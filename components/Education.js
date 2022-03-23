@@ -1,5 +1,6 @@
 import React from "react";
-import Image from "next/image";
+
+import StaticImage from "./StaticImage";
 
 const Education = () => {
   return (
@@ -42,12 +43,12 @@ const Education = () => {
               <div className="edu-item my-5" id="cert2">
                 <h5 className="edu-year">2021</h5>
                 <h4>Front End Web Developer Nanodegree Program</h4>
-                <Image
-                  src="/img/Udacity.png"
-                  alt="Udacity"
-                  width="180"
-                  height="30"
-                  layout="fixed"
+                <StaticImage
+                  src={"/img/Udacity.png"}
+                  alt={"Udacity"}
+                  width={180}
+                  height={30}
+                  layout={"fixed"}
                 />
                 <p>
                   The goal of the Front End Web Developer Nanodegree program is
@@ -88,12 +89,12 @@ const Education = () => {
               <div className="edu-item my-5" id="cert3">
                 <h5 className="edu-year">2021</h5>
                 <h4>The Complete 2022 Web Development Bootcamp</h4>
-                <Image
-                  src="/img/Udemy.png"
-                  alt="Udemy"
-                  width="100"
-                  height="40"
-                  layout="fixed"
+                <StaticImage
+                  src={"/img/Udemy.png"}
+                  alt={"Udemy"}
+                  width={100}
+                  height={40}
+                  layout={"fixed"}
                 />
                 <ul>
                   <li>Be able to build ANY website you want.</li>

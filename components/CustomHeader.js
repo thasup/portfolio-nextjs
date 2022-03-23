@@ -1,5 +1,6 @@
 import React from "react";
-import Image from "next/image";
+
+import StaticImage from "./StaticImage";
 
 const CustomHeader = () => {
   return (
@@ -9,14 +10,15 @@ const CustomHeader = () => {
     >
       <div className="container-fluid">
         <a className="navbar-brand d-flex flex-row align-items-center">
-          <Image
-            src="/favicon.ico"
-            alt="website_logo"
-            width="30"
-            height="30"
-            className="logo-nav d-inline-block align-text-top"
-          />{" "}
-          Thanachon Portfolio
+          <StaticImage
+            src={"/favicon.ico"}
+            alt={"website_logo"}
+            width={30}
+            height={30}
+            className="logo-nav"
+            layout={"fixed"}
+          />
+          <span className="ms-2">Thanachon Portfolio</span>
         </a>
         <button
           className="navbar-toggler"

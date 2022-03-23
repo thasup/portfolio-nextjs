@@ -1,34 +1,31 @@
 import React from "react";
-import Image from "next/image";
+import { Col, Container, Row } from "react-bootstrap";
+
+import WebImage from "./WebImage";
 
 const AboutMe = () => {
-  const myLoader = ({ src, width, quality }) => {
-    return `${src}&w=${width}&q=${quality || 75}`;
-  };
-
   return (
     <section id="about" className="section-container section-bg">
-      <div className="container">
+      <Container>
         <h2 className="text-start">About Me</h2>
 
-        <div className="row mt-5">
-          <div className="col-md-4">
-            <div className="profile-image d-flex justify-content-center">
-              <Image
-                loader={myLoader}
-                src={
-                  "https://www.dropbox.com/s/oxlkcjkjn9tmxrh/profile%20image%20circle.png?raw=1"
-                }
-                width={250}
-                height={250}
-                layout="responsive"
-                alt="my_picture_profile"
-                className="p-3"
-              />
-            </div>
-          </div>
-          <div className="col-md-8 align-self-center">
-            <div className="row">
+        <Row className="mt-5">
+          <Col
+            md={4}
+            className="p-3 profile-image d-flex justify-content-center"
+          >
+            <WebImage
+              src={
+                "https://www.dropbox.com/s/oxlkcjkjn9tmxrh/profile%20image%20circle.png"
+              }
+              width={250}
+              height={250}
+              layout={"fixed"}
+              alt="profile picture"
+            />
+          </Col>
+          <Col md={8} className="align-self-center">
+            <Row>
               <h3>Thanachon Supasatian</h3>
               <p>
                 A self-taught programmer and former mechanical engineer who
@@ -52,9 +49,9 @@ const AboutMe = () => {
                 is marvelous and powerful. It opens the way I can put my
                 creativity and technical skills to make things come true.
               </p>
-            </div>
-            <div className="row">
-              <div className="col-lg-6">
+            </Row>
+            <Row>
+              <Col lg={6}>
                 <ul id="personal-detail">
                   <li className="d-flex justify-content-between">
                     <strong>Gender:</strong>
@@ -73,8 +70,8 @@ const AboutMe = () => {
                     <span>Nonthaburi</span>
                   </li>
                 </ul>
-              </div>
-              <div className="col-lg-6">
+              </Col>
+              <Col lg={6}>
                 <ul id="personal-detail">
                   <li className="d-flex justify-content-between">
                     <strong>Email:</strong>
@@ -100,11 +97,11 @@ const AboutMe = () => {
                     <span>085 406 0527</span>
                   </li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     </section>
   );
 };
