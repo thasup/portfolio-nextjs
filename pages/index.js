@@ -5,11 +5,11 @@ import CustomHeader from "../components/CustomHeader";
 import AboutMe from "../components/AboutMe";
 import Skills from "../components/Skills";
 import Experience from "../components/Experience";
-import Showcase from "../components/Showcase";
 import Project from "../components/Project";
 import Education from "../components/Education";
 import Resume from "../components/Resume";
 import Contact from "../components/Contact";
+import ShowcaseSection from "../components/ShowcaseSection";
 
 export default function Home() {
   return (
@@ -22,7 +22,7 @@ export default function Home() {
       <CustomHeader />
       <AboutMe />
       <Skills />
-      <Experience showcase={<Showcase />} project={<Project />} />
+      <Experience showcase={<ShowcaseSection />} project={<Project />} />
       <Education />
       <Resume />
       <Contact />
