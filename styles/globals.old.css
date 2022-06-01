@@ -317,7 +317,7 @@ body {
 
 /* Portfolio Filters*/
 .portfolio-container {
-  opacity: 0;
+  opacity: 1;
 }
 
 .portfolio-filters {
