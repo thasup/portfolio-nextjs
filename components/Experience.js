@@ -1,10 +1,10 @@
 import React from "react";
 
-const Experience = ({ showcase, project }) => {
+const Portfolio = ({ showcase, project }) => {
   return (
     <section id="experience" className="section-container section-bg">
       <div className="container">
-        <h2 className="text-start">Experience</h2>
+        <h2 className="text-start">Portfolio</h2>
 
         {showcase}
 
@@ -46,4 +46,4 @@ const Experience = ({ showcase, project }) => {
   );
 };
 
-export default Experience;
+export default Portfolio;

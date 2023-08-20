@@ -4,38 +4,90 @@ import StaticImage from "./StaticImage";
 
 const Education = () => {
   return (
-    <section id="education" className="section-container section-bg">
+    <section id="experience" className="section-container section-bg">
       <div className="container">
-        <h2>Education</h2>
+        <h2>Experience</h2>
 
         <div className="mt-5">
           <div className="row">
+            {/* Degree and Experience Section */}
             <div className="col-lg-6 mb-5" id="degree">
-              <h3 className="edu-title">Degree</h3>
-              <div className="edu-item mt-4">
-                <h5 className="edu-year">2014 - 2017</h5>
+
+              {/* Degree Sub Section */}
+              <h3 className="exp-title">Degree</h3>
+              <div className="exp-item mt-4">
+                <h5 className="exp-year">2014 - 2017</h5>
                 <h4>Bachelor’s Degree in Mechanical Engineering</h4>
-                <h5 className="edu-institute">
+                <h5 className="exp-institute">
                   King Mongkut&apos;s Institute of Technology Ladkrabang
                 </h5>
                 <p>Bangkok, Thailand</p>
               </div>
+
+              {/* Professional Experience Sub Section */}
+              <h3 className="exp-title mt-5">Professional Experience</h3>
+              <div className="exp-item mt-4">
+                <h5 className="exp-year">2022 - Present</h5>
+                <h4>Front-End Engineer</h4>
+                <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
+                <p>Bangkok, Thailand</p>
+                <ul className="mb-0">
+                  <li>Implement the features and user interfaces of the product</li>
+                  <li>
+                    Architect efficient and reusable front-end systems that drive complex web
+                    applications
+                  </li>
+                  <li>
+                    Collaborate with team including Designers, QAs, Project Managers, and Software
+                    Engineers to deliver compelling user-facing products
+                  </li>
+                  <li>
+                    Identify and resolve potential issues during the development process including
+                    performance and scalability issues
+                  </li>
+                </ul>
+              </div>
+
+              <div className="exp-item">
+                <h5 className="exp-year">2018 - 2021</h5>
+                <h4>Mechanical, Electrical, and Plumbing Engineer</h4>
+                <h5 className="exp-institute">TOPARCH Ltd.</h5>
+                <p>Bangkok, Thailand</p>
+                <ul className="mb-0">
+                  <li>
+                    Managing and coordinating several constructors as the main constructor to build
+                    the 200 unit condominiums
+                  </li>
+                  <li>
+                    Managing construction of a hospital in Maesot, a housing estate in Ladkrabang,
+                    renovation of fitness, offices in Zen Tower and Central Silom as a consultant
+                  </li>
+                  <li>
+                    Drawing an architecture planning of community mall, housing estate, resort in
+                    AutoCAD and creating 3D house models in Sketchup
+                  </li>
+                  <li>Estimating quantity and cost of building construction or renovation</li>
+                  <li>
+                    Inspecting and checking the condition of condominium unit and townhouse before
+                    delivery to the customer
+                  </li>
+                </ul>
+              </div>
             </div>
 
+            {/* Certification Section */}
             <div className="col-lg-6" id="certificate">
               <h3 className="edu-title">Certificate</h3>
 
-              <div className="edu-item mt-4 mb-5" id="cert1">
-                <h5 className="edu-year">2022</h5>
+              {/* Certificate 1 */}
+              <div className="exp-item" id="cert1">
+                <h5 className="exp-year">2022</h5>
                 <h4>TOEIC® Listening and Reading Test</h4>
                 <h5>Score : 890</h5>
-                <h5 className="edu-institute">ETS</h5>
+                <h5 className="exp-institute">ETS</h5>
                 <p>Listening part score : 480, Reading part score : 410</p>
-                <a
-                  className="btn btn-sm btn-primary"
-                  target="blank"
-                  href="https://www.dropbox.com/s/9a1ylcljptv75vq/TOEIC%201-2-2022.pdf?dl=0"
-                >
+                <a className="btn btn-sm btn-primary" target="_blank"
+                  href="https://www.dropbox.com/s/9a1ylcljptv75vq/TOEIC%201-2-2022.pdf?dl=0" rel="noreferrer">
                   See credential
                 </a>
               </div>
@@ -122,6 +174,11 @@ const Education = () => {
                   See credential
                 </a>
               </div>
+
+              <a className="d-flex justify-content-end"
+                href="https://www.linkedin.com/in/thanachon-supasatian/details/certifications/" target="_blank" rel="noreferrer">
+                See more
+              </a>
             </div>
           </div>
         </div>

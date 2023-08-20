@@ -1,0 +1,32 @@
+{
+    "data": {
+        "projects": [
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/v1654267975/portfolio/projects/Sentiment_Analysis_App_square_2_o8igb8.png",
+                "name": "Sentiment Analysis App",
+                "description": "Single page application that allows users to run Natural Language Processing (NLP) on articles or blogs found on other websites.",
+                "tags": [
+                    "NodeJS",
+                    "API",
+                    "Bootstrap",
+                    "Render"
+                ],
+                "demoUrl": "https://thasup-sentiment-analysis.onrender.com",
+                "gitHubUrl": "https://github.com/thasup/sentiment-analysis-app"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/v1654267975/portfolio/projects/Sentiment_Analysis_App_square_2_o8igb8.png",
+                "name": "Sentiment Analysis App",
+                "description": "Single page application that allows users to run Natural Language Processing (NLP) on articles or blogs found on other websites.",
+                "tags": [
+                    "NodeJS",
+                    "API",
+                    "Bootstrap",
+                    "Render"
+                ],
+                "demoUrl": "https://thasup-sentiment-analysis.onrender.com",
+                "gitHubUrl": "https://github.com/thasup/sentiment-analysis-app"
+            }
+        ]
+    }
+}

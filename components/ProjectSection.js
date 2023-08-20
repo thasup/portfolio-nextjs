@@ -1,32 +1,44 @@
-import React from "react";
-
-import StaticImage from "./StaticImage";
-import Project from "./Project";
+import React from 'react'
+import ProjectList from './ProjectList'
 
 const ProjectSection = () => {
   return (
-    <>
-      <Project
-        image={
-          <StaticImage
-            src={"/img/projects/Sentiment Analysis App square 2.png"}
-            alt={"Sentiment Analysis App"}
-            layout={"fill"}
-          />
-        }
-        title={"Sentiment Analysis App"}
-        description={
-          <p>
-            Single page application that allows users to run Natural Language
-            Processing (NLP) on articles or blogs found on other websites.
-          </p>
-        }
-        // tags={["NodeJS", "API", "Bootstrap", "SCSS", "Netlify", "Heroku"]}
-        demoLink={"https://thasup-sentiment-analysis.netlify.app/"}
-        githubLink={"https://github.com/thasup/sentiment-analysis-app"}
-      />
-    </>
-  );
-};
+    <div className="mt-5">
+      <div className="col-12 d-flex flex-column align-items-center justify-content-center filters-section">
+        <ul className="portfolio-filters primary-filters" id="primary">
+          <li data-filter="*" className="filter-active">
+            all
+          </li>
+          <li data-filter=".filter-app">web app</li>
+          <li data-filter=".filter-web">web</li>
+          <li data-filter=".filter-game">game</li>
+        </ul>
 
-export default ProjectSection;
+        <a className="filters-more">
+          <i className="fas fa-chevron-down"></i>
+        </a>
+
+        <ul className="portfolio-filters secondary-filters" id="secondary">
+          <li data-filter="*" className="filter-active">
+            all
+          </li>
+          <li data-filter=".filter-react">react</li>
+          <li data-filter=".filter-node">node</li>
+          <li data-filter=".filter-next">next</li>
+          <li data-filter=".filter-bootstrap">bootstrap</li>
+          <li data-filter=".filter-mongodb">mongodb</li>
+          <li data-filter=".filter-docker">docker</li>
+          <li data-filter=".filter-scss">scss</li>
+          <li data-filter=".filter-typescript">typescript</li>
+          <li data-filter=".filter-api">api</li>
+        </ul>
+      </div>
+
+      <div className="row portfolio-container">
+        <ProjectList projects={projects} />
+      </div>
+    </div>
+  )
+}
+
+export default ProjectSection
