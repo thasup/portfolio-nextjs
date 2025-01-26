@@ -49,8 +49,8 @@ const CustomHeader = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link sections-name" id="education-link">
-                Education
+              <a className="nav-link sections-name" id="portfolio-link">
+                Portfolio
               </a>
             </li>
             <li className="nav-item">
