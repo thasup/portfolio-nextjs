@@ -16,7 +16,7 @@ const AboutMe = () => {
           >
             <WebImage
               src={
-                "https://www.dropbox.com/s/oxlkcjkjn9tmxrh/profile%20image%20circle.png"
+                "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267591/portfolio/IMG_71362_phuw5y.png"
               }
               width={250}
               height={250}
@@ -49,55 +49,6 @@ const AboutMe = () => {
                 is marvelous and powerful. It opens the way I can put my
                 creativity and technical skills to make things come true.
               </p>
-            </Row>
-            <Row>
-              <Col lg={6}>
-                <ul id="personal-detail">
-                  <li className="d-flex justify-content-between">
-                    <strong>Gender:</strong>
-                    <span>Male</span>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    <strong>Nationality:</strong>
-                    <span>Thai</span>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    <strong>Date of Birth:</strong>
-                    <span>18 December 1995</span>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    <strong>City:</strong>
-                    <span>Nonthaburi</span>
-                  </li>
-                </ul>
-              </Col>
-              <Col lg={6}>
-                <ul id="personal-detail">
-                  <li className="d-flex justify-content-between">
-                    <strong>Email:</strong>
-                    <span>thanachonfirst@hotmail.com</span>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    <strong>Github:</strong>
-                    <a href="https://github.com/thasup" target="blank">
-                      thasup
-                    </a>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    <strong>LinkedIn:</strong>
-                    <a
-                      href="https://www.linkedin.com/in/thanachon-supasatian-278292159/"
-                      target="blank"
-                    >
-                      Thanachon Supasatian
-                    </a>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    <strong>Phone:</strong>
-                    <span>085 406 0527</span>
-                  </li>
-                </ul>
-              </Col>
             </Row>
           </Col>
         </Row>
