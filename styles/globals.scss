@@ -238,8 +238,15 @@ body {
 	#skills {
 		.skill-list {
 			list-style: none;
+
 			li {
 				margin: 1.5rem 0;
+
+				.skill-icon {
+					display: flex;
+					gap: 8px;
+					margin-top: 0.5rem;
+				}
 			}
 		}
 

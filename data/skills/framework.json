@@ -1,0 +1,46 @@
+{
+    "data": [
+        {
+            "id": "ReactJS",
+            "logo": "React",
+            "color": "61DAFB",
+            "labelColor": "20232a",
+            "width": 71
+        },
+        {
+            "id": "NextJS",
+            "logo": "nextdotjs",
+            "color": "fff",
+            "labelColor": "000000",
+            "width": 67
+        },
+        {
+            "id": "VueJS",
+            "logo": "vuedotjs",
+            "color": "4FC08D",
+            "labelColor": "213547",
+            "width": 61
+        },
+        {
+            "id": "NuxtJS",
+            "logo": "nuxt",
+            "color": "00DC82",
+            "labelColor": "213547",
+            "width": 67
+        },
+        {
+            "id": "NodeJS",
+            "logo": "nodedotjs",
+            "color": "fff",
+            "labelColor": "339933",
+            "width": 69
+        },
+        {
+            "id": "Wordpress",
+            "logo": "wordpress",
+            "color": "fff",
+            "labelColor": "3858e9",
+            "width": 87
+        }
+    ]
+}

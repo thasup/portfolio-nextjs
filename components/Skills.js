@@ -1,6 +1,43 @@
 import React from "react";
+import SkillBadge from "./SkillBadge";
+import languageData from "../data/skills/language.json";
+import frameworkData from "../data/skills/framework.json";
 
 const Skills = () => {
+  const languageSkills = () => {
+    return (
+      languageData.data.map((skill) => {
+        return (
+          <SkillBadge
+            key={skill.logo}
+            id={skill.id}
+            logo={skill.logo}
+            color={skill.color}
+            labelColor={skill.labelColor}
+            width={skill.width}
+          />
+        )
+      })
+    )
+  }
+
+  const frameworkSkills = () => {
+    return (
+      frameworkData.data.map((skill) => {
+        return (
+          <SkillBadge
+            key={skill.logo}
+            id={skill.id}
+            logo={skill.logo}
+            color={skill.color}
+            labelColor={skill.labelColor}
+            width={skill.width}
+          />
+        )
+      })
+    )
+  }
+
   return (
     <section id="skills" className="section-container section-bg">
       <div className="container">
@@ -10,18 +47,15 @@ const Skills = () => {
           <ul className="skill-list">
             <li>
               <strong>Language:</strong>
-              <p>JavaScript, TypeScript, HTML, CSS, SCSS</p>
+              <div className="skill-icon">
+                {languageSkills()}
+              </div>
             </li>
             <li>
               <strong>Framework/Library:</strong>
-              <p>
-                ReactJS, NextJS, NodeJS, jQuery, Bootstrap, Material UI, Ant
-                Design, Jest
-              </p>
-            </li>
-            <li>
-              <strong>Database:</strong>
-              <p>MongoDB</p>
+              <div className="skill-icon">
+                {frameworkSkills()}
+              </div>
             </li>
             <li>
               <strong>Infrastructure:</strong>

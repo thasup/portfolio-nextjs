@@ -1,0 +1,39 @@
+{
+    "data": [
+        {
+            "id": "Javascript",
+            "logo": "javascript",
+            "color": "000",
+            "labelColor": "F7DF1E",
+            "width": 83
+        },
+        {
+            "id": "Typescript",
+            "logo": "typescript",
+            "color": "fff",
+            "labelColor": "3178C6",
+            "width": 85
+        },
+        {
+            "id": "Python",
+            "logo": "python",
+            "color": "fff",
+            "labelColor": "3776AB",
+            "width": 67
+        },
+        {
+            "id": "Php",
+            "logo": "PHP",
+            "color": "fff",
+            "labelColor": "7a86b8",
+            "width": 49
+        },
+        {
+            "id": "SCSS",
+            "logo": "sass",
+            "color": "fff",
+            "labelColor": "CC6699",
+            "width": 59
+        }
+    ]
+}
