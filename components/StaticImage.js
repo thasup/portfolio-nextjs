@@ -11,7 +11,7 @@ const StaticImage = ({
   priority,
   quality,
 }) => {
-  const myLoader = ({ src, quality }) => {
+  const myLoader = () => {
     return `${src}?raw=1&q=${quality || 75}`;
   };
 
