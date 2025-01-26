@@ -28,27 +28,27 @@ const AboutMe = () => {
             <Row>
               <h3>Thanachon Supasatian</h3>
               <p>
-                A self-taught programmer and former mechanical engineer who
-                strongly believes man can do anything as long as he/she has the
-                willpower and passion to do it.
+                It took me 25 years until one day when I tried to create an interactive investing dashboard on Excel as a hobby on a weekend while I work as a mechanical engineer.
               </p>
               <p>
-                Believing in your potential that you can do it and you also can
-                become a better person help overcome difficult challenges that
-                life might throw at you. Having good friends can also help it.
-                Working as a team is a powerful tool that humans build our
-                civilization for a thousand years.
+                I discover one thing while I&apos;m struck with Excel limitations and that thing has <em>profoundly changed my course of life</em> and the way I perceive how the future world will going to look like.
+              </p>
+              <p>It&apos;s <strong>coding.</strong></p>
+              <p>
+                A month passed while I was addicted to learning about web development and how programming works until I realized how powerful and amazing coding can be <em>which only limit by your competence and imagination.</em>
               </p>
               <p>
-                With a good mindset, great teamwork. Anything can be done, any
-                problem can be solved. Nothing is going to hold you from your
-                success.
+                How it can power our present world, or even further more; change our daily life. (or even my Excel dashboard)
               </p>
               <p>
-                Learning how to code is by far the best decision of my life. It
-                is marvelous and powerful. It opens the way I can put my
-                creativity and technical skills to make things come true.
+                Look around us, whether it a software that we working on in the office, a website that we casually browse in the afternoon, an application that we&apos;re making a taxi call to take us home, or a streaming app that we used to watch on our smart tv.
               </p>
+              <p>
+                How absurd of me to not notice all of these before quickly that <em>everything behind those screens has been powered by code!</em>
+                It took me more than 20 years to realize what a world I lived in.
+              </p>
+              <p>That&apos;s when I decided. <em>I will teach myself to become a programmer.</em></p>
+              <p>That&apos;s where my story as a programmer begins.</p>
             </Row>
           </Col>
         </Row>

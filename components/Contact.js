@@ -12,10 +12,7 @@ const Contact = () => {
               <i className="fas fa-map-marker-alt"></i>
               <div className="d-flex flex-column ms-3">
                 <h4>Location:</h4>
-                <p>
-                  34/82 Moo 3, bangkruai-sainoi road <br />
-                  Sai Noi, Nonthaburi 11150
-                </p>
+                <p>Bangkok</p>
               </div>
             </div>
             <div className="contact-info d-flex flex-row pt-3">
@@ -23,13 +20,6 @@ const Contact = () => {
               <div className="d-flex flex-column ms-3">
                 <h4>Email:</h4>
                 <p>thanachonfirst@hotmail.com</p>
-              </div>
-            </div>
-            <div className="contact-info d-flex flex-row pt-3">
-              <i className="fas fa-phone"></i>
-              <div className="d-flex flex-column ms-3">
-                <h4>Phone:</h4>
-                <p>085 406 0527</p>
               </div>
             </div>
             <div className="social-links pt-3">

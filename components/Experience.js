@@ -48,7 +48,7 @@ const Experience = () => {
                 </ul>
               </div>
 
-              <div className="exp-item">
+              {/* <div className="exp-item">
                 <h5 className="exp-year">2018 - 2021</h5>
                 <h4>Mechanical, Electrical, and Plumbing Engineer</h4>
                 <h5 className="exp-institute">TOPARCH Ltd.</h5>
@@ -72,7 +72,7 @@ const Experience = () => {
                     delivery to the customer
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
 
             {/* Certification Section */}
@@ -81,13 +81,13 @@ const Experience = () => {
 
               {/* Certificate 1 */}
               <div className="exp-item" id="cert1">
-                <h5 className="exp-year">2022</h5>
+                <h5 className="exp-year">2023</h5>
                 <h4>TOEIC® Listening and Reading Test</h4>
-                <h5>Score : 890</h5>
+                <h5>Score : 915</h5>
                 <h5 className="exp-institute">ETS</h5>
-                <p>Listening part score : 480, Reading part score : 410</p>
-                <a className="btn btn-sm btn-primary" target="_blank"
-                  href="https://www.dropbox.com/s/9a1ylcljptv75vq/TOEIC%201-2-2022.pdf?dl=0" rel="noreferrer">
+                <p>Listening part score : 470, Reading part score : 445</p>
+                <a className="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer"
+                  href="https://www.dropbox.com/scl/fi/mhnp7rw0v7zk1l2ycpzzl/TOEIC-2023.jpeg?rlkey=2hxjyhes1oxfttbofr9zafey2&st=m0nuyon8&dl=0">
                   See credential
                 </a>
               </div>
@@ -101,6 +101,7 @@ const Experience = () => {
                   width={180}
                   height={30}
                   layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <p>
                   The goal of the Front End Web Developer Nanodegree program is
@@ -144,9 +145,10 @@ const Experience = () => {
                 <StaticImage
                   src={"/img/Udemy.png"}
                   alt={"Udemy"}
-                  width={100}
+                  width={110}
                   height={40}
                   layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <ul>
                   <li>Be able to build ANY website you want.</li>

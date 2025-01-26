@@ -10,10 +10,10 @@ const Resume = () => {
       <div className="container-md position-relative">
         <div className="d-flex flex-row flex-wrap align-items-center justify-content-center">
           <h3 className="text-center text-uppercase mx-3">
-            Click to download resume here
+            Download resume here
           </h3>
           <a
-            className="btn btn-light btn-lg text-uppercase my-3"
+            className="btn btn-light btn-lg text-uppercase my-3 disabled"
             target="blank"
             href="https://www.dropbox.com/s/05p4h3qpqedcr84/resume%20standard%2001.pdf?dl=0"
           >

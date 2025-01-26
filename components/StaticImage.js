@@ -10,6 +10,7 @@ const StaticImage = ({
   fit,
   priority,
   quality,
+  ...props
 }) => {
   const myLoader = () => {
     return `${src}?raw=1&q=${quality || 75}`;
@@ -17,6 +18,7 @@ const StaticImage = ({
 
   return (
     <Image
+      {...props}
       loader={myLoader}
       src={src}
       alt={alt}

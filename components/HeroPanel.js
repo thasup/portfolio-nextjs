@@ -7,10 +7,10 @@ const HeroPanel = () => {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        "Full-stack Developer",
         "Front-End Developer",
         "Self-taught Programmer",
         "Mechanical Engineer",
+        "Lifelong Learner",
       ],
       loop: true,
       startDelay: 0,
