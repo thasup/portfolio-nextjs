@@ -1,43 +1,34 @@
 import React from 'react'
-import ProjectList from './ProjectList'
+import { data as projectsData} from "../data/projects.json";
+import ProjectItem from './ProjectItem';
+import StaticImage from './StaticImage';
 
 const ProjectSection = () => {
   return (
-    <div className="mt-5">
-      <div className="col-12 d-flex flex-column align-items-center justify-content-center filters-section">
-        <ul className="portfolio-filters primary-filters" id="primary">
-          <li data-filter="*" className="filter-active">
-            all
-          </li>
-          <li data-filter=".filter-app">web app</li>
-          <li data-filter=".filter-web">web</li>
-          <li data-filter=".filter-game">game</li>
-        </ul>
-
-        <a className="filters-more">
-          <i className="fas fa-chevron-down"></i>
-        </a>
-
-        <ul className="portfolio-filters secondary-filters" id="secondary">
-          <li data-filter="*" className="filter-active">
-            all
-          </li>
-          <li data-filter=".filter-react">react</li>
-          <li data-filter=".filter-node">node</li>
-          <li data-filter=".filter-next">next</li>
-          <li data-filter=".filter-bootstrap">bootstrap</li>
-          <li data-filter=".filter-mongodb">mongodb</li>
-          <li data-filter=".filter-docker">docker</li>
-          <li data-filter=".filter-scss">scss</li>
-          <li data-filter=".filter-typescript">typescript</li>
-          <li data-filter=".filter-api">api</li>
-        </ul>
-      </div>
-
-      <div className="row portfolio-container">
-        <ProjectList projects={projects} />
-      </div>
-    </div>
+      <>
+        {
+          projectsData.projects.map(project => {
+            return (
+              <ProjectItem
+                key={project.name}
+                image={
+                  <StaticImage
+                    src={project.imageSrc}
+                    alt={project.name}
+                    width={400}
+                    height={400}
+                  />
+                }
+                title={project.name}
+                description={project.description}
+                tags={project.tags}
+                demoLink={project.demoLink}
+                githubLink={project.githubLink}
+              />
+            )
+          })
+        }
+      </>
   )
 }
 

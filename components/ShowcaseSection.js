@@ -1,11 +1,11 @@
 import React from "react";
-import Showcase from "./Showcase";
+import ShowcaseItem from "./ShowcaseItem";
 import StaticImage from "./StaticImage";
 
 const ShowcaseSection = () => {
   return (
     <>
-      <Showcase
+      <ShowcaseItem
         image={
           <StaticImage
             src={"/img/projects/aurapan shop banner 2.webp"}
@@ -55,7 +55,7 @@ const ShowcaseSection = () => {
         githubLink={"https://github.com/thasup/microservices-ecommerce"}
       />
 
-      <Showcase
+      <ShowcaseItem
         image={
           <StaticImage
             src={"/img/projects/banner suppee.webp"}
@@ -70,11 +70,11 @@ const ShowcaseSection = () => {
         description={
           <p>
             Suppee is an e-commerce platform built with the
-            <strong>MERN</strong> stack, creating extensive back-end with
-            <strong>Express</strong>, managing global state with
+            <strong>MERN</strong> stack, creating extensive back-end with{" "}
+            <strong>Express</strong>, managing global state with{" "}
             <strong>Redux</strong>, working with a<strong>MongoDB</strong>{" "}
-            database and the Mongoose ODM, using
-            <strong>JWT</strong> authentication and integrating the
+            database and the Mongoose ODM, using{" "}
+            <strong>JWT</strong> authentication and integrating the{" "}
             <strong>PayPal</strong> API.
           </p>
         }
@@ -91,7 +91,7 @@ const ShowcaseSection = () => {
         githubLink={"https://github.com/thasup/Suppee"}
       />
 
-      <Showcase
+      <ShowcaseItem
         image={
           <StaticImage
             src={"/img/projects/preview where should i go banner.webp"}
@@ -108,8 +108,8 @@ const ShowcaseSection = () => {
             <p>Don&apos;t know where to go?</p>
             <p>
               Why not use this amazing app to find interesting places around
-              your area on
-              <strong>google maps</strong> with cool informations from
+              your area on{" "}
+              <strong>google maps</strong> with cool informations from{" "}
               <strong>TripAdvisor</strong> API.
             </p>
           </>

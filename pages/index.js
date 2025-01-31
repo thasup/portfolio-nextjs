@@ -9,6 +9,8 @@ import Portfolio from "../components/sections/Portfolio";
 import Resume from "../components/sections/Resume";
 import Contact from "../components/sections/Contact";
 import Quote from "../components/sections/Quote";
+import ShowcaseSection from "../components/ShowcaseSection";
+import ProjectSection from "../components/ProjectSection";
 
 export default function Home() {
   return (
@@ -24,7 +26,10 @@ export default function Home() {
       <Skills />
       <Experience />
       <Quote text="Believe you can and you're halfway there." author="Theodore Roosevelt" />
-      <Portfolio />
+      <Portfolio
+        showcase={<ShowcaseSection />}
+        project={<ProjectSection />}
+      />
       <Resume />
       <Quote text="Someone's sitting in the shade today because someone planted a tree long time ago" author="Warren Buffett" />
       <Contact />

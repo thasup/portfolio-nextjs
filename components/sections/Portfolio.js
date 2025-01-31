@@ -2,7 +2,7 @@ import React from "react";
 
 const Portfolio = ({ showcase, project }) => {
   return (
-    <section id="experience" className="section-container section-bg">
+    <section id="portfolio" className="section-container section-bg">
       <div className="container">
         <h2 className="text-start">Portfolio</h2>
 

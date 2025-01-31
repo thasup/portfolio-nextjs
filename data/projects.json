@@ -15,18 +15,215 @@
                 "gitHubUrl": "https://github.com/thasup/sentiment-analysis-app"
             },
             {
-                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/v1654267975/portfolio/projects/Sentiment_Analysis_App_square_2_o8igb8.png",
-                "name": "Sentiment Analysis App",
-                "description": "Single page application that allows users to run Natural Language Processing (NLP) on articles or blogs found on other websites.",
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267974/portfolio/projects/preview_travel_planer_app_nqb78t.jpg",
+                "name": "Travel Planer App",
+                "description": "Travel planer app that obtains a desired trip location & date from the user and displays weather forecast, country information, and an image of the location using information obtained from external APIs.",
                 "tags": [
                     "NodeJS",
                     "API",
-                    "Bootstrap",
+                    "Webpack",
+                    "Service Worker",
                     "Render"
                 ],
-                "demoUrl": "https://thasup-sentiment-analysis.onrender.com",
-                "gitHubUrl": "https://github.com/thasup/sentiment-analysis-app"
-            }
+                "demoUrl": "https://thasup-travel-planner.onrender.com",
+                "gitHubUrl": "https://github.com/thasup/travel-planer-app"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267959/portfolio/projects/preview_ipad_tincat_2_x7z2xc.webp",
+                "name": "TinCat",
+                "description": "A single landing page that shows 'TinCat', an application for cats who looking for hot kitties by wrapping all pages with the Bootstrap CSS framework.",
+                "tags": [
+                    "jQuery",
+                    "Bootstrap",
+                    "Netlify",
+                    "Gulp"
+                ],
+                "demoUrl": "https://thasup.github.io/TinCat/",
+                "gitHubUrl": "https://github.com/thasup/TinCat"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267960/portfolio/projects/preview_desktop_suppee_fuinpx.jpg",
+                "name": "Suppee",
+                "description": "Suppee is an e-commerce platform built with the MERN stack and Redux.",
+                "tags": [
+                    "ReactJS",
+                    "Redux",
+                    "Bootstrap",
+                    "MongoDB",
+                    "NodeJS",
+                    "API",
+                    "Render",
+                    "MERN"
+                ],
+                "demoUrl": "https://suppee.shop/",
+                "gitHubUrl": "https://github.com/thasup/Suppee"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267959/portfolio/projects/preview_ipad_aurapan_2_vat9cr.webp",
+                "name": "Aurapan",
+                "description": "Aurapan is a beautiful women's clothing e-commerce website built with microservices architecture.",
+                "tags": [
+                    "Microservices",
+                    "ReactJS",
+                    "NextJS",
+                    "Docker",
+                    "Kubernetes",
+                    "TypeScript",
+                    "MongoDB",
+                    "Github Action",
+                    "MERN"
+                ],
+                "demoUrl": "https://www.aurapan.com/",
+                "gitHubUrl": "https://github.com/thasup/microservices-ecommerce"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267959/portfolio/projects/preview_desktop_wsig_1_i25ood.webp",
+                "name": "Where Should I Go",
+                "description": "Don't know where to go? Why not use this amazing app to find interesting places around your area on google maps with cool informations from TripAdvisor API.",
+                "tags": [
+                    "ReactJS",
+                    "NodeJS",
+                    "API",
+                    "MUI"
+                ],
+                "demoUrl": "https://thasup-where-should-i-go.netlify.app/",
+                "gitHubUrl": "https://github.com/thasup/where-should-i-go"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1657813097/portfolio/projects/preview_desktop_vue-spotify_02_zrrp4t.jpg",
+                "name": "Vue Spotify",
+                "description": "Music is the universal language of mankind.",
+                "tags": [
+                    "VueJS",
+                    "Vuex",
+                    "Firebase",
+                    "TailwindCSS",
+                    "Netlify"
+                ],
+                "demoUrl": "https://thasup-vue-spotify.netlify.app/",
+                "gitHubUrl": "https://github.com/thasup/vue-spotify"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267960/portfolio/projects/preview_desktop_portfolio_weh8l6.webp",
+                "name": "Portfolio Website",
+                "description": "my lovely portfolio website deploy with real domain name on Netlify.",
+                "tags": [
+                    "jQuery",
+                    "Netlify",
+                    "Bootstrap",
+                    "Domain Name"
+                ],
+                "demoUrl": "https://thanachon.me/",
+                "gitHubUrl": "https://github.com/thasup/portfolio"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267959/portfolio/projects/preview_desktop_weather_2_masjq3.webp",
+                "name": "Weather Journal App",
+                "description": "This project is to create an asynchronous web app that uses Web API and user data to dynamically update the UI in a Weather Journal application by using Express as a server framework on Node.js.",
+                "tags": [
+                    "NodeJS",
+                    "API",
+                    "Express",
+                    "Render"
+                ],
+                "demoUrl": "https://thasup-weather-journal.onrender.com",
+                "gitHubUrl": "https://github.com/thasup/weather-journal-app"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267960/portfolio/projects/preview_desktop_noodle_1_vgisw1.webp",
+                "name": "Noodle Keep",
+                "description": "A simple note keeper app that built with MERN stack, MUI and Redux.",
+                "tags": [
+                    "ReactJS",
+                    "Redux",
+                    "NodeJS",
+                    "MUI",
+                    "MongoDB",
+                    "Render",
+                    "MERN"
+                ],
+                "demoUrl": "https://thasup-noodle-keeper.onrender.com",
+                "gitHubUrl": "https://github.com/thasup/keeper-app"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267959/portfolio/projects/preview_dice_game_tega6q.jpg",
+                "name": "Dice Game",
+                "description": "Feel lucky? Let's roll the dice to decide who will win with this simple web app.",
+                "tags": [
+                    "JavaScript",
+                    "DOM"
+                ],
+                "demoUrl": "https://thasup.github.io/dice-game/",
+                "gitHubUrl": "https://github.com/thasup/dice-game"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267974/portfolio/projects/preview_laptop_drumkit_vqjfhz.jpg",
+                "name": "DrumKit",
+                "description": "A simple JavaScript game that allows you to play instruments with keyboard or mouse input.",
+                "tags": [
+                    "JavaScript",
+                    "jQuery"
+                ],
+                "demoUrl": "https://thasup.github.io/DrumKit/",
+                "gitHubUrl": "https://github.com/thasup/DrumKit"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267960/portfolio/projects/preview_desktop_simon_x2vnjx.jpg",
+                "name": "Simon Game",
+                "description": "Simon game is a mini JavaScript game, a practice project to learn how to use jQuery library to make it easier and faster to write code.",
+                "tags": [
+                    "JavaScript",
+                    "jQuery"
+                ],
+                "demoUrl": "https://thasup.github.io/simon-game/",
+                "gitHubUrl": "https://github.com/thasup/simon-game"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1665422985/portfolio/projects/preview_desktop_creative-fund_1_ut2jqm.jpg",
+                "name": "Creative Fund",
+                "description": "A crowd funding dapp using the Ethereum blockchain, deployed on Goerli test network and built by NextJS.",
+                "tags": [
+                    "ReactJS",
+                    "NextJS",
+                    "NodeJS",
+                    "Ethereum",
+                    "Web3",
+                    "Solidity",
+                    "Alchemy",
+                    "Vercel"
+                ],
+                "demoUrl": "https://creativefund.vercel.app/",
+                "gitHubUrl": "https://github.com/thasup/crowdfunding"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1665423458/portfolio/projects/preview_laptop_lottery_1_zkuj8h.jpg",
+                "name": "Web3 Lottery",
+                "description": "A simple lottery game created with smart contract and deploy on Goerli test network",
+                "tags": [
+                    "ReactJS",
+                    "NodeJS",
+                    "Ethereum",
+                    "Web3",
+                    "Solidity",
+                    "Infura",
+                    "Netlify"
+                ],
+                "demoUrl": "https://thasup-lottery-dapp.netlify.app/",
+                "gitHubUrl": "https://github.com/thasup/lottery-react"
+            },
+            {
+                "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1684699304/portfolio/projects/Screenshot_2566-05-22_at_03.01.31_vwsef1.png",
+                "name": "Colors Palette Generator",
+                "description": "A visual color palette search engine with GPT-3.5 API",
+                "tags": [
+                    "Python",
+                    "Flask",
+                    "OpenAI API",
+                    "Render"
+                ],
+                "demoUrl": "https://color-palette-generator-v0ah.onrender.com/",
+                "gitHubUrl": "https://github.com/thasup/color-palette-generator"
+            }                                                                                                                                                            
         ]
     }
 }

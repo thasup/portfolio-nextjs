@@ -101,7 +101,6 @@ const Experience = () => {
                   width={180}
                   height={30}
                   layout={"fixed"}
-                  style={{objectFit: "contain"}}
                 />
                 <p>
                   The goal of the Front End Web Developer Nanodegree program is
@@ -148,7 +147,6 @@ const Experience = () => {
                   width={110}
                   height={40}
                   layout={"fixed"}
-                  style={{objectFit: "contain"}}
                 />
                 <ul>
                   <li>Be able to build ANY website you want.</li>

@@ -1,24 +1,15 @@
 import React from "react";
 import { Button, Col } from "react-bootstrap";
+import StaticImage from "./StaticImage";
 
-const Project = ({
+const ProjectItem = ({
   image,
   title,
   description,
-  tagsArray,
+  tags,
   demoLink,
   githubLink,
 }) => {
-  tagsArray = [
-    "Microservices",
-    "ReactJS",
-    "NextJS",
-    "Docker",
-    "Kubernetes",
-    "TypeScript",
-    "MongoDB",
-    "Github Action",
-  ];
   return (
     <Col
       lg={4}
@@ -28,12 +19,12 @@ const Project = ({
       <div className="portfolio-wrap">
         {image}
         <div className="portfolio-info d-flex flex-column align-items-center">
-          <a href={demoLink} target="blank" title="Website">
+          <a href={demoLink} target="_blank" rel="noopener noreferrer" title="Website">
             {title}
           </a>
-          {description}
+          <p>{description}</p>
           <div className="tech-tag">
-            {tagsArray.map((tag, index) => (
+            {tags?.map((tag, index) => (
               <Button key={index} variant="outline-light" className="btn-xsm">
                 {tag}
               </Button>
@@ -41,11 +32,11 @@ const Project = ({
           </div>
 
           <div className="portfolio-links d-flex flex-row">
-            <a href={demoLink} target="blank" title="Website" className="me-3">
+            <a href={demoLink} target="_blank" rel="noopener noreferrer" title="Website" className="me-3">
               <i className="fas fa-globe-americas"></i>
             </a>
 
-            <a href={githubLink} target="blank" title="Github">
+            <a href={githubLink} target="_blank" rel="noopener noreferrer" title="Github">
               <i className="fab fa-github"></i>
             </a>
           </div>
@@ -55,4 +46,4 @@ const Project = ({
   );
 };
 
-export default Project;
+export default ProjectItem;

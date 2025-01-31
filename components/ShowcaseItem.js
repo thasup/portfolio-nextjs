@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 
-const Showcase = ({
+const ShowcaseItem = ({
   image,
   title,
   scale,
@@ -18,13 +18,13 @@ const Showcase = ({
       </Col>
       <Col md={6} className="showcase-info d-flex flex-column">
         <div className="d-flex flex-row align-items-center">
-          <h3>{title}</h3>
+          <h3 className="mb-0">{title}</h3>
 
           <span className="badge rounded-pill bg-primary ms-2">{scale}</span>
         </div>
 
-        <h5 className="mb-3">{headline}</h5>
-        {description}
+        <h5 className="mb-0 text-italic">{headline}</h5>
+        <div className="desc-container d-flex flex-column">{description}</div>
 
         <div className="tech-tag">
           {tagsArray.map((tag, index) => (
@@ -53,4 +53,4 @@ const Showcase = ({
   );
 };
 
-export default Showcase;
+export default ShowcaseItem;

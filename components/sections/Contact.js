@@ -12,7 +12,7 @@ const Contact = () => {
               <i className="fas fa-map-marker-alt"></i>
               <div className="d-flex flex-column ms-3">
                 <h4>Location:</h4>
-                <p>Bangkok</p>
+                <p>Bangkok, Thailand</p>
               </div>
             </div>
             <div className="contact-info d-flex flex-row pt-3">
@@ -46,7 +46,7 @@ const Contact = () => {
           <div className="col-md-6">
             <Form method="post" role="form" data-netlify="true">
               <Form.Group>
-                <Form.Label for="name">Your Name</Form.Label>
+                <Form.Label htmlFor="name">Your Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
@@ -57,7 +57,7 @@ const Contact = () => {
               </Form.Group>
 
               <Form.Group className="mt-3">
-                <Form.Label for="email">Your Email</Form.Label>
+                <Form.Label htmlFor="email">Your Email</Form.Label>
                 <Form.Control
                   type="email"
                   name="email"
@@ -68,7 +68,7 @@ const Contact = () => {
               </Form.Group>
 
               <Form.Group className="mt-3">
-                <Form.Label for="subject">Subject</Form.Label>
+                <Form.Label htmlFor="subject">Subject</Form.Label>
                 <Form.Control
                   type="text"
                   name="subject"
@@ -79,7 +79,7 @@ const Contact = () => {
               </Form.Group>
 
               <Form.Group className="mt-3">
-                <Form.Label for="message">Message</Form.Label>
+                <Form.Label htmlFor="message">Message</Form.Label>
                 <Form.Control
                   type="textarea"
                   name="message"
