@@ -1,12 +1,14 @@
 import React from "react";
+import ShowcaseSection from "../ShowcaseSection";
+import ProjectSection from "../ProjectSection";
 
-const Portfolio = ({ showcase, project }) => {
+const Portfolio = () => {
   return (
     <section id="portfolio" className="section-container section-bg">
       <div className="container">
         <h2 className="text-start">Portfolio</h2>
 
-        {showcase}
+        <ShowcaseSection />
 
         <div className="mt-5">
           <div className="col-12 d-flex flex-column align-items-center justify-content-center filters-section">
@@ -39,7 +41,9 @@ const Portfolio = ({ showcase, project }) => {
             </ul>
           </div>
 
-          <div className="row portfolio-container">{project}</div>
+          <div className="row portfolio-container">
+            <ProjectSection />
+          </div>
         </div>
       </div>
     </section>

@@ -306,8 +306,14 @@ body {
 
 		.exp-item {
 			padding: 0 0 20px 20px;
+			margin-left: 12px;
 			border-left: 2px solid var(--secondary-color);
 			position: relative;
+
+			/* Desktop */
+			@media (min-width: 768px) {
+				margin-left: 0;
+			}
 
 			&::before {
 				position: absolute;
