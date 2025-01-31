@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-import WebImage from "./WebImage";
+import WebImage from "../WebImage";
 
 const AboutMe = () => {
   return (
