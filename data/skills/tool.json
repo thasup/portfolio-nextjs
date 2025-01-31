@@ -1,0 +1,53 @@
+{
+    "data": [
+        {
+            "id": "Git",
+            "logo": "git",
+            "color": "f05032",
+            "labelColor": "575757",
+            "width": 43
+        },
+        {
+            "id": "Postman",
+            "logo": "postman",
+            "color": "white",
+            "labelColor": "FF6C37",
+            "width": 75
+        },
+        {
+            "id": "Vite",
+            "logo": "vite",
+            "color": "ffce27",
+            "labelColor": "646CFF",
+            "width": 49
+        },
+        {
+            "id": "Jira",
+            "logo": "jirasoftware",
+            "color": "white",
+            "labelColor": "0052CC",
+            "width": 47
+        },
+        {
+            "id": "Magento",
+            "logo": "magento",
+            "color": "white",
+            "labelColor": "EE672F",
+            "width": 57
+        },
+        {
+            "id": "Figma",
+            "logo": "figma",
+            "color": "white",
+            "labelColor": "F24E1E",
+            "width": 61
+        },
+        {
+            "id": "Supabase",
+            "logo": "supabase",
+            "color": "3FCF8E",
+            "labelColor": "282828",
+            "width": 81
+        }
+    ]
+}

@@ -2,6 +2,9 @@ import React from "react";
 import SkillBadge from "../SkillBadge";
 import { data as languageData} from "../../data/skills/language.json";
 import { data as frameworkData} from "../../data/skills/framework.json";
+import { data as devopsData} from "../../data/skills/devops.json";
+import { data as toolData} from "../../data/skills/tool.json";
+import { data as technologyData} from "../../data/skills/technology.json";
 
 const Skills = () => {
   const SkillList = ({ title, skills }) => (
@@ -30,19 +33,10 @@ const Skills = () => {
         <div className="mt-5">
           <ul className="skill-list">
             <SkillList title="Language" skills={languageData} />
-            <SkillList title="Framework/Library" skills={frameworkData} />
-            <li>
-              <strong>Infrastructure:</strong>
-              <p>Docker, Kubernetes, GitHub Action, GCP, DigitalOcean</p>
-            </li>
-            <li>
-              <strong>Tool:</strong>
-              <p>Git, Postman, Git Bash, Gulp, Webpack</p>
-            </li>
-            <li>
-              <strong>Technology:</strong>
-              <p>RESTful API, Microservices</p>
-            </li>
+            <SkillList title="Framework / Library" skills={frameworkData} />
+            <SkillList title="DevOps" skills={devopsData} />
+            <SkillList title="Tool / Platform" skills={toolData} />
+            <SkillList title="Technology" skills={technologyData} />
           </ul>
         </div>
       </div>

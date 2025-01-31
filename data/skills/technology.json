@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "id": "OpenAI_API",
+            "logo": "openai",
+            "color": "white",
+            "labelColor": "19c37d",
+            "width": 91
+        },
+        {
+            "id": "Smart Contract & Web3",
+            "logo": "ethereum",
+            "color": "white",
+            "labelColor": "9999FF",
+            "width": 150
+        },
+        {
+            "id": "GraphQL",
+            "logo": "graphql",
+            "color": "white",
+            "labelColor": "E10098",
+            "width": 77
+        }
+    ]
+}

@@ -36,6 +36,13 @@
             "width": 69
         },
         {
+            "id": "NestJS",
+            "logo": "nestjs",
+            "color": "white",
+            "labelColor": "E0234E",
+            "width": 65
+        },
+        {
             "id": "Wordpress",
             "logo": "wordpress",
             "color": "fff",

@@ -1,0 +1,32 @@
+{
+    "data": [
+        {
+            "id": "Docker",
+            "logo": "docker",
+            "color": "fff",
+            "labelColor": "2496ED",
+            "width": 67
+        },
+        {
+            "id": "Github_Actions",
+            "logo": "github",
+            "color": "fff",
+            "labelColor": "181717",
+            "width": 109
+        },
+        {
+            "id": "DigitalOcean",
+            "logo": "digitalocean",
+            "color": "fff",
+            "labelColor": "0080FF",
+            "width": 97
+        },
+        {
+            "id": "AWS",
+            "logo": "amazon",
+            "color": "ec7211",
+            "labelColor": "2d3541",
+            "width": 53
+        }
+    ]
+}
