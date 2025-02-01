@@ -131,7 +131,9 @@ const Experience = () => {
                 </ul>
                 <a
                   className="btn btn-sm btn-primary"
-                  target="blank"
+                  target="__blank"
+                  rel="noopener noreferrer"
+                  role="button"
                   href="https://www.dropbox.com/s/7mk3u6qpcear4x8/My_Udacity_Certification%20%28front%20end%20web%20developer%29.pdf?dl=0"
                 >
                   See credential
@@ -168,15 +170,19 @@ const Experience = () => {
                 </ul>
                 <a
                   className="btn btn-sm btn-primary"
-                  target="blank"
+                  target="__blank"
+                  rel="noopener noreferrer"
+                  role="button"
                   href="https://www.dropbox.com/s/qifxvzzhrougo41/My_Udemy_Certification%20%28web%20developer%20bootcamp%29.pdf?dl=0"
                 >
                   See credential
                 </a>
               </div>
 
-              <a className="d-flex justify-content-end"
-                href="https://www.linkedin.com/in/thanachon-supasatian/details/certifications/" target="_blank" rel="noreferrer">
+              <a className="see-more-btn"
+                target="__blank"
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/in/thanachon-supasatian/details/certifications/">
                 See more
               </a>
             </div>
