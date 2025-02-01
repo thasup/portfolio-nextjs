@@ -1,10 +1,10 @@
 import React from "react";
 import SkillBadge from "../SkillBadge";
-import { data as languageData} from "../../data/skills/language.json";
-import { data as frameworkData} from "../../data/skills/framework.json";
-import { data as devopsData} from "../../data/skills/devops.json";
-import { data as toolData} from "../../data/skills/tool.json";
-import { data as technologyData} from "../../data/skills/technology.json";
+import languageData from "../../data/skills/language.json";
+import frameworkData from "../../data/skills/framework.json";
+import devopsData from "../../data/skills/devops.json";
+import toolData from "../../data/skills/tool.json";
+import technologyData from "../../data/skills/technology.json";
 
 const Skills = () => {
   const SkillList = ({ title, skills }) => (
@@ -32,11 +32,11 @@ const Skills = () => {
 
         <div className="mt-5">
           <ul className="skill-list">
-            <SkillList title="Language" skills={languageData} />
-            <SkillList title="Framework / Library" skills={frameworkData} />
-            <SkillList title="DevOps" skills={devopsData} />
-            <SkillList title="Tool / Platform" skills={toolData} />
-            <SkillList title="Technology" skills={technologyData} />
+            <SkillList title="Language" skills={languageData.data} />
+            <SkillList title="Framework / Library" skills={frameworkData.data} />
+            <SkillList title="DevOps" skills={devopsData.data} />
+            <SkillList title="Tool / Platform" skills={toolData.data} />
+            <SkillList title="Technology" skills={technologyData.data} />
           </ul>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { data as projectsData} from "../data/projects.json";
+import projectsData from "../data/projects.json";
 import ProjectItem from './ProjectItem';
 import StaticImage from './StaticImage';
 
@@ -7,7 +7,7 @@ const ProjectSection = () => {
   return (
       <>
         {
-          projectsData.projects.map(project => {
+          projectsData.data.projects.map(project => {
             return (
               <ProjectItem
                 key={project.name}
@@ -22,8 +22,8 @@ const ProjectSection = () => {
                 title={project.name}
                 description={project.description}
                 tags={project.tags}
-                demoLink={project.demoLink}
-                githubLink={project.githubLink}
+                demoLink={project.demoUrl}
+                githubLink={project.gitHubUrl}
               />
             )
           })

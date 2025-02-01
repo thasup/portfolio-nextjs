@@ -51,7 +51,6 @@ const ShowcaseSection = () => {
           "MongoDB",
           "Github Action",
         ]}
-        demoLink={"https://www.aurapan.com/"}
         githubLink={"https://github.com/thasup/microservices-ecommerce"}
       />
 
@@ -87,7 +86,6 @@ const ShowcaseSection = () => {
           "MongoDB",
           "Heroku",
         ]}
-        demoLink={"https://thasup-suppee.herokuapp.com/"}
         githubLink={"https://github.com/thasup/Suppee"}
       />
 

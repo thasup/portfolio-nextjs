@@ -19,7 +19,7 @@ const ProjectItem = ({
       <div className="portfolio-wrap">
         {image}
         <div className="portfolio-info d-flex flex-column align-items-center">
-          <a href={demoLink} target="_blank" rel="noopener noreferrer" title="Website">
+          <a href={demoLink} target="__blank" rel="noopener noreferrer" title="Website">
             {title}
           </a>
           <p>{description}</p>
@@ -32,11 +32,11 @@ const ProjectItem = ({
           </div>
 
           <div className="portfolio-links d-flex flex-row">
-            <a href={demoLink} target="_blank" rel="noopener noreferrer" title="Website" className="me-3">
+            <a href={demoLink} target="__blank" rel="noopener noreferrer" title="Website" className="me-3">
               <i className="fas fa-globe-americas"></i>
             </a>
 
-            <a href={githubLink} target="_blank" rel="noopener noreferrer" title="Github">
+            <a href={githubLink} target="__blank" rel="noopener noreferrer" title="Github">
               <i className="fab fa-github"></i>
             </a>
           </div>

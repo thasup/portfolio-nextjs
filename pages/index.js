@@ -13,10 +13,6 @@ import Quote from "../components/sections/Quote";
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>Hi! I&apos;m Thanachon | Portfolio</title>
-        <meta name="description" content="Thanachon's portfolio website" />
-      </Head>
       <HeroPanel />
       <CustomHeader />
       <AboutMe />

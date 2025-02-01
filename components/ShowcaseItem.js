@@ -35,16 +35,25 @@ const ShowcaseItem = ({
         </div>
 
         <div className="mt-3 showcase-link">
+          {demoLink && (
+            <Button
+              variant="primary"
+              className="me-2"
+              href={demoLink}
+              target="__blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fas fa-globe-americas"></i> LIVE DEMO
+            </Button>
+          )}
+
           <Button
             variant="primary"
-            className="me-2"
-            href={demoLink}
-            target="blank"
+            href={githubLink}
+            target="__blank"
+            rel="noopener noreferrer"
+            disabled={!githubLink}
           >
-            <i className="fas fa-globe-americas"></i> LIVE DEMO
-          </Button>
-
-          <Button variant="primary" href={githubLink} target="blank">
             <i className="fab fa-github"></i> GITHUB
           </Button>
         </div>

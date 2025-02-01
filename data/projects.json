@@ -108,13 +108,13 @@
                 "name": "Portfolio Website",
                 "description": "my lovely portfolio website deploy with real domain name on Netlify.",
                 "tags": [
-                    "jQuery",
+                    "NextJS",
                     "Netlify",
                     "Bootstrap",
                     "Domain Name"
                 ],
                 "demoUrl": "https://thanachon.me/",
-                "gitHubUrl": "https://github.com/thasup/portfolio"
+                "gitHubUrl": "https://github.com/thasup/portfolio-nextjs"
             },
             {
                 "imageSrc": "https://res.cloudinary.com/thasup/image/upload/w_600,f_auto/v1654267959/portfolio/projects/preview_desktop_weather_2_masjq3.webp",
