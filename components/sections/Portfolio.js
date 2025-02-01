@@ -11,7 +11,7 @@ const Portfolio = () => {
         <ShowcaseSection />
 
         <div className="mt-5">
-          <div className="col-12 d-flex flex-column align-items-center justify-content-center filters-section">
+          {/* <div className="col-12 d-flex flex-column align-items-center justify-content-center filters-section">
             <ul className="portfolio-filters primary-filters" id="primary">
               <li data-filter="*" className="filter-active">
                 all
@@ -39,7 +39,7 @@ const Portfolio = () => {
               <li data-filter=".filter-typescript">typescript</li>
               <li data-filter=".filter-api">api</li>
             </ul>
-          </div>
+          </div> */}
 
           <div className="row portfolio-container">
             <ProjectSection />

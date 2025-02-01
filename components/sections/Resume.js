@@ -14,8 +14,9 @@ const Resume = () => {
           </h3>
           <a
             className="btn btn-light btn-lg text-uppercase my-3 disabled"
-            target="blank"
-            href="https://www.dropbox.com/s/05p4h3qpqedcr84/resume%20standard%2001.pdf?dl=0"
+            target="__blank"
+            rel="noopener noreferrer"
+            href="#"
           >
             Download
           </a>
