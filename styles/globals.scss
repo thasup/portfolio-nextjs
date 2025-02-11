@@ -323,19 +323,10 @@ body {
 	Experience Section
 -------------------- */
 #experience {
-	#cert2 img {
-		height: 30px;
-		margin: 0.5rem 0 1rem;
-	}
-
-	#cert3 img {
-		height: 40px;
-		margin: 0.5rem 0 1rem;
-	}
-
-	.exp-item {
+	.exp-item,
+	.edu-item {
 		padding: 0 0 20px 20px;
-		margin-left: 12px;
+		margin: 0 0 0 12px;
 		border-left: 2px solid var(--secondary-color);
 		position: relative;
 
@@ -363,6 +354,10 @@ body {
 			background: #fff;
 			border: 3px solid var(--secondary-color);
 		}
+	}
+
+	.edu-item {
+		margin-bottom: 0;
 	}
 
 	.exp-year {

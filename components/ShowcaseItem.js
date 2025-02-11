@@ -17,13 +17,14 @@ const ShowcaseItem = ({
         {image}
       </Col>
       <Col md={6} className="showcase-info d-flex flex-column">
-        <div className="d-flex flex-row align-items-center">
-          <h3 className="mb-0">{title}</h3>
+        <div className="d-flex flex-column gap-1">
+          <div className="d-flex flex-row align-items-center">
+            <h3 className="mb-0">{title}</h3>
 
-          <span className="badge rounded-pill bg-primary ms-2">{scale}</span>
+            <span className="badge rounded-pill bg-primary ms-2">{scale}</span>
+          </div>
+          <h5 className="mb-0 text-italic">{headline}</h5>
         </div>
-
-        <h5 className="mb-0 text-italic">{headline}</h5>
         <div className="desc-container d-flex flex-column">{description}</div>
 
         <div className="tech-tag">
@@ -34,7 +35,7 @@ const ShowcaseItem = ({
           ))}
         </div>
 
-        <div className="mt-3 showcase-link">
+        <div className="showcase-link">
           {demoLink && (
             <Button
               variant="primary"

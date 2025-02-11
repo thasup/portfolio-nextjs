@@ -79,12 +79,43 @@ const Experience = () => {
             <div className="col-lg-6" id="certificate">
               <h3 className="edu-title">Certificate</h3>
 
-              {/* Certificate 1 */}
-              <div className="exp-item" id="cert1">
-                <h5 className="exp-year">2023</h5>
+              <div className="edu-item" id="cert4">
+                <h5 className="edu-year">2025</h5>
+                <h4>AWS Certified Cloud Practitioner</h4>
+                <StaticImage
+                  src={"/img/aws-logo.png"}
+                  alt={"AWS"}
+                  width={67}
+                  height={40}
+                  layout={"fixed"}
+                />
+                <p>
+                  Earners of this certification have a fundamental understanding of IT services and their uses in the AWS Cloud. 
+                  They demonstrated cloud fluency and foundational AWS knowledge. 
+                  Badge owners are able to identify essential AWS services necessary to set up AWS-focused projects.
+                </p>
+                <a
+                  className="btn btn-sm btn-primary"
+                  target="__blank"
+                  rel="noopener noreferrer"
+                  role="button"
+                  href="https://www.credly.com/badges/59968dd7-a269-4c22-9a06-bd0f2532556e/public_url"
+                >
+                  See credential
+                </a>
+              </div>
+
+              <div className="edu-item" id="cert3">
+                <h5 className="edu-year">2023</h5>
                 <h4>TOEIC® Listening and Reading Test</h4>
+                <StaticImage
+                  src={"/img/ets-logo.png"}
+                  alt={"ETS"}
+                  width={58}
+                  height={40}
+                  layout={"fixed"}
+                />
                 <h5>Score : 915</h5>
-                <h5 className="exp-institute">ETS</h5>
                 <p>Listening part score : 470, Reading part score : 445</p>
                 <a className="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer"
                   href="https://www.dropbox.com/scl/fi/mhnp7rw0v7zk1l2ycpzzl/TOEIC-2023.jpeg?rlkey=2hxjyhes1oxfttbofr9zafey2&st=m0nuyon8&dl=0">
@@ -92,7 +123,7 @@ const Experience = () => {
                 </a>
               </div>
 
-              <div className="edu-item my-5" id="cert2">
+              <div className="edu-item" id="cert2">
                 <h5 className="edu-year">2021</h5>
                 <h4>Front End Web Developer Nanodegree Program</h4>
                 <StaticImage
@@ -140,7 +171,7 @@ const Experience = () => {
                 </a>
               </div>
 
-              <div className="edu-item my-5" id="cert3">
+              <div className="edu-item" id="cert1">
                 <h5 className="edu-year">2021</h5>
                 <h4>The Complete 2022 Web Development Bootcamp</h4>
                 <StaticImage
