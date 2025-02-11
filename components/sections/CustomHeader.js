@@ -2,8 +2,10 @@ import React from "react";
 
 import StaticImage from "../StaticImage";
 import { scrollTo } from "../../utils/helpers";
+import useActiveSection from "../../hooks/useActiveSection";
 
 const CustomHeader = () => {
+  const { activeId } = useActiveSection();
   const navItems = [
     { id: 'about-link', text: 'About Me', sectionId: 'about' },
     { id: 'skills-link', text: 'Skills', sectionId: 'skills' },
@@ -45,7 +47,11 @@ const CustomHeader = () => {
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             {navItems.map((item) => (
               <li key={item.id} className="nav-item">
-                <a className="nav-link sections-name" id={item.id} onClick={() => scrollTo(item.sectionId)}>
+                <a
+                  className={`nav-link sections-name ${activeId === item.sectionId ? 'active-section' : ''}`}
+                  id={item.id}
+                  onClick={() => scrollTo(item.sectionId)}
+                >
                   {item.text}
                 </a>
               </li>
