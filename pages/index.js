@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import HeroPanel from "../components/sections/HeroPanel";
 import CustomHeader from "../components/sections/CustomHeader";
 import AboutMe from "../components/sections/AboutMe";
