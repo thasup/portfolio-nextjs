@@ -143,14 +143,23 @@ body {
 -------------------- */
 #hero {
 	/* position: relative; */
-	background: url('/img/hero-bg.jpg');
-	background-position: center right 30%;
+	// background: url('/img/hero-bg.jpg');
+	background: url('https://res.cloudinary.com/thasup/image/upload/v1740776548/stack%20connect/first-masked-banner_y8iozy.jpg');
+	background-position: center;
 	background-size: cover;
 	width: 100%;
 	height: 100vh;
 
+	.hero-title-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 30%;
+		color: var(--white);
+	}
+
 	.hero-title {
-		/* color: #fff; */
 		font-weight: 600;
 		font-size: 4.5rem;
 	}
@@ -164,7 +173,7 @@ body {
 		cursor: pointer;
 		font-size: 3rem;
 		transition: 0.5s;
-		color: var(--primary-sub-color);
+		color: var(--white);
 		height: 60px;
 
 		&:hover {
@@ -175,6 +184,16 @@ body {
 
 	/* Mobile */
 	@media (max-width: 576px) {
+		background: url('https://res.cloudinary.com/thasup/image/upload/v1742208855/stack%20connect/mobile-first-banner_qhnobr.jpg');
+		background-position: center;
+		background-size: cover;
+		width: 100%;
+		height: 100vh;
+
+		.hero-title-container {
+			margin-top: 60%;
+		}
+
 		.hero-title {
 			font-size: 2.75rem;
 		}

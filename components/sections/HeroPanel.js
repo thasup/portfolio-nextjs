@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
 
+import { scrollTo } from "../../utils/helpers";
+
 const HeroPanel = () => {
   const el = useRef(null);
 
@@ -25,18 +27,24 @@ const HeroPanel = () => {
     };
   }, []);
 
+  const handleScrollTo = () => {
+    scrollTo('about');
+  }
+
   return (
     <div
       id="hero"
       className="d-flex flex-column align-items-center justify-content-center"
     >
-      <h1 className="hero-title text-center">Hi! I am Thanachon</h1>
-      <p className="hero-subtitle text-center">
-        <span ref={el}></span>
-      </p>
-      <a className="btn-started">
-        <i className="fas fa-chevron-down"></i>
-      </a>
+      <div className="hero-title-container">
+        <h1 className="hero-title text-center">Hi! I am Thanachon</h1>
+        <p className="hero-subtitle text-center">
+          <span ref={el}></span>
+        </p>
+        <a className="btn-started" onClick={handleScrollTo}>
+          <i className="fas fa-chevron-down"></i>
+        </a>
+      </div>
     </div>
   );
 };
