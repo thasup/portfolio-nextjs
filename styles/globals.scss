@@ -1,3 +1,4 @@
+@use 'mixins' as *;
 @import "tailwindcss";
 
 /* --------------------
@@ -94,7 +95,7 @@ body {
 
 .paralax {
 	position: relative;
-	padding: 8rem 0;
+	padding: rem(128) 0;
 }
 
 /* back-to-top button */
@@ -154,7 +155,7 @@ body {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 1rem;
+		gap: rem(16);
 		margin-top: 30%;
 		color: var(--white);
 	}
@@ -165,19 +166,19 @@ body {
 	}
 
 	.hero-subtitle {
-		font-size: 2.5rem;
+		font-size: rem(24);
 		font-weight: 600;
 	}
 
 	.btn-started {
 		cursor: pointer;
-		font-size: 3rem;
+		font-size: rem(48);
 		transition: 0.5s;
 		color: var(--white);
-		height: 60px;
+		height: rem(60);
 
 		&:hover {
-			padding-top: 10px;
+			padding-top: rem(10);
 			color: var(--secondary-color);
 		}
 	}
@@ -195,11 +196,11 @@ body {
 		}
 
 		.hero-title {
-			font-size: 2.75rem;
+			font-size: rem(44);
 		}
 
 		.hero-subtitle {
-			font-size: 1.5rem;
+			font-size: rem(24);
 		}
 	}
 }
@@ -239,13 +240,13 @@ body {
 -------------------- */
 #about {
 	.profile-image > span {
-		border-radius: 8px;
-		box-shadow: 0 8px 16px 0 rgb(0 0 0 / 16%);
+		border-radius: rem(8);
+		box-shadow: 0 rem(8) rem(16) 0 rgb(0 0 0 / 16%);
 
 		&:hover {
-			box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+			box-shadow: 0 rem(8) rem(32) 0 rgba(0, 0, 0, 0.2);
 			transition: all 0.3s ease-out;
-			transform: translateY(-3px);
+			transform: translateY(-rem(3));
 		}
 
 		/* Add a transition for when you move out of hover */
@@ -263,13 +264,13 @@ body {
 		list-style: none;
 
 		li {
-			margin: 1.5rem 0;
+			margin: rem(24) 0;
 
 			.skill-icon {
 				display: flex;
 				flex-wrap: wrap;
-				gap: 8px;
-				margin-top: 0.5rem;
+				gap: rem(8);
+				margin-top: rem(8);
 			}
 		}
 	}
@@ -277,39 +278,36 @@ body {
 	.skill-tag {
 		list-style: none;
 		padding-left: 0;
-		margin: 0.5rem 0;
+		margin: rem(8) 0;
 
 		li {
 			cursor: pointer;
 			display: block;
 			position: relative;
 			color: var(--white);
-			/* background-color: var(--primary-light-color); */
 			background-color: var(--primary-sub-color);
-			font-size: 0.85rem;
-			padding: 3px 12px;
-			margin: 0.5rem 1rem 0.5rem 0;
-			/* border: 2px solid var(--primary-color); */
-			border-radius: 5px;
+			font-size: rem(14);
+			padding: rem(2) rem(12);
+			margin: rem(8) rem(1) rem(8) 0;
+			border-radius: rem(5);
 			transition: 0.3s;
 
 			&:hover {
 				font-weight: 600;
-				/* bottom: 0.2rem; */
-				box-shadow: 0 4px 2px -3px #ccc, 0 4px 5px 1px #ccc, 0 2px 7px 1px #ccc;
+				box-shadow: 0 rem(4) rem(2) -rem(3) #ccc, 0 rem(4) rem(5) rem(1) #ccc, 0 rem(2) rem(7) rem(1) #ccc;
 			}
 		}
 	}
 
 	.line-break {
-		border-bottom: solid 1px var(--primary-color);
+		border-bottom: solid rem(1) var(--primary-color);
 	}
 }
 
 /* Mobile, Tablet */
 @media (max-width: 768px) {
 	#skills .skill-tag li {
-		margin: 0.5rem 1rem 0.5rem 0;
+		margin: rem(8) rem(16) rem(8) 0;
 	}
 }
 
@@ -319,16 +317,16 @@ body {
 #experience {
 	.exp-item,
 	.edu-item {
-		padding: 0 0 20px 20px;
-		margin: 0 0 0 12px;
-		border-left: 2px solid var(--secondary-color);
+		padding: rem(0) rem(0) rem(20) rem(20);
+		margin: rem(0) rem(0) rem(0) rem(12);
+		border-left: rem(2) solid var(--secondary-color);
 		position: relative;
 
 		a[role="button"] {
-			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.16);
+			box-shadow: 0 rem(8) rem(16) 0 rgba(0, 0, 0, 0.16);
 
 			&:hover {
-				box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+				box-shadow: 0 rem(8) rem(32) 0 rgba(0, 0, 0, 0.2);
 			}
 		}
 
@@ -369,7 +367,7 @@ body {
 
 	#certificate {
 		.exp-institute {
-			margin-bottom: 1rem;
+			margin-bottom: rem(16);
 		}
 	}
 
@@ -387,7 +385,7 @@ body {
 	.showcase {
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
+		gap: rem(32);
 
 		.showcase-img>span {
 			display: block;
@@ -412,7 +410,7 @@ body {
 		}
 
 		.desc-container {
-			gap: 0.5rem;
+			gap: rem(8);
 
 			p {
 				margin-bottom: 0;
@@ -422,17 +420,17 @@ body {
 		.tech-tag {
 			display: flex;
 			flex-wrap: wrap;
-			gap: 0.25rem;
+			gap: rem(4);
 
 			.btn-xsm {
-				padding: 0.15rem 0.3rem;
-				font-size: 0.75rem;
-				border-radius: 0.15rem;
+				padding: rem(3) rem(6);
+				font-size: rem(12);
+				border-radius: rem(3);
 			}
 		}
 
 		.showcase-info {
-			gap: 1rem;
+			gap: rem(16);
 
 			h5 {
 				font-style: italic;
@@ -484,7 +482,7 @@ body {
 				padding: 10px 15px 8px 15px;
 				font-size: 0.85rem;
 				font-weight: 600;
-				line-height: 1rem;
+				line-height: rem(16);
 				text-transform: uppercase;
 				color: var(--primary-color);
 				margin-bottom: 5px;
@@ -519,9 +517,9 @@ body {
 
 		.filters-more {
 			position: relative;
-			font-size: 1rem;
-			width: 1.75rem;
-			height: 1.75rem;
+			font-size: rem(16);
+			width: rem(28);
+			height: rem(28);
 			background-color: var(--secondary-color);
 			color: var(--white);
 			box-shadow: var(--shadow);
@@ -529,7 +527,7 @@ body {
 			top: -25px;
 			cursor: pointer;
 			text-align: center;
-			line-height: 1.75rem;
+			line-height: rem(28);
 			transition: 0.5s;
 			z-index: 5;
 
@@ -549,7 +547,7 @@ body {
 
 	/* Portfolio Container */
 	.portfolio-item {
-		margin: 15px 0px;
+		margin: rem(16) 0px;
 
 		.portfolio-wrap {
 			position: relative;
@@ -559,10 +557,10 @@ body {
 				position: absolute;
 				background-color: var(--primary-sub-color);
 				z-index: 2;
-				left: 40px;
-				right: 40px;
-				top: 40px;
-				bottom: 40px;
+				left: rem(40);
+				right: rem(40);
+				top: rem(40);
+				bottom: rem(40);
 				transition: all ease-in-out 0.3s;
 				visibility: hidden;
 				opacity: 0;
@@ -588,33 +586,33 @@ body {
 				display: flex;
 				flex-direction: column;
 				flex-wrap: wrap;
-				gap: 0.5rem;
+				gap: rem(8);
 				position: absolute;
 				top: 0;
 				left: 0;
 				z-index: 3;
-				padding: 32px 16px 16px;
+				padding: rem(32) rem(16) rem(16);
 				color: var(--white);
 				transition: all ease-in-out 0.3s;
 				visibility: hidden;
 				opacity: 0;
-				font-size: 16px;
+				font-size: rem(16);
 
 				.tech-tag {
 					display: flex;
 					justify-content: center;
 					flex-wrap: wrap;
-					gap:0.25rem;
+					gap: rem(4);
 
 					button {
-						padding: 0.15rem 0.3rem;
-						font-size: 0.75rem;
-						border-radius: 0.15rem;
+						padding: rem(3) rem(6);
+						font-size: rem(12);
+						border-radius: rem(3);
 					}
 				}
 
 				a {
-					font-size: 1.5em;
+					font-size: rem(24);
 					font-weight: bold;
 					text-decoration: none;
 					color: var(--white);
@@ -627,13 +625,13 @@ body {
 
 				p {
 					text-align: center;
-					margin-bottom: 0.5em;
+					margin-bottom: rem(8);
 				}
 
 				.portfolio-links {
 					a {
-						font-size: 2em;
-						margin-top: 0.5em;
+						font-size: rem(2);
+						margin-top: rem(8);
 					}
 				}
 			}
@@ -643,12 +641,12 @@ body {
 	/* Tablet */
 	@media (max-width: 768px) {
 		.filters-section.show-filters {
-			margin-bottom: 6rem;
+			margin-bottom: rem(96);
 		}
 
 		.portfolio-info {
 			display: none;
-			left: calc(50% - 230px);
+			left: calc(50% - rem(230));
 		}
 	}
 
@@ -659,14 +657,14 @@ body {
 		}
 
 		.filters-section.show-filters {
-			margin-bottom: 8rem;
+			margin-bottom: rem(128);
 		}
 
 		.portfolio-info {
 			display: none;
-			left: 0px;
-			font-size: 14px;
-			top: calc(50% - 80px);
+			left: 0;
+			font-size: rem(14);
+			top: calc(50% - rem(80));
 		}
 	}
 }
@@ -687,15 +685,15 @@ body {
 	#certificate {
 		#cert2 {
 			img {
-				height: 30px;
-				margin: 0.5rem 0 1rem;
+				height: rem(30);
+				margin: rem(8) 0 rem(16);
 			}
 		}
 
 		#cert3 {
 			img {
-				height: 40px;
-				margin: 0.5rem 0 1rem;
+				height: rem(40);
+				margin: rem(8) 0 rem(16);
 			}
 		}
 
@@ -704,7 +702,7 @@ body {
 		}
 
 		.edu-institute {
-			margin-bottom: 1rem;
+			margin-bottom: rem(16);
 		}
 	}
 }
@@ -715,7 +713,7 @@ body {
 #resume {
 	background-image: url(/img/resume-bg.jpg);
 	background-position: right 85% center;
-	padding: 8rem 0;
+	padding: rem(128) 0;
 	color: #fff;
 }
 
@@ -725,38 +723,38 @@ body {
 #contact {
 	.contact-info {
 		i {
-			font-size: 2rem;
+			font-size: rem(32);
 		}
 	}
 
 	.social-links {
-		padding-bottom: 20px;
+		padding-bottom: rem(20);
 
 		a {
-			font-size: 1.5rem;
+			font-size: rem(24);
 			display: inline-block;
 			background: #fff;
 			color: var(--primary-color);
 			line-height: 0;
-			padding: 0.75rem 0;
-			margin-right: 4px;
+			padding: rem(12) 0;
+			margin-right: rem(4);
 			border-radius: 50%;
 			text-align: center;
-			width: 3rem;
-			height: 3rem;
+			width: rem(48);
+			height: rem(48);
 			transition: 0.3s;
-			border: 1px solid var(--primary-color);
+			border: rem(1) solid var(--primary-color);
 
 			&:hover {
 				background: var(--secondary-color);
-				border: 1px solid var(--secondary-color);
+				border: rem(1) solid var(--secondary-color);
 				color: #fff;
 			}
 		}
 	}
 
 	.col-form-label {
-		font-size: 1.25rem;
+		font-size: rem(20);
 		font-weight: bold;
 		padding-top: 0;
 	}
@@ -767,16 +765,16 @@ body {
 -------------------- */
 footer {
 	color: #fff;
-	padding: 1rem 0;
+	padding: rem(16) 0;
 
 	div {
-		margin: 1rem 0;
+		margin: rem(16) 0;
 
 		p {
 			margin: 0;
 
 			&:first-child {
-				margin-bottom: 1rem;
+				margin-bottom: rem(16);
 			}
 		}
 	}
