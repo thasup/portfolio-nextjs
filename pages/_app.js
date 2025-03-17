@@ -4,8 +4,8 @@ import { Container, SSRProvider } from 'react-bootstrap';
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import Script from 'next/script';
 
-import '../styles/bootstrap.css';
-import '../styles/globals.scss';
+import '@/styles/bootstrap.css';
+import '@/styles/globals.scss';
 
 const MyApp = ({ Component, pageProps }) => {
 	return (

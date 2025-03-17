@@ -1,6 +1,6 @@
 import React from "react";
-import ShowcaseSection from "../ShowcaseSection";
-import ProjectSection from "../ProjectSection";
+import ShowcaseSection from "@/components/ShowcaseSection";
+import ProjectSection from "@/components/ProjectSection";
 
 const Portfolio = () => {
   return (

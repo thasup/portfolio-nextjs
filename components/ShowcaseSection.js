@@ -1,6 +1,6 @@
 import React from "react";
-import ShowcaseItem from "./ShowcaseItem";
-import StaticImage from "./StaticImage";
+import ShowcaseItem from "@/components/ShowcaseItem";
+import StaticImage from "@/components/StaticImage";
 
 const ShowcaseSection = () => {
   return (

@@ -1,12 +1,12 @@
-import HeroPanel from "../components/sections/HeroPanel";
-import CustomHeader from "../components/sections/CustomHeader";
-import AboutMe from "../components/sections/AboutMe";
-import Skills from "../components/sections/Skills";
-import Experience from "../components/sections/Experience";
-import Portfolio from "../components/sections/Portfolio";
-import Resume from "../components/sections/Resume";
-import Contact from "../components/sections/Contact";
-import Quote from "../components/sections/Quote";
+import HeroPanel from "@/components/sections/HeroPanel";
+import CustomHeader from "@/components/sections/CustomHeader";
+import AboutMe from "@/components/sections/AboutMe";
+import Skills from "@/components/sections/Skills";
+import Experience from "@/components/sections/Experience";
+import Portfolio from "@/components/sections/Portfolio";
+import Resume from "@/components/sections/Resume";
+import Contact from "@/components/sections/Contact";
+import Quote from "@/components/sections/Quote";
 
 export default function Home() {
   return (

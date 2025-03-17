@@ -1,10 +1,10 @@
 import React from "react";
-import SkillBadge from "../SkillBadge";
-import languageData from "../../data/skills/language.json";
-import frameworkData from "../../data/skills/framework.json";
-import devopsData from "../../data/skills/devops.json";
-import toolData from "../../data/skills/tool.json";
-import technologyData from "../../data/skills/technology.json";
+import SkillBadge from "@/components/SkillBadge";
+import languageData from "@/data/skills/language.json";
+import frameworkData from "@/data/skills/framework.json";
+import devopsData from "@/data/skills/devops.json";
+import toolData from "@/data/skills/tool.json";
+import technologyData from "@/data/skills/technology.json";
 
 const Skills = () => {
   const SkillList = ({ title, skills }) => (

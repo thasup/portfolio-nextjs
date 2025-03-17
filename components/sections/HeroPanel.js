@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
 
-import { scrollTo } from "../../utils/helpers";
+import { scrollTo } from "@/utils/helpers";
 
 const HeroPanel = () => {
   const el = useRef(null);
@@ -37,8 +37,8 @@ const HeroPanel = () => {
       className="d-flex flex-column align-items-center justify-content-center"
     >
       <div className="hero-title-container">
-        <h1 className="hero-title text-center">Hi! I am Thanachon</h1>
-        <p className="hero-subtitle text-center">
+        {/* <h1 className="hero-title text-center">Hi! I am Thanachon</h1> */}
+        <p className="hero-title text-center">
           <span ref={el}></span>
         </p>
         <a className="btn-started" onClick={handleScrollTo}>

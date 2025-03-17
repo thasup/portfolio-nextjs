@@ -1,6 +1,6 @@
 import React from "react";
 
-import StaticImage from "../StaticImage";
+import StaticImage from "@/components/StaticImage";
 
 const Experience = () => {
   return (

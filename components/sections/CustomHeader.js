@@ -1,8 +1,8 @@
 import React from "react";
 
-import StaticImage from "../StaticImage";
-import { scrollTo } from "../../utils/helpers";
-import useActiveSection from "../../hooks/useActiveSection";
+import StaticImage from "@/components/StaticImage";
+import { scrollTo } from "@/utils/helpers";
+import useActiveSection from "@/hooks/useActiveSection";
 
 const CustomHeader = () => {
   const { activeId } = useActiveSection();

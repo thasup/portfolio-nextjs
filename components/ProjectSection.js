@@ -1,7 +1,7 @@
 import React from 'react'
-import projectsData from "../data/projects.json";
-import ProjectItem from './ProjectItem';
-import StaticImage from './StaticImage';
+import projectsData from "@/data/projects.json";
+import ProjectItem from '@/components/ProjectItem';
+import StaticImage from '@/components/StaticImage';
 
 const ProjectSection = () => {
   return (
