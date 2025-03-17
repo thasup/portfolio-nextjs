@@ -52,9 +52,14 @@ body {
 }
 
 /* Button */
-.btn-primary:hover {
+.btn-primary {
 	background-color: var(--black);
 	border-color: var(--black);
+
+	&:hover {
+		background-color: var(--black);
+		border-color: var(--black);
+	}
 }
 
 .section-shadow {
@@ -184,7 +189,6 @@ body {
     Navbar Section
 -------------------- */
 #navbar {
-
 	.navbar-brand,
 	.nav-link {
 		cursor: pointer;
@@ -194,51 +198,20 @@ body {
 		color: var(--secondary-color);
 	}
 
-	.nav-dropdown:hover,
-	.nav-dropdown-menu {
-		display: block;
-	}
+	.navbar-dropdown-menu {
+		visibility: visible;
 
-	.nav-dropdown-menu {
-		position: absolute;
-		z-index: 1000;
-		display: none;
-		min-width: 10rem;
-		padding: 0.5rem 0;
-		list-style: none;
-		background-color: #fff;
-		background-clip: padding-box;
-		border-radius: 0.25rem;
-		box-shadow: var(--shadow);
-	}
+		/* Mobile */
+		@media (max-width: 576px) {
+			&.collapse {
+				visibility: collapse;
+			}
 
-	.nav-dropdown {
-		position: relative;
-	}
-
-	.nav-dropdown-link {
-		&::after {
-			display: inline-block;
-			margin-left: 0.255em;
-			vertical-align: 0.255em;
-			content: '';
-			border-top: 0.3em solid;
-			border-right: 0.3em solid transparent;
-			border-bottom: 0;
-			border-left: 0.3em solid transparent;
+			&.show {
+				visibility: visible;
+			}
 		}
-	}
-}
 
-/* Mobile */
-@media (max-width: 425px) {
-	#navbar .navbar-brand {
-		font-size: 1.1rem;
-	}
-
-	#navbar .navbar-brand .logo-nav {
-		height: 25px;
-		width: 25px;
 	}
 }
 
@@ -450,9 +423,11 @@ body {
 		.showcase-link {
 			a {
 				box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.16);
+				transition: box-shadow 0.3s ease, transform 0.3s ease;
 
 				&:hover {
 					box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+					transform: scale(1.01);
 				}
 			}
 		}

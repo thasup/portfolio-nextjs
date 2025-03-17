@@ -36,3 +36,4 @@ yarn-error.log*
 
 # data
 data/happily_questions.json
+data/happily_feedbacks.json
