@@ -30,7 +30,7 @@ const Skills = () => {
       <div className="container">
         <h2>Skills</h2>
 
-        <div className="mt-5">
+        <div>
           <ul className="skill-list">
             <SkillList title="Language" skills={languageData.data} />
             <SkillList title="Framework / Library" skills={frameworkData.data} />

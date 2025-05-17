@@ -7,6 +7,7 @@ import Portfolio from "@/components/sections/Portfolio";
 import Resume from "@/components/sections/Resume";
 import Contact from "@/components/sections/Contact";
 import Quote from "@/components/sections/Quote";
+import LifelongLearning from "@/components/sections/LifelongLearning";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <Experience />
       <Quote text="Believe you can and you're halfway there." author="Theodore Roosevelt" />
       <Portfolio />
+      <LifelongLearning />
       <Resume />
       <Quote text="Someone's sitting in the shade today because someone planted a tree long time ago" author="Warren Buffett" />
       <Contact />

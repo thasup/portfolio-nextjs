@@ -8,7 +8,7 @@ const Experience = () => {
       <div className="container">
         <h2>Experience</h2>
 
-        <div className="mt-5">
+        <div>
           <div className="row">
             {/* Degree and Experience Section */}
             <div className="col-lg-6 mb-5" id="degree">

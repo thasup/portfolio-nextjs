@@ -22,6 +22,14 @@ body {
 		sans-serif;
 }
 
+/* Components */
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
 .section-bg {
 	background: linear-gradient(180deg, #f2f6f9 0%, #fff 100%);
 	padding: 6rem 0;

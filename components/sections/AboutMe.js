@@ -9,7 +9,7 @@ const AboutMe = () => {
       <Container>
         <h2 className="text-start">About Me</h2>
 
-        <Row className="mt-5">
+        <Row>
           <Col
             md={4}
             className="p-3 profile-image d-flex justify-content-center"

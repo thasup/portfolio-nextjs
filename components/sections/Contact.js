@@ -6,7 +6,8 @@ const Contact = () => {
     <section id="contact" className="section-container section-bg">
       <div className="container">
         <h2>Contact</h2>
-        <div className="row align-items-start mt-5">
+
+        <div className="row align-items-start">
           <div className="col-md-6">
             <div className="contact-info d-flex flex-row pt-3">
               <i className="fas fa-map-marker-alt"></i>
