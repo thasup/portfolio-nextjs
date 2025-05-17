@@ -8,7 +8,7 @@ const LifelongLearning = () => {
   const [key, setKey] = useState(iframes[0].name);
 
   return (
-    <section id="lifelong-learning" className="section-container section-bg">
+    <section id="learning" className="section-container section-bg">
       <Container>
         <h2 className="text-start mb-4">Lifelong Learning</h2>
 

@@ -11,6 +11,7 @@ const CustomHeader = () => {
     { id: 'skills-link', text: 'Skills', sectionId: 'skills' },
     { id: 'experience-link', text: 'Experience', sectionId: 'experience' },
     { id: 'portfolio-link', text: 'Portfolio', sectionId: 'portfolio' },
+    { id: 'learning-link', text: 'Lifelong Learning', sectionId: 'learning' },
     { id: 'resume-link', text: 'Resume', sectionId: 'resume' },
     { id: 'contact-link', text: 'Contact', sectionId: 'contact' },
   ];
