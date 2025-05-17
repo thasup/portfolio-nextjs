@@ -6,21 +6,21 @@
         "description": "Tracks structured knowledge acquisition—books, online courses, certifications, and formal education. This school documents the continuous sharpening of your intellectual capital.",
         "tags": ["Certifications", "Books", "Online Courses"],
         "demoUrl": "https://airtable.com/appoPztPp3kjnaI4Q/shrrbyB2aNp9MOjkm",
-        "iframeContent": "<iframe class=\"airtable-embed\" src=\"https://airtable.com/embed/appoPztPp3kjnaI4Q/shrrbyB2aNp9MOjkm\" frameborder=\"0\" onmousewheel=\"\" width=\"100%\" height=\"800\" style=\"background: transparent; border: 1px solid #ccc;\"></iframe>"
+        "iframeContent": "<iframe class=\"airtable-embed\" src=\"https://airtable.com/embed/appoPztPp3kjnaI4Q/shrrbyB2aNp9MOjkm\" loading=\"lazy\" sandbox=\"allow-scripts allow-same-origin\" referrerpolicy=\"no-referrer\" frameborder=\"0\" onmousewheel=\"\" width=\"100%\" height=\"680\" style=\"background: transparent; border: 1px solid #ccc;\"></iframe>"
       },
       {
         "name": "Books Gallery",
         "description": "...",
         "tags": ["Books"],
         "demoUrl": "https://airtable.com/appoPztPp3kjnaI4Q/shrbGURgRPMiYcKBf",
-        "iframeContent": "<iframe class=\"airtable-embed\" src=\"https://airtable.com/embed/appoPztPp3kjnaI4Q/shrbGURgRPMiYcKBf\" frameborder=\"0\" onmousewheel=\"\" width=\"100%\" height=\"800\" style=\"background: transparent; border: 1px solid #ccc;\"></iframe>"
+        "iframeContent": "<iframe class=\"airtable-embed\" src=\"https://airtable.com/embed/appoPztPp3kjnaI4Q/shrbGURgRPMiYcKBf\" loading=\"lazy\" sandbox=\"allow-scripts allow-same-origin\" referrerpolicy=\"no-referrer\" frameborder=\"0\" onmousewheel=\"\" width=\"100%\" height=\"680\" style=\"background: transparent; border: 1px solid #ccc;\"></iframe>"
       },
       {
         "name": "Online Courses Gallery",
         "description": "...",
         "tags": ["Online Courses"],
         "demoUrl": "https://airtable.com/appoPztPp3kjnaI4Q/shrqqL9SFCAn2WttL",
-        "iframeContent": "<iframe class=\"airtable-embed\" src=\"https://airtable.com/embed/appoPztPp3kjnaI4Q/shrqqL9SFCAn2WttL\" frameborder=\"0\" onmousewheel=\"\" width=\"100%\" height=\"800\" style=\"background: transparent; border: 1px solid #ccc;\"></iframe>"
+        "iframeContent": "<iframe class=\"airtable-embed\" src=\"https://airtable.com/embed/appoPztPp3kjnaI4Q/shrqqL9SFCAn2WttL\" loading=\"lazy\" sandbox=\"allow-scripts allow-same-origin\" referrerpolicy=\"no-referrer\" frameborder=\"0\" onmousewheel=\"\" width=\"100%\" height=\"680\" style=\"background: transparent; border: 1px solid #ccc;\"></iframe>"
       }
     ]
   }
