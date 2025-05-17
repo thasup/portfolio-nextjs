@@ -28,6 +28,22 @@ const AboutMe = () => {
             <Row>
               <h3>Thanachon Supasatian</h3>
               <p>
+              For 3 years, I walked a different path as a mechanical engineer, working in construction management consultant company.
+              </p>
+              <p>
+              Then, a simple weekend project—building an interactive investing dashboard in Excel—ignited a spark. Hitting the limitations of my tools, I stumbled upon something that would fundamentally reshape my perspective: <strong>code</strong>.
+              </p>
+              <p>
+                What began as a hobby quickly transformed into an all-consuming passion. I was mesmerized by the power of web development and the limitless possibilities that coding unlocks.
+              </p>
+              <p>
+                It&apos;s a force shaping the world around us, from the software we use at work to the apps that seamlessly manage our lives. I realized I was surrounded by a world powered by code, and I hadn&apos;t truly seen it before.
+              </p>
+              <p>That realization led me to a pivotal decision: to dedicate myself to becoming a <em>software engineer</em>.</p>
+              <p>This is where my journey begins, driven by a desire to not just understand the future, but to build it.</p>
+            </Row>
+            {/* <Row>
+              <p>
                 It took me 25 years until one day when I tried to create an interactive investing dashboard on Excel as a hobby on a weekend while I work as a mechanical engineer.
               </p>
               <p>
@@ -49,7 +65,7 @@ const AboutMe = () => {
               </p>
               <p>That&apos;s when I decided. <em>I will teach myself to become a programmer.</em></p>
               <p>That&apos;s where my story as a programmer begins.</p>
-            </Row>
+            </Row> */}
           </Col>
         </Row>
       </Container>

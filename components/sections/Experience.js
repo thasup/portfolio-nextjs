@@ -16,7 +16,7 @@ const Experience = () => {
               {/* Degree Sub Section */}
               <h3 className="exp-title">Degree</h3>
               <div className="exp-item mt-4">
-                <h5 className="exp-year">2014 - 2017</h5>
+                <h5 className="exp-year">2014 - 2018</h5>
                 <h4>Bachelor’s Degree in Mechanical Engineering</h4>
                 <h5 className="exp-institute">
                   King Mongkut&apos;s Institute of Technology Ladkrabang

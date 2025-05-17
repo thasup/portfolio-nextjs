@@ -9,10 +9,11 @@ const HeroPanel = () => {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        "Front-End Developer",
-        "Self-taught Programmer",
-        "Mechanical Engineer",
+        "Software Engineer",
         "Lifelong Learner",
+        "AI Enthusiast",
+        "Mechanical Engineer",
+        "Self-taught Programmer",
       ],
       loop: true,
       startDelay: 0,
