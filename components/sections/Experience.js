@@ -27,7 +27,31 @@ const Experience = () => {
               {/* Professional Experience Sub Section */}
               <h3 className="exp-title mt-5">Professional Experience</h3>
               <div className="exp-item mt-4">
-                <h5 className="exp-year">2022 - Present</h5>
+                <h5 className="exp-year">2025 - Present</h5>
+                <StaticImage
+                  src={"/img/teams_by_maqe_logo.jpeg"}
+                  alt={"TeamStack"}
+                  width={40}
+                  height={40}
+                  layout={"fixed"}
+                />
+                <h4>Senior Frontend Engineer</h4>
+                <h5 className="exp-institute">TeamStack</h5>
+                <p>Remote</p>
+                {/* <ul className="mb-0">
+                  <li>Continue role and responsibilities as listed below.</li>
+                </ul> */}
+              </div>
+
+              <div className="exp-item">
+                <h5 className="exp-year">2022 - 2025</h5>
+                <StaticImage
+                  src={"/img/maqe_logo.jpeg"}
+                  alt={"MAQE"}
+                  width={40}
+                  height={40}
+                  layout={"fixed"}
+                />
                 <h4>Front-End Engineer</h4>
                 <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
                 <p>Bangkok, Thailand</p>
@@ -213,7 +237,7 @@ const Experience = () => {
               <a className="see-more-btn"
                 target="__blank"
                 rel="noopener noreferrer"
-                href="https://www.linkedin.com/in/thanachon-supasatian/details/certifications/">
+                href="https://airtable.com/appoPztPp3kjnaI4Q/shrDV6n8ugfuxK6pK">
                 See more
               </a>
             </div>

@@ -24,9 +24,9 @@ const StaticImage = ({
       alt={alt}
       width={width}
       height={height}
-      layout={layout || "responsive"}
-      objectFit={fit ? fit : "cover"}
-      priority={priority || false}
+      layout={layout ?? "responsive"}
+      objectFit={fit ?? "cover"}
+      priority={priority ?? false}
     />
   );
 };
