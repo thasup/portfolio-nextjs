@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Tabs, Tab, Container } from "react-bootstrap";
 import iframesData from "@/data/iframes.json";
@@ -16,7 +18,7 @@ const LifelongLearning = () => {
           <Tabs
             id="lifelong-learning-tabs"
             activeKey={key}
-            onSelect={(k) => setKey(k)}
+            onSelect={(key) => setKey(key)}
             className="mb-3 justify-content-center"
             justify
           >

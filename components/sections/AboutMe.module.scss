@@ -1,0 +1,48 @@
+.profileImage > span {
+    border-radius: rem(8, 16);
+	box-shadow: 0 rem(8, 16) rem(16, 16) 0 rgb(0 0 0 / 16%);
+	transition: all 0.3s ease-out;
+}
+
+.profileImage > span:hover {
+	box-shadow: 0 rem(8, 16) rem(32, 16) 0 rgba(0, 0, 0, 0.2);
+	transform: translateY(-rem(3, 16));
+}
+
+/* Add a transition for when you move out of hover */
+.profileImage > span:not(:hover) {
+	transition: all 0.3s ease-in-out;
+}
+
+.about-me-section {
+  background: linear-gradient(180deg, #f2f6f9 0%, #fff 100%);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.about-me-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.about-me-description {
+  font-size: 16px;
+  color: #333;
+}
+
+.about-me-section {
+  background: linear-gradient(180deg, #f2f6f9 0%, #fff 100%);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Existing styles, renamed to avoid conflicts or scoped as needed */
+.about-me-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.about-me-description {
+  font-size: 16px;
+  color: #333;
+}

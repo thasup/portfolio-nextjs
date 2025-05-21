@@ -6,11 +6,24 @@ import devopsData from "@/data/skills/devops.json";
 import toolData from "@/data/skills/tool.json";
 import technologyData from "@/data/skills/technology.json";
 
+import styles from './Skills.module.scss';
+
+interface SkillListProps {
+  title: string;
+  skills: Array<{
+    logo: string;
+    id: string;
+    color: string;
+    labelColor: string;
+    width: number;
+  }>;
+}
+
 const Skills = () => {
-  const SkillList = ({ title, skills }) => (
-    <li>
+  const SkillList: React.FC<SkillListProps> = ({ title, skills }) => (
+    <li className={styles.skillList}>
       <strong>{title}:</strong>
-      <div className="skill-icon">
+      <div className={styles.skillItem}>
         {skills.map((skill) => (
           <SkillBadge
             key={skill.logo}
@@ -26,12 +39,12 @@ const Skills = () => {
   );
 
   return (
-    <section id="skills" className="section-container section-bg">
+    <section id="skills" className={`${styles.skillsSection} section-container section-bg`}>
       <div className="container">
         <h2>Skills</h2>
 
         <div>
-          <ul className="skill-list">
+          <ul className={styles.skillsGrid}>
             <SkillList title="Language" skills={languageData.data} />
             <SkillList title="Framework / Library" skills={frameworkData.data} />
             <SkillList title="DevOps" skills={devopsData.data} />

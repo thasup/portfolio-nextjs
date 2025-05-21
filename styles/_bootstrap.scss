@@ -1,0 +1,3 @@
+// _bootstrap.scss
+@use 'config/variables' as *; // Your overrides first
+@use 'bootstrap/scss/bootstrap'; // Bootstrap source files

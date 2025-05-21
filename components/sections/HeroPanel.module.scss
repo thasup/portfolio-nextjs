@@ -1,0 +1,56 @@
+@use '@/styles/config/variables' as *;
+@use '@/styles/config/mixins' as *;
+
+.heroPanel {
+  position: relative;
+  background: url('https://res.cloudinary.com/thasup/image/upload/v1740776548/stack%20connect/first-masked-banner_y8iozy.jpg');
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+
+  @include respond-below($breakpoint-md) {
+    background: url('https://res.cloudinary.com/thasup/image/upload/v1742208855/stack%20connect/mobile-first-banner_qhnobr.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .titleContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(16);
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: $color-white;
+
+    @include respond-below($breakpoint-md) {
+      margin-top: 60%;
+    }
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 4.5rem;
+
+    @include respond-below($breakpoint-md) {
+      font-size: rem(44);
+    }
+  }
+
+  .scrollButton {
+    cursor: pointer;
+    font-size: rem(48);
+    transition: 0.5s;
+    color: $color-white;
+    height: rem(60);
+
+    &:hover {
+      padding-top: rem(10);
+      color: $color-secondary;
+    }
+  }
+}

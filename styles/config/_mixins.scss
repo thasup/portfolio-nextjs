@@ -1,0 +1,73 @@
+@use 'sass:math';
+@use 'variables' as *;
+
+@function rem($pixels, $context: $font-size-base) {
+  @if (math.is-unitless($pixels)) {
+      $pixels: $pixels * 1px;
+  }
+  @if (math.is-unitless($context)) {
+      $context: $context * 1px;
+  }
+  @return math.div($pixels, $context) * 1rem;
+}
+
+/* Responsive media queries */
+@mixin respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+/* Utility flex mixins */
+@mixin flex-center($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Position mixin */
+@mixin position-absolute($pos-map) {
+  position: absolute;
+  @each $prop, $value in $pos-map {
+    #{$prop}: $value;
+  }
+}
+
+/* Box-shadow system */
+@mixin box-shadow($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px rgba($color-dark, 0.12);
+  } @else if $level == 2 {
+    box-shadow: 0 4px 6px rgba($color-dark, 0.16);
+  } @else if $level == 3 {
+    box-shadow: 0 8px 16px rgba($color-dark, 0.2);
+  }
+}
+
+/* Transition helper */
+@mixin transition($properties...) {
+  @if length($properties) == 0 {
+    transition: $transition-base;
+  } @else {
+    transition-property: $properties;
+    transition-duration: $transition-base;
+    transition-timing-function: ease-in-out;
+  }
+}

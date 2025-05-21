@@ -1,10 +1,10 @@
 import React from "react";
-
 import StaticImage from "@/components/StaticImage";
+import styles from "./Experience.module.scss";
 
 const Experience = () => {
   return (
-    <section id="experience" className="section-container section-bg">
+    <section id="experience" className={`section-container section-bg ${styles.experienceSection}`}>
       <div className="container">
         <h2>Experience</h2>
 
@@ -12,13 +12,12 @@ const Experience = () => {
           <div className="row">
             {/* Degree and Experience Section */}
             <div className="col-lg-6 mb-5" id="degree">
-
               {/* Degree Sub Section */}
               <h3 className="exp-title">Degree</h3>
-              <div className="exp-item mt-4">
-                <h5 className="exp-year">2014 - 2018</h5>
+              <div className={`${styles.expItem} mt-4`}>
+                <h5 className={styles.expYear}>2014 - 2018</h5>
                 <h4>Bachelor’s Degree in Mechanical Engineering</h4>
-                <h5 className="exp-institute">
+                <h5 className={styles.expInstitute}>
                   King Mongkut&apos;s Institute of Technology Ladkrabang
                 </h5>
                 <p>Bangkok, Thailand</p>
@@ -26,34 +25,34 @@ const Experience = () => {
 
               {/* Professional Experience Sub Section */}
               <h3 className="exp-title mt-5">Professional Experience</h3>
-              <div className="exp-item mt-4">
-                <h5 className="exp-year">2025 - Present</h5>
+              <div className={`${styles.expItem} mt-4`}>
+                <h5 className={styles.expYear}>2025 - Present</h5>
                 <StaticImage
                   src={"/img/teams_by_maqe_logo.jpeg"}
                   alt={"TeamStack"}
                   width={40}
                   height={40}
-                  layout={"fixed"}
+                  style={{ objectFit: "contain" }}
                 />
                 <h4>Senior Frontend Engineer</h4>
-                <h5 className="exp-institute">TeamStack</h5>
+                <h5 className={styles.expInstitute}>TeamStack</h5>
                 <p>Remote</p>
                 {/* <ul className="mb-0">
                   <li>Continue role and responsibilities as listed below.</li>
                 </ul> */}
               </div>
 
-              <div className="exp-item">
-                <h5 className="exp-year">2022 - 2025</h5>
+              <div className={styles.expItem}>
+                <h5 className={styles.expYear}>2022 - 2025</h5>
                 <StaticImage
                   src={"/img/maqe_logo.jpeg"}
                   alt={"MAQE"}
                   width={40}
                   height={40}
-                  layout={"fixed"}
+                  style={{ objectFit: "contain" }}
                 />
                 <h4>Front-End Engineer</h4>
-                <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
+                <h5 className={styles.expInstitute}>MAQE Bangkok Co., Ltd.</h5>
                 <p>Bangkok, Thailand</p>
                 <ul className="mb-0">
                   <li>Implement the features and user interfaces of the product</li>
@@ -103,7 +102,7 @@ const Experience = () => {
             <div className="col-lg-6" id="certificate">
               <h3 className="edu-title">Certificate</h3>
 
-              <div className="edu-item" id="cert4">
+              <div className={styles.expItem} id="cert4">
                 <h5 className="edu-year">2025</h5>
                 <h4>AWS Certified Cloud Practitioner</h4>
                 <StaticImage
@@ -111,12 +110,13 @@ const Experience = () => {
                   alt={"AWS"}
                   width={67}
                   height={40}
-                  layout={"fixed"}
+                  style={{ objectFit: "contain" }}
                 />
                 <p>
-                  Earners of this certification have a fundamental understanding of IT services and their uses in the AWS Cloud. 
-                  They demonstrated cloud fluency and foundational AWS knowledge. 
-                  Badge owners are able to identify essential AWS services necessary to set up AWS-focused projects.
+                  Earners of this certification have a fundamental understanding of IT services and
+                  their uses in the AWS Cloud. They demonstrated cloud fluency and foundational AWS
+                  knowledge. Badge owners are able to identify essential AWS services necessary to
+                  set up AWS-focused projects.
                 </p>
                 <a
                   className="btn btn-sm btn-primary"
@@ -129,7 +129,7 @@ const Experience = () => {
                 </a>
               </div>
 
-              <div className="edu-item" id="cert3">
+              <div className={styles.expItem} id="cert3">
                 <h5 className="edu-year">2023</h5>
                 <h4>TOEIC® Listening and Reading Test</h4>
                 <StaticImage
@@ -137,17 +137,21 @@ const Experience = () => {
                   alt={"ETS"}
                   width={58}
                   height={40}
-                  layout={"fixed"}
+                  style={{ objectFit: "contain" }}
                 />
                 <h5>Score : 915</h5>
                 <p>Listening part score : 470, Reading part score : 445</p>
-                <a className="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer"
-                  href="https://www.dropbox.com/scl/fi/mhnp7rw0v7zk1l2ycpzzl/TOEIC-2023.jpeg?rlkey=2hxjyhes1oxfttbofr9zafey2&st=m0nuyon8&dl=0">
+                <a
+                  className="btn btn-sm btn-primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.dropbox.com/scl/fi/mhnp7rw0v7zk1l2ycpzzl/TOEIC-2023.jpeg?rlkey=2hxjyhes1oxfttbofr9zafey2&st=m0nuyon8&dl=0"
+                >
                   See credential
                 </a>
               </div>
 
-              <div className="edu-item" id="cert2">
+              <div className={styles.expItem} id="cert2">
                 <h5 className="edu-year">2021</h5>
                 <h4>Front End Web Developer Nanodegree Program</h4>
                 <StaticImage
@@ -155,34 +159,24 @@ const Experience = () => {
                   alt={"Udacity"}
                   width={180}
                   height={30}
-                  layout={"fixed"}
+                  style={{ objectFit: "contain" }}
                 />
                 <p>
-                  The goal of the Front End Web Developer Nanodegree program is
-                  to equip learners with the unique skills they need to build
-                  and develop a variety of websites and applications.
+                  The goal of the Front End Web Developer Nanodegree program is to equip learners
+                  with the unique skills they need to build and develop a variety of websites and
+                  applications.
                 </p>
                 <ul>
+                  <li>be able to construct responsive websites using CSS, Flexbox and CSS Grid</li>
                   <li>
-                    be able to construct responsive websites using CSS, Flexbox
-                    and CSS Grid
+                    develop interactive websites and UI (User Interface) applications using
+                    JavaScript and HTML
                   </li>
+                  <li>connect a web application to backend server data using Node.js</li>
                   <li>
-                    develop interactive websites and UI (User Interface)
-                    applications using JavaScript and HTML
+                    build competency automating application build and deployment using Webpack
                   </li>
-                  <li>
-                    connect a web application to backend server data using
-                    Node.js
-                  </li>
-                  <li>
-                    build competency automating application build and deployment
-                    using Webpack
-                  </li>
-                  <li>
-                    improving offline performance of websites using Service
-                    Worker
-                  </li>
+                  <li>improving offline performance of websites using Service Worker</li>
                 </ul>
                 <a
                   className="btn btn-sm btn-primary"
@@ -195,7 +189,7 @@ const Experience = () => {
                 </a>
               </div>
 
-              <div className="edu-item" id="cert1">
+              <div className={styles.expItem} id="cert1">
                 <h5 className="edu-year">2021</h5>
                 <h4>The Complete 2022 Web Development Bootcamp</h4>
                 <StaticImage
@@ -203,23 +197,17 @@ const Experience = () => {
                   alt={"Udemy"}
                   width={110}
                   height={40}
-                  layout={"fixed"}
+                  style={{ objectFit: "contain" }}
                 />
                 <ul>
                   <li>Be able to build ANY website you want.</li>
-                  <li>
-                    Craft a portfolio of websites to apply for junior developer
-                    jobs.
-                  </li>
-                  <li>
-                    Build fully-fledged websites and web apps for your startup
-                    or business.
-                  </li>
+                  <li>Craft a portfolio of websites to apply for junior developer jobs.</li>
+                  <li>Build fully-fledged websites and web apps for your startup or business.</li>
                   <li>Master backend development with Node</li>
                   <li>Master frontend development with React</li>
                   <li>
-                    Learn the latest frameworks and technologies, including
-                    Javascript ES6, Bootstrap 4, MongoDB.
+                    Learn the latest frameworks and technologies, including Javascript ES6,
+                    Bootstrap 4, MongoDB.
                   </li>
                   <li>Learn professional developer best practices.</li>
                 </ul>
@@ -234,10 +222,12 @@ const Experience = () => {
                 </a>
               </div>
 
-              <a className="see-more-btn"
+              <a
+                className={styles.seeMoreBtn}
                 target="__blank"
                 rel="noopener noreferrer"
-                href="https://airtable.com/appoPztPp3kjnaI4Q/shrDV6n8ugfuxK6pK">
+                href="https://airtable.com/appoPztPp3kjnaI4Q/shrDV6n8ugfuxK6pK"
+              >
                 See more
               </a>
             </div>

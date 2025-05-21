@@ -1,11 +1,12 @@
-import React from "react";
+'use client';
 
+import React from "react";
 import StaticImage from "@/components/StaticImage";
 import { scrollTo } from "@/utils/helpers";
-import useActiveSection from "@/hooks/useActiveSection";
+import { useActiveSection } from "@/hooks/useActiveSection";
 
 const CustomHeader = () => {
-  const { activeId } = useActiveSection();
+  const activeId = useActiveSection();
   const navItems = [
     { id: 'about-link', text: 'About Me', sectionId: 'about' },
     { id: 'skills-link', text: 'Skills', sectionId: 'skills' },
@@ -24,12 +25,18 @@ const CustomHeader = () => {
       <div className="container-fluid">
         <a className="navbar-brand d-flex flex-row align-items-center">
           <StaticImage
-            src={"/favicon.ico"}
-            alt={"website_logo"}
+            src="/favicon.ico"
+            alt="website_logo"
             width={30}
             height={30}
             className="logo-nav"
-            layout={"fixed"}
+            priority={false}
+            quality={85}
+            style={{
+              objectFit: "contain",
+              width: "auto",
+              height: "auto"
+            }}
           />
           <span className="ms-2">Thanachon Portfolio</span>
         </a>

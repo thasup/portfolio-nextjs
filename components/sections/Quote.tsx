@@ -1,6 +1,11 @@
 import React from "react";
 
-const Quote = ({ text, author }) => {
+interface QuoteProps {
+  text: string;
+  author: string;
+}
+
+const Quote: React.FC<QuoteProps> = ({ text, author }) => {
   return (
     <section id="quote" className="section-container section-bg">
 		<div className="container">

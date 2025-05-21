@@ -1,0 +1,81 @@
+@use 'config/preload' as *;
+
+.skillsSection {
+  @include respond-above($breakpoint-md) {
+    padding: $spacer-5 0;
+  }
+  background-color: $color-light;
+}
+
+.title {
+  @include flex-center(column);
+  text-align: center;
+  color: $color-dark;
+  margin-bottom: $spacer-4;
+}
+
+.skillsGrid {
+  @include flex-column;
+  gap: $spacer-3;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skillItem {
+  text-align: left;
+  padding: $spacer-3;
+  background: #fff;
+  border-radius: 8px;
+  @include box-shadow(2);
+}
+
+.skillList {
+  list-style: none;
+  @include flex-column;
+  gap: $spacer-1;
+}
+
+.skillList li {
+  margin: $spacer-3 0;
+}
+
+.skillIcon {
+  @include flex-wrap;
+  gap: $spacer-1;
+  margin-top: $spacer-1;
+}
+
+.skillTag {
+  list-style: none;
+  padding-left: 0;
+  margin: $spacer-1 0;
+}
+
+.skillTag li {
+  cursor: pointer;
+  display: block;
+  @include position-absolute((top: null, left: null));
+  color: var(--white);
+  background-color: var(--primary-sub-color);
+  font-size: calc($font-size-base * 0.875);
+  padding: $spacer-1 $spacer-2;
+  margin: $spacer-1 $spacer-1 $spacer-1 0;
+  border-radius: 5px;
+  @include transition();
+}
+
+.skillTag li:hover {
+  font-weight: 600;
+  box-shadow: 0 calc($spacer-1 * 4) calc($spacer-1 * 2) calc($spacer-1 * 3) #ccc, 0 calc($spacer-1 * 4) calc($spacer-1 * 5) calc($spacer-1) #ccc, 0 calc($spacer-1 * 2) calc($spacer-1 * 7) calc($spacer-1) #ccc;
+}
+
+.lineBreak {
+  border-bottom: solid 1px var(--primary-color);
+}
+
+/* Mobile, Tablet */
+@media (max-width: 768px) {
+  .skillTag li {
+    margin: $spacer-1 $spacer-3 $spacer-1 0;
+  }
+}

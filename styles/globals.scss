@@ -1,5 +1,10 @@
-@use 'mixins' as *;
-@import "tailwindcss";
+@use 'bootstrap'; // Import Bootstrap styles
+
+@use 'base/reset';
+@use 'config/variables' as *;
+@use 'config/mixins' as *;
+@use 'components';
+@use 'tailwindcss';
 
 /* --------------------
     General
@@ -14,16 +19,8 @@
 	--white: #fff;
 	--black: #000;
 	--shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Typography */
-body {
-	font-family: 'Open Sans',
-		sans-serif;
-}
 
 /* Components */
-
 .container {
 	display: flex;
 	flex-direction: column;
@@ -115,7 +112,7 @@ body {
 	height: 40px;
 	background-color: var(--secondary-color);
 	color: var(--white);
-	box-shadow: var(--shadow);
+	box-shadow: $shadow-base;
 	border-radius: 50%;
 	bottom: 10px;
 	right: 20px;
@@ -144,72 +141,6 @@ body {
 	/* Add a transition for when you move out of hover */
 	&:not(:hover) {
 		transition: 0.3s ease-in-out;
-	}
-}
-
-/* --------------------
-	Hero Section
--------------------- */
-#hero {
-	/* position: relative; */
-	// background: url('/img/hero-bg.jpg');
-	background: url('https://res.cloudinary.com/thasup/image/upload/v1740776548/stack%20connect/first-masked-banner_y8iozy.jpg');
-	background-position: center;
-	background-size: cover;
-	width: 100%;
-	height: 100vh;
-
-	.hero-title-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: rem(16);
-		margin-top: 30%;
-		color: var(--white);
-	}
-
-	.hero-title {
-		font-weight: 600;
-		font-size: 4.5rem;
-	}
-
-	.hero-subtitle {
-		font-size: rem(24);
-		font-weight: 600;
-	}
-
-	.btn-started {
-		cursor: pointer;
-		font-size: rem(48);
-		transition: 0.5s;
-		color: var(--white);
-		height: rem(60);
-
-		&:hover {
-			padding-top: rem(10);
-			color: var(--secondary-color);
-		}
-	}
-
-	/* Mobile */
-	@media (max-width: 576px) {
-		background: url('https://res.cloudinary.com/thasup/image/upload/v1742208855/stack%20connect/mobile-first-banner_qhnobr.jpg');
-		background-position: center;
-		background-size: cover;
-		width: 100%;
-		height: 100vh;
-
-		.hero-title-container {
-			margin-top: 60%;
-		}
-
-		.hero-title {
-			font-size: rem(44);
-		}
-
-		.hero-subtitle {
-			font-size: rem(24);
-		}
 	}
 }
 
@@ -243,225 +174,6 @@ body {
 	}
 }
 
-/* --------------------
-    About Section
--------------------- */
-#about {
-	.profile-image > span {
-		border-radius: rem(8);
-		box-shadow: 0 rem(8) rem(16) 0 rgb(0 0 0 / 16%);
-
-		&:hover {
-			box-shadow: 0 rem(8) rem(32) 0 rgba(0, 0, 0, 0.2);
-			transition: all 0.3s ease-out;
-			transform: translateY(-rem(3));
-		}
-
-		/* Add a transition for when you move out of hover */
-		&:not(:hover) {
-			transition: 0.3s ease-in-out;
-		}
-	}
-}
-
-/* --------------------
-    Skills Section
--------------------- */
-#skills {
-	.skill-list {
-		list-style: none;
-
-		li {
-			margin: rem(24) 0;
-
-			.skill-icon {
-				display: flex;
-				flex-wrap: wrap;
-				gap: rem(8);
-				margin-top: rem(8);
-			}
-		}
-	}
-
-	.skill-tag {
-		list-style: none;
-		padding-left: 0;
-		margin: rem(8) 0;
-
-		li {
-			cursor: pointer;
-			display: block;
-			position: relative;
-			color: var(--white);
-			background-color: var(--primary-sub-color);
-			font-size: rem(14);
-			padding: rem(2) rem(12);
-			margin: rem(8) rem(1) rem(8) 0;
-			border-radius: rem(5);
-			transition: 0.3s;
-
-			&:hover {
-				font-weight: 600;
-				box-shadow: 0 rem(4) rem(2) -rem(3) #ccc, 0 rem(4) rem(5) rem(1) #ccc, 0 rem(2) rem(7) rem(1) #ccc;
-			}
-		}
-	}
-
-	.line-break {
-		border-bottom: solid rem(1) var(--primary-color);
-	}
-}
-
-/* Mobile, Tablet */
-@media (max-width: 768px) {
-	#skills .skill-tag li {
-		margin: rem(8) rem(16) rem(8) 0;
-	}
-}
-
-/* --------------------
-	Experience Section
--------------------- */
-#experience {
-	.exp-item,
-	.edu-item {
-		padding: rem(0) rem(0) rem(20) rem(20);
-		margin: rem(0) rem(0) rem(0) rem(12);
-		border-left: rem(2) solid var(--secondary-color);
-		position: relative;
-
-		a[role="button"] {
-			box-shadow: 0 rem(8) rem(16) 0 rgba(0, 0, 0, 0.16);
-
-			&:hover {
-				box-shadow: 0 rem(8) rem(32) 0 rgba(0, 0, 0, 0.2);
-			}
-		}
-
-		/* Desktop */
-		@media (min-width: 768px) {
-			margin-left: 0;
-		}
-
-		&::before {
-			position: absolute;
-			content: "";
-			width: 20px;
-			height: 20px;
-			border-radius: 50%;
-			left: -11px;
-			top: 0;
-			background: #fff;
-			border: 3px solid var(--secondary-color);
-		}
-
-		li {
-			list-style: disc;
-		}
-	}
-
-	.edu-item {
-		margin-bottom: 0;
-	}
-
-	.exp-year {
-		color: var(--primary-light-color);
-	}
-
-	h4 {
-		font-family: "Gelasio", serif;
-		color: var(--primary-sub-color);
-	}
-
-	.exp-institute {
-		font-style: italic;
-	}
-
-	#certificate {
-		.exp-institute {
-			margin-bottom: rem(16);
-		}
-	}
-
-	.see-more-btn {
-		margin-left: auto;
-		display: flex;
-		width: fit-content;
-	}
-}
-
-/* --------------------
-	Portfolio Section
--------------------- */
-#portfolio {
-	.showcase {
-		display: flex;
-		flex-direction: column;
-		gap: rem(32);
-
-		.showcase-img>span {
-			display: block;
-			border: 1px solid #e8eef7;
-			border-radius: 8px;
-			margin: -76px auto 0;
-			z-index: 1;
-			position: relative;
-			background-color: #fff;
-			box-shadow: 0 8px 16px 0 rgb(0 0 0 / 16%);
-
-			&:hover {
-				box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-				transition: all 0.3s ease-out;
-				transform: translateY(-3px);
-			}
-
-			/* Add a transition for when you move out of hover */
-			&:not(:hover) {
-				transition: 0.3s ease-in-out;
-			}
-		}
-
-		.desc-container {
-			gap: rem(8);
-
-			p {
-				margin-bottom: 0;
-			}
-		}
-
-		.tech-tag {
-			display: flex;
-			flex-wrap: wrap;
-			gap: rem(4);
-
-			.btn-xsm {
-				padding: rem(3) rem(6);
-				font-size: rem(12);
-				border-radius: rem(3);
-			}
-		}
-
-		.showcase-info {
-			gap: rem(16);
-
-			h5 {
-				font-style: italic;
-			}
-		}
-
-		.showcase-link {
-			a {
-				box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.16);
-				transition: box-shadow 0.3s ease, transform 0.3s ease;
-
-				&:hover {
-					box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-					transform: scale(1.01);
-				}
-			}
-		}
-	}
-
 	/* Desktop */
 	@media (min-width: 768px) {
 		.showcase {
@@ -486,7 +198,7 @@ body {
 			background: #fff;
 			border-radius: 50px;
 			padding: 2px 15px;
-			box-shadow: var(--shadow);
+			box-shadow: $shadow-base;
 
 			li {
 				cursor: pointer;
@@ -534,7 +246,7 @@ body {
 			height: rem(28);
 			background-color: var(--secondary-color);
 			color: var(--white);
-			box-shadow: var(--shadow);
+			box-shadow: $shadow-base;
 			border-radius: 50%;
 			top: -25px;
 			cursor: pointer;
@@ -682,44 +394,6 @@ body {
 }
 
 /* --------------------
-    Education Section
--------------------- */
-#education {
-	h4 {
-		font-family: 'Gelasio', serif;
-		color: var(--primary-sub-color);
-	}
-
-	.edu-institute {
-		font-style: italic;
-	}
-
-	#certificate {
-		#cert2 {
-			img {
-				height: rem(30);
-				margin: rem(8) 0 rem(16);
-			}
-		}
-
-		#cert3 {
-			img {
-				height: rem(40);
-				margin: rem(8) 0 rem(16);
-			}
-		}
-
-		.edu-year {
-			color: var(--primary-light-color);
-		}
-
-		.edu-institute {
-			margin-bottom: rem(16);
-		}
-	}
-}
-
-/* --------------------
     Resume Section
 -------------------- */
 #resume {
@@ -727,74 +401,4 @@ body {
 	background-position: right 85% center;
 	padding: rem(128) 0;
 	color: #fff;
-}
-
-/* --------------------
-    Contact Section
--------------------- */
-#contact {
-	.contact-info {
-		i {
-			font-size: rem(32);
-		}
-	}
-
-	.social-links {
-		padding-bottom: rem(20);
-
-		a {
-			font-size: rem(24);
-			display: inline-block;
-			background: #fff;
-			color: var(--primary-color);
-			line-height: 0;
-			padding: rem(12) 0;
-			margin-right: rem(4);
-			border-radius: 50%;
-			text-align: center;
-			width: rem(48);
-			height: rem(48);
-			transition: 0.3s;
-			border: rem(1) solid var(--primary-color);
-
-			&:hover {
-				background: var(--secondary-color);
-				border: rem(1) solid var(--secondary-color);
-				color: #fff;
-			}
-		}
-	}
-
-	.col-form-label {
-		font-size: rem(20);
-		font-weight: bold;
-		padding-top: 0;
-	}
-}
-
-/* --------------------
-    Footer Section
--------------------- */
-footer {
-	color: #fff;
-	padding: rem(16) 0;
-
-	div {
-		margin: rem(16) 0;
-
-		p {
-			margin: 0;
-
-			&:first-child {
-				margin-bottom: rem(16);
-			}
-		}
-	}
-
-	.footer-link {
-		font-weight: 700;
-		text-transform: uppercase;
-		text-decoration: none;
-		cursor: pointer;
-	}
 }
