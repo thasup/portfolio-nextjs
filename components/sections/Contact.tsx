@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
 
 const Contact = () => {
   return (
@@ -46,48 +46,48 @@ const Contact = () => {
 
           <div className="col-md-6">
             <Form method="post" role="form" data-netlify="true">
-              <FormGroup>
-                <FormLabel htmlFor="name">Your Name</FormLabel>
-                <FormControl
+              <Form.Group>
+                <Form.Label htmlFor="name">Your Name</Form.Label>
+                <Form.Control
                   type="text"
                   name="name"
                   id="name"
                   placeholder="John Doe"
                   required
-                ></FormControl>
-              </FormGroup>
+                ></Form.Control>
+              </Form.Group>
 
-              <FormGroup className="mt-3">
-                <FormLabel htmlFor="email">Your Email</FormLabel>
-                <FormControl
+              <Form.Group className="mt-3">
+                <Form.Label htmlFor="email">Your Email</Form.Label>
+                <Form.Control
                   type="email"
                   name="email"
                   id="email"
                   placeholder="johndoe@email.com"
                   required
-                ></FormControl>
-              </FormGroup>
+                ></Form.Control>
+              </Form.Group>
 
-              <FormGroup className="mt-3">
-                <FormLabel htmlFor="subject">Subject</FormLabel>
-                <FormControl
+              <Form.Group className="mt-3">
+                <Form.Label htmlFor="subject">Subject</Form.Label>
+                <Form.Control
                   type="text"
                   name="subject"
                   id="subject"
                   placeholder="Subject"
                   required
-                ></FormControl>
-              </FormGroup>
+                ></Form.Control>
+              </Form.Group>
 
-              <FormGroup className="mt-3">
-                <FormLabel htmlFor="message">Message</FormLabel>
-                <FormControl
+              <Form.Group className="mt-3">
+                <Form.Label htmlFor="message">Message</Form.Label>
+                <Form.Control
                   type="textarea"
                   name="message"
                   placeholder="Message"
                   required
-                ></FormControl>
-              </FormGroup>
+                ></Form.Control>
+              </Form.Group>
 
               <div className="text-center mt-3">
                 <button type="submit" className="btn btn-success">
