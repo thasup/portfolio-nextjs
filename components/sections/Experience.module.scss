@@ -1,5 +1,4 @@
-@use '@/styles/config/variables' as *;
-@use '@/styles/config/mixins' as *;
+@use 'config/preload' as *;
 
 .experienceSection {
   .expItem,
@@ -23,7 +22,7 @@
     }
 
     &::before {
-      @include position-absolute((content: '""', width: rem(20, 16), height: rem(20, 16), border-radius: 50%, left: rem(-11, 16), top: 0, background: #fff, border: rem(3, 16) solid var(--secondary-color)));
+      @include position-absolute((content: '', width: rem(20, 16), height: rem(20, 16), border-radius: 50%, left: rem(-11, 16), top: 0, background: #fff, border: rem(3, 16) solid var(--secondary-color)));
     }
 
     li {

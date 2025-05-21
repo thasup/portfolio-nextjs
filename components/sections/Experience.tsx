@@ -4,7 +4,7 @@ import styles from "./Experience.module.scss";
 
 const Experience = () => {
   return (
-    <section className={`section-container section-bg ${styles.experienceSection}`}>
+    <section id="experience" className={`section-container section-bg ${styles.experienceSection}`}>
       <div className="container">
         <h2>Experience</h2>
 

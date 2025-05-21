@@ -14,8 +14,7 @@ const nextConfig = {
     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-    prependData: `@use 'config/variables' as *; @use 'config/mixins' as *;`
+    includePaths: [path.join(__dirname, 'styles')]
   }
 }
 

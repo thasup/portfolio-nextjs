@@ -1,4 +1,4 @@
-@use "bootstrap"; // Import Bootstrap styles
+@use 'bootstrap'; // Import Bootstrap styles
 
 @use 'base/reset';
 @use 'config/variables' as *;
@@ -20,14 +20,7 @@
 	--black: #000;
 	--shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
 
-/* Typography */
-body {
-	font-family: 'Open Sans',
-		sans-serif;
-}
-
 /* Components */
-
 .container {
 	display: flex;
 	flex-direction: column;
@@ -148,72 +141,6 @@ body {
 	/* Add a transition for when you move out of hover */
 	&:not(:hover) {
 		transition: 0.3s ease-in-out;
-	}
-}
-
-/* --------------------
-	Hero Section
--------------------- */
-#hero {
-	/* position: relative; */
-	// background: url('/img/hero-bg.jpg');
-	background: url('https://res.cloudinary.com/thasup/image/upload/v1740776548/stack%20connect/first-masked-banner_y8iozy.jpg');
-	background-position: center;
-	background-size: cover;
-	width: 100%;
-	height: 100vh;
-
-	.hero-title-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: rem(16);
-		margin-top: 30%;
-		color: var(--white);
-	}
-
-	.hero-title {
-		font-weight: 600;
-		font-size: 4.5rem;
-	}
-
-	.hero-subtitle {
-		font-size: rem(24);
-		font-weight: 600;
-	}
-
-	.btn-started {
-		cursor: pointer;
-		font-size: rem(48);
-		transition: 0.5s;
-		color: var(--white);
-		height: rem(60);
-
-		&:hover {
-			padding-top: rem(10);
-			color: var(--secondary-color);
-		}
-	}
-
-	/* Mobile */
-	@media (max-width: 576px) {
-		background: url('https://res.cloudinary.com/thasup/image/upload/v1742208855/stack%20connect/mobile-first-banner_qhnobr.jpg');
-		background-position: center;
-		background-size: cover;
-		width: 100%;
-		height: 100vh;
-
-		.hero-title-container {
-			margin-top: 60%;
-		}
-
-		.hero-title {
-			font-size: rem(44);
-		}
-
-		.hero-subtitle {
-			font-size: rem(24);
-		}
 	}
 }
 

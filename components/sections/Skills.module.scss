@@ -1,5 +1,4 @@
-@use '@/styles/config/variables' as *;
-@use '@/styles/config/mixins' as *;
+@use 'config/preload' as *;
 
 .skillsSection {
   @include respond-above($breakpoint-md) {

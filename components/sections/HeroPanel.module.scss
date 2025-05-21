@@ -1,26 +1,56 @@
-@use '@/styles/config/variables' as vars;
-@use '@/styles/config/mixins' as mx;
+@use '@/styles/config/variables' as *;
+@use '@/styles/config/mixins' as *;
 
 .heroPanel {
-  padding: vars.$spacer-5 vars.$spacer-3;
-  margin-bottom: vars.$spacer-4;
-  background: linear-gradient(rgba(vars.$color-dark, 0.9), rgba(vars.$color-dark, 0.8)),
-    url('/img/hero-bg.jpg') center/cover;
+  position: relative;
+  background: url('https://res.cloudinary.com/thasup/image/upload/v1740776548/stack%20connect/first-masked-banner_y8iozy.jpg');
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
 
-  &__title {
-    font-size: 2.5rem;
-    color: vars.$color-light;
-    margin-bottom: vars.$spacer-3;
+  @include respond-below($breakpoint-md) {
+    background: url('https://res.cloudinary.com/thasup/image/upload/v1742208855/stack%20connect/mobile-first-banner_qhnobr.jpg');
+    background-position: center;
+    background-size: cover;
+  }
 
-    @include mx.respond-above(vars.$breakpoint-md) {
-      font-size: 3.5rem;
+  .titleContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(16);
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: $color-white;
+
+    @include respond-below($breakpoint-md) {
+      margin-top: 60%;
     }
   }
 
-  &__subtitle {
-    font-size: 1.25rem;
-    color: rgba(vars.$color-light, 0.9);
-    max-width: 600px;
-    margin: 0 auto;
+  .title {
+    font-weight: 600;
+    font-size: 4.5rem;
+
+    @include respond-below($breakpoint-md) {
+      font-size: rem(44);
+    }
+  }
+
+  .scrollButton {
+    cursor: pointer;
+    font-size: rem(48);
+    transition: 0.5s;
+    color: $color-white;
+    height: rem(60);
+
+    &:hover {
+      padding-top: rem(10);
+      color: $color-secondary;
+    }
   }
 }

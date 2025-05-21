@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 /* Color palette */
 $color-primary: #2c3e50;
 $color-secondary: #62efcd;
@@ -7,13 +9,13 @@ $color-light: #f8f9fa;
 $color-dark: #343a40;
 
 /* Semantic color variants */
-$color-primary-active: darken($color-primary, 15%);
-$color-secondary-hover: lighten($color-secondary, 10%);
-$color-success-light: lighten($color-success, 20%);
-$color-danger-dark: darken($color-danger, 10%);
+$color-primary-active: color.adjust($color-primary, $lightness: -15%);
+$color-secondary-hover: color.adjust($color-secondary, $lightness: 10%);
+$color-success-light: color.adjust($color-success, $lightness: 20%);
+$color-danger-dark: color.adjust($color-danger, $lightness: -10%);
 $color-light-muted: #e9ecef;
 $color-primary-color: $color-primary;
-$color-primary-light-color: lighten($color-primary, 20%);
+$color-primary-light-color: color.adjust($color-primary, $lightness: 20%);
 $color-primary-sub-color: #345676;
 $color-secondary-color: $color-secondary;
 $color-overlay: #415162;

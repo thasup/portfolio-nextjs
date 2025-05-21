@@ -1,40 +1,41 @@
-@use '@/styles/config/variables' as *;
-@use '@/styles/config/mixins' as *;
+
+@use "styles/config/variables" as vars;
+@use "styles/config/mixins" as mix;
 
 .contact-info {
   i {
-    font-size: rem(32);
+    font-size: mix.rem(32, vars.$font-size-base);
   }
 }
 
 .social-links {
-  padding-bottom: rem(20);
+  padding-bottom: mix.rem(20, vars.$font-size-base);
 
   a {
-    font-size: rem(24);
+    font-size: mix.rem(24, vars.$font-size-base);
     display: inline-block;
     background: #fff;
     color: var(--primary-color);
     line-height: 0;
-    padding: rem(12) 0;
-    margin-right: rem(4);
+    padding: mix.rem(12, vars.$font-size-base) 0;
+    margin-right: mix.rem(4, vars.$font-size-base);
     border-radius: 50%;
     text-align: center;
-    width: rem(48);
-    height: rem(48);
+    width: mix.rem(48, vars.$font-size-base);
+    height: mix.rem(48, vars.$font-size-base);
     transition: 0.3s;
-    border: rem(1) solid var(--primary-color);
+    border: mix.rem(1, vars.$font-size-base) solid var(--primary-color);
 
     &:hover {
       background: var(--secondary-color);
-      border: rem(1) solid var(--secondary-color);
+      border: mix.rem(1, vars.$font-size-base) solid var(--secondary-color);
       color: #fff;
     }
   }
 }
 
 .col-form-label {
-  font-size: rem(20);
+  font-size: mix.rem(20, vars.$font-size-base);
   font-weight: bold;
   padding-top: 0;
 }

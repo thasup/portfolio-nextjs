@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
 import { scrollTo } from "@/utils/helpers";
+
 import styles from './HeroPanel.module.scss';
 
 const HeroPanel: React.FC = () => {
