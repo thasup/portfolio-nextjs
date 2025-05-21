@@ -3,32 +3,46 @@
 import React from "react";
 import Image from "next/image";
 
-const StaticImage = ({
+interface StaticImageProps {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  fit?: "contain" | "cover" | "fill" | "none" | "scale-down";
+  priority?: boolean;
+  quality?: number;
+  className?: string;
+}
+
+const StaticImage: React.FC<StaticImageProps> = ({
   src,
   alt,
   width,
   height,
-  layout,
-  fit,
-  priority,
-  quality,
-  ...props
+  fit = "cover",
+  priority = false,
+  quality = 75,
+  className,
 }) => {
   const myLoader = () => {
-    return `${src}?raw=1&q=${quality || 75}`;
+    return `${src}?raw=1&q=${quality}`;
   };
 
   return (
     <Image
-      {...props}
       loader={myLoader}
       src={src}
       alt={alt}
       width={width}
       height={height}
-      layout={layout ?? "responsive"}
-      objectFit={fit ?? "cover"}
-      priority={priority ?? false}
+      className={className}
+      style={{ 
+        objectFit: fit,
+        width: '100%',
+        height: 'auto'
+      }}
+      priority={priority}
+      sizes="(max-width: 768px) 100vw, 50vw"
     />
   );
 };
