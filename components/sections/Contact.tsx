@@ -1,5 +1,4 @@
 import React from "react";
-import Form from 'react-bootstrap/Form';
 
 const Contact = () => {
   return (
@@ -24,20 +23,27 @@ const Contact = () => {
               </div>
             </div>
             <div className="social-links pt-3">
-              <a href="https://thanachon.me" className="website" target="blank">
+              <a
+                href="https://thanachon.me"
+                className="website"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <i className="fas fa-globe-americas"></i>
               </a>
               <a
                 href="https://github.com/thasup"
                 className="github"
-                target="blank"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-github"></i>
               </a>
               <a
                 href="https://www.linkedin.com/in/thanachon-supasatian-278292159/"
                 className="linkedin"
-                target="blank"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-linkedin"></i>
               </a>
@@ -45,56 +51,70 @@ const Contact = () => {
           </div>
 
           <div className="col-md-6">
-            <Form method="post" role="form" data-netlify="true">
-              <Form.Group>
-                <Form.Label htmlFor="name">Your Name</Form.Label>
-                <Form.Control
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+              <input type="hidden" name="form-name" value="contact" />
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  Your Name
+                </label>
+                <input
                   type="text"
-                  name="name"
+                  className="form-control"
                   id="name"
+                  name="name"
                   placeholder="John Doe"
                   required
-                ></Form.Control>
-              </Form.Group>
+                />
+              </div>
 
-              <Form.Group className="mt-3">
-                <Form.Label htmlFor="email">Your Email</Form.Label>
-                <Form.Control
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Your Email
+                </label>
+                <input
                   type="email"
-                  name="email"
+                  className="form-control"
                   id="email"
-                  placeholder="johndoe@email.com"
+                  name="email"
+                  placeholder="johndoe@example.com"
                   required
-                ></Form.Control>
-              </Form.Group>
+                />
+              </div>
 
-              <Form.Group className="mt-3">
-                <Form.Label htmlFor="subject">Subject</Form.Label>
-                <Form.Control
+              <div className="mb-3">
+                <label htmlFor="subject" className="form-label">
+                  Subject
+                </label>
+                <input
                   type="text"
-                  name="subject"
+                  className="form-control"
                   id="subject"
+                  name="subject"
                   placeholder="Subject"
                   required
-                ></Form.Control>
-              </Form.Group>
+                />
+              </div>
 
-              <Form.Group className="mt-3">
-                <Form.Label htmlFor="message">Message</Form.Label>
-                <Form.Control
-                  type="textarea"
+              <div className="mb-3">
+                <label htmlFor="message" className="form-label">
+                  Message
+                </label>
+                <textarea
+                  className="form-control"
+                  id="message"
                   name="message"
-                  placeholder="Message"
+                  rows={4}
+                  placeholder="Your message..."
                   required
-                ></Form.Control>
-              </Form.Group>
+                ></textarea>
+              </div>
 
-              <div className="text-center mt-3">
-                <button type="submit" className="btn btn-success">
+              <div className="text-center mt-4">
+                <button type="submit" className="btn btn-success px-4 py-2">
                   Send Message
                 </button>
               </div>
-            </Form>
+            </form>
           </div>
         </div>
       </div>
