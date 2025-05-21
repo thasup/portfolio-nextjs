@@ -1,0 +1,26 @@
+@use '@/styles/config/variables' as vars;
+@use '@/styles/config/mixins' as mx;
+
+.heroPanel {
+  padding: vars.$spacer-5 vars.$spacer-3;
+  margin-bottom: vars.$spacer-4;
+  background: linear-gradient(rgba(vars.$color-dark, 0.9), rgba(vars.$color-dark, 0.8)),
+    url('/img/hero-bg.jpg') center/cover;
+
+  &__title {
+    font-size: 2.5rem;
+    color: vars.$color-light;
+    margin-bottom: vars.$spacer-3;
+
+    @include mx.respond-above(vars.$breakpoint-md) {
+      font-size: 3.5rem;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    color: rgba(vars.$color-light, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

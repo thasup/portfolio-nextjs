@@ -1,0 +1,21 @@
+@use '../config/variables' as *;
+
+/* Reset and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  line-height: $line-height-base;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+}

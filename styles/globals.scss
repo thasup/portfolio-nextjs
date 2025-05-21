@@ -1,5 +1,15 @@
-@use 'mixins' as *;
-@use "tailwindcss";
+// Base
+@use 'base/reset';
+
+// Config
+@use 'config/variables' as *;
+@use 'config/mixins' as *;
+
+// Components
+@use 'components';
+
+// Vendor
+@use 'tailwindcss';
 
 /* --------------------
     General

@@ -1,7 +1,8 @@
-import '@/styles/globals.scss';
 import { Inter } from 'next/font/google';
 import CustomHeader from '@/components/sections/CustomHeader';
 import Footer from '@/components/sections/Footer';
+
+import '@/styles/globals.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 

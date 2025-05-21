@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
 import { scrollTo } from "@/utils/helpers";
+import styles from './HeroPanel.module.scss';
 
 const HeroPanel: React.FC = () => {
   const el = useRef<HTMLSpanElement>(null);
@@ -37,13 +38,13 @@ const HeroPanel: React.FC = () => {
   return (
     <div
       id="hero"
-      className="d-flex flex-column align-items-center justify-content-center"
+      className={styles.heroPanel}
     >
-      <div className="hero-title-container">
-        <p className="hero-title text-center">
+      <div className={styles.titleContainer}>
+        <p className={styles.title}>
           <span ref={el}></span>
         </p>
-        <a className="btn-started" onClick={handleScrollTo}>
+        <a className={styles.scrollButton} onClick={handleScrollTo}>
           <i className="fas fa-chevron-down"></i>
         </a>
       </div>
