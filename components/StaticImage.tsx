@@ -41,10 +41,6 @@ const StaticImage: React.FC<StaticImageProps> = ({
       sizes="(max-width: 768px) 100vw, 50vw"
       style={{
         objectFit: fit,
-        width: '100%',
-        height: 'auto',
-        maxWidth: "100%",
-        height: "auto"
       }} />
   );
 };

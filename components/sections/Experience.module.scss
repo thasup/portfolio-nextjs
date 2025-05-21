@@ -1,17 +1,69 @@
-/* Add your styles for the Experience section here */
-.experience {
-  /* Example styles */
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
-}
+@use '@/styles/config/variables' as *;
+@use '@/styles/config/mixins' as *;
 
-.experience-title {
-  font-size: 24px;
-  font-weight: bold;
-}
+.experienceSection {
+  .expItem,
+  .eduItem {
+    padding: rem(0) rem(0) rem(40) rem(20);
+    margin: rem(0) rem(0) rem(0) rem(12);
+    border-left: rem(2) solid var(--secondary-color);
+    position: relative;
 
-.experience-description {
-  font-size: 16px;
-  color: #333;
+    a[role="button"] {
+      box-shadow: 0 rem(8) rem(16) 0 rgba(0, 0, 0, 0.16);
+
+      &:hover {
+        box-shadow: 0 rem(8) rem(32) 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    @media (min-width: 768px) {
+      margin-left: 0;
+    }
+
+    &::before {
+      position: absolute;
+      content: "";
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      left: -11px;
+      top: 0;
+      background: #fff;
+      border: 3px solid var(--secondary-color);
+    }
+
+    li {
+      list-style: disc;
+    }
+  }
+
+  .eduItem {
+    margin-bottom: 0;
+  }
+
+  .expYear {
+    color: var(--primary-light-color);
+  }
+
+  h4 {
+    font-family: "Gelasio", serif;
+    color: var(--primary-sub-color);
+  }
+
+  .expInstitute {
+    font-style: italic;
+  }
+
+  .seeMoreBtn {
+    margin-left: auto;
+    display: flex;
+    width: fit-content;
+  }
+
+  #certificate {
+    .expInstitute {
+      margin-bottom: rem(16);
+    }
+  }
 }

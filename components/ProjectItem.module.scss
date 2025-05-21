@@ -1,0 +1,77 @@
+@use '@/styles/config/variables' as *;
+
+.portfolioItem {
+  margin: 1rem 0;
+
+  .portfolioWrap {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      background-color: var(--primary-sub-color);
+      z-index: 2;
+      left: 2.5rem;
+      right: 2.5rem;
+      top: 2.5rem;
+      bottom: 2.5rem;
+      transition: all ease-in-out 0.3s;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    &:hover::before {
+      opacity: 0.6;
+      visibility: visible;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.portfolioInfo {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 2rem 1rem 1rem;
+  color: var(--white);
+  transition: all ease-in-out 0.3s;
+  visibility: hidden;
+  opacity: 0;
+
+  .techTag {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+
+    button {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 0.25rem;
+    }
+  }
+
+  a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--white);
+
+    &:hover {
+      color: var(--secondary-color);
+    }
+  }
+
+  p {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+}
