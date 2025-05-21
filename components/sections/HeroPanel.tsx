@@ -1,12 +1,15 @@
+'use client'
+
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
-
 import { scrollTo } from "@/utils/helpers";
 
-const HeroPanel = () => {
-  const el = useRef(null);
+const HeroPanel: React.FC = () => {
+  const el = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    if (!el.current) return;
+
     const typed = new Typed(el.current, {
       strings: [
         "Software Engineer",
@@ -22,7 +25,6 @@ const HeroPanel = () => {
       backDelay: 2000,
     });
 
-    // Destropying
     return () => {
       typed.destroy();
     };
@@ -38,7 +40,6 @@ const HeroPanel = () => {
       className="d-flex flex-column align-items-center justify-content-center"
     >
       <div className="hero-title-container">
-        {/* <h1 className="hero-title text-center">Hi! I am Thanachon</h1> */}
         <p className="hero-title text-center">
           <span ref={el}></span>
         </p>

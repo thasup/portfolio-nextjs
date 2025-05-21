@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,17 +13,21 @@
     "next": "^15.3.2",
     "nextjs-google-analytics": "^2.3.7",
     "postcss": "^8.5.2",
-    "react": "^19.1.0",
-    "react-bootstrap": "^2.10.10",
-    "react-dom": "^19.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
     "swiper": "^8.0.7",
     "tailwindcss": "^4.0.7",
     "typed.js": "^2.0.12"
   },
   "devDependencies": {
-    "eslint": "8.11.0",
+    "@types/node": "^22.15.21",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.57.0",
     "eslint-config-next": "^15.3.2",
-    "sass": "^1.52.1"
+    "sass": "^1.52.1",
+    "typescript": "^5.4.2"
   },
   "engines": {
     "node": ">=22"
