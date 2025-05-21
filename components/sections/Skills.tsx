@@ -6,8 +6,19 @@ import devopsData from "@/data/skills/devops.json";
 import toolData from "@/data/skills/tool.json";
 import technologyData from "@/data/skills/technology.json";
 
+interface SkillListProps {
+  title: string;
+  skills: Array<{
+    logo: string;
+    id: string;
+    color: string;
+    labelColor: string;
+    width: number;
+  }>;
+}
+
 const Skills = () => {
-  const SkillList = ({ title, skills }) => (
+  const SkillList: React.FC<SkillListProps> = ({ title, skills }) => (
     <li>
       <strong>{title}:</strong>
       <div className="skill-icon">

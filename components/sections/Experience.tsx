@@ -33,7 +33,7 @@ const Experience = () => {
                   alt={"TeamStack"}
                   width={40}
                   height={40}
-                  layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <h4>Senior Frontend Engineer</h4>
                 <h5 className="exp-institute">TeamStack</h5>
@@ -50,7 +50,7 @@ const Experience = () => {
                   alt={"MAQE"}
                   width={40}
                   height={40}
-                  layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <h4>Front-End Engineer</h4>
                 <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
@@ -111,7 +111,7 @@ const Experience = () => {
                   alt={"AWS"}
                   width={67}
                   height={40}
-                  layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <p>
                   Earners of this certification have a fundamental understanding of IT services and their uses in the AWS Cloud. 
@@ -137,7 +137,7 @@ const Experience = () => {
                   alt={"ETS"}
                   width={58}
                   height={40}
-                  layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <h5>Score : 915</h5>
                 <p>Listening part score : 470, Reading part score : 445</p>
@@ -155,7 +155,7 @@ const Experience = () => {
                   alt={"Udacity"}
                   width={180}
                   height={30}
-                  layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <p>
                   The goal of the Front End Web Developer Nanodegree program is
@@ -203,7 +203,7 @@ const Experience = () => {
                   alt={"Udemy"}
                   width={110}
                   height={40}
-                  layout={"fixed"}
+                  style={{objectFit: "contain"}}
                 />
                 <ul>
                   <li>Be able to build ANY website you want.</li>
