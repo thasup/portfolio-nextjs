@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google';
+import { gelasio, openSans } from '@/lib/fonts';
 import CustomHeader from '@/components/sections/CustomHeader';
 import Footer from '@/components/sections/Footer';
 
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${gelasio.variable} ${openSans.variable}`}>
       <body className={inter.className}>
         <CustomHeader />
         <main className="pb-5">

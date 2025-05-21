@@ -2,19 +2,21 @@
 @use '@/styles/config/mixins' as *;
 
 .skillsSection {
-  padding: $spacer-5 0;
+  @include respond-above($breakpoint-md) {
+    padding: $spacer-5 0;
+  }
   background-color: $color-light;
 }
 
 .title {
+  @include flex-center(column);
   text-align: center;
   color: $color-dark;
   margin-bottom: $spacer-4;
 }
 
 .skillsGrid {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   gap: $spacer-3;
   max-width: 1200px;
   margin: 0 auto;
@@ -23,15 +25,14 @@
 .skillItem {
   text-align: left;
   padding: $spacer-3;
-  background: white;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  @include box-shadow(2);
 }
 
 .skillList {
   list-style: none;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   gap: $spacer-1;
 }
 
@@ -40,8 +41,7 @@
 }
 
 .skillIcon {
-  display: flex;
-  flex-wrap: wrap;
+  @include flex-wrap;
   gap: $spacer-1;
   margin-top: $spacer-1;
 }
@@ -55,19 +55,19 @@
 .skillTag li {
   cursor: pointer;
   display: block;
-  position: relative;
+  @include position-absolute((top: null, left: null));
   color: var(--white);
   background-color: var(--primary-sub-color);
-  font-size: $font-size-base * 0.875; /* 14px */
+  font-size: calc($font-size-base * 0.875);
   padding: $spacer-1 $spacer-2;
   margin: $spacer-1 $spacer-1 $spacer-1 0;
   border-radius: 5px;
-  transition: 0.3s;
+  @include transition();
 }
 
 .skillTag li:hover {
   font-weight: 600;
-  box-shadow: 0 $spacer-1 * 4 $spacer-1 * 2 - $spacer-1 * 3 #ccc, 0 $spacer-1 * 4 $spacer-1 * 5 $spacer-1 #ccc, 0 $spacer-1 * 2 $spacer-1 * 7 $spacer-1 #ccc;
+  box-shadow: 0 calc($spacer-1 * 4) calc($spacer-1 * 2) calc($spacer-1 * 3) #ccc, 0 calc($spacer-1 * 4) calc($spacer-1 * 5) calc($spacer-1) #ccc, 0 calc($spacer-1 * 2) calc($spacer-1 * 7) calc($spacer-1) #ccc;
 }
 
 .lineBreak {

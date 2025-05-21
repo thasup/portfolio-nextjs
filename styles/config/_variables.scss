@@ -1,4 +1,4 @@
-// Color palette
+/* Color palette */
 $color-primary: #007bff;
 $color-secondary: #6c757d;
 $color-success: #28a745;
@@ -6,20 +6,45 @@ $color-danger: #dc3545;
 $color-light: #f8f9fa;
 $color-dark: #343a40;
 
-// Spacing scale
+/* Semantic color variants */
+$color-primary-active: darken($color-primary, 15%);
+$color-secondary-hover: lighten($color-secondary, 10%);
+$color-success-light: lighten($color-success, 20%);
+$color-danger-dark: darken($color-danger, 10%);
+$color-light-muted: #e9ecef;
+
+/* Spacing scale */
 $spacer-1: 0.25rem;
 $spacer-2: 0.5rem;
 $spacer-3: 1rem;
 $spacer-4: 1.5rem;
 $spacer-5: 3rem;
+$spacer-6: 4rem;
+$spacer-7: 6rem;
 
-// Typography
-$font-family-base: 'Segoe UI', system-ui, sans-serif;
+/* Typography */
+$font-family-base: var(--font-open-sans), var(--font-gelasio), sans-serif;
 $font-size-base: 1rem;
 $line-height-base: 1.5;
 
-// Breakpoints
+/* Breakpoints */
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
+
+/* Transition variables */
+$transition-base: 0.3s ease-in-out;
+$transition-fast: 0.15s linear;
+$transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+/* Z-index layers */
+$z-index: (
+  modal: 1000,
+  overlay: 900,
+  dropdown: 800,
+  header: 700,
+  footer: 600,
+  default: 1,
+  below: -1
+);
