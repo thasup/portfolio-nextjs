@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 interface StaticImageProps {
   src: string;
@@ -37,14 +37,15 @@ const StaticImage: React.FC<StaticImageProps> = ({
       width={width}
       height={height}
       className={className}
-      style={{ 
-        objectFit: fit,
-        width: '100%',
-        height: 'auto'
-      }}
       priority={priority}
       sizes="(max-width: 768px) 100vw, 50vw"
-    />
+      style={{
+        objectFit: fit,
+        width: '100%',
+        height: 'auto',
+        maxWidth: "100%",
+        height: "auto"
+      }} />
   );
 };
 

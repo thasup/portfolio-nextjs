@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 interface WebImageProps {
   src: string;
@@ -38,10 +38,14 @@ const WebImage: React.FC<WebImageProps> = ({
       alt={alt}
       width={computedWidth}
       height={height}
-      style={{ objectFit: 'contain', ...props.style }}
       priority={priority}
       sizes="(max-width: 768px) 100vw, 50vw"
-    />
+      style={{
+        objectFit: 'contain',
+        ...props.style,
+        maxWidth: "100%",
+        height: "auto"
+      }} />
   );
 };
 
