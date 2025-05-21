@@ -12,6 +12,7 @@ interface StaticImageProps {
   priority?: boolean;
   quality?: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const StaticImage: React.FC<StaticImageProps> = ({

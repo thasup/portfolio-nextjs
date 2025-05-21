@@ -29,9 +29,7 @@ const CustomHeader = () => {
             alt="website_logo"
             width={30}
             height={30}
-            layout="fixed"
             className="logo-nav"
-            fit="cover"
             priority={false}
             quality={85}
             style={{
