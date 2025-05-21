@@ -1,14 +1,9 @@
-// Base
-@use 'base/reset';
+@use "bootstrap"; // Import Bootstrap styles
 
-// Config
+@use 'base/reset';
 @use 'config/variables' as *;
 @use 'config/mixins' as *;
-
-// Components
 @use 'components';
-
-// Vendor
 @use 'tailwindcss';
 
 /* --------------------

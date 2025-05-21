@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.7",
+    "bootstrap": "^5.3.6",
     "next": "^15.3.2",
     "nextjs-google-analytics": "^2.3.7",
     "postcss": "^8.5.2",
