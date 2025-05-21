@@ -5,6 +5,7 @@ import frameworkData from "@/data/skills/framework.json";
 import devopsData from "@/data/skills/devops.json";
 import toolData from "@/data/skills/tool.json";
 import technologyData from "@/data/skills/technology.json";
+
 import styles from './Skills.module.scss';
 
 interface SkillListProps {
@@ -20,7 +21,7 @@ interface SkillListProps {
 
 const Skills = () => {
   const SkillList: React.FC<SkillListProps> = ({ title, skills }) => (
-    <li>
+    <li className={styles.skillList}>
       <strong>{title}:</strong>
       <div className={styles.skillItem}>
         {skills.map((skill) => (

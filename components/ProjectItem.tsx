@@ -1,7 +1,14 @@
 import React from "react";
 import { Button, Col } from "react-bootstrap";
 
-const ProjectItem = ({
+const ProjectItem: React.FC<{
+  image: string;
+  title: string;
+  description: string;
+  tags: string[];
+  demoLink?: string;
+  githubLink?: string;
+}> = ({
   image,
   title,
   description,
