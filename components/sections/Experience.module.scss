@@ -4,17 +4,17 @@
 .experienceSection {
   .expItem,
   .eduItem {
-    padding: rem(0, 0, 40, 20);
-    margin: rem(0, 0, 0, 12);
-    border-left: rem(2) solid var(--secondary-color);
+    padding: 0 0 rem(40, 16) rem(20, 16);
+    margin: 0 0 0 rem(12, 16);
+    border-left: rem(2, 16) solid var(--secondary-color);
     position: relative;
 
     a[role="button"] {
-      box-shadow: 0 rem(8) rem(16) 0 rgba(0, 0, 0, 0.16);
+      box-shadow: 0 rem(8, 16) rem(16, 16) 0 rgba(0, 0, 0, 0.16);
       @include transition();
 
       &:hover {
-        box-shadow: 0 rem(8) rem(32) 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 rem(8, 16) rem(32, 16) 0 rgba(0, 0, 0, 0.2);
       }
     }
 
@@ -23,7 +23,7 @@
     }
 
     &::before {
-      @include position-absolute((content: '""', width: rem(20), height: rem(20), border-radius: 50%, left: rem(-11), top: 0, background: #fff, border: rem(3) solid var(--secondary-color)));
+      @include position-absolute((content: '""', width: rem(20, 16), height: rem(20, 16), border-radius: 50%, left: rem(-11, 16), top: 0, background: #fff, border: rem(3, 16) solid var(--secondary-color)));
     }
 
     li {

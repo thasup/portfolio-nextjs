@@ -1,6 +1,6 @@
 /* Color palette */
-$color-primary: #007bff;
-$color-secondary: #6c757d;
+$color-primary: #2c3e50;
+$color-secondary: #62efcd;
 $color-success: #28a745;
 $color-danger: #dc3545;
 $color-light: #f8f9fa;
@@ -12,6 +12,15 @@ $color-secondary-hover: lighten($color-secondary, 10%);
 $color-success-light: lighten($color-success, 20%);
 $color-danger-dark: darken($color-danger, 10%);
 $color-light-muted: #e9ecef;
+$color-primary-color: $color-primary;
+$color-primary-light-color: lighten($color-primary, 20%);
+$color-primary-sub-color: #345676;
+$color-secondary-color: $color-secondary;
+$color-overlay: #415162;
+$color-white: #fff;
+$color-black: #000;
+
+$shadow-base: 0px 2px 10px rgba(0, 0, 0, 0.15);
 
 /* Spacing scale */
 $spacer-1: 0.25rem;

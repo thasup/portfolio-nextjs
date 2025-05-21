@@ -1,18 +1,40 @@
-/* Add your styles for the Contact section here */
-.contact {
-  /* Example styles */
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
+@use '@/styles/config/variables' as *;
+@use '@/styles/config/mixins' as *;
+
+.contact-info {
+  i {
+    font-size: rem(32);
+  }
 }
 
-.contact-title {
-  font-size: 24px;
+.social-links {
+  padding-bottom: rem(20);
+
+  a {
+    font-size: rem(24);
+    display: inline-block;
+    background: #fff;
+    color: var(--primary-color);
+    line-height: 0;
+    padding: rem(12) 0;
+    margin-right: rem(4);
+    border-radius: 50%;
+    text-align: center;
+    width: rem(48);
+    height: rem(48);
+    transition: 0.3s;
+    border: rem(1) solid var(--primary-color);
+
+    &:hover {
+      background: var(--secondary-color);
+      border: rem(1) solid var(--secondary-color);
+      color: #fff;
+    }
+  }
+}
+
+.col-form-label {
+  font-size: rem(20);
   font-weight: bold;
-}
-
-.contact-item {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #333;
+  padding-top: 0;
 }
