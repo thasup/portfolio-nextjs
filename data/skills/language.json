@@ -1,18 +1,11 @@
 {
     "data": [
         {
-            "id": "HTML",
-            "logo": "html5",
+            "id": "Typescript",
+            "logo": "typescript",
             "color": "fff",
-            "labelColor": "E34F26",
-            "width": 57
-        },
-        {
-            "id": "CSS",
-            "logo": "css3",
-            "color": "fff",
-            "labelColor": "1572B6",
-            "width": 49
+            "labelColor": "3178C6",
+            "width": 85
         },
         {
             "id": "Javascript",
@@ -22,11 +15,25 @@
             "width": 83
         },
         {
-            "id": "Typescript",
-            "logo": "typescript",
+            "id": "HTML",
+            "logo": "html5",
             "color": "fff",
-            "labelColor": "3178C6",
-            "width": 85
+            "labelColor": "E34F26",
+            "width": 57
+        },
+        {
+            "id": "SCSS",
+            "logo": "sass",
+            "color": "fff",
+            "labelColor": "CC6699",
+            "width": 59
+        },
+        {
+            "id": "CSS",
+            "logo": "css3",
+            "color": "fff",
+            "labelColor": "1572B6",
+            "width": 49
         },
         {
             "id": "Python",
@@ -41,13 +48,6 @@
             "color": "fff",
             "labelColor": "777BB4",
             "width": 49
-        },
-        {
-            "id": "SCSS",
-            "logo": "sass",
-            "color": "fff",
-            "labelColor": "CC6699",
-            "width": 59
         },
         {
             "id": "Solidity",

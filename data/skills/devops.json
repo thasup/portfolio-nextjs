@@ -22,6 +22,27 @@
             "width": 97
         },
         {
+            "id": "Heroku",
+            "logo": "heroku",
+            "color": "fff",
+            "labelColor": "430098",
+            "width": 63
+        },
+        {
+            "id": "Netlify",
+            "logo": "netlify",
+            "color": "00C7B7",
+            "labelColor": "151a1e",
+            "width": 67
+        },
+        {
+            "id": "Render",
+            "logo": "render",
+            "color": "46E3B7",
+            "labelColor": "000000",
+            "width": 63
+        },
+        {
             "id": "Kubernetes",
             "logo": "kubernetes",
             "color": "fff",

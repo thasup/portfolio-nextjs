@@ -43,27 +43,6 @@
             "width": 47
         },
         {
-            "id": "Heroku",
-            "logo": "heroku",
-            "color": "fff",
-            "labelColor": "430098",
-            "width": 63
-        },
-        {
-            "id": "Netlify",
-            "logo": "netlify",
-            "color": "00C7B7",
-            "labelColor": "151a1e",
-            "width": 67
-        },
-        {
-            "id": "Render",
-            "logo": "render",
-            "color": "46E3B7",
-            "labelColor": "000000",
-            "width": 63
-        },
-        {
             "id": "GraphQL",
             "logo": "graphql",
             "color": "fff",
@@ -97,13 +76,6 @@
             "color": "FFCA28",
             "labelColor": "1a73e8",
             "width": 69
-        },
-        {
-            "id": "DigitalOcean",
-            "logo": "digitalocean",
-            "color": "fff",
-            "labelColor": "0080FF",
-            "width": 97
         }
     ]
 }

@@ -127,8 +127,8 @@ const Experience = () => {
                 </div>
               </div>
 
-              <div className="exp-item">
-                <h5 className="exp-year">2023 - 2024</h5>
+              <div className="exp-item --last-item">
+                <h5 className="exp-year">2022 - 2024</h5>
                 <StaticImage
                   src={"/img/maqe_logo.jpeg"}
                   alt={"MAQE"}
@@ -139,17 +139,7 @@ const Experience = () => {
                 <h4>Associate Front-End Engineer</h4>
                 <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
                 <p>Bangkok, Thailand</p>
-              </div>
-
-              <div className="exp-item">
-                <h5 className="exp-year">2022 - 2023</h5>
-                <StaticImage
-                  src={"/img/maqe_logo.jpeg"}
-                  alt={"MAQE"}
-                  width={40}
-                  height={40}
-                  layout={"fixed"}
-                />
+                <br />
                 <h4>Front-End Engineer</h4>
                 <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
                 <p>Bangkok, Thailand</p>

@@ -50,13 +50,6 @@
             "width": 87
         },
         {
-            "id": "jQuery",
-            "logo": "jquery",
-            "color": "fff",
-            "labelColor": "0769AD",
-            "width": 67
-        },
-        {
             "id": "Tailwind",
             "logo": "tailwindcss",
             "color": "fff",
@@ -90,6 +83,15 @@
             "color": "fff",
             "labelColor": "1867C0",
             "width": 63
+        }
+    ],
+    "hidden": [
+        {
+            "id": "jQuery",
+            "logo": "jquery",
+            "color": "fff",
+            "labelColor": "0769AD",
+            "width": 67
         }
     ]
 }

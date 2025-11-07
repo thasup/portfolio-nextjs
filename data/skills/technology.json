@@ -8,27 +8,6 @@
             "width": 91
         },
         {
-            "id": "Smart Contract & Web3",
-            "logo": "ethereum",
-            "color": "white",
-            "labelColor": "9999FF",
-            "width": 150
-        },
-        {
-            "id": "GraphQL",
-            "logo": "graphql",
-            "color": "white",
-            "labelColor": "E10098",
-            "width": 77
-        },
-        {
-            "id": "Web Development",
-            "logo": "mdnwebdocs",
-            "color": "white",
-            "labelColor": "FF6600",
-            "width": 133
-        },
-        {
             "id": "Prompt Engineering",
             "logo": "openai",
             "color": "white",
@@ -36,11 +15,18 @@
             "width": 145
         },
         {
-            "id": "Mechanical Engineering",
-            "logo": "autodesk",
+            "id": "Smart Contract & Web3",
+            "logo": "ethereum",
             "color": "white",
-            "labelColor": "4C8CBF",
-            "width": 167
+            "labelColor": "9999FF",
+            "width": 150
+        },
+        {
+            "id": "Web Development",
+            "logo": "mdnwebdocs",
+            "color": "white",
+            "labelColor": "FF6600",
+            "width": 133
         },
         {
             "id": "UX Design",
