@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "Windows",
+      "logo": "windows",
+      "color": "fff",
+      "labelColor": "0078D6",
+      "width": 81
+    },
+    {
+      "id": "macOS",
+      "logo": "apple",
+      "color": "fff",
+      "labelColor": "6b6c6f",
+      "width": 71
+    }
+  ]
+}

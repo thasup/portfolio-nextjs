@@ -15,6 +15,13 @@
             "width": 75
         },
         {
+            "id": "Gulp",
+            "logo": "gulp",
+            "color": "fff",
+            "labelColor": "CF4647",
+            "width": 55
+        },
+        {
             "id": "Vite",
             "logo": "vite",
             "color": "ffce27",
@@ -22,11 +29,46 @@
             "width": 49
         },
         {
+            "id": "Webpack",
+            "logo": "webpack",
+            "color": "8DD6F9",
+            "labelColor": "2b3a42",
+            "width": 77
+        },
+        {
             "id": "Jira",
             "logo": "jirasoftware",
             "color": "white",
             "labelColor": "0052CC",
             "width": 47
+        },
+        {
+            "id": "Heroku",
+            "logo": "heroku",
+            "color": "fff",
+            "labelColor": "430098",
+            "width": 63
+        },
+        {
+            "id": "Netlify",
+            "logo": "netlify",
+            "color": "00C7B7",
+            "labelColor": "151a1e",
+            "width": 67
+        },
+        {
+            "id": "Render",
+            "logo": "render",
+            "color": "46E3B7",
+            "labelColor": "000000",
+            "width": 63
+        },
+        {
+            "id": "GraphQL",
+            "logo": "graphql",
+            "color": "fff",
+            "labelColor": "E10098",
+            "width": 77
         },
         {
             "id": "Magento",
@@ -48,6 +90,20 @@
             "color": "3FCF8E",
             "labelColor": "282828",
             "width": 81
+        },
+        {
+            "id": "Firebase",
+            "logo": "firebase",
+            "color": "FFCA28",
+            "labelColor": "1a73e8",
+            "width": 69
+        },
+        {
+            "id": "DigitalOcean",
+            "logo": "digitalocean",
+            "color": "fff",
+            "labelColor": "0080FF",
+            "width": 97
         }
     ]
 }

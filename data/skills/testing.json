@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "id": "Jest",
+      "logo": "jest",
+      "color": "fff",
+      "labelColor": "C21325",
+      "width": 53
+    },
+    {
+      "id": "Mocha",
+      "logo": "mocha",
+      "color": "fff",
+      "labelColor": "8D6748",
+      "width": 63
+    },
+    {
+      "id": "Vitest",
+      "logo": "vitest",
+      "color": "fff",
+      "labelColor": "6E9F18",
+      "width": 63
+    }
+  ]
+}

@@ -48,6 +48,48 @@
             "color": "fff",
             "labelColor": "3858e9",
             "width": 87
+        },
+        {
+            "id": "jQuery",
+            "logo": "jquery",
+            "color": "fff",
+            "labelColor": "0769AD",
+            "width": 67
+        },
+        {
+            "id": "Tailwind",
+            "logo": "tailwindcss",
+            "color": "fff",
+            "labelColor": "06B6D4",
+            "width": 77
+        },
+        {
+            "id": "Bootstrap",
+            "logo": "bootstrap",
+            "color": "fff",
+            "labelColor": "7952B3",
+            "width": 81
+        },
+        {
+            "id": "MUI",
+            "logo": "mui",
+            "color": "fff",
+            "labelColor": "007FFF",
+            "width": 47
+        },
+        {
+            "id": "Ant Design",
+            "logo": "antdesign",
+            "color": "fff",
+            "labelColor": "0170FE",
+            "width": 93
+        },
+        {
+            "id": "Vuetify",
+            "logo": "vuetify",
+            "color": "fff",
+            "labelColor": "1867C0",
+            "width": 63
         }
     ]
 }

@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "LangChain",
+      "logo": "langchain",
+      "color": "fff",
+      "labelColor": "1d3d3c",
+      "width": 89
+    },
+    {
+      "id": "AI SDK",
+      "logo": "vercel",
+      "color": "fff",
+      "labelColor": "000000",
+      "width": 65
+    }
+  ]
+}

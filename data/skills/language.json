@@ -1,9 +1,23 @@
 {
     "data": [
         {
+            "id": "HTML",
+            "logo": "html5",
+            "color": "fff",
+            "labelColor": "E34F26",
+            "width": 57
+        },
+        {
+            "id": "CSS",
+            "logo": "css3",
+            "color": "fff",
+            "labelColor": "1572B6",
+            "width": 49
+        },
+        {
             "id": "Javascript",
             "logo": "javascript",
-            "color": "000",
+            "color": "000000",
             "labelColor": "F7DF1E",
             "width": 83
         },
@@ -25,7 +39,7 @@
             "id": "PHP",
             "logo": "PHP",
             "color": "fff",
-            "labelColor": "7a86b8",
+            "labelColor": "777BB4",
             "width": 49
         },
         {

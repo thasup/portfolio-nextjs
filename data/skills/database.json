@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "id": "MongoDB",
+      "logo": "mongodb",
+      "color": "00ed64",
+      "labelColor": "033430",
+      "width": 83
+    }
+  ]
+}

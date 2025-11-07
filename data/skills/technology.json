@@ -1,7 +1,7 @@
 {
     "data": [
         {
-            "id": "OpenAI_API",
+            "id": "Generative AI",
             "logo": "openai",
             "color": "white",
             "labelColor": "19c37d",
@@ -20,6 +20,34 @@
             "color": "white",
             "labelColor": "E10098",
             "width": 77
+        },
+        {
+            "id": "Web Development",
+            "logo": "mdnwebdocs",
+            "color": "white",
+            "labelColor": "FF6600",
+            "width": 133
+        },
+        {
+            "id": "Prompt Engineering",
+            "logo": "openai",
+            "color": "white",
+            "labelColor": "412991",
+            "width": 145
+        },
+        {
+            "id": "Mechanical Engineering",
+            "logo": "autodesk",
+            "color": "white",
+            "labelColor": "4C8CBF",
+            "width": 167
+        },
+        {
+            "id": "UX Design",
+            "logo": "figma",
+            "color": "white",
+            "labelColor": "00adbc",
+            "width": 91
         }
     ]
 }
