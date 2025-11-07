@@ -20,6 +20,13 @@
       "color": "fff",
       "labelColor": "6E9F18",
       "width": 63
+    },
+    {
+      "id": "Cypress",
+      "logo": "cypress",
+      "color": "ffffff",
+      "labelColor": "17202C",
+      "width": 71
     }
   ]
 }

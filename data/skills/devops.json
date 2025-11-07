@@ -8,7 +8,7 @@
             "width": 67
         },
         {
-            "id": "Github_Actions",
+            "id": "Github Actions",
             "logo": "github",
             "color": "fff",
             "labelColor": "181717",
@@ -51,10 +51,24 @@
         },
         {
             "id": "AWS",
-            "logo": "amazon",
-            "color": "ec7211",
-            "labelColor": "2d3541",
+            "logo": "amazonaws",
+            "color": "FF9900",
+            "labelColor": "232F3E",
             "width": 53
+        },
+        {
+            "id": "GitLab",
+            "logo": "gitlab",
+            "color": "ffffff",
+            "labelColor": "FC6D26",
+            "width": 69
+        },
+        {
+            "id": "Vercel",
+            "logo": "vercel",
+            "color": "ffffff",
+            "labelColor": "000000",
+            "width": 57
         }
     ]
 }

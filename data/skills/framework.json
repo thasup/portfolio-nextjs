@@ -92,6 +92,13 @@
             "color": "fff",
             "labelColor": "0769AD",
             "width": 67
+        },
+        {
+            "id": "Laravel",
+            "logo": "laravel",
+            "color": "ffffff",
+            "labelColor": "FF2D20",
+            "width": 69
         }
     ]
 }

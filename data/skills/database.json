@@ -6,6 +6,22 @@
       "color": "00ed64",
       "labelColor": "033430",
       "width": 83
+    },
+    {
+      "id": "MySQL",
+      "logo": "mysql",
+      "color": "ffffff",
+      "labelColor": "4479A1",
+      "width": 69
+    }
+  ],
+  "hidden": [
+    {
+      "id": "MariaDB",
+      "logo": "mariadb",
+      "color": "ffffff",
+      "labelColor": "1F305F",
+      "width": 79
     }
   ]
 }

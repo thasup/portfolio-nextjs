@@ -50,6 +50,27 @@
             "width": 77
         },
         {
+            "id": "NPM",
+            "logo": "npm",
+            "color": "white",
+            "labelColor": "CB3837",
+            "width": 49
+        },
+        {
+            "id": "ESLint",
+            "logo": "eslint",
+            "color": "white",
+            "labelColor": "4B32C3",
+            "width": 61
+        },
+        {
+            "id": "Stylelint",
+            "logo": "stylelint",
+            "color": "white",
+            "labelColor": "263238",
+            "width": 77
+        },
+        {
             "id": "Magento",
             "logo": "magento",
             "color": "white",
@@ -76,6 +97,27 @@
             "color": "FFCA28",
             "labelColor": "1a73e8",
             "width": 69
+        },
+        {
+            "id": "Google Analytics",
+            "logo": "googleanalytics",
+            "color": "ffffff",
+            "labelColor": "E37400",
+            "width": 121
+        },
+        {
+            "id": "Google Tag Manager",
+            "logo": "googletagmanager",
+            "color": "ffffff",
+            "labelColor": "246FDB",
+            "width": 155
+        },
+        {
+            "id": "Alchemy",
+            "logo": "alchemy",
+            "color": "ffffff",
+            "labelColor": "0B0B0B",
+            "width": 81
         }
     ]
 }
