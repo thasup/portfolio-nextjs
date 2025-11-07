@@ -325,10 +325,14 @@ body {
 #experience {
 	.exp-item,
 	.edu-item {
-		padding: rem(0) rem(0) rem(20) rem(20);
+		padding: rem(0) rem(0) rem(28) rem(20);
 		margin: rem(0) rem(0) rem(0) rem(12);
 		border-left: rem(2) solid var(--secondary-color);
 		position: relative;
+
+		&.--last-item {
+			padding-bottom: 0;
+		}
 
 		a[role="button"] {
 			box-shadow: 0 rem(8) rem(16) 0 rgba(0, 0, 0, 0.16);

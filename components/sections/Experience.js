@@ -12,22 +12,10 @@ const Experience = () => {
           <div className="row">
             {/* Degree and Experience Section */}
             <div className="col-lg-6 mb-5" id="degree">
-
-              {/* Degree Sub Section */}
-              <h3 className="exp-title">Degree</h3>
-              <div className="exp-item mt-4">
-                <h5 className="exp-year">2014 - 2018</h5>
-                <h4>Bachelor’s Degree in Mechanical Engineering</h4>
-                <h5 className="exp-institute">
-                  King Mongkut&apos;s Institute of Technology Ladkrabang
-                </h5>
-                <p>Bangkok, Thailand</p>
-              </div>
-
               {/* Professional Experience Sub Section */}
-              <h3 className="exp-title mt-5">Professional Experience</h3>
+              <h3 className="exp-title">Professional Experience</h3>
               <div className="exp-item mt-4">
-                <h5 className="exp-year">2025 - Present</h5>
+                <h5 className="exp-year">2024 - Present</h5>
                 <StaticImage
                   src={"/img/teams_by_maqe_logo.jpeg"}
                   alt={"TeamStack"}
@@ -35,16 +23,126 @@ const Experience = () => {
                   height={40}
                   layout={"fixed"}
                 />
-                <h4>Senior Frontend Engineer</h4>
-                <h5 className="exp-institute">TeamStack</h5>
+                <h4>Senior Front-End Engineer</h4>
+                <h5 className="exp-institute">TeamStack (formerly MAQE)</h5>
                 <p>Remote</p>
-                {/* <ul className="mb-0">
-                  <li>Continue role and responsibilities as listed below.</li>
-                </ul> */}
+                <div>
+                  <p>
+                    At MAQE, I focused on crafting engaging user interfaces and delivering product
+                    features that elevated the user experience. I partnered closely with
+                    cross‑functional teams to ship high‑quality, user‑centric solutions and
+                    proactively resolved challenges throughout the development lifecycle.
+                  </p>
+
+                  <br />
+                  <h6 className="mt-3">Customer-Focused Delivery</h6>
+                  <p className="mb-2">
+                    Delivering high‑quality, user‑centric solutions aligned to customer needs and
+                    business goals.
+                  </p>
+                  <ul className="mb-3">
+                    <li>
+                      <strong>Event Creation & Management Platform</strong> – Built an event
+                      platform leveraging generative AI to simplify organizer and attendee
+                      workflows.
+                      <div>
+                        <em>Tech Stack:</em> Vue 3, Generative AI, TypeScript, Vuetify, Vite, GA4
+                        &amp; GTM, AWS
+                      </div>
+                    </li>
+                    <li className="mt-2">
+                      <strong>Token Gating Application</strong> – Access control for NFT communities
+                      using Web3 on Ethereum and L2 blockchains.
+                      <div>
+                        <em>Tech Stack:</em> Vue 3, NestJS, Web3, Vite, Vuetify, TypeScript, Alchemy
+                        SDK, GitHub Actions, AWS, Docker, Vitest
+                      </div>
+                    </li>
+                    <li className="mt-2">
+                      <strong>Tangier</strong> – Tool for creating Giving Circles to raise and
+                      distribute funds within communities.
+                      <div>
+                        <em>Tech Stack:</em> Vue 3, Solidity, Smart Contract, TypeScript, Alchemy,
+                        Web3, NestJS
+                      </div>
+                    </li>
+                    <li className="mt-2">
+                      <strong>AP Thai</strong> – Consumer property website for discovery and
+                      investment.
+                      <div>
+                        <em>Tech Stack:</em> NuxtJS, SCSS, Laravel, MariaDB, Docker, Cypress, GA4
+                        &amp; GTM, GitLab, AWS
+                      </div>
+                    </li>
+                  </ul>
+
+                  <br />
+                  <h6 className="mt-3">Cultural Added</h6>
+                  <p className="mb-2">
+                    Fostering a positive, collaborative culture alongside technical excellence.
+                  </p>
+                  <ul className="mb-3">
+                    <li>
+                      Hosted the 4th‑gen FeDX guild monthly to strengthen collaboration between
+                      Frontend Engineers and Designers.
+                    </li>
+                    <li>Shared knowledge, experiences, and questions across 50+ guild sessions.</li>
+                    <li>Served as technical team for the GuildFest 2024 party web application.</li>
+                    <li>
+                      Initiate Remote Roast, a 30-minute informal session that curbs remote
+                      isolation and burnout while boosting morale, trust, and fostering
+                      psychological safety within a team.
+                    </li>
+                  </ul>
+
+                  <br />
+                  <h6 className="mt-3">Internal Initiatives</h6>
+                  <p className="mb-2">
+                    Driving internal improvements to enhance team efficiency and operations.
+                  </p>
+                  <ul className="mb-0">
+                    <li>
+                      <strong>ESLint &amp; StyleLint Config MAQE</strong> – Maintained open‑source
+                      linting packages and conducted quarterly reviews of browser/device support.
+                      <div>
+                        <em>Tech Stack:</em> NPM package, ESLint, StyleLint, SASS
+                      </div>
+                    </li>
+                    <li className="mt-2">
+                      <strong>The Online Catalog Platform</strong> – Volunteered to explore Magento
+                      to improve Medium B2B purchasing experiences via optimized, automated sales
+                      operations.
+                      <div>
+                        <em>Tech Stack:</em> React, GraphQL, Magento, TailwindCSS, PHP
+                      </div>
+                    </li>
+                    <li className="mt-2">
+                      <strong>MAQE Corporate Website</strong> – Optimized performance achieving +41%
+                      performance score and −29% load time.
+                      <div>
+                        <em>Tech Stack:</em> WordPress, PHP, jQuery, SASS, GA4
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               <div className="exp-item">
-                <h5 className="exp-year">2022 - 2025</h5>
+                <h5 className="exp-year">2023 - 2024</h5>
+                <StaticImage
+                  src={"/img/maqe_logo.jpeg"}
+                  alt={"MAQE"}
+                  width={40}
+                  height={40}
+                  layout={"fixed"}
+                />
+                <h4>Associate Front-End Engineer</h4>
+                <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
+                <p>Bangkok, Thailand</p>
+              </div>
+
+              <div className="exp-item">
+                <h5 className="exp-year">2022 - 2023</h5>
                 <StaticImage
                   src={"/img/maqe_logo.jpeg"}
                   alt={"MAQE"}
@@ -55,7 +153,7 @@ const Experience = () => {
                 <h4>Front-End Engineer</h4>
                 <h5 className="exp-institute">MAQE Bangkok Co., Ltd.</h5>
                 <p>Bangkok, Thailand</p>
-                <ul className="mb-0">
+                {/* <ul className="mb-0">
                   <li>Implement the features and user interfaces of the product</li>
                   <li>
                     Architect efficient and reusable front-end systems that drive complex web
@@ -69,7 +167,7 @@ const Experience = () => {
                     Identify and resolve potential issues during the development process including
                     performance and scalability issues
                   </li>
-                </ul>
+                </ul> */}
               </div>
 
               {/* <div className="exp-item">
@@ -101,145 +199,152 @@ const Experience = () => {
 
             {/* Certification Section */}
             <div className="col-lg-6" id="certificate">
-              <h3 className="edu-title">Certificate</h3>
+              <div className="edu-section mb-4">
+                <h3 className="edu-title">Certificate</h3>
+                <div className="edu-item" id="cert4">
+                  <h5 className="edu-year">2025</h5>
+                  <h4>AWS Certified Cloud Practitioner</h4>
+                  <StaticImage
+                    src={"/img/aws-logo.png"}
+                    alt={"AWS"}
+                    width={67}
+                    height={40}
+                    layout={"fixed"}
+                  />
+                  <p>
+                    Earners of this certification have a fundamental understanding of IT services
+                    and their uses in the AWS Cloud. They demonstrated cloud fluency and
+                    foundational AWS knowledge. Badge owners are able to identify essential AWS
+                    services necessary to set up AWS-focused projects.
+                  </p>
+                  <a
+                    className="btn btn-sm btn-primary"
+                    target="__blank"
+                    rel="noopener noreferrer"
+                    role="button"
+                    href="https://www.credly.com/badges/59968dd7-a269-4c22-9a06-bd0f2532556e/public_url"
+                  >
+                    See credential
+                  </a>
+                </div>
 
-              <div className="edu-item" id="cert4">
-                <h5 className="edu-year">2025</h5>
-                <h4>AWS Certified Cloud Practitioner</h4>
-                <StaticImage
-                  src={"/img/aws-logo.png"}
-                  alt={"AWS"}
-                  width={67}
-                  height={40}
-                  layout={"fixed"}
-                />
-                <p>
-                  Earners of this certification have a fundamental understanding of IT services and their uses in the AWS Cloud. 
-                  They demonstrated cloud fluency and foundational AWS knowledge. 
-                  Badge owners are able to identify essential AWS services necessary to set up AWS-focused projects.
-                </p>
+                <div className="edu-item" id="cert3">
+                  <h5 className="edu-year">2023</h5>
+                  <h4>TOEIC® Listening and Reading Test</h4>
+                  <StaticImage
+                    src={"/img/ets-logo.png"}
+                    alt={"ETS"}
+                    width={58}
+                    height={40}
+                    layout={"fixed"}
+                  />
+                  <h5>Score : 915</h5>
+                  <p>Listening part score : 470, Reading part score : 445</p>
+                  <a
+                    className="btn btn-sm btn-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.dropbox.com/scl/fi/mhnp7rw0v7zk1l2ycpzzl/TOEIC-2023.jpeg?rlkey=2hxjyhes1oxfttbofr9zafey2&st=m0nuyon8&dl=0"
+                  >
+                    See credential
+                  </a>
+                </div>
+
+                <div className="edu-item" id="cert2">
+                  <h5 className="edu-year">2021</h5>
+                  <h4>Front End Web Developer Nanodegree Program</h4>
+                  <StaticImage
+                    src={"/img/Udacity.png"}
+                    alt={"Udacity"}
+                    width={180}
+                    height={30}
+                    layout={"fixed"}
+                  />
+                  <p>
+                    The goal of the Front End Web Developer Nanodegree program is to equip learners
+                    with the unique skills they need to build and develop a variety of websites and
+                    applications.
+                  </p>
+                  <ul>
+                    <li>
+                      be able to construct responsive websites using CSS, Flexbox and CSS Grid
+                    </li>
+                    <li>
+                      develop interactive websites and UI (User Interface) applications using
+                      JavaScript and HTML
+                    </li>
+                    <li>connect a web application to backend server data using Node.js</li>
+                    <li>
+                      build competency automating application build and deployment using Webpack
+                    </li>
+                    <li>improving offline performance of websites using Service Worker</li>
+                  </ul>
+                  <a
+                    className="btn btn-sm btn-primary"
+                    target="__blank"
+                    rel="noopener noreferrer"
+                    role="button"
+                    href="https://www.dropbox.com/s/7mk3u6qpcear4x8/My_Udacity_Certification%20%28front%20end%20web%20developer%29.pdf?dl=0"
+                  >
+                    See credential
+                  </a>
+                </div>
+
+                <div className="edu-item --last-item" id="cert1">
+                  <h5 className="edu-year">2021</h5>
+                  <h4>The Complete 2022 Web Development Bootcamp</h4>
+                  <StaticImage
+                    src={"/img/Udemy.png"}
+                    alt={"Udemy"}
+                    width={110}
+                    height={40}
+                    layout={"fixed"}
+                  />
+                  <ul>
+                    <li>Be able to build ANY website you want.</li>
+                    <li>Craft a portfolio of websites to apply for junior developer jobs.</li>
+                    <li>Build fully-fledged websites and web apps for your startup or business.</li>
+                    <li>Master backend development with Node</li>
+                    <li>Master frontend development with React</li>
+                    <li>
+                      Learn the latest frameworks and technologies, including Javascript ES6,
+                      Bootstrap 4, MongoDB.
+                    </li>
+                    <li>Learn professional developer best practices.</li>
+                  </ul>
+                  <a
+                    className="btn btn-sm btn-primary"
+                    target="__blank"
+                    rel="noopener noreferrer"
+                    role="button"
+                    href="https://www.dropbox.com/s/qifxvzzhrougo41/My_Udemy_Certification%20%28web%20developer%20bootcamp%29.pdf?dl=0"
+                  >
+                    See credential
+                  </a>
+                </div>
+
                 <a
-                  className="btn btn-sm btn-primary"
+                  className="see-more-btn"
                   target="__blank"
                   rel="noopener noreferrer"
-                  role="button"
-                  href="https://www.credly.com/badges/59968dd7-a269-4c22-9a06-bd0f2532556e/public_url"
+                  href="https://airtable.com/appoPztPp3kjnaI4Q/shrDV6n8ugfuxK6pK"
                 >
-                  See credential
+                  See more
                 </a>
               </div>
 
-              <div className="edu-item" id="cert3">
-                <h5 className="edu-year">2023</h5>
-                <h4>TOEIC® Listening and Reading Test</h4>
-                <StaticImage
-                  src={"/img/ets-logo.png"}
-                  alt={"ETS"}
-                  width={58}
-                  height={40}
-                  layout={"fixed"}
-                />
-                <h5>Score : 915</h5>
-                <p>Listening part score : 470, Reading part score : 445</p>
-                <a className="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer"
-                  href="https://www.dropbox.com/scl/fi/mhnp7rw0v7zk1l2ycpzzl/TOEIC-2023.jpeg?rlkey=2hxjyhes1oxfttbofr9zafey2&st=m0nuyon8&dl=0">
-                  See credential
-                </a>
+              <div className="edu-section">
+                {/* Degree Sub Section */}
+                <h3 className="exp-title">Degree</h3>
+                <div className="exp-item --last-item mt-4">
+                  <h5 className="exp-year">2014 - 2018</h5>
+                  <h4>Bachelor’s Degree in Mechanical Engineering</h4>
+                  <h5 className="exp-institute">
+                    King Mongkut&apos;s Institute of Technology Ladkrabang
+                  </h5>
+                  <p>Bangkok, Thailand</p>
+                </div>
               </div>
-
-              <div className="edu-item" id="cert2">
-                <h5 className="edu-year">2021</h5>
-                <h4>Front End Web Developer Nanodegree Program</h4>
-                <StaticImage
-                  src={"/img/Udacity.png"}
-                  alt={"Udacity"}
-                  width={180}
-                  height={30}
-                  layout={"fixed"}
-                />
-                <p>
-                  The goal of the Front End Web Developer Nanodegree program is
-                  to equip learners with the unique skills they need to build
-                  and develop a variety of websites and applications.
-                </p>
-                <ul>
-                  <li>
-                    be able to construct responsive websites using CSS, Flexbox
-                    and CSS Grid
-                  </li>
-                  <li>
-                    develop interactive websites and UI (User Interface)
-                    applications using JavaScript and HTML
-                  </li>
-                  <li>
-                    connect a web application to backend server data using
-                    Node.js
-                  </li>
-                  <li>
-                    build competency automating application build and deployment
-                    using Webpack
-                  </li>
-                  <li>
-                    improving offline performance of websites using Service
-                    Worker
-                  </li>
-                </ul>
-                <a
-                  className="btn btn-sm btn-primary"
-                  target="__blank"
-                  rel="noopener noreferrer"
-                  role="button"
-                  href="https://www.dropbox.com/s/7mk3u6qpcear4x8/My_Udacity_Certification%20%28front%20end%20web%20developer%29.pdf?dl=0"
-                >
-                  See credential
-                </a>
-              </div>
-
-              <div className="edu-item" id="cert1">
-                <h5 className="edu-year">2021</h5>
-                <h4>The Complete 2022 Web Development Bootcamp</h4>
-                <StaticImage
-                  src={"/img/Udemy.png"}
-                  alt={"Udemy"}
-                  width={110}
-                  height={40}
-                  layout={"fixed"}
-                />
-                <ul>
-                  <li>Be able to build ANY website you want.</li>
-                  <li>
-                    Craft a portfolio of websites to apply for junior developer
-                    jobs.
-                  </li>
-                  <li>
-                    Build fully-fledged websites and web apps for your startup
-                    or business.
-                  </li>
-                  <li>Master backend development with Node</li>
-                  <li>Master frontend development with React</li>
-                  <li>
-                    Learn the latest frameworks and technologies, including
-                    Javascript ES6, Bootstrap 4, MongoDB.
-                  </li>
-                  <li>Learn professional developer best practices.</li>
-                </ul>
-                <a
-                  className="btn btn-sm btn-primary"
-                  target="__blank"
-                  rel="noopener noreferrer"
-                  role="button"
-                  href="https://www.dropbox.com/s/qifxvzzhrougo41/My_Udemy_Certification%20%28web%20developer%20bootcamp%29.pdf?dl=0"
-                >
-                  See credential
-                </a>
-              </div>
-
-              <a className="see-more-btn"
-                target="__blank"
-                rel="noopener noreferrer"
-                href="https://airtable.com/appoPztPp3kjnaI4Q/shrDV6n8ugfuxK6pK">
-                See more
-              </a>
             </div>
           </div>
         </div>
