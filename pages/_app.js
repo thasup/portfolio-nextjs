@@ -2,11 +2,15 @@ import React from 'react';
 import Head from 'next/head';
 import { Container, SSRProvider } from 'react-bootstrap';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import '@/styles/bootstrap.css';
 import '@/styles/globals.scss';
 
 const MyApp = ({ Component, pageProps }) => {
+	const router = useRouter();
+
 	return (
 		<SSRProvider>
 			<Head>
@@ -24,6 +28,7 @@ const MyApp = ({ Component, pageProps }) => {
 					src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 					strategy="lazyOnload"
 				/>
+				<SpeedInsights route={router.pathname} />
 			</main>
 		</SSRProvider>
 	);
