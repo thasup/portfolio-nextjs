@@ -18,7 +18,7 @@ const Skills = () => {
       <div className="skill-icon">
         {skills.map((skill) => (
           <SkillBadge
-            key={skill.logo}
+            key={skill.id}
             id={skill.id}
             logo={skill.logo}
             color={skill.color}
