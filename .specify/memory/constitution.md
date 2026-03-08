@@ -1,50 +1,217 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  Sync Impact Report
+  ────────────────────────────────────────────────────
+  Version change: 0.0.0 → 1.0.0 (initial ratification)
+  
+  Modified principles: N/A (first version)
+  
+  Added sections:
+    - Core Principles (10 principles)
+    - Fixed Library Stack
+    - Development Workflow
+    - Governance
+  
+  Removed sections: N/A (first version)
+  
+  Templates requiring updates:
+    - .specify/templates/plan-template.md       ✅ reviewed — no updates needed
+    - .specify/templates/spec-template.md        ✅ reviewed — no updates needed
+    - .specify/templates/tasks-template.md       ✅ reviewed — no updates needed
+  
+  Follow-up TODOs: none
+-->
+
+# Portfolio Website Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Static-First Performance
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every architectural and implementation decision MUST optimize for
+static export (`next.config.ts` → `output: 'export'`).
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- No server-side rendering. No API routes. No dynamic routes that
+  cannot be statically generated at build time.
+- The production site MUST achieve **Lighthouse scores of 95+** across
+  Performance, Accessibility, Best Practices, and SEO.
+- Any feature that would require a server runtime (middleware, server
+  actions, ISR) MUST be rejected or re-architected to work at build
+  time.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. TailwindCSS + shadcn/ui Only
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+Zero Bootstrap. Zero SCSS files. Zero inline `style` attributes unless
+using CSS custom properties via the `style` prop for truly dynamic
+values (e.g., animation colors derived from data at runtime).
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- All visual styling MUST use Tailwind utility classes.
+- shadcn/ui is the component library. Generated components live in
+  `src/components/ui/` and MUST never be modified directly.
+- Extend or customize shadcn/ui via **wrapper components** placed
+  outside `src/components/ui/`.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. TypeScript Strict Mode
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+All source files MUST use `.tsx` or `.ts` extensions. No `.js` or
+`.jsx` files are permitted.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **No `any` types.** Every value MUST have an explicit or inferable
+  type.
+- All data structures MUST have explicit interfaces or types defined
+  in `src/types/` or co-located with their data file in `src/data/`.
+- `tsconfig.json` MUST enable `"strict": true`.
+
+### IV. Image Optimization Is Mandatory
+
+Every image rendered in the application MUST use `next/image`. No raw
+`<img>` tags.
+
+- All project screenshots and media MUST be in `.webp` format.
+- Avatar and hero images MUST set `priority={true}`.
+- All other images MUST use lazy loading.
+- Where a static import is available, blur placeholders MUST be used.
+
+### V. Component Hierarchy
+
+The component directory structure MUST follow this exact layout:
+
+- `src/components/ui/` → shadcn/ui generated components (never edited
+  directly).
+- `src/components/shared/` → Reusable primitives: `ScrollReveal`,
+  `SectionHeader`, `TechBadge`, `AnimatedCounter`, etc.
+- `src/components/layout/` → `Navbar`, `Footer`, `ScrollProgress`,
+  `ThemeToggle`.
+- `src/components/sections/` → One file per page section: `Hero`,
+  `Timeline`, `Projects`, `Skills`, `Testimonials`, `ContactCTA`.
+- `src/components/timeline/` → Timeline-specific sub-components.
+- `src/components/projects/` → Project-specific sub-components.
+
+No component may exist outside this hierarchy without explicit
+justification documented in its file header.
+
+### VI. Animation Philosophy — Subtle Only
+
+Framer Motion is the sole animation library. Permitted use cases:
+
+- Scroll-triggered fade-up reveals.
+- Timeline node interactions.
+- Skill bar fill animations.
+- Page transitions.
+
+Non-negotiable rules:
+
+- Animations MUST NOT play on every render without user interaction.
+- All animated components MUST respect `prefers-reduced-motion` via
+  Framer Motion's `useReducedMotion()` hook.
+- Framer Motion MUST be lazy-loaded via `next/dynamic` to avoid
+  blocking the critical rendering path.
+
+### VII. Fixed Library Stack
+
+The technology stack is locked. No additional runtime dependencies may
+be added without an amendment to this constitution.
+
+| Concern         | Library / Tool                                     |
+|-----------------|----------------------------------------------------|
+| Framework       | Next.js 15, App Router                             |
+| Styling         | TailwindCSS v4 + shadcn/ui                         |
+| Animation       | Framer Motion (lazy-loaded via dynamic import)     |
+| Carousel        | Swiper.js (only required modules imported)         |
+| Forms           | React Hook Form + Zod + Resend                     |
+| Analytics       | Google Analytics 4 via `@next/third-parties/google`|
+| Theme           | next-themes                                        |
+| Icons           | lucide-react only (no heroicons, no react-icons)   |
+| Fonts           | Geist Sans + Geist Mono via `geist` npm package    |
+| Hosting         | Netlify (static export, `netlify.toml` required)   |
+
+### VIII. Data-Driven Architecture
+
+All content — timeline events, projects, skills, testimonials — MUST
+live in `src/data/` as typed TypeScript files.
+
+- No hardcoded content inside component JSX.
+- Components MUST receive data as props or import from data files
+  directly.
+- Every data file MUST export a typed array or object with an
+  accompanying interface in the same file or in `src/types/`.
+
+### IX. Accessibility Baseline
+
+- All interactive elements MUST have an `aria-label` or visible text
+  label.
+- Color contrast MUST meet WCAG AA (minimum 4.5:1 for normal text,
+  3:1 for large text).
+- Keyboard navigation MUST work for all interactive components,
+  including timeline nodes and project filters.
+- Focus indicators MUST be visible on all focusable elements.
+
+### X. No External CDN Dependencies
+
+- No Google Fonts URLs at runtime. Fonts MUST be bundled via the
+  `geist` npm package.
+- No CDN-hosted CSS or JavaScript files.
+- Everything MUST be bundled at build time so the site works fully
+  offline after the initial page load.
+
+## Fixed Library Stack
+
+The table in Principle VII is the authoritative dependency list.
+Deviations require a constitutional amendment (see Governance below).
+
+**Explicitly banned dependencies** (present in the legacy codebase,
+MUST be removed during migration):
+
+- `react-bootstrap` — replaced by shadcn/ui + TailwindCSS.
+- `sass` / any `.scss` files — replaced by TailwindCSS v4.
+- `@vercel/analytics` / `@vercel/speed-insights` — replaced by GA4
+  via `@next/third-parties/google`.
+- `typed.js` — replaced by Framer Motion text animations.
+
+**Dev-dependency allowlist**: TypeScript, ESLint, Prettier, PostCSS,
+`@types/*` packages. Additions to dev dependencies do not require a
+constitutional amendment unless they affect the build output.
+
+## Development Workflow
+
+### Build & Deployment
+
+1. `npm run dev` — local development with hot reload.
+2. `npm run build` — MUST produce a static export with zero errors.
+3. `npm run lint` — MUST pass with zero warnings before any PR merge.
+4. Deployment target is **Netlify**. A `netlify.toml` MUST always
+   exist at the repository root.
+
+### Code Quality Gates
+
+- All new components MUST follow the Component Hierarchy (Principle V).
+- All data MUST be extracted into `src/data/` (Principle VIII).
+- All images MUST use `next/image` with `.webp` format (Principle IV).
+- All files MUST be TypeScript with strict mode (Principle III).
+- Lighthouse CI SHOULD run on every PR; scores below 95 block merge.
+
+### File Naming Conventions
+
+- Components: `PascalCase.tsx` (e.g., `ScrollReveal.tsx`).
+- Data files: `camelCase.ts` (e.g., `timelineEvents.ts`).
+- Type files: `camelCase.ts` (e.g., `timeline.ts` in `src/types/`).
+- Utility files: `camelCase.ts` (e.g., `formatDate.ts` in
+  `src/utils/` or `utils/`).
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes all other project practices,
+  conventions, and ad-hoc decisions.
+- Any amendment MUST be documented with a version bump, rationale,
+  and migration plan (if breaking).
+- Version follows semantic versioning:
+  - **MAJOR**: Principle removal or redefinition (backward
+    incompatible).
+  - **MINOR**: New principle or materially expanded guidance.
+  - **PATCH**: Clarifications, wording fixes, non-semantic
+    refinements.
+- All PRs and code reviews MUST verify compliance with these
+  principles.
+- Complexity or deviation from these principles MUST be justified in
+  a Complexity Tracking table (see plan template).
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-08 | **Last Amended**: 2026-03-08
