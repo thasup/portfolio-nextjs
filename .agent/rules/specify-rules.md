@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2026-03-08
 
 ## Active Technologies
+- TypeScript 5.x, Node >= 18 + Next.js 15 (App Router), TailwindCSS v4 + shadcn/ui, Framer Motion (lazy-loaded), Swiper.js, React Hook Form + Zod, Resend, `next-intl`, `@next/third-parties/google` (002-bilingual-portfolio)
+- N/A (Build-time data sourcing from Airtable via API) (002-bilingual-portfolio)
 
 - TypeScript 5.x (strict mode), React 19, Node 20+ + Next.js 15 (App Router), TailwindCSS v4, (001-portfolio-rebuild)
 
@@ -23,6 +25,7 @@ npm test && npm run lint
 TypeScript 5.x (strict mode), React 19, Node 20+: Follow standard conventions
 
 ## Recent Changes
+- 002-bilingual-portfolio: Added TypeScript 5.x, Node >= 18 + Next.js 15 (App Router), TailwindCSS v4 + shadcn/ui, Framer Motion (lazy-loaded), Swiper.js, React Hook Form + Zod, Resend, `next-intl`, `@next/third-parties/google`
 
 - 001-portfolio-rebuild: Added TypeScript 5.x (strict mode), React 19, Node 20+ + Next.js 15 (App Router), TailwindCSS v4,
 
