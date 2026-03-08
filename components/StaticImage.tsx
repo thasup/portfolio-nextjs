@@ -1,6 +1,6 @@
 import React from "react";
-import Image from "next/image";
-import { ImageProps } from "next/image";
+import Image from "next/legacy/image";
+import { ImageProps } from "next/legacy/image";
 
 interface StaticImageProps extends Omit<ImageProps, 'src' | 'alt'> {
   src: string;
