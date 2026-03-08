@@ -1,4 +1,6 @@
-function Error({ statusCode }) {
+import { NextPageContext } from 'next';
+
+function Error({ statusCode }: { statusCode?: number }) {
   return (
     <p
       className="d-flex justify-content-center align-items-center"
@@ -11,7 +13,7 @@ function Error({ statusCode }) {
   );
 }
 
-Error.getInitialProps = ({ res, err }) => {
+Error.getInitialProps = ({ res, err }: NextPageContext) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
 };

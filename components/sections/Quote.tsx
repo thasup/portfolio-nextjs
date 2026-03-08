@@ -1,6 +1,6 @@
 import React from "react";
 
-const Quote = ({ text, author }) => {
+const Quote = ({ text, author }: { text: string; author: string }) => {
   return (
     <section id="quote" className="section-container section-bg">
 		<div className="container">

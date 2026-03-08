@@ -1,6 +1,17 @@
 import React from "react";
 import { Button, Col } from "react-bootstrap";
 
+import { ReactNode } from "react";
+
+interface ProjectItemProps {
+  image: ReactNode;
+  title: string;
+  description: string;
+  tags?: string[];
+  demoLink?: string;
+  githubLink?: string;
+}
+
 const ProjectItem = ({
   image,
   title,
@@ -8,7 +19,7 @@ const ProjectItem = ({
   tags,
   demoLink,
   githubLink,
-}) => {
+}: ProjectItemProps) => {
   return (
     <Col
       lg={4}

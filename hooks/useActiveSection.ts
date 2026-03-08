@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export const useActiveSection = () => {
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {

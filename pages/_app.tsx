@@ -5,8 +5,9 @@ import Script from 'next/script';
 
 import '@/styles/bootstrap.css';
 import '@/styles/globals.scss';
+import type { AppProps } from 'next/app';
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<SSRProvider>
 			<Head>
