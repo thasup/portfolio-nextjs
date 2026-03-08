@@ -1,5 +1,12 @@
 import React from "react";
 import Image from "next/image";
+import { ImageProps } from "next/image";
+
+interface StaticImageProps extends Omit<ImageProps, 'src' | 'alt'> {
+  src: string;
+  alt: string;
+  fit?: "fill" | "contain" | "cover" | "none" | "scale-down";
+}
 
 const StaticImage = ({
   src,
@@ -11,7 +18,7 @@ const StaticImage = ({
   priority,
   quality,
   ...props
-}) => {
+}: StaticImageProps) => {
   const myLoader = () => {
     return `${src}?raw=1&q=${quality || 75}`;
   };

@@ -5,7 +5,7 @@ import iframesData from "@/data/iframes.json";
 const iframes = iframesData.data.iframes;
 
 const LifelongLearning = () => {
-  const [key, setKey] = useState(iframes[0].name);
+  const [key, setKey] = useState<string | undefined>(iframes[0].name);
 
   return (
     <section id="learning" className="section-container section-bg">
@@ -16,7 +16,7 @@ const LifelongLearning = () => {
           <Tabs
             id="lifelong-learning-tabs"
             activeKey={key}
-            onSelect={(k) => setKey(k)}
+            onSelect={(k) => setKey(k || undefined)}
             className="mb-3 justify-content-center"
             justify
           >

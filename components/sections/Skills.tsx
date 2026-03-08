@@ -9,8 +9,10 @@ import toolData from "@/data/skills/tool.json";
 import technologyData from "@/data/skills/technology.json";
 import aiData from "@/data/skills/ai.json";
 
+import { SkillBadgeProps } from "@/components/SkillBadge";
+
 const Skills = () => {
-  const SkillList = ({ title, skills }) => (
+  const SkillList = ({ title, skills }: { title: string; skills: SkillBadgeProps[] }) => (
     <li>
       <strong>{title}:</strong>
       <div className="skill-icon">

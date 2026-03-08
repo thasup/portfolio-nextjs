@@ -82,9 +82,9 @@ const Contact = () => {
               <Form.Group className="mt-3">
                 <Form.Label htmlFor="message">Message</Form.Label>
                 <Form.Control
-                  type="textarea"
+                  as="textarea"
                   name="message"
-                  rows="5"
+                  rows={5}
                   placeholder="Message"
                   required
                 ></Form.Control>

@@ -1,6 +1,19 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 
+import { ReactNode } from "react";
+
+interface ShowcaseItemProps {
+  image: ReactNode;
+  title: string;
+  scale?: string;
+  headline?: string;
+  description: ReactNode;
+  tagsArray: string[];
+  demoLink?: string;
+  githubLink?: string;
+}
+
 const ShowcaseItem = ({
   image,
   title,
@@ -10,7 +23,7 @@ const ShowcaseItem = ({
   tagsArray,
   demoLink,
   githubLink,
-}) => {
+}: ShowcaseItemProps) => {
   return (
     <Row className="showcase py-5">
       <Col md={6} className="showcase-img">

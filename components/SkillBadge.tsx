@@ -1,8 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-const normalizeLogo = (id, logo) => {
-  const map = {
+export interface SkillBadgeProps {
+  id: string;
+  logo: string;
+  color?: string;
+  labelColor?: string;
+  width?: number | string;
+}
+
+const normalizeLogo = (id: string, logo: string) => {
+  const map: Record<string, string> = {
     "Github_Actions": "githubactions",
     "AWS": "amazonaws",
     "Jira": "jira",
@@ -11,7 +19,7 @@ const normalizeLogo = (id, logo) => {
   return map[id] || logo;
 };
 
-const hexToRgb = (hex) => {
+const hexToRgb = (hex: string) => {
   const clean = hex.replace('#','');
   const bigint = parseInt(clean, 16);
   const r = (bigint >> 16) & 255;
@@ -20,7 +28,7 @@ const hexToRgb = (hex) => {
   return { r, g, b };
 };
 
-const getReadableLogoColor = (bgHex) => {
+const getReadableLogoColor = (bgHex: string) => {
   // YIQ contrast
   try {
     const { r, g, b } = hexToRgb(bgHex);
@@ -31,7 +39,7 @@ const getReadableLogoColor = (bgHex) => {
   }
 };
 
-const SkillBadge = ({ id, logo, color, labelColor }) => {
+const SkillBadge = ({ id, logo, color, labelColor, width }: SkillBadgeProps) => {
   const encodedId = encodeURIComponent(id);
   const bg = (labelColor || "555").replace('#','');
   const logoSlug = normalizeLogo(id, logo);
