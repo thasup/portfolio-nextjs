@@ -1,23 +1,20 @@
 <!--
   Sync Impact Report
   ────────────────────────────────────────────────────
-  Version change: 1.0.0 → 2.0.0 (Cycle 2 Finalization)
+  Version change: 2.0.0 → 2.1.0 (60-Second Impact Enhancement)
   
   Modified principles:
-    - I. Static-First Performance → I. Hybrid Static Rendering (Vercel)
-    - VII. Fixed Library Stack (Netlify replaced by Vercel, next-intl added)
+    - XVI. Analytics Event Tracking → Enhanced with granular tracking requirements
+    - XVII. First Impression Standards → Expanded with 60-second browsing focus and Apple-quality benchmarks
+    - XIII. Timeline Is A Vertical Scroll Narrative → Clarified Apple-quality expectations
+    - XIV. Centralized Modal System → Strengthened zero-redirect policy
   
-  Added sections:
-    - XI. Content Authority Hierarchy
-    - XII. Bilingual Content Architecture (TH/EN)
-    - XIII. Timeline Is A Vertical Scroll Narrative
-    - XIV. Centralized Modal System
-    - XV. Ultra-Fast Performance
-    - XVI. Analytics Event Tracking
-    - XVII. First Impression Standards
-    - XVIII. Content Quality Standards
-    - XIX. Modal-First Navigation
-    - XX. Accessibility Commitments
+  Enhanced focus areas:
+    - 60-second maximum value delivery window
+    - Apple product website quality benchmark
+    - Comprehensive analytics for every interaction
+    - Bilingual excellence for Thai and international audiences
+    - Attention capture and retention strategies
   
   Templates requiring updates:
     - .specify/templates/plan-template.md       ✅ reviewed — no updates needed
@@ -98,19 +95,19 @@ Non-negotiable rules:
 
 The technology stack is locked. No additional runtime dependencies may be added without an amendment to this constitution.
 
-| Concern         | Library / Tool                                     |
-|-----------------|----------------------------------------------------|
-| Framework       | Next.js 15, App Router                             |
-| Styling         | TailwindCSS v4 + shadcn/ui                         |
-| Animation       | Framer Motion (lazy-loaded via dynamic import)     |
-| Carousel        | Swiper.js (only required modules imported)         |
-| Forms           | React Hook Form + Zod + Resend                     |
-| Analytics       | Google Analytics 4 via `@next/third-parties/google`|
-| Theme           | next-themes                                        |
-| Icons           | lucide-react only (no heroicons, no react-icons)   |
-| Fonts           | Geist Sans + Geist Mono via `geist`, Noto Sans Thai / Sarabun via `next/font/google` |
-| i18n            | next-intl                                          |
-| Hosting         | Vercel (hybrid static rendering, `vercel.json`)    |
+| Concern         | Library / Tool                                                |
+|-----------------|---------------------------------------------------------------|
+| Framework       | Next.js 15, App Router                                        |
+| Styling         | TailwindCSS v4 + shadcn/ui                                    |
+| Animation       | Framer Motion (lazy-loaded via dynamic import)                |
+| Carousel        | Swiper.js (only required modules imported)                    |
+| Forms           | React Hook Form + Zod + Resend                                |
+| Analytics       | Google Analytics 4 via `@next/third-parties/google`          |
+| Theme           | next-themes                                                   |
+| Icons           | lucide-react only (no heroicons, no react-icons)              |
+| Fonts           | Geist Sans/Mono (`geist`), Noto Sans Thai/Sarabun (`next/font/google`) |
+| i18n            | next-intl                                                     |
+| Hosting         | Vercel (hybrid static rendering, `vercel.json`)               |
 
 ### VIII. Data-Driven Architecture
 
@@ -136,42 +133,72 @@ All content — timeline events, projects, skills, testimonials — MUST live in
 ### XI. Content Authority Hierarchy
 
 All content must be sourced in this priority order:
+
 1. Airtable Gaia Project → authoritative source for personal beliefs, values, reflections, projects, achievements.
 2. CV/Resume → authoritative for work history and tech stack.
 3. LinkedIn → authoritative for professional framing.
 4. GitHub → authoritative for technical evidence.
 5. This specification → fills gaps where above sources are silent.
 
-### XII. Bilingual Content Architecture (TH/EN)
+### XII. Bilingual Content Architecture (TH/EN) — Excellence for Both Audiences
 
-The site MUST support both Thai (th) and English (en) languages.
-- English is the default language (`lang="en"` on root HTML element).
-- URL structure: `/en/...` and `/th/...` with automatic redirect from `/` to `/en/`.
-- All user-facing strings must have both EN and TH translations.
-- Content files: `src/messages/en.json` and `src/messages/th.json`.
-- Font: Thai script requires Noto Sans Thai or Sarabun from Google Fonts — self-host via `next/font/google` with `subsets: ['thai', 'latin']`. Keep line-height: 1.8 minimum when `lang="th"` is active.
+The portfolio MUST provide **world-class experiences in both Thai and English** to serve Thai and international audiences equally well.
 
-### XIII. Timeline Is A Vertical Scroll Narrative
+**Language support requirements**:
 
-The timeline IS a full-screen, section-by-section vertical scroll experience.
-- Each timeline event is a full-width "scene" — minimum 80vh tall on desktop.
-- Framer Motion `useScroll` + `useTransform` for parallax and reveal effects.
-- A persistent vertical progress spine runs down the left side.
-- Year markers float sticky on the right side.
-- Entire timeline section is rendered server-side for SEO, with Framer Motion enhancing the static content.
+- **English is the default language** (`lang="en"` on root HTML element) for international reach.
+- **URL structure**: `/en/...` and `/th/...` with automatic redirect from `/` to `/en/`.
+- **100% translation coverage**: All user-facing strings, navigation, content, CTAs, and microcopy must have both EN and TH translations.
+- **Content files**: `src/messages/en.json` and `src/messages/th.json` for i18n strings.
+- **Content parity**: Thai and English versions must deliver equivalent value — not just literal translations, but culturally adapted messaging that resonates with each audience.
 
-### XIV. Centralized Modal System
+**Typography for Thai script**:
 
-Zero external navigation from project cards, timeline events, or skill items.
-- All supplementary content renders inside a centralized Modal component.
-- The Modal is a full-screen overlay (minimum 80vw × 80vh on desktop).
+- **Font**: Thai script requires Noto Sans Thai or Sarabun from Google Fonts — self-host via `next/font/google` with `subsets: ['thai', 'latin']`.
+- **Line-height**: Minimum 1.8 when `lang="th"` is active (Thai script requires more vertical spacing).
+- **Font fallback chain**: Ensure graceful degradation if web fonts fail to load.
+
+**Localization quality standards**:
+
+- **EN copy**: Direct, confident, international professional tone. Optimized for global tech recruiters and international companies.
+- **TH copy**: Professional yet approachable (ภาษาทางการที่ฟังดูเป็นธรรมชาติ). Optimized for Thai companies and Thai nationals working abroad.
+- **Cultural adaptation**: Adjust examples, references, and social proof based on audience (e.g., TOEIC score more relevant to Thai audience, GitHub contributions more relevant to international audience).
+
+**Language toggle UX**:
+
+- Prominent language switcher in navigation (flags or TH/EN labels).
+- Language preference persists in localStorage.
+- Analytics tracking on language toggle to understand audience split.
+
+### XIII. Timeline Is A Vertical Scroll Narrative — Apple-Quality Standard
+
+The timeline IS the centerpiece of the portfolio — a full-screen, cinematic vertical scroll experience that rivals Apple product marketing pages.
+
+- **Each timeline event is a "scene"** — minimum 80vh tall on desktop, full-width, with carefully choreographed scroll-triggered animations.
+- **Apple-quality parallax**: Use Framer Motion `useScroll` + `useTransform` for smooth parallax depth, reveal effects, and progressive content disclosure as user scrolls.
+- **Visual storytelling hierarchy**: Text, images, and achievements reveal in coordinated sequences that guide the eye and maintain engagement.
+- **Persistent vertical progress spine** runs down the left side with animated fill as user progresses through timeline.
+- **Year markers** float sticky on the right side, updating contextually based on scroll position.
+- **Performance constraint**: Despite rich animations, entire timeline section MUST be server-side rendered for SEO, with Framer Motion progressively enhancing the static content without blocking initial paint.
+- **60-second constraint**: First 3-5 timeline scenes must communicate core career progression and unique value within 20 seconds of scrolling.
+
+### XIV. Centralized Modal System — Zero-Redirect Philosophy
+
+**No external navigation.** Zero redirects out. Every piece of supplementary information MUST render within the site to maximize attention retention.
+
+- **All supplementary content** (project details, timeline deep-dives, certificates, case studies, testimonials) renders inside a centralized Modal component.
+- **Full-screen immersive overlay** — minimum 80vw × 80vh on desktop, 100vw × 100vh on mobile.
+- **Rich content support**: The Modal must elegantly display text, images, videos, code snippets, metrics, galleries — whatever tells the story best.
 - Built on shadcn Dialog with custom full-screen variant.
-- Supports content types: 'project', 'timeline-event', 'certificate', 'testimonial'.
-- Modal state is reflected in URL hash (e.g., `#project-ai-event-platform`).
+- Supported content types: `'project'`, `'timeline-event'`, `'certificate'`, `'testimonial'`, `'case-study'`, `'skill-detail'`.
+- **URL hash integration**: Modal state is reflected in URL hash (e.g., `#project-ai-event-platform`) for shareability and browser history.
+- **Attention retention strategy**: Keep visitors engaged within the portfolio ecosystem rather than losing them to external links.
+- Exception: Social media icons and resume download are permitted external actions, but must fire analytics events.
 
 ### XV. Ultra-Fast Performance
 
 Targets are non-negotiable:
+
 - Lighthouse Performance: 100 desktop, 95+ mobile.
 - LCP: < 1.2s (desktop), < 2.0s (mobile).
 - CLS: 0.00 (reserve all image space with aspect-ratio).
@@ -179,19 +206,62 @@ Targets are non-negotiable:
 - TTFB: < 200ms (Vercel Edge Network CDN).
 - Bundle: < 120kb initial JS (gzipped), heavy sections lazy-loaded.
 
-### XVI. Analytics Event Tracking
+### XVI. Analytics Event Tracking — Comprehensive Granular Insights
 
-Every meaningful user interaction must fire a typed GA4 custom event defined in `src/lib/analytics.ts`.
-- Events required: PAGE_VIEW, NAV_LINK_CLICK, LANGUAGE_TOGGLE, THEME_TOGGLE, RESUME_DOWNLOAD, HERO_CTA_CLICK, HERO_SOCIAL_CLICK, TIMELINE_SCENE_ENTER, TIMELINE_PROGRESS, PROJECT_FILTER_CHANGE, PROJECT_CARD_CLICK, MODAL_OPEN, MODAL_CLOSE, SCROLL_DEPTH, etc.
-- All event names are SCREAMING_SNAKE_CASE string constants.
+**Every interaction, every scroll, every hesitation must be tracked.** The portfolio is a data-driven product.
 
-### XVII. First Impression Standards
+All analytics events MUST be typed GA4 custom events defined in `src/lib/analytics.ts` with consistent naming and parameter schemas.
 
-- Above-the-fold content must communicate WHO, WHAT, and WHY in under 5 seconds.
-- Single dominant visual hierarchy.
-- Maximum 2 CTAs above fold.
-- Hero animations complete in < 1.2s total.
-- Social proof signal above fold (e.g., TOEIC 915, AWS Certified).
+**Required tracking events** (non-exhaustive):
+
+- **Navigation**: `PAGE_VIEW`, `NAV_LINK_CLICK`, `LANGUAGE_TOGGLE`, `THEME_TOGGLE`, `SCROLL_TO_SECTION`
+- **Hero interactions**: `HERO_CTA_CLICK`, `HERO_SOCIAL_CLICK`, `HERO_ANIMATION_COMPLETE`
+- **Timeline engagement**: `TIMELINE_SCENE_ENTER`, `TIMELINE_SCENE_EXIT`, `TIMELINE_PROGRESS_25`, `TIMELINE_PROGRESS_50`, `TIMELINE_PROGRESS_75`, `TIMELINE_PROGRESS_100`, `TIMELINE_SCENE_DWELL_TIME`
+- **Project exploration**: `PROJECT_FILTER_CHANGE`, `PROJECT_CARD_HOVER`, `PROJECT_CARD_CLICK`, `PROJECT_GALLERY_NAVIGATE`
+- **Modal interactions**: `MODAL_OPEN`, `MODAL_CLOSE`, `MODAL_CONTENT_SCROLL`, `MODAL_CTA_CLICK`, `MODAL_DWELL_TIME`
+- **Conversion signals**: `RESUME_DOWNLOAD`, `CONTACT_FORM_OPEN`, `CONTACT_FORM_SUBMIT`, `CONTACT_FORM_SUCCESS`, `CONTACT_FORM_ERROR`
+- **Engagement depth**: `SCROLL_DEPTH_25`, `SCROLL_DEPTH_50`, `SCROLL_DEPTH_75`, `SCROLL_DEPTH_100`, `TIME_ON_PAGE_10S`, `TIME_ON_PAGE_30S`, `TIME_ON_PAGE_60S`, `RETURN_VISITOR`
+- **Exit intent**: `SCROLL_UP_FAST`, `MOUSE_LEAVE_VIEWPORT`, `TAB_BLUR`
+
+**Event naming**: All event names are `SCREAMING_SNAKE_CASE` string constants.
+
+**Event parameters**: Every event must include contextual metadata (e.g., `section_id`, `project_slug`, `language`, `scroll_position`, `time_elapsed`).
+
+**GA4 dashboard goal**: Raw analytics data must enable answering: "Where do visitors spend time?", "What content drives engagement?", "Where do they drop off?", "Which CTAs convert?", "Do TH vs EN visitors behave differently?"
+
+### XVII. First Impression Standards — The 60-Second Impact Rule
+
+**The entire portfolio MUST deliver maximum value and create lasting impact within 60 seconds of browsing.** This is the critical window for mass audiences.
+
+**Above-the-fold requirements** (first 5 seconds):
+
+- **Immediately communicate WHO, WHAT, and WHY** — visitor must instantly understand: "This is [Name], a [Role] who solves [Problem] with [Unique Approach]."
+- **Single dominant visual hierarchy** — one primary message, supported by secondary elements, never competing.
+- **Maximum 2 CTAs** above fold — one primary (e.g., "View Work"), one secondary (e.g., "Contact").
+- **Hero animations complete in < 1.2s total** — fast enough to delight, not annoy.
+- **Social proof signal** above fold — credibility markers (e.g., TOEIC 915, AWS Certified, Years of Experience, Notable Companies).
+
+**60-second browsing path** (15-60 seconds):
+
+- **Within 15 seconds**: Visitor should grasp core expertise and unique value proposition.
+- **Within 30 seconds**: Visitor should see compelling project examples or timeline highlights that demonstrate capability.
+- **Within 45 seconds**: Visitor should discover proof points (achievements, metrics, testimonials) that build trust.
+- **Within 60 seconds**: Visitor should either (a) take conversion action (contact, download resume), (b) decide to explore deeper (scroll timeline, open project modal), or (c) leave with positive memorable impression.
+
+**Attention retention strategies**:
+
+- **Progressive disclosure**: Don't overwhelm — reveal information in digestible chunks as user scrolls.
+- **Visual magnetism**: High-quality imagery, smooth animations, and professional polish on par with Apple product pages.
+- **Curiosity hooks**: Each section should tease the next (e.g., "Scroll to see how I built X").
+- **Micro-interactions**: Subtle hover effects, scroll-triggered reveals, and responsive feedback that reward exploration.
+
+**Apple-quality benchmark**: Every aspect of the portfolio should feel as polished, intentional, and performant as Apple product marketing pages. This means:
+
+- Deliberate use of whitespace.
+- Typography hierarchy that guides the eye.
+- Animations that enhance (never distract from) the narrative.
+- Performance so smooth it feels native.
+- Attention to every pixel, every transition, every detail.
 
 ### XVIII. Content Quality Standards
 
@@ -204,6 +274,7 @@ Every meaningful user interaction must fire a typed GA4 custom event defined in 
 ### XIX. Modal-First Navigation
 
 All content that would traditionally be a separate page must open in the centralized Modal.
+
 - The only separate pages are: `/` (home), `/about`, `/contact`, `/projects`.
 - Project detail pages (`/projects/[slug]`) STILL EXIST as static pages for SEO and direct linking.
 - The ProjectDetailContent component renders in both Modal and page.
@@ -265,4 +336,4 @@ Deviations require a constitutional amendment (see Governance below).
 - All PRs and code reviews MUST verify compliance with these principles.
 - Complexity or deviation from these principles MUST be justified in a Complexity Tracking table (see plan template).
 
-**Version**: 2.0.0 | **Ratified**: 2026-03-08 | **Last Amended**: 2026-03-08
+**Version**: 2.1.0 | **Ratified**: 2026-03-08 | **Last Amended**: 2026-03-09
