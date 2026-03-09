@@ -8,12 +8,19 @@ import { ProjectCard } from '../projects/ProjectCard'
 import { ProjectFilter } from '../projects/ProjectFilter'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { LocalizedText } from '@/components/shared/LocalizedText'
+import { trackEvent, GA_EVENTS } from '@/lib/analytics'
 
 export function Projects() {
   const [activeDomain, setActiveDomain] = useState<ProjectDomain | 'all'>('all')
   const reducedMotion = useReducedMotion()
+
+  const handleDomainChange = (domain: ProjectDomain | 'all') => {
+    setActiveDomain(domain);
+    trackEvent(GA_EVENTS.PROJECT_FILTER_CHANGE, {
+      filter_category: domain
+    });
+  }
 
   const filteredProjects = projects.filter(
     (project) => activeDomain === 'all' || project.domain === activeDomain
@@ -23,12 +30,12 @@ export function Projects() {
     <section id="projects" className="section-padding bg-muted/30">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
-          label="MY WORK"
-          title="Featured Projects"
-          subtitle="Real problems solved with code that shipped to production"
+          label={<LocalizedText en="MY WORK" th="ผลงาน" />}
+          title={<LocalizedText en="Featured Projects" th="ผลงานที่โดดเด่น" />}
+          subtitle={<LocalizedText en="Real problems solved with code that shipped to production" th="แก้ไขปัญหาจริงด้วยโค้ดที่ใช้งานได้ระดับโปรดักชัน" />}
         />
 
-        <ProjectFilter activeDomain={activeDomain} onDomainChange={setActiveDomain} />
+        <ProjectFilter activeDomain={activeDomain} onDomainChange={handleDomainChange} />
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout" initial={false}>
@@ -53,15 +60,9 @@ export function Projects() {
 
         {filteredProjects.length === 0 && (
           <div className="py-20 text-center text-muted-foreground">
-            No projects found for this category.
+            <LocalizedText en="No projects found for this category." th="ไม่พบโปรเจกต์ในหมวดหมู่นี้" />
           </div>
         )}
-
-        <div className="mt-16 text-center">
-          <Button variant="outline" size="lg" asChild>
-            <Link href="/projects">View All Projects</Link>
-          </Button>
-        </div>
       </div>
     </section>
   )

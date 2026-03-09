@@ -118,11 +118,11 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 **Purpose**: Adapt projects into the centralized modal-centric architecture.
 *(Depends on: A010, B001, B002)*
 
-- [ ] E001 [US3] Update `src/components/projects/ProjectCard.tsx`
+- [x] E001 [US3] Update `src/components/projects/ProjectCard.tsx`
   - Switch native link routes to `useModal().open()`. Hook up layoutId mapping for Framer Motion shared transitions. Handle tracking events. Use `LocalizedText`.
-- [ ] E002 [P] [US3] Update `src/components/sections/Projects.tsx`
+- [x] E002 [P] [US3] Update `src/components/sections/Projects.tsx`
   - Wire up `PROJECT_FILTER_CHANGE` event integration and rewrite headers.
-- [ ] E003 [US3] Update `src/app/[locale]/projects/[slug]/page.tsx`
+- [x] E003 [US3] Update `src/app/[locale]/projects/[slug]/page.tsx`
   - Maintain page strictly for explicit SEO links. Inject JSON-LD structured schema. Re-use `ProjectDetailContent`.
 
 ---
