@@ -5,7 +5,7 @@ import { sarabun } from '@/lib/fonts'
 import { ThemeProvider } from 'next-themes'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, getTranslations } from 'next-intl/server'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { ScrollProgress } from '@/components/layout/ScrollProgress'
@@ -14,30 +14,39 @@ import { ModalShell } from '@/components/modal/ModalShell'
 import { siteConfig } from '@/data/siteConfig'
 import '@/styles/globals.css'
 
-export const metadata: Metadata = {
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.title}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.tagline,
-  metadataBase: new URL(siteConfig.siteUrl),
-  openGraph: {
-    title: `${siteConfig.name} — ${siteConfig.title}`,
-    description: siteConfig.tagline,
-    url: siteConfig.siteUrl,
-    siteName: siteConfig.name,
-    type: 'website',
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${siteConfig.name} — ${siteConfig.title}`,
-    description: siteConfig.tagline,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'site' })
+
+  return {
+    title: {
+      default: `${siteConfig.name} — ${t('title')}`,
+      template: `%s | ${siteConfig.name}`,
+    },
+    description: t('description'),
+    metadataBase: new URL(siteConfig.siteUrl),
+    openGraph: {
+      title: `${siteConfig.name} — ${t('title')}`,
+      description: t('description'),
+      url: siteConfig.siteUrl,
+      siteName: siteConfig.name,
+      type: 'website',
+      locale: locale === 'th' ? 'th_TH' : 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${siteConfig.name} — ${t('title')}`,
+      description: t('description'),
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  }
 }
 
 export const viewport: Viewport = {
