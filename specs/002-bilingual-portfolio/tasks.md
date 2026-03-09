@@ -82,15 +82,15 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 **Purpose**: Wire translation and switching mechanics (`[US4]`).
 
-- [ ] C001 [P] [US4] Build `src/components/layout/LanguageToggle.tsx`
+- [x] C001 [P] [US4] Build `src/components/layout/LanguageToggle.tsx`
   - Client component calling `router.replace()` + cookie setup. Fire `LANGUAGE_TOGGLE` event.
-- [ ] C002 [P] [US4] Update `src/components/layout/Navbar.tsx`
+- [x] C002 [P] [US4] Update `src/components/layout/Navbar.tsx`
   - Inject `LanguageToggle`. Replace hardcoded strings with `useTranslations()`.
-- [ ] C003 [P] [US4] Build `src/components/shared/LocalizedText.tsx`
+- [x] C003 [P] [US4] Build `src/components/shared/LocalizedText.tsx`
   - Yields correct field string relying on `useLocale()`. Handles edge-case fallbacks.
-- [ ] C004 [P] [US4] Update `src/app/[locale]/layout.tsx` for Thai typography
+- [x] C004 [P] [US4] Update `src/app/[locale]/layout.tsx` for Thai typography
   - Push `'font-sarabun leading-loose'` to body when `locale === 'th'`. Set html `lang`.
-- [ ] C005 [P] [US4] Add locale-aware metadata to all pages in `src/app/[locale]/`
+- [x] C005 [P] [US4] Add locale-aware metadata to all pages in `src/app/[locale]/`
   - Update `generateMetadata` on `page.tsx`, `about/page.tsx`, `contact/page.tsx`, `projects/page.tsx`. Use `hreflang` alternate links mapping EN/TH OG images.
 
 ---
