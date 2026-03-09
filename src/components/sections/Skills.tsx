@@ -3,6 +3,7 @@ import { ScrollReveal } from '@/components/shared/ScrollReveal'
 import { SkillBar } from '@/components/shared/SkillBar'
 import { skillClusters } from '@/data/skills'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { LocalizedText } from '@/components/shared/LocalizedText'
 import { cn } from '@/lib/utils'
 
 export function Skills() {
@@ -10,9 +11,9 @@ export function Skills() {
     <section id="skills" className="section-padding">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
-          label="SKILLS"
-          title="Technical Arsenal"
-          subtitle="Intentionally building toward AI engineering mastery"
+          label={<LocalizedText en="SKILLS" th="ทักษะ" />}
+          title={<LocalizedText en="Technical Arsenal" th="ความสามารถทางเทคนิค" />}
+          subtitle={<LocalizedText en="Intentionally building toward AI engineering mastery" th="ความเชี่ยวชาญด้าน AI และซอฟต์แวร์เต็มรูปแบบ" />}
         />
 
         <div className="grid gap-8 md:grid-cols-2">
@@ -28,12 +29,14 @@ export function Skills() {
               >
                 <CardHeader>
                   <CardTitle className="text-xl flex items-center gap-2">
-                    {cluster.nameEn}
+                    <LocalizedText en={cluster.nameEn} th={cluster.nameTh} />
                     {cluster.emphasized && (
                       <span className="flex h-2 w-2 rounded-full bg-primary" />
                     )}
                   </CardTitle>
-                  <p className="text-sm text-muted-foreground">{cluster.narrativeEn}</p>
+                  <p className="text-sm text-muted-foreground">
+                    <LocalizedText en={cluster.narrativeEn} th={cluster.narrativeTh} />
+                  </p>
                 </CardHeader>
                 <CardContent className="grid gap-5">
                   {cluster.skills.map((skill) => (

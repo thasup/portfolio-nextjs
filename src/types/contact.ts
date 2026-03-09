@@ -3,8 +3,11 @@ import { z } from 'zod'
 export interface ContactIntent {
   key: string
   label: string
+  labelTh?: string
   heading: string
+  headingTh?: string
   placeholder: string
+  placeholderTh?: string
   icon: string
 }
 
