@@ -131,15 +131,15 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 **Purpose**: Wire deep behavioral tracking explicitly mapped in Spec.
 
-- [ ] F001 Add scroll depth + time tracking to `src/app/[locale]/layout.tsx`
+- [x] F001 Add scroll depth + time tracking to `src/app/[locale]/layout.tsx`
   - Add standard `setTimeout` metrics (30s, 60s...) and `SCROLL_DEPTH` intersection mappings via a dedicated client `<Analytics/>`.
-- [ ] F002 [P] Add `SECTION_VISIBLE` tracking to all sections
+- [x] F002 [P] Add `SECTION_VISIBLE` tracking to all sections
   - Push GA tracking parameters explicitly to `src/components/shared/ScrollReveal.tsx`.
-- [ ] F003 [P] [US1] Add `HERO_CTA_CLICK` tracking to `src/components/sections/Hero.tsx`
+- [x] F003 [P] [US1] Add `HERO_CTA_CLICK` tracking to `src/components/sections/Hero.tsx`
   - Map specific intents targeting Hero CTAs and Navigation resumes natively.
-- [ ] F004 [US2] Add `TIMELINE_PROGRESS` tracking to `src/components/timeline/TimelineSection.tsx`
+- [x] F004 [US2] Add `TIMELINE_PROGRESS` tracking to `src/components/timeline/TimelineSection.tsx`
   - Compute active intersections mapping to 25%, 50%, etc., using `scrollYProgress`.
-- [ ] F005 [P] Verify GA4 receives all events via `docs/GA4_SETUP.md`
+- [x] F005 [P] Verify GA4 receives all events via `docs/GA4_SETUP.md`
   - Create documentation referencing custom schema metrics (lang, theme) expected via external integrations manually.
 
 ---
