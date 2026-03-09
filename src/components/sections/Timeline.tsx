@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -107,9 +107,9 @@ export function Timeline() {
 
   const years: YearKey[] = [2022, 2023, 2024, 2025];
 
-  const handleYearEnter = (year: YearKey, offsetTop: number) => {
+  const handleYearEnter = useCallback((year: YearKey, offsetTop: number) => {
     setYearPositions((prev) => ({ ...prev, [year]: offsetTop }));
-  };
+  }, []);
 
   return (
     <section ref={sectionRef} id="timeline" className="relative section-padding overflow-hidden">

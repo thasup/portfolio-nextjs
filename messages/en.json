@@ -4,6 +4,7 @@
     "projects": "Projects",
     "skills": "Skills",
     "about": "About",
+    "value": "Value",
     "contact": "Contact",
     "resume": "Resume",
     "hire_me": "Hire Me",
@@ -12,8 +13,8 @@
     "sr_navigation": "Navigation"
   },
   "hero": {
-    "availability": "Open to Senior AI Engineer & Product Owner roles · Bangkok",
-    "tagline": "I build products that think.",
+    "availability": "Open to AI Engineer / Software Engineer / Product Owner role",
+    "tagline": "I build systems that think.",
     "ctaPrimary": "See My Work",
     "ctaSecondary": "Get In Touch"
   },
@@ -41,8 +42,8 @@
     "errorGeneric": "Something went wrong. Please try again or email me directly."
   },
   "timeline": {
-    "label": "Timeline",
-    "title": "The Chronicle",
+    "label": "Experience",
+    "title": "My Journey",
     "subtitle": "A cinematic journey through milestones, projects, and growth",
     "deepDive": "Deep Dive",
     "visionCta": "What's Next",
@@ -59,6 +60,12 @@
     "title": "What People Say",
     "subtitle": "Feedback from colleagues, managers, and collaborators",
     "loading": "Loading testimonials..."
+  },
+  "value": {
+    "label": "VALUE",
+    "title": "Why Work With Me",
+    "subtitle": "Five things I bring to any team or project",
+    "evidence": "See more"
   },
   "site": {
     "title": "Senior Software Engineer",

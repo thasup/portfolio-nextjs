@@ -5,10 +5,11 @@ export interface NavigationItem {
 }
 
 export const navigationItems: NavigationItem[] = [
-  { label: 'Timeline', href: '/#timeline', isAnchor: true },
+  { label: 'About', href: '/#about', isAnchor: true },
+  { label: 'Experience', href: '/#timeline', isAnchor: true },
   { label: 'Projects', href: '/#projects', isAnchor: true },
   { label: 'Skills', href: '/#skills', isAnchor: true },
   { label: 'Testimonials', href: '/#testimonials', isAnchor: true },
-  { label: 'About', href: '/about/', isAnchor: false },
-  { label: 'Contact', href: '/contact/', isAnchor: false },
+  { label: 'Value', href: '/#value', isAnchor: true },
+  { label: 'Contact', href: '/#contact', isAnchor: true },
 ]
