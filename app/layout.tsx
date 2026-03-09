@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import '@/styles/bootstrap.css';
 import '@/styles/globals.scss';
@@ -94,6 +95,7 @@ export default function RootLayout({
             `
           }}
         />
+        <SpeedInsights />
       </body>
     </html>
   );
