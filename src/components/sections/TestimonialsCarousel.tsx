@@ -38,7 +38,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                 <div>
                   <Quote className="h-8 w-8 text-primary/20 mb-4" />
                   <p className="text-foreground leading-relaxed italic relative z-10">
-                    "{testim.quote}"
+                    "{testim.quoteEn}"
                   </p>
                 </div>
                 
@@ -49,8 +49,8 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                   </div>
                   <div>
                     <div className="font-semibold">{testim.authorName}</div>
-                    <div className="text-sm text-muted-foreground">{testim.authorRole}</div>
-                    <div className="text-xs text-muted-foreground">{testim.relationship}</div>
+                    <div className="text-sm text-muted-foreground">{testim.authorRoleEn}</div>
+                    <div className="text-xs text-muted-foreground">{testim.relationshipEn}</div>
                   </div>
                 </div>
               </CardContent>

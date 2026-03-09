@@ -41,13 +41,13 @@ export function ValueProp() {
                     <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       {getIcon(value.icon)}
                     </div>
-                    <h3 className="mb-3 text-xl font-bold">{value.title}</h3>
+                    <h3 className="mb-3 text-xl font-bold">{value.titleEn}</h3>
                     <p className="text-muted-foreground leading-relaxed flex-grow">
-                      {value.description}
+                      {value.descriptionEn}
                     </p>
-                    {value.crossRef && (
+                    {value.crossRefId && (
                       <Link 
-                        href={value.crossRef}
+                        href={value.crossRefId}
                         className="mt-6 flex items-center text-sm font-medium text-primary hover:underline hover:underline-offset-4"
                       >
                         See evidence

@@ -28,12 +28,12 @@ export function Skills() {
               >
                 <CardHeader>
                   <CardTitle className="text-xl flex items-center gap-2">
-                    {cluster.name}
+                    {cluster.nameEn}
                     {cluster.emphasized && (
                       <span className="flex h-2 w-2 rounded-full bg-primary" />
                     )}
                   </CardTitle>
-                  <p className="text-sm text-muted-foreground">{cluster.narrative}</p>
+                  <p className="text-sm text-muted-foreground">{cluster.narrativeEn}</p>
                 </CardHeader>
                 <CardContent className="grid gap-5">
                   {cluster.skills.map((skill) => (
