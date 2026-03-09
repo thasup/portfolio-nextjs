@@ -6,7 +6,10 @@
     "about": "About",
     "contact": "Contact",
     "resume": "Resume",
-    "hireMe": "Hire Me"
+    "hire_me": "Hire Me",
+    "experience": "Experience",
+    "testimonials": "Testimonials",
+    "sr_navigation": "Navigation"
   },
   "hero": {
     "availability": "Open to Senior AI Engineer & Product Owner roles · Bangkok",
@@ -46,9 +49,19 @@
     "visionTitle": "Building the Future",
     "visionDescription": "Currently exploring opportunities in AI Engineering and Product Ownership, with a vision to found a successful SaaS company in the next decade."
   },
-  "footer": {},
-  "modal": {},
-  "common": {
-    "more": "more"
+  "footer": {
+    "navigation": "Navigation",
+    "connect": "Connect",
+    "allRightsReserved": "All rights reserved."
+  },
+  "testimonials": {
+    "label": "TESTIMONIALS",
+    "title": "What People Say",
+    "subtitle": "Feedback from colleagues, managers, and collaborators",
+    "loading": "Loading testimonials..."
+  },
+  "site": {
+    "title": "Senior Software Engineer",
+    "description": "Building production AI systems and full-stack products. Pivoting from 4 years of shipping across Web3, e-commerce, and frontend into Senior AI Engineer — with a 10-year vision of founding a SaaS company."
   }
 }

@@ -7,9 +7,11 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { siteConfig } from '@/data/siteConfig'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useTranslations } from 'next-intl'
 
 export function Hero() {
   const reducedMotion = useReducedMotion()
+  const t = useTranslations('hero')
   const [roleIndex, setRoleIndex] = useState(0)
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export function Hero() {
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
               <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                Open to opportunities
+                {t('availability')}
               </span>
             </Wrapper>
 
@@ -101,10 +103,10 @@ export function Hero() {
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button size="lg" asChild>
-                  <a href="/#projects">View My Work</a>
+                  <a href="/#projects">{t('ctaPrimary')}</a>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link href="/contact/">Get In Touch</Link>
+                  <Link href="/contact/">{t('ctaSecondary')}</Link>
                 </Button>
               </div>
             </Wrapper>
@@ -146,7 +148,7 @@ export function Hero() {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative">
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 blur-2xl" />
+              <div className="absolute -inset-4 rounded-full bg-linear-to-br from-primary/20 via-accent/20 to-primary/20 blur-2xl" />
               <div className="relative h-64 w-64 overflow-hidden rounded-full border-4 border-border bg-muted sm:h-80 sm:w-80">
                 <div className="flex h-full w-full items-center justify-center text-6xl font-bold text-muted-foreground">
                   TS

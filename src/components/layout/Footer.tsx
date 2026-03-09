@@ -2,8 +2,11 @@ import Link from 'next/link'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
+import { useTranslations } from 'next-intl'
 
 export function Footer() {
+  const t = useTranslations('footer')
+
   return (
     <footer className="border-t border-border bg-muted/30">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -22,7 +25,7 @@ export function Footer() {
           {/* Navigation */}
           <div>
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Navigation
+              {t('navigation')}
             </h3>
             <ul className="space-y-2">
               {navigationItems.map((item) => (
@@ -41,7 +44,7 @@ export function Footer() {
           {/* Social */}
           <div>
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Connect
+              {t('connect')}
             </h3>
             <div className="flex gap-3">
               <a
@@ -74,7 +77,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          © {new Date().getFullYear()} {siteConfig.name}. {t('allRightsReserved')}
         </div>
       </div>
     </footer>
