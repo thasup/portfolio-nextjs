@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: 'Thanachon Suppasatian',
+  name: 'Thanachon Supasatian',
   title: 'Senior Software Engineer',
   tagline:
     'Building production AI systems and full-stack products. Pivoting from 4 years of shipping across Web3, e-commerce, and frontend into Senior AI Engineer — with a 10-year vision of founding a SaaS company.',

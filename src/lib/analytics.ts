@@ -8,6 +8,7 @@ export const GA_EVENTS = {
   SECTION_VISIBLE: 'section_visible',
   HERO_CTA_CLICK: 'hero_cta_click',
   TIMELINE_PROGRESS: 'timeline_progress',
+  TIMELINE_DEEPDIVE_OPEN: 'timeline_deepdive_open',
   SCROLL_DEPTH: 'scroll_depth',
   RESUME_DOWNLOAD: 'resume_download',
 } as const;
@@ -30,4 +31,15 @@ export function trackScrollDepth(percentage: number) {
 
 export function trackSectionVisibility(sectionId: string) {
   trackEvent(GA_EVENTS.SECTION_VISIBLE, { section: sectionId });
+}
+
+export interface TimelineProgressEvent {
+  percent: 25 | 50 | 75 | 100;
+}
+
+export interface TimelineDeepDiveEvent {
+  event_id: string;
+  event_title: string;
+  year: number;
+  event_type: 'work' | 'project' | 'education' | 'achievement' | 'learning' | 'milestone';
 }

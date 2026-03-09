@@ -3,7 +3,7 @@
 **Feature Branch**: `001-portfolio-rebuild`
 **Created**: 2026-03-08
 **Status**: Draft
-**Input**: User description: "Build a personal portfolio website for Thanachon Suppasatian — Senior Software Engineer pivoting toward Senior AI Engineer and Product Owner roles, with a 10-year vision of becoming a SaaS founder."
+**Input**: User description: "Build a personal portfolio website for Thanachon Supasatian — Senior Software Engineer pivoting toward Senior AI Engineer and Product Owner roles, with a 10-year vision of becoming a SaaS founder."
 
 ## User Scenarios & Testing *(mandatory)*
 

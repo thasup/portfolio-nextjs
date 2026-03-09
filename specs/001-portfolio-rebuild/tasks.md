@@ -75,7 +75,7 @@
 
 ### Data Files
 
-- [x] T020 [P] Write `src/data/siteConfig.ts` — export `siteConfig` object with: name ("Thanachon Suppasatian"), title ("Senior Software Engineer"), tagline, location ("Bangkok, Thailand"), email, linkedinUrl, githubUrl, avatarImage path, resumeUrl, siteUrl from env var
+- [x] T020 [P] Write `src/data/siteConfig.ts` — export `siteConfig` object with: name ("Thanachon Supasatian"), title ("Senior Software Engineer"), tagline, location ("Bangkok, Thailand"), email, linkedinUrl, githubUrl, avatarImage path, resumeUrl, siteUrl from env var
 
 - [x] T021 [P] Write `src/data/navigation.ts` — export `NavigationItem` interface (label, href, isAnchor) and `navigationItems` array with 6 entries: Timeline (/#timeline), Projects (/#projects), Skills (/#skills), Testimonials (/#testimonials), About (/about), Contact (/contact)
 
@@ -143,7 +143,7 @@
 
 ### Root Layout & Home Page
 
-- [x] T043 [US1] Write `src/app/layout.tsx` — import Geist Sans + Geist Mono from `geist` package, set CSS variables `--font-geist-sans`, `--font-geist-mono` on body. Wrap children in `ThemeProvider` from next-themes (attribute: "class", defaultTheme: "system", enableSystem: true). Add `GoogleAnalytics` from `@next/third-parties/google` with `NEXT_PUBLIC_GA_ID`. Include Navbar, Footer, ScrollProgress. Export `metadata` with title template `"%s | Thanachon Suppasatian"`, default title, description, Open Graph tags (title, description, url, siteName, images, type), Twitter card meta
+- [x] T043 [US1] Write `src/app/layout.tsx` — import Geist Sans + Geist Mono from `geist` package, set CSS variables `--font-geist-sans`, `--font-geist-mono` on body. Wrap children in `ThemeProvider` from next-themes (attribute: "class", defaultTheme: "system", enableSystem: true). Add `GoogleAnalytics` from `@next/third-parties/google` with `NEXT_PUBLIC_GA_ID`. Include Navbar, Footer, ScrollProgress. Export `metadata` with title template `"%s | Thanachon Supasatian"`, default title, description, Open Graph tags (title, description, url, siteName, images, type), Twitter card meta
 
 - [x] T044 [US1] Write `src/app/page.tsx` — compose home page with `<section>` wrappers: `<section id="hero">` + Hero, ValueStrip, then placeholder sections for timeline, projects, skills, testimonials, valueprop, contact (each as `<section id="..." className="min-h-[50vh]">` with SectionHeader placeholder). This allows nav links to work even before other user stories are implemented
 
