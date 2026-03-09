@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "timeline": "Timeline",
+    "projects": "Projects",
+    "skills": "Skills",
+    "about": "About",
+    "contact": "Contact",
+    "resume": "Resume",
+    "hireMe": "Hire Me"
+  },
+  "hero": {
+    "availability": "Open to Senior AI Engineer & Product Owner roles · Bangkok",
+    "tagline": "I build products that think.",
+    "ctaPrimary": "See My Work",
+    "ctaSecondary": "Get In Touch"
+  },
+  "timeline": {},
+  "projects": {},
+  "skills": {},
+  "testimonials": {},
+  "valueProp": {},
+  "contact": {},
+  "footer": {},
+  "modal": {},
+  "common": {}
+}

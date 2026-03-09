@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "timeline": "ไทม์ไลน์",
+    "projects": "ผลงาน",
+    "skills": "ทักษะ",
+    "about": "เกี่ยวกับฉัน",
+    "contact": "ติดต่อ",
+    "resume": "ประวัติการทำงาน",
+    "hireMe": "ร่วมงานกัน"
+  },
+  "hero": {
+    "availability": "เปิดรับตำแหน่ง Senior AI Engineer & Product Owner · กรุงเทพฯ",
+    "tagline": "ผมสร้างผลิตภัณฑ์ที่คิดเองได้.",
+    "ctaPrimary": "ดูผลงาน",
+    "ctaSecondary": "ติดต่อ"
+  },
+  "timeline": {},
+  "projects": {},
+  "skills": {},
+  "testimonials": {},
+  "valueProp": {},
+  "contact": {},
+  "footer": {},
+  "modal": {},
+  "common": {}
+}

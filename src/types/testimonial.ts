@@ -1,8 +1,11 @@
 export interface Testimonial {
   id: string
-  quote: string
+  quoteEn: string
+  quoteTh: string
   authorName: string
-  authorRole: string
-  relationship: string
+  authorRoleEn: string
+  authorRoleTh: string
+  relationshipEn: string
+  relationshipTh: string
   authorAvatar?: string
 }

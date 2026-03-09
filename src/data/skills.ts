@@ -3,9 +3,12 @@ import type { SkillCluster } from '@/types/skill'
 export const skillClusters: SkillCluster[] = [
   {
     id: 'ai-llm',
-    name: 'AI & LLM',
-    narrative:
+    nameEn: 'AI & LLM',
+    nameTh: 'AI & LLM',
+    narrativeEn:
       'Building production LLM pipelines and AI-powered features — from RAG architectures to prompt engineering for enterprise applications.',
+    narrativeTh:
+      'สร้างไพป์ไลน์ LLM และฟีเจอร์ AI ที่ใช้งานได้จริง ตั้งแต่สถาปัตยกรรม RAG จนถึง Prompt Engineering สำหรับองค์กร',
     order: 1,
     emphasized: true,
     skills: [
@@ -19,9 +22,12 @@ export const skillClusters: SkillCluster[] = [
   },
   {
     id: 'frontend',
-    name: 'Frontend Engineering',
-    narrative:
+    nameEn: 'Frontend Engineering',
+    nameTh: 'วิศวกรรมฟรอนต์เอนด์',
+    narrativeEn:
       'Crafting performant, accessible web experiences with modern React patterns — from pixel-perfect UIs to complex state management.',
+    narrativeTh:
+      'สร้างประสบการณ์เว็บไซต์ที่มีประสิทธิภาพและเข้าถึงได้ง่ายด้วยรูปแบบ React สมัยใหม่',
     order: 2,
     emphasized: false,
     skills: [
@@ -35,9 +41,12 @@ export const skillClusters: SkillCluster[] = [
   },
   {
     id: 'backend',
-    name: 'Backend & Infrastructure',
-    narrative:
+    nameEn: 'Backend & Infrastructure',
+    nameTh: 'แบ็คเอนด์และโครงสร้างพื้นฐาน',
+    narrativeEn:
       'Full-stack capability spanning Node.js APIs, PostgreSQL databases, and AWS cloud architecture for scalable applications.',
+    narrativeTh:
+      'ความสามารถแบบ Full-stack ครอบคลุม Node.js API, ฐานข้อมูล PostgreSQL, และสถาปัตยกรรมคลาวด์ AWS',
     order: 3,
     emphasized: false,
     skills: [
@@ -51,9 +60,12 @@ export const skillClusters: SkillCluster[] = [
   },
   {
     id: 'web3',
-    name: 'Web3 & Blockchain',
-    narrative:
+    nameEn: 'Web3 & Blockchain',
+    nameTh: 'Web3 & Blockchain',
+    narrativeEn:
       'Hands-on smart contract development and DApp building — from token gating to DAO governance with Solidity and Ethers.js.',
+    narrativeTh:
+      'พัฒนา Smart Contract และสร้าง DApp ตั้งแต่การจำกัดการเข้าถึงด้วยโทเค็นจนถึงการกำกับดูแล DAO ด้วย Solidity',
     order: 4,
     emphasized: false,
     skills: [

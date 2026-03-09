@@ -24,39 +24,39 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 **Purpose**: Setup Vercel hosting, next-intl, Airtable integration, and GA4 tracking base.
 
-- [ ] A001 Remove Netlify config, migrate to Vercel
+- [x] A001 Remove Netlify config, migrate to Vercel
   - Remove `netlify.toml` and any `@netlify/*` packages from `package.json`.
   - Remove `output: 'export'` from `next.config.ts`.
   - Create `vercel.json` with security headers + cache headers per plan.
   - Update `README.md` deployment section.
-- [ ] A002 [P] Install Cycle 2 dependencies via `package.json`
+- [x] A002 [P] Install Cycle 2 dependencies via `package.json`
   - `npm install next-intl resend tsx`
   - `npm install -D @types/gtag.js`
-- [ ] A003 Configure next-intl middleware in `src/middleware.ts`
+- [x] A003 Configure next-intl middleware in `src/middleware.ts`
   - Support locales: `['en', 'th']`, default: `'en'`, matcher ignores `/_next`, `/api`.
-- [ ] A004 Configure next-intl in `next.config.ts`
+- [x] A004 Configure next-intl in `next.config.ts`
   - Wrap config with `withNextIntl()`. Verify build compiles.
-- [ ] A005 [P] Migrate `app/` to `[locale]` routing
+- [x] A005 [P] Migrate `app/` to `[locale]` routing
   - Rename `src/app/layout.tsx` → `src/app/[locale]/layout.tsx`.
   - Move `page.tsx`, `about/`, `contact/`, `projects/` into `src/app/[locale]/`.
   - Create new root `src/app/layout.tsx` (minimal html/body).
-- [ ] A006 [P] Add Sarabun Thai font in `src/lib/fonts.ts`
+- [x] A006 [P] Add Sarabun Thai font in `src/lib/fonts.ts`
   - Setup Sarabun Google Font (subsets/weights). Apply to `[locale]/layout.tsx` and `globals.css` when `lang="th"`.
-- [ ] A007 [P] Create `messages/en.json` — complete EN string file
+- [x] A007 [P] Create `messages/en.json` — complete EN string file
   - Define `nav.*`, `hero.*`, `timeline.*`, `projects.*`, `skills.*`, etc., from content canvas.
-- [ ] A008 [P] Create `messages/th.json` — complete TH string file
+- [x] A008 [P] Create `messages/th.json` — complete TH string file
   - Mirror `en.json` exactly with Thai translations mapping canvas.
-- [ ] A009 [P] Write `scripts/fetch-airtable.ts` — Airtable prebuild fetcher
+- [x] A009 [P] Write `scripts/fetch-airtable.ts` — Airtable prebuild fetcher
   - Fetch tables, write to `src/data/generated/values.ts` and `reflections.ts`. Wrap in gracefully failing `try/catch`. Add `"prebuild"` to `package.json`. Add to `.gitignore`.
-- [ ] A010 [P] Update all data files with bilingual fields in `src/data/`
+- [x] A010 [P] Update all data files with bilingual fields in `src/data/`
   - Timeline, projects, skills, testimonials, value propositions fields updated (e.g., `titleEn`, `titleTh`). Create `src/data/timelineChapters.ts`.
-- [ ] A011 [P] Add new TypeScript types for Cycle 2 in `src/types/`
+- [x] A011 [P] Add new TypeScript types for Cycle 2 in `src/types/`
   - Update `modal.ts`, `timeline.ts`, and adapt existing types for bilingual fields.
-- [ ] A012 Update `src/lib/analytics.ts` — complete event system
+- [x] A012 Update `src/lib/analytics.ts` — complete event system
   - Map typed GA4 constants, define `trackEvent()`, `trackTimeOnPage()`, scroll depths, section visibility trackers.
-- [ ] A013 [P] Write `src/hooks/useModal.ts` and `src/components/modal/ModalContext.tsx`
+- [x] A013 [P] Write `src/hooks/useModal.ts` and `src/components/modal/ModalContext.tsx`
   - Implement Provider state (`isOpen`, `payload`). Tie to MODAL_OPEN and MODAL_CLOSE GA4 events. Add wrapper to `[locale]/layout.tsx`.
-- [ ] A014 [P] Write `src/hooks/useHashModal.ts` — hash URL sync
+- [x] A014 [P] Write `src/hooks/useHashModal.ts` — hash URL sync
   - Read `window.location.hash` to trigger `open()`, write mapping state, and add `popstate` listeners.
 
 ---
