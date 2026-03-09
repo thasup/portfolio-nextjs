@@ -65,15 +65,15 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 **Purpose**: Implement full-screen localized modal popovers (`[US3]`).
 
-- [ ] B001 [US3] Build `src/components/modal/Modal.tsx` — centralized modal shell
+- [x] B001 [US3] Build `src/components/modal/Modal.tsx` — centralized modal shell
   - Use shadcn Dialog with custom override (`z-[200]`, backdrop blur). Add focus trap, Escape closure, Framer Motion fade-up.
-- [ ] B002 [P] [US3] Build `src/components/modal/content/ProjectModal.tsx`
+- [x] B002 [P] [US3] Build `src/components/modal/content/ProjectModal.tsx`
   - Consume project slug. Layout: Hero image, badges, problem/approach localized descriptions, Swiper gallery, GitHub/live links. Track `MODAL_SCROLL_DEPTH`.
-- [ ] B003 [P] [US3] Build `src/components/modal/content/TimelineModal.tsx`
+- [x] B003 [P] [US3] Build `src/components/modal/content/TimelineModal.tsx`
   - Consume event id. Layout: localized description/impact, related skills. Cross-trigger to `ProjectModal` on related thumbnails.
-- [ ] B004 [P] [US3] Build `src/components/modal/content/CertificateModal.tsx`
+- [x] B004 [P] [US3] Build `src/components/modal/content/CertificateModal.tsx`
   - Consume certificate id. Layout: badge image, issuer, localized verification info.
-- [ ] B005 [P] [US3] Build `src/components/modal/content/TestimonialModal.tsx`
+- [x] B005 [P] [US3] Build `src/components/modal/content/TestimonialModal.tsx`
   - Consume testimonial id. Layout: localized quote, author name/role, and avatar.
 
 ---

@@ -8,6 +8,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { ScrollProgress } from '@/components/layout/ScrollProgress'
 import { ModalProvider } from '@/components/modal/ModalContext'
+import { ModalShell } from '@/components/modal/ModalShell'
 import { siteConfig } from '@/data/siteConfig'
 import '@/styles/globals.css'
 
@@ -77,6 +78,7 @@ export default async function RootLayout({
             <Navbar />
             <main>{children}</main>
             <Footer />
+            <ModalShell />
           </ModalProvider>
         </ThemeProvider>
         {process.env.NEXT_PUBLIC_GA_ID && (
