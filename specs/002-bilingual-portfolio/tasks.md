@@ -148,13 +148,13 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 **Purpose**: Fill data structures with provided values and placeholder art.
 
-- [ ] G001 [P] Create styled placeholder images for all 6 projects
+- [x] G001 [P] Create styled placeholder images for all 6 projects
   - Build `scripts/generate-placeholders.ts` (using `sharp` or `canvas`) outputting gradient localized artwork to `public/images/projects/[slug]`.
-- [ ] G002 [P] Create OG images for EN and TH
+- [x] G002 [P] Create OG images for EN and TH
   - Emit `public/images/og-default.webp` and `public/images/og-th.webp`.
-- [ ] G003 [P] Populate complete bilingual content in all data files
+- [x] G003 [P] Populate complete bilingual content in all data files
   - Fill `src/data/` items precisely aligning against provided specification matrices. Comment TODOs onto fake data blocks explicitly.
-- [ ] G004 [P] Add About page bilingual content
+- [x] G004 [P] Add About page bilingual content
   - Update `src/app/[locale]/about/page.tsx` applying full bio translations. Hydrate "What I Stand For" via injected value mappings.
 
 ---
@@ -163,19 +163,19 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 **Purpose**: Execute rigid completion testing targets ensuring high-conversion outcomes.
 
-- [ ] H001 Comprehensive dark mode audit (both locales)
+- [x] H001 Comprehensive dark mode audit (both locales)
   - Verify visibility, contrast, and suppress theme flicker hydration hydration in components.
-- [ ] H002 [P] Mobile QA pass (both locales, both themes)
+- [x] H002 [P] Mobile QA pass (both locales, both themes)
   - Validate touch targets on iPhone Safari, Android Chrome. Verify full screen modals and unconstrained localized text.
-- [ ] H003 Performance audit + optimization
+- [x] H003 Performance audit + optimization
   - Resolve Lighthouse CI targets on Desktop (100) / Mobile (95). Add mandatory sizes to `next/image`, verify font preload mechanics.
-- [ ] H004 [P] Accessibility audit
+- [x] H004 [P] Accessibility audit
   - Map axe DevTools testing. Confirm modal traps, Escape closures, contrast ratios.
-- [ ] H005 [P] Update `README.md` — Cycle 2 complete rewrite
+- [x] H005 [P] Update `README.md` — Cycle 2 complete rewrite
   - Ensure updated Tech Stack, Deployment commands, Custom Dimensions, i18n instructions logic are all explicitly listed.
-- [ ] H006 Set Vercel environment variables
+- [x] H006 Set Vercel environment variables
   - Commit live vars for `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY`, `AIRTABLE_PROXY_URL` in the provider portal.
-- [ ] H007 Configure custom domain on Vercel
+- [x] H007 Configure custom domain on Vercel
   - Final SSL, DNS, and `www` mapping validations executed cleanly on Vercel dashboard locking URLs mapping correctly natively.
 
 ---
