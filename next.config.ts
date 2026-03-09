@@ -1,14 +1,13 @@
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
+
+const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
-  output: 'export',
   trailingSlash: true,
-  images: {
-    unoptimized: true,
-  },
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', 'swiper'],
   },
 }
 
-export default nextConfig
+export default withNextIntl(nextConfig)

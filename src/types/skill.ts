@@ -6,8 +6,10 @@ export interface Skill {
 
 export interface SkillCluster {
   id: string
-  name: string
-  narrative: string
+  nameEn: string
+  nameTh: string
+  narrativeEn: string
+  narrativeTh: string
   order: number
   emphasized: boolean
   skills: Skill[]

@@ -1,7 +1,10 @@
 export interface ValueProposition {
   id: string
-  title: string
-  description: string
+  titleEn: string
+  titleTh: string
+  descriptionEn: string
+  descriptionTh: string
   icon: string
-  crossRef?: string
+  crossRefType?: 'project' | 'timeline' | 'section' | null
+  crossRefId?: string
 }

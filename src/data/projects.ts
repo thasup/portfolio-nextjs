@@ -3,15 +3,21 @@ import type { Project } from '@/types/project'
 export const projects: Project[] = [
   {
     slug: 'ai-event-platform',
-    title: 'AI Event Platform',
+    titleTh: '',
+    titleEn: 'AI Event Platform',
     domain: 'ai',
-    tagline: 'LLM-powered event management with intelligent content generation',
-    problemSummary: 'Event organizers spent 60% of their time on manual content creation and speaker coordination.',
-    problem:
+    taglineTh: '',
+    taglineEn: 'LLM-powered event management with intelligent content generation',
+    problemSummaryTh: '',
+    problemSummaryEn: 'Event organizers spent 60% of their time on manual content creation and speaker coordination.',
+    problemTh: '',
+    problemEn:
       'Event organizers at enterprise scale were drowning in manual work: writing session descriptions, matching speakers to topics, predicting attendance patterns, and generating marketing copy. The process was slow, inconsistent, and didn\'t scale.',
-    approach:
+    approachTh: '',
+    approachEn:
       'Built a full-stack platform integrating OpenAI GPT-4 and LangChain for RAG-based content generation. The system ingests speaker profiles, past event data, and topic trends to auto-generate session descriptions, suggest speaker-topic matches, and predict attendance. Real-time collaboration via WebSocket enables team coordination.',
-    features: [
+    featuresTh: [],
+    featuresEn: [
       'LLM-powered agenda and session description generation',
       'Speaker-topic matching with RAG-based recommendations',
       'Attendance prediction using historical event data',
@@ -19,8 +25,10 @@ export const projects: Project[] = [
       'Multi-tenant architecture for agency clients',
     ],
     techStack: ['Next.js', 'TypeScript', 'LangChain', 'OpenAI GPT-4', 'PostgreSQL', 'WebSocket', 'TailwindCSS'],
-    outcomes: 'Reduced content creation time by 85%. Platform processed 50+ events. Adopted by 3 enterprise clients.',
-    challenges:
+    outcomesTh: '',
+    outcomesEn: 'Reduced content creation time by 85%. Platform processed 50+ events. Adopted by 3 enterprise clients.',
+    challengesTh: '',
+    challengesEn:
       'Maintaining LLM response quality at scale required careful prompt engineering and output validation pipelines. Implemented a human-in-the-loop review step for generated content before publication.',
     heroImage: '/images/projects/ai-event-platform/hero.webp',
     screenshots: [],
@@ -29,15 +37,21 @@ export const projects: Project[] = [
   },
   {
     slug: 'tangier-dao',
-    title: 'Tangier DAO',
+    titleTh: '',
+    titleEn: 'Tangier DAO',
     domain: 'web3',
-    tagline: 'Decentralized governance platform with on-chain voting and treasury management',
-    problemSummary: 'Communities lacked transparent, trustless tools for collective decision-making and fund management.',
-    problem:
+    taglineTh: '',
+    taglineEn: 'Decentralized governance platform with on-chain voting and treasury management',
+    problemSummaryTh: '',
+    problemSummaryEn: 'Communities lacked transparent, trustless tools for collective decision-making and fund management.',
+    problemTh: '',
+    problemEn:
       'Decentralized communities needed a governance system that is transparent, tamper-proof, and accessible. Existing DAO tools were either too complex for non-crypto-native users or lacked the voting mechanisms needed for real governance.',
-    approach:
+    approachTh: '',
+    approachEn:
       'Co-founded and built a DAO governance platform from scratch. Designed Solidity smart contracts for proposal creation, weighted voting, and automated treasury disbursement. Built an intuitive Next.js frontend that abstracts blockchain complexity while maintaining full transparency.',
-    features: [
+    featuresTh: [],
+    featuresEn: [
       'On-chain proposal creation and weighted voting',
       'Automated treasury management with smart contracts',
       'Delegate voting system for passive members',
@@ -45,8 +59,10 @@ export const projects: Project[] = [
       'Wallet-connect integration (MetaMask, WalletConnect)',
     ],
     techStack: ['Next.js', 'Solidity', 'Ethers.js', 'IPFS', 'Hardhat', 'TypeScript', 'TailwindCSS'],
-    outcomes: 'Onboarded 200+ DAO members. Processed 15 governance proposals. Managed community treasury of $50K+.',
-    challenges:
+    outcomesTh: '',
+    outcomesEn: 'Onboarded 200+ DAO members. Processed 15 governance proposals. Managed community treasury of $50K+.',
+    challengesTh: '',
+    challengesEn:
       'Gas optimization for voting contracts was critical — implemented batch voting and off-chain signature collection with on-chain verification to minimize transaction costs.',
     heroImage: '/images/projects/tangier-dao/hero.webp',
     screenshots: [],
@@ -55,15 +71,21 @@ export const projects: Project[] = [
   },
   {
     slug: 'token-gating',
-    title: 'NFT Token Gating',
+    titleTh: '',
+    titleEn: 'NFT Token Gating',
     domain: 'web3',
-    tagline: 'Content access control powered by NFT ownership verification',
-    problemSummary: 'Content creators needed a way to monetize premium content using NFT-based access.',
-    problem:
+    taglineTh: '',
+    taglineEn: 'Content access control powered by NFT ownership verification',
+    problemSummaryTh: '',
+    problemSummaryEn: 'Content creators needed a way to monetize premium content using NFT-based access.',
+    problemTh: '',
+    problemEn:
       'Content creators and brands wanted to offer exclusive digital experiences to NFT holders, but no turnkey solution existed to verify wallet ownership and gate content access in real-time.',
-    approach:
+    approachTh: '',
+    approachEn:
       'Built a reusable token-gating middleware system that verifies NFT ownership via on-chain queries, integrates with MetaMask and WalletConnect for frictionless authentication, and provides a simple API for gating any page or API route.',
-    features: [
+    featuresTh: [],
+    featuresEn: [
       'Real-time NFT ownership verification',
       'MetaMask and WalletConnect authentication',
       'Reusable middleware for any Next.js route',
@@ -71,7 +93,8 @@ export const projects: Project[] = [
       'Support for ERC-721 and ERC-1155 tokens',
     ],
     techStack: ['Next.js', 'TypeScript', 'Ethers.js', 'MetaMask SDK', 'WalletConnect', 'Node.js'],
-    outcomes: 'Enabled 3 clients to monetize premium content. Verified 5,000+ wallet connections.',
+    outcomesTh: '',
+    outcomesEn: 'Enabled 3 clients to monetize premium content. Verified 5,000+ wallet connections.',
     heroImage: '/images/projects/token-gating/hero.webp',
     screenshots: [],
     featured: false,
@@ -79,15 +102,21 @@ export const projects: Project[] = [
   },
   {
     slug: 'ap-thai',
-    title: 'AP Thai Property Platform',
+    titleTh: '',
+    titleEn: 'AP Thai Property Platform',
     domain: 'ecommerce',
-    tagline: 'Real estate listing platform for Thailand\'s leading property developer',
-    problemSummary: 'Thailand\'s top real estate developer needed a modern, mobile-first property search experience.',
-    problem:
+    taglineTh: '',
+    taglineEn: 'Real estate listing platform for Thailand\'s leading property developer',
+    problemSummaryTh: '',
+    problemSummaryEn: 'Thailand\'s top real estate developer needed a modern, mobile-first property search experience.',
+    problemTh: '',
+    problemEn:
       'AP Thai, one of Thailand\'s largest real estate developers, had an outdated property listing website that was slow, not mobile-optimized, and lacked modern search capabilities — leading to high bounce rates and poor conversion.',
-    approach:
+    approachTh: '',
+    approachEn:
       'Led frontend development of a complete rebuild using Next.js with server-side rendering for SEO. Implemented advanced geo-search with Google Maps integration, virtual tour embedding, and a mortgage calculator. Optimized for mobile-first with aggressive performance targets.',
-    features: [
+    featuresTh: [],
+    featuresEn: [
       'Advanced property search with geo-filtering',
       'Google Maps integration with area boundaries',
       'Virtual tour and 360° photo viewer',
@@ -95,7 +124,8 @@ export const projects: Project[] = [
       'Mobile-first responsive design',
     ],
     techStack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Google Maps API', 'REST API'],
-    outcomes: 'Achieved 95+ Lighthouse scores. 35% increase in user engagement. 20% improvement in lead conversion.',
+    outcomesTh: '',
+    outcomesEn: 'Achieved 95+ Lighthouse scores. 35% increase in user engagement. 20% improvement in lead conversion.',
     heroImage: '/images/projects/ap-thai/hero.webp',
     screenshots: [],
     featured: false,
@@ -103,15 +133,21 @@ export const projects: Project[] = [
   },
   {
     slug: 'b2b-catalog',
-    title: 'B2B Product Catalog',
+    titleTh: '',
+    titleEn: 'B2B Product Catalog',
     domain: 'ecommerce',
-    tagline: 'Enterprise product catalog with complex filtering and bulk ordering',
-    problemSummary: 'B2B buyers struggled to find products across 10,000+ SKUs with the existing system.',
-    problem:
+    taglineTh: '',
+    taglineEn: 'Enterprise product catalog with complex filtering and bulk ordering',
+    problemSummaryTh: '',
+    problemSummaryEn: 'B2B buyers struggled to find products across 10,000+ SKUs with the existing system.',
+    problemTh: '',
+    problemEn:
       'An enterprise client\'s B2B buyers were using a slow, Windows-era catalog system to browse 10,000+ industrial products. Product discovery was painful, bulk ordering was manual, and the system couldn\'t handle custom pricing tiers per client.',
-    approach:
+    approachTh: '',
+    approachEn:
       'Built a modern web-based catalog with hierarchical categorization, multi-attribute faceted search, and client-specific pricing engines. Integrated with the client\'s SAP ERP system for real-time inventory and pricing data.',
-    features: [
+    featuresTh: [],
+    featuresEn: [
       'Hierarchical product categorization',
       'Multi-attribute faceted filtering',
       'Bulk order management with CSV import',
@@ -119,7 +155,8 @@ export const projects: Project[] = [
       'SAP ERP integration for real-time inventory',
     ],
     techStack: ['Next.js', 'TypeScript', 'PostgreSQL', 'REST API', 'SAP Integration', 'TailwindCSS'],
-    outcomes: 'Handled 10,000+ SKUs. 60% faster product discovery. Bulk orders reduced from 2 hours to 15 minutes.',
+    outcomesTh: '',
+    outcomesEn: 'Handled 10,000+ SKUs. 60% faster product discovery. Bulk orders reduced from 2 hours to 15 minutes.',
     heroImage: '/images/projects/b2b-catalog/hero.webp',
     screenshots: [],
     featured: false,
@@ -127,15 +164,21 @@ export const projects: Project[] = [
   },
   {
     slug: 'maqe-website',
-    title: 'MAQE Corporate Website',
+    titleTh: '',
+    titleEn: 'MAQE Corporate Website',
     domain: 'frontend',
-    tagline: 'Modern agency website with headless CMS and dynamic case studies',
-    problemSummary: 'MAQE\'s website was outdated and couldn\'t showcase their evolving portfolio effectively.',
-    problem:
+    taglineTh: '',
+    taglineEn: 'Modern agency website with headless CMS and dynamic case studies',
+    problemSummaryTh: '',
+    problemSummaryEn: 'MAQE\'s website was outdated and couldn\'t showcase their evolving portfolio effectively.',
+    problemTh: '',
+    problemEn:
       'MAQE Bangkok\'s corporate website was built on WordPress, was slow to update, and didn\'t reflect the agency\'s modern technical capabilities. The team needed a fast, SEO-optimized site they could update without developer involvement.',
-    approach:
+    approachTh: '',
+    approachEn:
       'Rebuilt from scratch with Next.js and a headless CMS (Contentful). Implemented dynamic case study pages that the marketing team can publish without code changes. Focused on SEO optimization, performance, and pixel-perfect implementation of the design team\'s Figma files.',
-    features: [
+    featuresTh: [],
+    featuresEn: [
       'Headless CMS integration with Contentful',
       'Dynamic case study and blog pages',
       'Team directory with bio management',
@@ -143,7 +186,8 @@ export const projects: Project[] = [
       'Pixel-perfect responsive design from Figma',
     ],
     techStack: ['Next.js', 'TypeScript', 'Contentful', 'TailwindCSS', 'Framer Motion', 'Vercel'],
-    outcomes: '40% faster page load speed. Improved SEO rankings. Marketing team publishes content independently.',
+    outcomesTh: '',
+    outcomesEn: '40% faster page load speed. Improved SEO rankings. Marketing team publishes content independently.',
     heroImage: '/images/projects/maqe-website/hero.webp',
     screenshots: [],
     featured: false,

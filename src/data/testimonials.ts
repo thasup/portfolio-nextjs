@@ -7,42 +7,57 @@ import type { Testimonial } from '@/types/testimonial'
 export const testimonials: Testimonial[] = [
   {
     id: 'testimonial-1',
-    quote:
+    quoteTh: '',
+    quoteEn:
       'Thanachon doesn\'t just write code — he thinks about the business problem first. When we were building the AI Event Platform, he pushed back on three feature requests because they didn\'t solve the actual user pain point. That product thinking is rare in engineers.',
     authorName: 'Somchai Phanich',
-    authorRole: 'Engineering Manager',
-    relationship: 'Direct Manager at MAQE',
+    authorRoleTh: '',
+    authorRoleEn: 'Engineering Manager',
+    relationshipTh: '',
+    relationshipEn: 'Direct Manager at MAQE',
   },
   {
     id: 'testimonial-2',
-    quote:
+    quoteTh: '',
+    quoteEn:
       'I\'ve worked with Thanachon on the AP Thai project and what stood out was his ability to ship under pressure without cutting corners. He delivered a 95+ Lighthouse score on a project with aggressive timelines by making smart architectural choices early.',
     authorName: 'Natasha Chen',
-    authorRole: 'Tech Lead',
-    relationship: 'Team Lead at MAQE',
+    authorRoleTh: '',
+    authorRoleEn: 'Tech Lead',
+    relationshipTh: '',
+    relationshipEn: 'Team Lead at MAQE',
   },
   {
     id: 'testimonial-3',
-    quote:
+    quoteTh: '',
+    quoteEn:
       'When we needed someone to pick up LangChain and RAG architecture with no prior experience, Thanachon went from zero to a production prototype in three weeks. His learning velocity is exceptional — he doesn\'t wait to be taught, he builds to learn.',
     authorName: 'Marcus Lee',
-    authorRole: 'Senior AI Engineer',
-    relationship: 'Colleague at MAQE',
+    authorRoleTh: '',
+    authorRoleEn: 'Senior AI Engineer',
+    relationshipTh: '',
+    relationshipEn: 'Colleague at MAQE',
   },
   {
     id: 'testimonial-4',
-    quote:
+    quoteTh: '',
+    quoteEn:
       'Thanachon was the bridge between our design team and the engineering team. He translated Figma mockups into pixel-perfect implementations while also suggesting UX improvements that the designers hadn\'t considered. That cross-functional fluency is valuable.',
     authorName: 'Priya Sharma',
-    authorRole: 'Product Designer',
-    relationship: 'Cross-functional collaborator at MAQE',
+    authorRoleTh: '',
+    authorRoleEn: 'Product Designer',
+    relationshipTh: '',
+    relationshipEn: 'Cross-functional collaborator at MAQE',
   },
   {
     id: 'testimonial-5',
-    quote:
+    quoteTh: '',
+    quoteEn:
       'What impressed me most about working with Thanachon on the Tangier DAO project was his founder mentality. He wasn\'t just building features — he was thinking about user acquisition, governance models, and long-term sustainability. That\'s a co-founder mindset.',
     authorName: 'Daniel Park',
-    authorRole: 'Co-founder',
-    relationship: 'Co-founder of Tangier DAO',
+    authorRoleTh: '',
+    authorRoleEn: 'Co-founder',
+    relationshipTh: '',
+    relationshipEn: 'Co-founder of Tangier DAO',
   },
 ]
