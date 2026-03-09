@@ -98,10 +98,10 @@ export function Timeline() {
     return acc;
   }, {} as Record<YearKey, typeof timelineEvents>);
 
-  // Sort events within each year by sortDate descending
+  // Sort events within each year by sortDate ascending
   Object.keys(eventsByYear).forEach((year) => {
     eventsByYear[year as unknown as YearKey].sort(
-      (a, b) => new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime()
+      (a, b) => new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime()
     );
   });
 
