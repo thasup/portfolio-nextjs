@@ -37,6 +37,8 @@ export function Navbar() {
     { label: t('projects'), href: '/#projects' },
     { label: t('skills'), href: '/#skills' },
     { label: t('testimonials'), href: '/#testimonials' },
+    { label: t('value'), href: '/#value' },
+    { label: t('contact'), href: '/#contact' },
   ]
 
   return (
@@ -89,9 +91,9 @@ export function Navbar() {
               </a>
             </Button>
           )}
-          <Button size="sm" asChild>
+          {/* <Button size="sm" asChild>
             <Link href="/contact/">{t('hire_me')}</Link>
-          </Button>
+          </Button> */}
         </div>
 
         {/* Mobile Menu */}
