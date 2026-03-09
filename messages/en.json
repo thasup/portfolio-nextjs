@@ -14,13 +14,32 @@
     "ctaPrimary": "See My Work",
     "ctaSecondary": "Get In Touch"
   },
-  "timeline": {},
-  "projects": {},
-  "skills": {},
-  "testimonials": {},
-  "valueProp": {},
-  "contact": {},
+  "about": {
+    "label": "ABOUT ME",
+    "title": "The Journey So Far",
+    "bio1": "I'm Thanachon Suppasatian, a Senior Software Engineer based in Bangkok. My 4-year journey has been intentionally broad—ranging from headless CMS platforms to Web3 smart contracts and B2B e-commerce architectures.",
+    "bio2": "Right now, I am pivoting entirely into the AI Engineering space. I believe that integrating LLMs into existing product interfaces is the most profound shift in UX since the mobile phone.",
+    "bio3": "My guiding philosophy is that engineering should serve the business and the end-user. I consider myself a Product Owner as much as an Engineer, and over the next 10 years, I am building the holistic skillset required to found a successful SaaS company.",
+    "ctaProjects": "View Recent Work",
+    "ctaResume": "Download Resume"
+  },
+  "contact": {
+    "label": "CONTACT",
+    "title": "Let's Connect",
+    "subtitle": "Choose your reason for reaching out",
+    "formIntentLabel": "What are you looking for?",
+    "formNameLabel": "Name",
+    "formEmailLabel": "Email",
+    "formSubmit": "Send Message",
+    "formSubmitting": "Sending...",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thanks for reaching out. I'll get back to you within 24 hours.",
+    "successCta": "Send another message",
+    "errorGeneric": "Something went wrong. Please try again or email me directly."
+  },
   "footer": {},
   "modal": {},
-  "common": {}
+  "common": {
+    "more": "more"
+  }
 }

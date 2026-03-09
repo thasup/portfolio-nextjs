@@ -20,8 +20,12 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2, Loader2, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { LocalizedText, getLocalizedData } from '@/components/shared/LocalizedText'
+import { useTranslations, useLocale } from 'next-intl'
 
 export function Contact() {
+  const t = useTranslations('contact')
+  const locale = useLocale()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
@@ -65,7 +69,7 @@ export function Contact() {
       form.reset()
     } catch (error) {
       console.error('Contact form error:', error)
-      setErrorMsg('Something went wrong. Please try again or email me directly.')
+      setErrorMsg(t('errorGeneric'))
     } finally {
       setIsSubmitting(false)
     }
@@ -75,9 +79,9 @@ export function Contact() {
     <section id="contact" className="section-padding bg-muted/30">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <SectionHeader
-          label="CONTACT"
-          title="Let's Connect"
-          subtitle="Choose your reason for reaching out"
+          label={t('label')}
+          title={t('title')}
+          subtitle={t('subtitle')}
         />
 
         <div className="mx-auto mt-12 w-full max-w-2xl">
@@ -85,16 +89,16 @@ export function Contact() {
             <Card className="border-primary/50 bg-primary/5 text-center">
               <CardContent className="flex flex-col items-center justify-center p-12">
                 <CheckCircle2 className="mb-4 h-12 w-12 text-primary" />
-                <h3 className="text-2xl font-bold">Message Sent!</h3>
+                <h3 className="text-2xl font-bold">{t('successTitle')}</h3>
                 <p className="mt-2 text-muted-foreground">
-                  Thanks for reaching out. I'll get back to you within 24 hours.
+                  {t('successMessage')}
                 </p>
                 <Button
                   className="mt-8"
                   variant="outline"
                   onClick={() => setIsSuccess(false)}
                 >
-                  Send another message
+                  {t('successCta')}
                 </Button>
               </CardContent>
             </Card>
@@ -119,7 +123,7 @@ export function Contact() {
                       name="intent"
                       render={({ field }) => (
                         <FormItem className="space-y-4">
-                          <FormLabel className="text-base">What are you looking for?</FormLabel>
+                          <FormLabel className="text-base">{t('formIntentLabel')}</FormLabel>
                           <FormControl>
                             <div className="grid gap-4 sm:grid-cols-2">
                               {contactIntents.map((intent) => (
@@ -134,7 +138,9 @@ export function Contact() {
                                       : 'border-border bg-background'
                                   )}
                                 >
-                                  <span className="font-semibold text-foreground">{intent.label}</span>
+                                  <span className="font-semibold text-foreground">
+                                    <LocalizedText en={intent.label} th={intent.labelTh || intent.label} />
+                                  </span>
                                 </button>
                               ))}
                             </div>
@@ -151,7 +157,7 @@ export function Contact() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Name</FormLabel>
+                            <FormLabel>{t('formNameLabel')}</FormLabel>
                             <FormControl>
                               <Input placeholder="John Doe" {...field} />
                             </FormControl>
@@ -164,7 +170,7 @@ export function Contact() {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>{t('formEmailLabel')}</FormLabel>
                             <FormControl>
                               <Input placeholder="john@example.com" type="email" {...field} />
                             </FormControl>
@@ -180,10 +186,12 @@ export function Contact() {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{currentIntentConfig.heading}</FormLabel>
+                          <FormLabel>
+                            <LocalizedText en={currentIntentConfig.heading} th={currentIntentConfig.headingTh || currentIntentConfig.heading} />
+                          </FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder={currentIntentConfig.placeholder}
+                              placeholder={getLocalizedData(currentIntentConfig, 'placeholder', useLocale())}
                               className="min-h-[160px] resize-y"
                               {...field}
                             />
@@ -203,12 +211,12 @@ export function Contact() {
                       {isSubmitting ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Sending...
+                          {t('formSubmitting')}
                         </>
                       ) : (
                         <>
                           <Send className="mr-2 h-4 w-4" />
-                          Send Message
+                          {t('formSubmit')}
                         </>
                       )}
                     </Button>

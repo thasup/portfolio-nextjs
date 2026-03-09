@@ -4,6 +4,8 @@ import { GeistMono } from 'geist/font/mono'
 import { sarabun } from '@/lib/fonts'
 import { ThemeProvider } from 'next-themes'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { ScrollProgress } from '@/components/layout/ScrollProgress'
@@ -55,6 +57,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const messages = await getMessages()
 
   return (
     <html
@@ -67,20 +70,22 @@ export default async function RootLayout({
           locale === 'th' ? 'font-sarabun leading-loose' : ''
         }`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ModalProvider>
-            <ScrollProgress />
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-            <ModalShell />
-          </ModalProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ModalProvider>
+              <ScrollProgress />
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+              <ModalShell />
+            </ModalProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
