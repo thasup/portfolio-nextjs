@@ -1,6 +1,6 @@
 import { Hero } from '@/components/sections/Hero'
 import { ValueStrip } from '@/components/sections/ValueStrip'
-import { Timeline } from '@/components/sections/Timeline'
+import { TimelineSection as Timeline } from '@/components/timeline/TimelineSection'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { Testimonials } from '@/components/sections/Testimonials'

@@ -1,9 +1,10 @@
+import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 interface SectionHeaderProps {
-  title: string
-  subtitle?: string
-  label?: string
+  title: ReactNode
+  subtitle?: ReactNode
+  label?: ReactNode
   align?: 'left' | 'center'
 }
 
