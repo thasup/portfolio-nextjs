@@ -100,15 +100,15 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 **Purpose**: The primary apple-tier narrative component (`[US2]`).
 *(Depends on: A010, A011, B001, C003)*
 
-- [ ] D001 [P] [US2] Build `src/components/timeline/TimelineSpine.tsx`
+- [x] D001 [P] [US2] Build `src/components/timeline/TimelineSpine.tsx`
   - Build fixed left-side progress indicator mapping chapter waypoints tracking `scrollYProgress` using Framer Motion. Hide on mobile.
-- [ ] D002 [P] [US2] Build `src/components/timeline/ChapterBreak.tsx`
+- [x] D002 [P] [US2] Build `src/components/timeline/ChapterBreak.tsx`
   - Setup full-viewport component. Render muted chapter number, localized title, background opacity gradients. Trigger `TIMELINE_SCENE_ENTER`.
-- [ ] D003 [P] [US2] Build `src/components/timeline/EventScene.tsx`
+- [x] D003 [P] [US2] Build `src/components/timeline/EventScene.tsx`
   - Create two-column desktop layout (content / abstract SVG art). Alternate left/right based on index. Trigger Intersection Observer reveals + `TIMELINE_SCENE_ENTER`. Bind "Deep Dive →" to `useModal()`.
-- [ ] D004 [US2] Build `src/components/timeline/TimelineSection.tsx` — orchestrator
+- [x] D004 [US2] Build `src/components/timeline/TimelineSection.tsx` — orchestrator
   - Read fetched data to interleave `ChapterBreak` with `EventScene`. Monitor active chapters for spine injection.
-- [ ] D005 [US2] Replace Timeline import in `src/app/[locale]/page.tsx`
+- [x] D005 [US2] Replace Timeline import in `src/app/[locale]/page.tsx`
   - Purge legacy timeline blocks, map new orchestrator layout. Ensure deep dives correctly pop to modal views.
 
 ---
