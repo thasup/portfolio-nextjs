@@ -16,6 +16,7 @@
 ## Path Conventions
 
 Next.js App Router structure at repository root:
+
 - Components: `src/components/`
 - Data: `src/data/`
 - Types: `src/types/`
@@ -29,13 +30,13 @@ Next.js App Router structure at repository root:
 
 **Purpose**: Prepare data structures and translations before component implementation
 
-- [ ] T001 [P] Enhance TimelineEvent interface in src/types/timeline.ts (add descriptionEn/Th, featured, mediaLinks?)
-- [ ] T002 [P] Add MediaLink interface to src/types/timeline.ts
-- [ ] T003 Update all timeline events in src/data/timelineEvents.ts (add descriptionEn, descriptionTh='', featured=false)
-- [ ] T004 [P] Export YEAR_THEMES constant in src/data/timelineChapters.ts (4 year themes: 2022-2025)
-- [ ] T005 [P] Add YearKey type export in src/data/timelineChapters.ts (2022 | 2023 | 2024 | 2025)
-- [ ] T006 [P] Add timeline i18n keys to src/messages/en.json (label, title, subtitle)
-- [ ] T007 [P] Add timeline i18n keys to src/messages/th.json (Thai translations)
+- [x] T001 [P] Enhance TimelineEvent interface in src/types/timeline.ts (add descriptionEn/Th, featured, mediaLinks?)
+- [x] T002 [P] Add MediaLink interface to src/types/timeline.ts
+- [x] T003 Update all timeline events in src/data/timelineEvents.ts (add descriptionEn, descriptionTh='', featured=false)
+- [x] T004 [P] Export YEAR_THEMES constant in src/data/timelineChapters.ts (4 year themes: 2022-2025)
+- [x] T005 [P] Add YearKey type export in src/data/timelineChapters.ts (2022 | 2023 | 2024 | 2025)
+- [x] T006 [P] Add timeline i18n keys to src/messages/en.json (label, title, subtitle)
+- [x] T007 [P] Add timeline i18n keys to src/messages/th.json (Thai translations)
 
 **Checkpoint**: TypeScript compiles successfully, all data files validate against enhanced interfaces
 
@@ -47,12 +48,12 @@ Next.js App Router structure at repository root:
 
 **⚠️ CRITICAL**: No timeline component work can begin until this phase is complete
 
-- [ ] T008 [P] Add TIMELINE_PROGRESS event constant to src/lib/analytics.ts
-- [ ] T009 [P] Add TIMELINE_DEEPDIVE_OPEN event constant to src/lib/analytics.ts
-- [ ] T010 [P] Add TimelineProgressEvent interface to src/lib/analytics.ts (percent: 25|50|75|100)
-- [ ] T011 [P] Add TimelineDeepDiveEvent interface to src/lib/analytics.ts (event_id, event_title, year, event_type)
-- [ ] T012 [P] Add timeline utility classes to src/styles/globals.css (timeline-card-hover, year-numeral)
-- [ ] T013 [P] Create src/components/timeline/ directory structure
+- [x] T008 [P] Add TIMELINE_PROGRESS event constant to src/lib/analytics.ts
+- [x] T009 [P] Add TIMELINE_DEEPDIVE_OPEN event constant to src/lib/analytics.ts
+- [x] T010 [P] Add TimelineProgressEvent interface to src/lib/analytics.ts (percent: 25|50|75|100)
+- [x] T011 [P] Add TimelineDeepDiveEvent interface to src/lib/analytics.ts (event_id, event_title, year, event_type)
+- [x] T012 [P] Add timeline utility classes to src/styles/globals.css (timeline-card-hover, year-numeral)
+- [x] T013 [P] Create src/components/timeline/ directory structure
 
 **Checkpoint**: Foundation ready - timeline component implementation can now begin in parallel
 
@@ -70,27 +71,27 @@ Next.js App Router structure at repository root:
 
 **Background & Year Sections**:
 
-- [ ] T014 [P] [US1] Create YearBackground component in src/components/timeline/YearBackground.tsx (4 year gradients, opacity crossfade)
-- [ ] T015 [P] [US1] Create TimelineYear component in src/components/timeline/TimelineYear.tsx (year header, events stack, IntersectionObserver callback)
+- [x] T014 [P] [US1] Create YearBackground component in src/components/timeline/YearBackground.tsx (4 year gradients, opacity crossfade)
+- [x] T015 [P] [US1] Create TimelineYear component in src/components/timeline/TimelineYear.tsx (year header, events stack, IntersectionObserver callback)
 
 **Spine Component**:
 
-- [ ] T016 [US1] Create TimelineSpine component in src/components/timeline/TimelineSpine.tsx (track, fill with scaleY, traveling dot hidden <768px, year markers, sticky positioning top: 6rem)
+- [x] T016 [US1] Create TimelineSpine component in src/components/timeline/TimelineSpine.tsx (track, fill with scaleY, traveling dot hidden <768px, year markers, sticky positioning top: 6rem)
 
 **Event Cards**:
 
-- [ ] T017 [US1] Create CATEGORY_CONFIG constant in src/components/timeline/TimelineEventCard.tsx (5 event types with icons and bilingual labels)
-- [ ] T018 [US1] Create TimelineEventCard component in src/components/timeline/TimelineEventCard.tsx (category badge, title/summary/impact, tech badges max 5 with overflow counter, Deep Dive button placeholder, featured styling with ring and top strip, scroll reveal animation)
+- [x] T017 [US1] Create CATEGORY_CONFIG constant in src/components/timeline/TimelineEventCard.tsx (5 event types with icons and bilingual labels)
+- [x] T018 [US1] Create TimelineEventCard component in src/components/timeline/TimelineEventCard.tsx (category badge, title/summary/impact, tech badges max 5 with overflow counter, Deep Dive button placeholder, featured styling with ring and top strip, scroll reveal animation)
 
 **Main Timeline Section**:
 
-- [ ] T019 [US1] Create Timeline section orchestrator in src/components/sections/Timeline.tsx (useScroll hook, useMotionValueEvent for spine progress, IntersectionObserver for active year, analytics milestones 25/50/75/100%, layout: spine left + content right, SectionHeader integration)
-- [ ] T020 [P] [US1] Create barrel exports in src/components/timeline/index.ts (export all timeline components)
+- [x] T019 [US1] Create Timeline section orchestrator in src/components/sections/Timeline.tsx (useScroll hook, useMotionValueEvent for spine progress, IntersectionObserver for active year, analytics milestones 25/50/75/100%, layout: spine left + content right, SectionHeader integration)
+- [x] T020 [P] [US1] Create barrel exports in src/components/timeline/index.ts (export all timeline components)
 
 **Integration**:
 
-- [ ] T021 [US1] Add Timeline section import to src/app/[locale]/page.tsx (insert between existing sections per design)
-- [ ] T022 [US1] Add Vision CTA component to Timeline section in src/components/sections/Timeline.tsx (What's Next footer at end of timeline)
+- [x] T021 [US1] Add Timeline section import to src/app/[locale]/page.tsx (insert between existing sections per design)
+- [x] T022 [US1] Add Vision CTA component to Timeline section in src/components/sections/Timeline.tsx (What's Next footer at end of timeline)
 
 **Checkpoint**: At this point, User Story 1 (core viewing), User Story 3 (tech badges), and User Story 4 (spine animation) should all be fully functional and testable independently. Scroll through timeline, verify backgrounds transition, spine fills, tech badges display correctly.
 
@@ -106,18 +107,18 @@ Next.js App Router structure at repository root:
 
 **Modal Component**:
 
-- [ ] T023 [P] [US2] Create TimelineEventModal component in src/components/modals/TimelineEventModal.tsx (display descriptionEn/Th, impactEn/Th, all skills with TechBadge, optional mediaLinks, bilingual content with fallback)
+- [x] T023 [P] [US2] Create TimelineEventModal component in src/components/modals/TimelineEventModal.tsx (display descriptionEn/Th, impactEn/Th, all skills with TechBadge, optional mediaLinks, bilingual content with fallback)
 
 **Modal Integration**:
 
-- [ ] T024 [US2] Extend useModal hook in src/hooks/useModal.ts (add 'timeline-event' to ModalType union)
-- [ ] T025 [US2] Add TimelineEventModalData interface to src/hooks/useModal.ts (type: 'timeline-event', id: string)
-- [ ] T026 [US2] Integrate TimelineEventModal into modal router (wherever modal content is determined based on type)
+- [x] T024 [US2] Extend useModal hook in src/hooks/useModal.ts (add 'timeline-event' to ModalType union)
+- [x] T025 [US2] Add TimelineEventModalData interface to src/hooks/useModal.ts (type: 'timeline-event', id: string)
+- [x] T026 [US2] Integrate TimelineEventModal into modal router (wherever modal content is determined based on type)
 
 **Event Card Connection**:
 
-- [ ] T027 [US2] Implement Deep Dive button handler in src/components/timeline/TimelineEventCard.tsx (call useModal open with event.id, fire TIMELINE_DEEPDIVE_OPEN analytics with event_id, event_title, year, event_type)
-- [ ] T028 [US2] Update button to show URL hash pattern #timeline-event-{id} on hover for UX clarity
+- [x] T027 [US2] Implement Deep Dive button handler in src/components/timeline/TimelineEventCard.tsx (call useModal open with event.id, fire TIMELINE_DEEPDIVE_OPEN analytics with event_id, event_title, year, event_type)
+- [x] T028 [US2] Update button to show URL hash pattern #timeline-event-{id} on hover for UX clarity
 
 **Checkpoint**: At this point, User Story 2 should be fully functional. Click Deep Dive buttons, verify modals open with complete event details, URL hash updates, analytics fires, ESC closes modal.
 
@@ -127,15 +128,15 @@ Next.js App Router structure at repository root:
 
 **Purpose**: Refinements and optimizations that enhance the overall experience
 
-- [ ] T029 [P] Verify featured event styling (1px ring 30% opacity, 2px top gradient strip) on 2-3 flagship events
-- [ ] T030 [P] Add bilingual Thai translations for events marked with empty descriptionTh fields in src/data/timelineEvents.ts
-- [ ] T031 [P] Performance audit: Chrome DevTools Performance tab during scroll (verify 60fps, no layout thrashing, GPU-accelerated animations only)
-- [ ] T032 [P] Lighthouse audit: Performance 100 desktop / 95+ mobile, Accessibility 100, verify LCP <1.2s desktop / <2.0s mobile
-- [ ] T033 Mobile device testing: Verify traveling dot hidden <768px, scroll smooth on iPhone SE / Pixel 5, backgrounds transition <1.5s
-- [ ] T034 [P] Accessibility audit: ARIA labels on Deep Dive buttons, keyboard navigation, focus indicators, screen reader testing
-- [ ] T035 [P] Color contrast verification: All 4 year theme colors meet WCAG 2.1 AA (4.5:1 normal text, 3:1 large text)
-- [ ] T036 Run quickstart.md validation steps (build verification, local dev test, bilingual toggle test)
-- [ ] T037 [P] Add optional media assets to 2-3 featured events (screenshots/videos in mediaLinks array) if available
+- [x] T029 [P] Verify featured event styling (1px ring 30% opacity, 2px top gradient strip) on 2-3 flagship events
+- [x] T030 [P] Add bilingual Thai translations for events marked with empty descriptionTh fields in src/data/timelineEvents.ts
+- [ ] T031 [P] Performance audit: Chrome DevTools Performance tab during scroll (verify 60fps, no layout thrashing, GPU-accelerated animations only) - MANUAL TESTING REQUIRED
+- [ ] T032 [P] Lighthouse audit: Performance 100 desktop / 95+ mobile, Accessibility 100, verify LCP <1.2s desktop / <2.0s mobile - MANUAL TESTING REQUIRED
+- [ ] T033 Mobile device testing: Verify traveling dot hidden <768px, scroll smooth on iPhone SE / Pixel 5, backgrounds transition <1.5s - MANUAL TESTING REQUIRED
+- [ ] T034 [P] Accessibility audit: ARIA labels on Deep Dive buttons, keyboard navigation, focus indicators, screen reader testing - MANUAL TESTING REQUIRED
+- [ ] T035 [P] Color contrast verification: All 4 year theme colors meet WCAG 2.1 AA (4.5:1 normal text, 3:1 large text) - MANUAL TESTING REQUIRED
+- [x] T036 Run quickstart.md validation steps (build verification, local dev test, bilingual toggle test)
+- [ ] T037 [P] Add optional media assets to 2-3 featured events (screenshots/videos in mediaLinks array) if available - OPTIONAL
 
 ---
 
@@ -249,7 +250,7 @@ With multiple developers:
 - **User Story 2 (P2)**: 6 tasks (Deep Dive modals)
 - **Polish Phase**: 9 tasks
 - **Parallel Opportunities**: 20 tasks can run in parallel (marked [P])
-- **Independent Tests**: 
+- **Independent Tests**:
   - US1: Scroll through timeline, verify years/events/backgrounds/spine/tech badges
   - US2: Click Deep Dive, verify modal opens with complete details
   - US3: Satisfied by US1 tech badges display

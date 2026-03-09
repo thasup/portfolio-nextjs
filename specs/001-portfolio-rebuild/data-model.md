@@ -38,12 +38,14 @@ erDiagram
 `"work"` | `"project"` | `"education"` | `"achievement"`
 
 **Type icon defaults**:
+
 - `work` → `Briefcase`
 - `project` → `Rocket`
 - `education` → `GraduationCap`
 - `achievement` → `Trophy`
 
 **Validation rules**:
+
 - `id` must be unique across all events
 - `sortDate` must be valid ISO 8601 date string
 - `skills` array must have ≥ 1 entry
@@ -79,12 +81,14 @@ erDiagram
 `"ai"` | `"web3"` | `"ecommerce"` | `"frontend"`
 
 **Domain display mapping**:
+
 - `ai` → `"AI & LLM"`, color: indigo
 - `web3` → `"Web3"`, color: purple
 - `ecommerce` → `"E-Commerce"`, color: emerald
 - `frontend` → `"Frontend"`, color: sky
 
 **Validation rules**:
+
 - `slug` must be unique, lowercase, hyphens only
 - `slug` is used for `generateStaticParams()` — all slugs are enumerated at build time
 - `features` array must have ≥ 2 entries
@@ -116,6 +120,7 @@ erDiagram
 | `level` | `number` | Yes | Proficiency level 0–100 |
 
 **Validation rules**:
+
 - Exactly one cluster must have `emphasized: true` (the AI & LLM cluster)
 - `order` values must be unique and sequential starting from 1
 - `level` must be between 0 and 100 inclusive
@@ -137,6 +142,7 @@ erDiagram
 | `authorAvatar` | `string` | No | Path to avatar image (WebP). If null, initials fallback. |
 
 **Validation rules**:
+
 - `quote` must be ≥ 50 characters (ensures specificity, not generic)
 - `authorAvatar` is optional — component renders AvatarFallback with
   initials derived from `authorName`
@@ -156,6 +162,7 @@ erDiagram
 | `crossRef` | `string` | No | Anchor link to evidence (e.g., `"#projects"`, `"/projects/ai-event-platform"`) |
 
 **Validation rules**:
+
 - Exactly 5 entries
 - All 5 must have `title`, `description`, and `icon`
 
@@ -174,6 +181,7 @@ erDiagram
 | `icon` | `string` | Yes | Lucide icon name |
 
 **Validation rules**:
+
 - Exactly 4 entries
 
 ### ContactFormData
@@ -193,7 +201,7 @@ erDiagram
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `name` | `string` | Yes | `"Thanachon Suppasatian"` |
+| `name` | `string` | Yes | `"Thanachon Supasatian"` |
 | `title` | `string` | Yes | `"Senior Software Engineer"` |
 | `tagline` | `string` | Yes | Positioning tagline for hero |
 | `location` | `string` | Yes | `"Bangkok, Thailand"` |
@@ -217,6 +225,7 @@ erDiagram
 | `isAnchor` | `boolean` | Yes | Whether this link is an on-page anchor |
 
 **Default entries**:
+
 - `{ label: "Timeline", href: "/#timeline", isAnchor: true }`
 - `{ label: "Projects", href: "/#projects", isAnchor: true }`
 - `{ label: "Skills", href: "/#skills", isAnchor: true }`
@@ -227,10 +236,12 @@ erDiagram
 ## Data File Architecture
 
 All data files export two things:
+
 1. A **type/interface** (or import from `src/types/`)
 2. A **typed constant** array or object
 
 Example pattern:
+
 ```typescript
 // src/data/projects.ts
 import type { Project } from '@/types/project'
@@ -242,6 +253,7 @@ export const projects: Project[] = [
 ```
 
 Components import directly:
+
 ```typescript
 // src/components/sections/Projects.tsx
 import { projects } from '@/data/projects'

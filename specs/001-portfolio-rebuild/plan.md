@@ -5,7 +5,7 @@
 
 ## Summary
 
-Rebuild Thanachon Suppasatian's personal portfolio as a statically-exported
+Rebuild Thanachon Supasatian's personal portfolio as a statically-exported
 Next.js 15 App Router site deployed to Netlify. The site consists of a
 single-page scrolling experience at `/` with dedicated static pages for
 project case studies (`/projects/[slug]`), an about page (`/about`), and
@@ -199,58 +199,70 @@ build-time generation of all six project slugs.
 ### Layout Components
 
 **Navbar**
+
 - Props: none (reads navigation data from `src/data/navigation.ts`)
 - State: active section (from `useScrollSpy`), mobile menu open/close
 - Behavior: sticky top, transparent → solid on scroll, active section highlight, smooth scroll to anchor sections, full href for /about, /contact pages
 - Children: NavLinks, ThemeToggle, MobileMenu
 
 **ScrollProgress**
+
 - Props: none
 - State: scroll percentage (CSS scaleX, no JS except initial binding)
 - Behavior: fixed top bar, fills left-to-right as user scrolls
 
 **ThemeToggle**
+
 - Props: none
 - State: current theme from next-themes `useTheme()`
 - Behavior: toggles between light/dark, persists via localStorage
 
 **Footer**
+
 - Props: none (reads from `src/data/siteConfig.ts`)
 - Behavior: social links (LinkedIn, GitHub, Email), copyright
 
 ### Shared Components
 
 **ScrollReveal**
+
 - Props: `children: ReactNode`, `delay?: number`, `direction?: 'up' | 'left' | 'right'`
 - Behavior: Framer Motion wrapper, fades in on scroll enter, respects `useReducedMotion()`
 
 **SectionHeader**
+
 - Props: `title: string`, `subtitle?: string`, `label?: string`, `align?: 'left' | 'center'`
 - Behavior: renders h2 + optional subtitle with consistent spacing
 
 **TechBadge**
+
 - Props: `name: string`, `variant?: 'default' | 'outline'`
 - Behavior: renders shadcn Badge with technology name
 
 **SkillBar**
+
 - Props: `name: string`, `level: number` (0–100), `icon?: string`
 - Behavior: animated fill bar triggered by `useInView`, respects reduced motion
 
 **DomainBadge**
+
 - Props: `domain: ProjectDomain`
 - Behavior: color-coded badge per domain (AI=indigo, Web3=purple, E-commerce=emerald, Frontend=sky)
 
 ### Section Components
 
 **Hero**
+
 - Props: none (reads from `src/data/siteConfig.ts`)
 - Behavior: name + title + tagline, avatar with `priority={true}`, two CTAs ("View My Work" → #projects, "Get In Touch" → /contact), Framer Motion entrance animation
 
 **ValueStrip**
+
 - Props: none
 - Behavior: horizontal bar of quick stats (4+ years, 6 projects shipped, 3 domains). AnimatedCounter for numbers.
 
 **Timeline**
+
 - Props: none (reads from `src/data/timelineEvents.ts`)
 - Behavior:
   - Desktop (≥768px): `TimelineTrack` — horizontal scrollable track. Click node → single expanded `TimelineDetail` panel below track. Single active state.
@@ -258,32 +270,39 @@ build-time generation of all six project slugs.
   - Framer Motion for expand/collapse animations.
 
 **Projects**
+
 - Props: none (reads from `src/data/projects.ts`)
 - Behavior: `ProjectFilter` (shadcn Tabs, single-select, default "All") + grid of `ProjectCard`. Cards link to `/projects/[slug]`. Featured projects (AI Event Platform, Tangier DAO) have visual emphasis. Framer Motion `AnimatePresence` + `layout` for filter transitions.
 
 **Skills**
+
 - Props: none (reads from `src/data/skills.ts`)
 - Behavior: grid of skill clusters. Each cluster: title, narrative, list of `SkillBar`. AI & LLM cluster first + visually emphasized. Fill animations on scroll.
 
 **Testimonials**
+
 - Props: none (reads from `src/data/testimonials.ts`)
 - Behavior: Swiper carousel with Autoplay + Pagination modules. `ssr: false` dynamic import. shadcn Avatar with AvatarFallback (initials) for missing images.
 
 **ValueProp**
+
 - Props: none (reads from `src/data/valuePropositions.ts`)
 - Behavior: 5 value cards, each with lucide icon + title + description + optional cross-ref anchor link. ScrollReveal stagger.
 
 **ContactCTA**
+
 - Props: none (reads from `src/data/contactIntents.ts`)
 - Behavior: 4 intent option cards (shadcn Card), selecting one reveals the form with tailored heading/placeholder. Form uses React Hook Form + Zod validation. Submits via Netlify Forms (`netlify` attribute, hidden `form-name` input). Social links row.
 
 ### Project Detail Page Components
 
 **ProjectGallery**
+
 - Props: `images: string[]` (WebP paths)
 - Behavior: Swiper carousel with Navigation + Pagination modules. `ssr: false`.
 
 **ProjectMeta**
+
 - Props: `techStack: string[]`, `liveUrl?: string`, `sourceUrl?: string`
 - Behavior: tech badges row + external link buttons
 

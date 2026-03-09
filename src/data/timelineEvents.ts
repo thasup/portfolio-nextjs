@@ -18,6 +18,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Architected AI features adopted by 3 enterprise clients, reducing manual operations by 40%.',
     skills: ['Technical Leadership', 'AI Architecture', 'System Design', 'Mentoring'],
+    featured: false,
   },
   {
     id: 'ai-event-platform',
@@ -36,6 +37,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Platform processed 50+ events with 85% reduction in manual content creation time.',
     skills: ['Next.js', 'LangChain', 'OpenAI API', 'RAG', 'PostgreSQL', 'WebSocket'],
+    featured: true,
   },
   {
     id: 'langchain-rag',
@@ -54,6 +56,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Built 3 RAG prototypes that directly informed the AI Event Platform architecture.',
     skills: ['LangChain', 'RAG', 'Vector Databases', 'Prompt Engineering', 'Python'],
+    featured: false,
   },
   {
     id: 'tangier-dao',
@@ -72,6 +75,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Onboarded 200+ DAO members and processed 15 governance proposals in first quarter.',
     skills: ['Solidity', 'Ethers.js', 'Next.js', 'IPFS', 'Smart Contracts'],
+    featured: true,
   },
   {
     id: 'token-gating',
@@ -90,6 +94,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Enabled 3 client projects to monetize content through NFT-based access control.',
     skills: ['Web3', 'NFT', 'MetaMask', 'WalletConnect', 'Next.js', 'TypeScript'],
+    featured: false,
   },
   {
     id: 'aws-certified',
@@ -108,6 +113,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Reduced cloud infrastructure costs by 25% across 2 client projects using optimized architectures.',
     skills: ['AWS', 'Cloud Architecture', 'EC2', 'S3', 'Lambda', 'CloudFront'],
+    featured: false,
   },
   {
     id: 'b2b-catalog',
@@ -126,6 +132,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Processed 10,000+ SKUs with 60% faster product discovery compared to the previous system.',
     skills: ['Next.js', 'TypeScript', 'REST API', 'PostgreSQL', 'E-commerce'],
+    featured: false,
   },
   {
     id: 'ap-thai',
@@ -144,6 +151,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Achieved 95+ Lighthouse scores and 35% increase in user engagement after launch.',
     skills: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Google Maps API'],
+    featured: true,
   },
   {
     id: 'maqe-website',
@@ -162,6 +170,7 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Launched on time with 40% improvement in page load speed and improved SEO rankings.',
     skills: ['Next.js', 'Headless CMS', 'TailwindCSS', 'SEO', 'TypeScript'],
+    featured: false,
   },
   {
     id: 'join-maqe',
@@ -180,5 +189,6 @@ export const timelineEvents: TimelineEvent[] = [
     impactTh: '',
     impactEn: 'Contributed to 4 client projects in the first year, establishing full-stack capability.',
     skills: ['React', 'Next.js', 'TypeScript', 'Node.js', 'Agile'],
+    featured: false,
   },
 ]

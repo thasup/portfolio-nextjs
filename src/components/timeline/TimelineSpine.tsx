@@ -1,27 +1,76 @@
-'use client';
+"use client";
 
-import { useScroll } from 'framer-motion';
-import { timelineChapters } from '@/data/timelineChapters';
-import { LocalizedText } from '@/components/shared/LocalizedText';
+import { motion, useTransform } from "framer-motion";
+import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
 
-export function TimelineSpine() {
-  const { scrollYProgress } = useScroll({
-    offset: ['start start', 'end end']
-  });
+interface TimelineSpineProps {
+  totalHeight: number;
+  scrollProgress: number;
+  activeYear: YearKey | null;
+  yearPositions: Record<YearKey, number>;
+}
+
+export function TimelineSpine({
+  totalHeight,
+  scrollProgress,
+  activeYear,
+  yearPositions,
+}: TimelineSpineProps) {
+  const years: YearKey[] = [2022, 2023, 2024, 2025];
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
-    <div className="hidden lg:block w-[2px] bg-border absolute left-0 top-0 bottom-0 overflow-hidden rounded-full">
-      <div 
-        className="w-full bg-primary relative !scale-x-100"
-        style={{ height: '20vh', transform: 'translateY(-100%)', top: 'var(--scroll-y, 0px)' }}
-        ref={(el) => {
-          if (el) {
-            scrollYProgress.on("change", (latest) => {
-               el.style.setProperty('--scroll-y', `${latest * 100}%`);
-            });
-          }
+    <div className="relative w-1" style={{ height: `${totalHeight}px` }}>
+      {/* Background track */}
+      <div className="absolute inset-x-0 top-0 bottom-0 w-1 bg-border rounded-full" />
+
+      {/* Animated fill */}
+      <motion.div
+        className="absolute inset-x-0 top-0 w-1 rounded-full origin-top"
+        style={{
+          scaleY: scrollProgress,
+          backgroundColor: activeYear ? YEAR_THEMES[activeYear].spineColor : "#6366F1",
         }}
       />
+
+      {/* Traveling dot - hidden on mobile */}
+      {!isMobile && (
+        <motion.div
+          className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full shadow-lg"
+          style={{
+            top: `${scrollProgress * totalHeight}px`,
+            backgroundColor: activeYear ? YEAR_THEMES[activeYear].dotColor : "#A5B4FC",
+            boxShadow: activeYear
+              ? `0 0 12px ${YEAR_THEMES[activeYear].dotColor}`
+              : "0 0 12px #A5B4FC",
+          }}
+        />
+      )}
+
+      {/* Year markers */}
+      {years.map((year) => {
+        const position = yearPositions[year] || 0;
+        const theme = YEAR_THEMES[year];
+        const isActive = activeYear === year;
+
+        return (
+          <div
+            key={year}
+            className="absolute left-1/2 -translate-x-1/2 transition-all duration-300"
+            style={{ top: `${position}px` }}
+          >
+            <div
+              className={`w-2 h-2 rounded-full border-2 transition-all duration-300 ${
+                isActive ? "scale-150" : "scale-100"
+              }`}
+              style={{
+                backgroundColor: isActive ? theme.spineColor : "transparent",
+                borderColor: theme.spineColor,
+              }}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

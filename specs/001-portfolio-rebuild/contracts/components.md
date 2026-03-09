@@ -93,6 +93,7 @@ interface DomainBadgeProps {
 ```
 
 **Behavior**: Renders a color-coded badge. Colors by domain:
+
 - `ai` → indigo background
 - `web3` → purple background
 - `ecommerce` → emerald background
@@ -109,6 +110,7 @@ Displays the human-readable domain label from a lookup map.
 ```
 
 **Behavior**:
+
 - Sticky top with `z-50`
 - Background: transparent when at top, solid with blur when scrolled
 - Renders nav links from `navigation.ts`
@@ -170,6 +172,7 @@ text with current year. Links open in new tab with `rel="noopener noreferrer"`.
 ```
 
 **Behavior**:
+
 - Renders: name, professional title, tagline, avatar image, 2 CTA buttons
 - Avatar uses `next/image` with `priority={true}` and static import for blur
 - CTA 1: "View My Work" → smooth scrolls to `#projects`
@@ -194,6 +197,7 @@ Subtle background differentiation from hero section.
 ```
 
 **Behavior**:
+
 - Manages `activeEventId: string | null` state
 - Desktop (≥768px): renders `TimelineTrack` + `TimelineDetail`
 - Mobile (<768px): renders `TimelineAccordion`
@@ -206,6 +210,7 @@ Subtle background differentiation from hero section.
 ```
 
 **Behavior**:
+
 - Manages `activeFilter: ProjectDomain | 'all'` state (default: `'all'`)
 - Renders `ProjectFilter` (shadcn Tabs) + grid of `ProjectCard`
 - Filtered cards use Framer Motion `AnimatePresence` + `layout` for transitions
@@ -219,6 +224,7 @@ Subtle background differentiation from hero section.
 ```
 
 **Behavior**:
+
 - Renders skill clusters in `order` sequence
 - Each cluster: name heading, narrative text, grid of `SkillBar`
 - Emphasized cluster (AI & LLM) gets visual distinction (larger, first)
@@ -232,6 +238,7 @@ Subtle background differentiation from hero section.
 ```
 
 **Behavior**:
+
 - Swiper carousel (dynamically imported, `ssr: false`)
 - Modules: Autoplay (3s pause), Pagination (dots)
 - Each slide: quote text, shadcn Avatar (with AvatarFallback for initials),
@@ -246,6 +253,7 @@ Subtle background differentiation from hero section.
 ```
 
 **Behavior**:
+
 - Renders 5 value cards in a responsive grid (3 cols desktop, 1 col mobile)
 - Each card: lucide icon, title, description, optional "See evidence" link
 - Cross-ref links smooth-scroll to target or navigate to project page
@@ -259,6 +267,7 @@ Subtle background differentiation from hero section.
 ```
 
 **Behavior**:
+
 - 4 intent cards (shadcn Card) in a 2×2 grid
 - Clicking an intent card: highlights it, reveals form below with
   tailored heading and placeholder from the selected ContactIntent
@@ -395,7 +404,7 @@ interface ProjectMetaProps {
 
 - Wraps all pages with: Geist fonts, ThemeProvider, Navbar, Footer,
   ScrollProgress, GoogleAnalytics
-- Metadata: title template (`%s | Thanachon Suppasatian`), default
+- Metadata: title template (`%s | Thanachon Supasatian`), default
   description, OG tags with site URL
 
 ### Home Page (`page.tsx`)

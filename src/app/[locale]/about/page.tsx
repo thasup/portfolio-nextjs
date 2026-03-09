@@ -1,6 +1,6 @@
 import { siteConfig } from '@/data/siteConfig'
 import { SectionHeader } from '@/components/shared/SectionHeader'
-import { TimelineSection } from '@/components/timeline/TimelineSection'
+import { Timeline } from '@/components/sections/Timeline'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import type { Metadata } from 'next'
@@ -48,7 +48,7 @@ export default async function AboutPage() {
       </div>
       
       {/* We reuse the timeline section here as the story */}
-      <TimelineSection />
+      <Timeline />
     </div>
   )
 }

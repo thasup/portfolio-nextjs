@@ -1,4 +1,4 @@
-export type TimelineEventType = 'work' | 'project' | 'education' | 'achievement'
+export type TimelineEventType = 'work' | 'project' | 'education' | 'achievement' | 'learning' | 'milestone'
 
 export interface TimelineChapter {
   id: string
@@ -12,6 +12,13 @@ export interface TimelineChapter {
   eventIds: string[]
 }
 
+export interface MediaLink {
+  type: 'image' | 'video' | 'link'
+  url: string
+  caption?: string
+  captionTh?: string
+}
+
 export interface TimelineEvent {
   id: string
   chapterId: string
@@ -23,12 +30,13 @@ export interface TimelineEvent {
   type: TimelineEventType
   summaryEn: string
   summaryTh: string
-  descriptionEn?: string
-  descriptionTh?: string
+  descriptionEn: string
+  descriptionTh: string
   impactEn: string
   impactTh: string
   skills: string[]
+  featured: boolean
+  mediaLinks?: MediaLink[]
   icon?: string
   tech?: string[]
-  isFeatured?: boolean
 }
