@@ -45,7 +45,7 @@ export function TimelineNode({ event, isActive, onClick }: TimelineNodeProps) {
         <Icon />
       </div>
       <div className="w-24 text-center text-sm font-medium leading-tight line-clamp-2">
-        {event.title}
+        {event.titleEn}
       </div>
     </button>
   )

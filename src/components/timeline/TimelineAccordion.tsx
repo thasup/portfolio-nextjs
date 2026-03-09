@@ -27,7 +27,7 @@ export function TimelineAccordion({ events }: TimelineAccordionProps) {
                 <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
                   {event.date}
                 </span>
-                <span className="text-lg font-bold">{event.title}</span>
+                <span className="text-lg font-bold">{event.titleEn}</span>
                 <span className="text-sm font-normal text-muted-foreground">
                   {event.company}
                 </span>
@@ -35,10 +35,10 @@ export function TimelineAccordion({ events }: TimelineAccordionProps) {
             </AccordionTrigger>
             <AccordionContent>
               <div className="pt-2 pb-4 space-y-4">
-                <p className="leading-relaxed text-sm">{event.description}</p>
+                <p className="leading-relaxed text-sm">{event.descriptionEn}</p>
                 <div className="space-y-1.5">
                   <span className="text-sm font-semibold text-primary">Impact</span>
-                  <p className="text-sm text-muted-foreground">{event.impact}</p>
+                  <p className="text-sm text-muted-foreground">{event.impactEn}</p>
                 </div>
                 <div className="pt-2 flex flex-wrap gap-1.5">
                   {event.skills.map(skill => (

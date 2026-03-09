@@ -17,7 +17,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
           <Image
             src={project.heroImage}
-            alt={project.title}
+            alt={project.titleEn}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -31,13 +31,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <span className="text-xs font-medium text-muted-foreground">{project.year}</span>
           </div>
           <h3 className="text-xl font-bold transition-colors group-hover:text-primary">
-            {project.title}
+            {project.titleEn}
           </h3>
         </CardHeader>
         
         <CardContent className="p-5 pt-3">
           <p className="line-clamp-2 text-sm text-muted-foreground">
-            {project.problemSummary}
+            {project.problemSummaryEn}
           </p>
         </CardContent>
         

@@ -13,15 +13,15 @@ export function TimelineDetail({ event }: TimelineDetailProps) {
         <div className="flex flex-col gap-6 md:flex-row md:gap-8">
           <div className="flex-1 space-y-4">
             <div>
-              <h3 className="text-2xl font-bold">{event.title}</h3>
+              <h3 className="text-2xl font-bold">{event.titleEn}</h3>
               <p className="text-lg text-muted-foreground">{event.company}</p>
             </div>
             
-            <p className="leading-relaxed">{event.description}</p>
+            <p className="leading-relaxed">{event.descriptionEn}</p>
             
             <div className="space-y-2">
               <h4 className="font-semibold text-primary">Impact</h4>
-              <p className="text-muted-foreground">{event.impact}</p>
+              <p className="text-muted-foreground">{event.impactEn}</p>
             </div>
           </div>
           
