@@ -11,7 +11,7 @@ Implementing a premium bilingual (EN/TH) personal portfolio website engineered s
 
 **Language/Version**: TypeScript 5.x, Node >= 18
 **Primary Dependencies**: Next.js 15 (App Router), TailwindCSS v4 + shadcn/ui, Framer Motion (lazy-loaded), Swiper.js, React Hook Form + Zod, Resend, `next-intl`, `@next/third-parties/google`
-**Storage**: N/A (Build-time data sourcing from Airtable via API)
+**Storage**: N/A (Version-controlled static TypeScript data files)
 **Testing**: Playwright (if applicable), Vitest, Lighthouse CI
 **Target Platform**: Vercel (Hybrid Static Rendering + Edge Network)
 **Project Type**: Personal Portfolio Web Application
@@ -25,7 +25,7 @@ Implementing a premium bilingual (EN/TH) personal portfolio website engineered s
 
 - **Hybrid Static Rendering (Vercel)**: COMPLIANT (`output: 'export'` omitted from `next.config.ts`; `/api/contact` provided as serverless, pages compiled to static HTML).
 - **TailwindCSS + shadcn/ui Only**: COMPLIANT (no custom SCSS).
-- **TypeScript Strict Mode**: COMPLIANT (Types defined locally or generated from Airtable types).
+- **TypeScript Strict Mode**: COMPLIANT (Types defined locally and enforced across data files).
 - **Image Optimization**: COMPLIANT (`next/image` handles WebP/AVIF via Vercel).
 - **Component Hierarchy**: COMPLIANT (Matches `ui/`, `shared/`, `sections/`, `timeline/`, `projects/`, `modal/`).
 - **Animation Philosophy**: COMPLIANT (Framer Motion is restricted primarily to timeline progress spine and modal popovers; relies on CSS Intersection Observers for basic reveals).
@@ -54,8 +54,6 @@ thanachon-portfolio/
 ├── messages/
 │   ├── en.json
 │   └── th.json
-├── scripts/
-│   └── fetch-airtable.ts
 ├── src/
 │   ├── app/
 │   │   ├── [locale]/
@@ -77,7 +75,14 @@ thanachon-portfolio/
 │   │   ├── timeline/
 │   │   └── ui/
 │   ├── data/
-│   │   └── generated/
+│   │   ├── contactIntents.ts
+│   │   ├── navigation.ts
+│   │   ├── projects.ts
+│   │   ├── skills.ts
+│   │   ├── testimonials.ts
+│   │   ├── timelineChapters.ts
+│   │   ├── timelineEvents.ts
+│   │   └── valuePropositions.ts
 │   ├── hooks/
 │   ├── lib/
 │   └── types/

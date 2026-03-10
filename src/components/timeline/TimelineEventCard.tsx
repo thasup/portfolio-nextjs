@@ -100,24 +100,20 @@ export function TimelineEventCard({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`relative rounded-xl border bg-card/60 backdrop-blur-sm p-6 timeline-card-hover ${
-        event.featured ? "ring-1" : ""
-      }`}
+      className={`relative rounded-xl border bg-card/60 backdrop-blur-sm p-6 timeline-card-hover ring-1`}
       style={{
-        borderColor: event.featured ? `${theme.accentHex}40` : undefined,
+        borderColor: `${theme.accentHex}40`,
         // @ts-ignore - custom property for ring color
-        "--tw-ring-color": event.featured ? `${theme.accentHex}30` : undefined,
+        "--tw-ring-color": `${theme.accentHex}30`,
       }}
     >
-      {/* Featured glow strip */}
-      {event.featured && (
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl"
-          style={{
-            background: `linear-gradient(to right, transparent, ${theme.accentHex}, transparent)`,
-          }}
-        />
-      )}
+      {/* Glow strip */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl"
+        style={{
+          background: `linear-gradient(to right, transparent, ${theme.accentHex}, transparent)`,
+        }}
+      />
 
       {/* Category badge */}
       <div className="flex items-center gap-2 mb-3">

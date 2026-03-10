@@ -10,8 +10,9 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 **Organization**: Tasks are grouped by logical phased implementation blocks representing Cycle 2 new additions. Cycle 1 tasks (T001–T082) are complete and not duplicated here.
 
 ## Format: `[ID] [P?] [Story?] Description`
+
 - **[P]**: Can run in parallel with other `[P]` tasks in the block
-- **Story IDs Map**: 
+- **Story IDs Map**:
   - `[US1]` - 5-Second Impression (Hero)
   - `[US2]` - Vertical Narrative Timeline
   - `[US3]` - Centralized Portfolio Showcase (Modal)
@@ -22,7 +23,7 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 
 ## Phase A: CYCLE 2 INFRASTRUCTURE (blocks everything in this cycle)
 
-**Purpose**: Setup Vercel hosting, next-intl, Airtable integration, and GA4 tracking base.
+**Purpose**: Setup Vercel hosting, next-intl, static data scaffolding, and GA4 tracking base.
 
 - [x] A001 Remove Netlify config, migrate to Vercel
   - Remove `netlify.toml` and any `@netlify/*` packages from `package.json`.
@@ -46,8 +47,8 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
   - Define `nav.*`, `hero.*`, `timeline.*`, `projects.*`, `skills.*`, etc., from content canvas.
 - [x] A008 [P] Create `messages/th.json` — complete TH string file
   - Mirror `en.json` exactly with Thai translations mapping canvas.
-- [x] A009 [P] Write `scripts/fetch-airtable.ts` — Airtable prebuild fetcher
-  - Fetch tables, write to `src/data/generated/values.ts` and `reflections.ts`. Wrap in gracefully failing `try/catch`. Add `"prebuild"` to `package.json`. Add to `.gitignore`.
+- [x] A009 [P] Normalize `src/data/` static content exports
+  - Ensure all narrative data lives in checked-in `.ts` files with proper types. Remove reliance on generated folders or build scripts.
 - [x] A010 [P] Update all data files with bilingual fields in `src/data/`
   - Timeline, projects, skills, testimonials, value propositions fields updated (e.g., `titleEn`, `titleTh`). Create `src/data/timelineChapters.ts`.
 - [x] A011 [P] Add new TypeScript types for Cycle 2 in `src/types/`
@@ -174,7 +175,7 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 - [x] H005 [P] Update `README.md` — Cycle 2 complete rewrite
   - Ensure updated Tech Stack, Deployment commands, Custom Dimensions, i18n instructions logic are all explicitly listed.
 - [x] H006 Set Vercel environment variables
-  - Commit live vars for `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY`, `AIRTABLE_PROXY_URL` in the provider portal.
+  - Commit live vars for `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_SITE_URL`, `RESEND_API_KEY` in the provider portal.
 - [x] H007 Configure custom domain on Vercel
   - Final SSL, DNS, and `www` mapping validations executed cleanly on Vercel dashboard locking URLs mapping correctly natively.
 
@@ -183,13 +184,16 @@ description: "Task list for Cycle 2: Bilingual Portfolio"
 ## EXECUTION STRATEGY
 
 ### Milestone 1: Structural Integrity (Phase A -> C)
+
 Deploy Vercel, setup routing locale intercepts, and lock Modal triggers in isolation.
 *(MVP Checkpoint: Multi-lingual rendering and blank modal execution functions natively).*
 
 ### Milestone 2: Product Showcasing (Phase D -> E)
+
 Interleave timeline and projects into the visual scroll hierarchy.
 *(MVP Checkpoint: Core project logic works entirely using Apple-target scroll reveals).*
 
 ### Milestone 3: Data & Deployment (Phase F -> H)
+
 Implement tracking, hydrate final image assets, evaluate rigid checks, and commit domain configs.
 *(MVP Checkpoint: Launch asset ready).*

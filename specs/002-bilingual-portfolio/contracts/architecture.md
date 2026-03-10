@@ -1,10 +1,13 @@
 # Architectural Contracts: Bilingual Portfolio
+
 **Branch**: `002-bilingual-portfolio` | **Date**: 2026-03-08 | **Context**: [plan.md](../plan.md)
 
 ## 1. Centralized Modal System Contract
+
 Zero external navigation from detailed content blocks; everything renders atop the view hierarchy using URL hashing to guarantee native browser navigation compatibility.
 
 ### `ModalType` and `ModalPayload` definitions
+
 ```typescript
 type ModalType = 'project' | 'timeline-event' | 'certificate' | 'testimonial';
 
@@ -24,13 +27,16 @@ interface ModalContextValue {
 ```
 
 ### Usage Guarantee
+
 - `useHashModal` hook synchronizes the hash string (e.g., `#project-ai-event-platform`) onto the global window object.
 - The root `Modal` component reacts natively, scaling up/down via Framer Motion without server SSR disruption.
 
 ## 2. Analytics Reporting Contract
+
 Every interaction corresponds to a rigidly typed schema mapping Google Analytics 4 via `@next/third-parties/google`.
 
 ### `Events` Map Definition
+
 ```typescript
 export const Events = {
   MODAL_OPEN: 'modal_open',
@@ -53,9 +59,11 @@ interface EventParams {
 ```
 
 ## 3. i18n Contract (next-intl)
+
 UI strings decoupled securely from static data exports. Handled natively via `<IntlProvider/>` components bound directly to `/en/...` and `/th/...` route mappings.
 
 ### Format Schema (e.g., `messages/en.json`)
+
 ```json
 {
   "nav": {
@@ -77,6 +85,7 @@ UI strings decoupled securely from static data exports. Handled natively via `<I
 ```
 
 ### Component Implementation Rule
+
 ```typescript
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -88,9 +97,8 @@ export default function HeroContent() {
 }
 ```
 
-## 4. Airtable Generation Contract
-```typescript
-// scripts/fetch-airtable.ts
-```
-- Bound to `package.json` `"prebuild": "npx tsx scripts/fetch-airtable.ts"`.
-- Intercepts missing/`404` errors gracefully by exporting a locally stored fallback typescript dictionary, guaranteeing Vercel unblocked builds.
+## 4. Static Data Authority Contract
+
+- All narrative content (timeline, projects, testimonials, skills, values) must live in typed files within `src/data/`.
+- Updates to content are performed by editing these files directly, reviewed via version control.
+- No build-time network fetches are permitted; deterministic builds rely solely on repository data.

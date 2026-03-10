@@ -8,13 +8,12 @@
 ## Overview & Content Foundation
 
 The site establishes a bilingual experience reflecting the career timeline, projects, and skills of Thanachon Supasatian (AI Engineer / Product Owner / Founder).
-Airtable Gaia Project API check resulted in a 404 (schema absent), so the provided content canvas serves as the authoritative source.
+The provided content canvas serves as the authoritative source for all copy and structured data.
 
 ## Clarifications
 
 ### Session 2026-03-08
 
-- Q: Airtable proxy integration strategy? → A: Option A (Build-time fetch in `generateStaticParams` / prebuild scripts writing to `src/data/generated/`, fallback to static canvas on failure).
 - Q: next-intl routing architecture? → A: Strategy B (Default locale `en` has no prefix `/...`, Thai uses `/th/...`).
 - Q: Thai font selection? → A: Option B (Sarabun for Thai body text + headings, paired with Geist Sans for English).
 - Q: Vertical timeline scroll mechanics and hierarchy? → A: Approach C (Hybrid Intersection Observer + Framer Motion spine), with full-viewport-width chapter "scene breaks", indented events below, and a spine showing chapter waypoints (showing event list on hover/tap).
@@ -22,8 +21,8 @@ Airtable Gaia Project API check resulted in a 404 (schema absent), so the provid
 - Q: GA4 custom dimensions implementation? → A: Yes, implementation must include a GA4 setup guide in `README.md` listing custom dimensions (`lang`, `theme`, `device_category`) and their configuration steps.
 - Q: Timeline event interaction (Deep-dive vs auto-expand)? → A: Option A (Full event content is always visible during scroll; "Deep dive" button opens Modal for extended narrative/metrics/tech stack).
 - Q: Project images launch strategy? → A: Option A (Launch with high-quality intentional abstract placeholders using project accent colors + logo styling, to be replaced later).
-- Q: About page integration with Airtable personal values? → A: Yes, include a "What I Stand For" subsection reflecting {titleEn, titleTh, descriptionEn, descriptionTh} arrays, falling back to static data if Airtable build fetch fails.
-- Q: Vercel environment variables documentation? → A: Yes (Create a three-section `.env.local.example` explicitly distinguishing client-visible `NEXT_PUBLIC_`, server-only `RESEND_API_KEY`, and build-time-only `AIRTABLE_PROXY_URL` variables).
+- Q: About page integration with personal values data? → A: Yes, include a "What I Stand For" subsection reflecting {titleEn, titleTh, descriptionEn, descriptionTh} arrays sourced from the static content canvas.
+- Q: Vercel environment variables documentation? → A: Yes (Create a three-section `.env.local.example` explicitly distinguishing client-visible `NEXT_PUBLIC_` variables and server-only secrets such as `RESEND_API_KEY`).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -98,7 +97,6 @@ As a visitor, I want to select my intent and easily contact Thanachon using a sh
 
 - What happens when a user navigates to the `#` hash for an open Modal but JavaScript is failing? (Server-side rendering or graceful fallback)
 - How does the timeline layout respond to extremely short or tall viewports?
-- What happens when the Airtable proxy connection fails on the build step? (Use fallback static canvas provided in this specification)
 
 ## Requirements *(mandatory)*
 
@@ -108,9 +106,9 @@ As a visitor, I want to select my intent and easily contact Thanachon using a sh
 - **FR-002**: System MUST render the Timeline with full-viewport-width chapter scenes, indented events, and a hybrid scroll mechanic (Intersection Observer entry animations + Framer Motion spine markers).
 - **FR-003**: System MUST provide a centralized Modal (full coverage) controlled by the URL hash (e.g., `#project-[slug]`) for hardware/browser Back navigation support without SSR.
 - **FR-004**: System MUST track granular GA4 typed user interactions and custom dimensions (`lang`, `theme`, `device_category`), documented in `README.md`.
-- **FR-005**: System MUST attempt an Airtable API data fetch at build-time (saving to `src/data/generated/`) and gracefully fallback to static file definitions if unreachable.
-- **FR-006**: System MUST supply an About page with a "What I Stand For" subsection leveraging fetched/fallback properties.
-- **FR-007**: System MUST provide a three-section `.env.local.example` documenting Client, Server, and Build-Time environment scope clarity.
+- **FR-005**: System MUST source all narrative data from version-controlled static files to guarantee deterministic builds without external fetches.
+- **FR-006**: System MUST supply an About page with a "What I Stand For" subsection leveraging the static bilingual properties.
+- **FR-007**: System MUST provide a scoped `.env.local.example` that clearly distinguishes client-visible `NEXT_PUBLIC_*` variables from server-only secrets (e.g., `RESEND_API_KEY`).
 
 ### Key Entities
 

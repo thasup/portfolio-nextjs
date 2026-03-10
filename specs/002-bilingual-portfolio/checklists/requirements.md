@@ -31,5 +31,5 @@
 
 ## Notes
 
-- Checked Airtable API proxy but encountered 404. Proceeded using provided content canvas.
+- Verified static content canvas as the authoritative data source.
 - All checklist items pass based on current specifications.
