@@ -31,7 +31,18 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **Product impact**: Explain how this feature improves first impression,
+  attention retention, insight density, or conversion quality.
+- **Performance + accessibility**: State the likely impact on Lighthouse,
+  motion, loading, keyboard access, and semantic structure.
+- **Evidence-led content**: Identify what claims, proof points, or content
+  sources this feature introduces or depends on.
+- **Bilingual fit**: Note whether EN/TH content, metadata, routing, or
+  culturally adapted messaging are affected.
+- **Measurement**: Define what success signals matter and which analytics, if
+  any, are worth instrumenting.
+- **Appropriate level of detail**: Confirm any implementation-specific rules are
+  captured in the spec or README rather than incorrectly promoted to doctrine.
 
 ## Project Structure
 
@@ -98,7 +109,7 @@ directories captured above]
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Violation                  | Why Needed          | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------- | ------------------------------------ |
+| [e.g., 4th project]        | [current need]      | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem]  | [why direct DB access insufficient]  |
