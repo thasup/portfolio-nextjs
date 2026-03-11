@@ -22,7 +22,7 @@ export function SectionHeader({
       )}
     >
       {label && (
-        <span className="mb-3 inline-block text-xs font-semibold tracking-[0.2em] uppercase text-primary">
+        <span className="mb-6 inline-block text-xs font-semibold tracking-[0.2em] uppercase text-primary">
           {label}
         </span>
       )}

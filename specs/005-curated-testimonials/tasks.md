@@ -72,11 +72,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T014 [US2] Redesign the full testimonial reading experience in `src/components/modal/content/TestimonialModal.tsx` to support richer hierarchy, speaker context, and full quote formatting
-- [ ] T015 [US2] Refine testimonial modal shell sizing and reading container behavior in `src/components/modal/ModalShell.tsx` for long-form testimonial content
-- [ ] T016 [US2] Update testimonial modal open/close flow in `src/components/modal/ModalContext.tsx` only if needed to preserve overview continuity and selected-testimonial clarity
-- [ ] T017 [P] [US2] Add or refine localized modal support copy in `messages/en.json` and `messages/th.json` for testimonial detail presentation if needed
-- [ ] T018 [US2] Manually validate the modal experience in `src/components/modal/content/TestimonialModal.tsx`, `src/components/modal/ModalShell.tsx`, and `src/components/modal/ModalContext.tsx` for multi-paragraph readability, attribution visibility, and return-to-overview continuity
+- [x] T014 [US2] Redesign the full testimonial reading experience in `src/components/modal/content/TestimonialModal.tsx` to support richer hierarchy, speaker context, and full quote formatting
+- [x] T015 [US2] Refine testimonial modal shell sizing and reading container behavior in `src/components/modal/ModalShell.tsx` for long-form testimonial content
+- [x] T016 [US2] Update testimonial modal open/close flow in `src/components/modal/ModalContext.tsx` only if needed to preserve overview continuity and selected-testimonial clarity
+- [x] T017 [P] [US2] Add or refine localized modal support copy in `messages/en.json` and `messages/th.json` for testimonial detail presentation if needed
+- [x] T018 [US2] Manually validate the modal experience in `src/components/modal/content/TestimonialModal.tsx`, `src/components/modal/ModalShell.tsx`, and `src/components/modal/ModalContext.tsx` for multi-paragraph readability, attribution visibility, and return-to-overview continuity
 
 **Checkpoint**: User Stories 1 and 2 both work independently, with overview scanning and modal deep reading now complete.
 
@@ -90,11 +90,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T019 [US3] Enhance testimonial card visual polish, spacing rhythm, and editorial emphasis in `src/components/sections/Testimonials.tsx` and `src/components/sections/TestimonialsCarousel.tsx`
-- [ ] T020 [US3] Enhance modal visual polish, typography treatment, and supporting metadata composition in `src/components/modal/content/TestimonialModal.tsx`
-- [ ] T021 [P] [US3] Refine supporting iconography, chips, or emphasis treatments in `src/components/ui/` and `src/lib/utils.ts` if needed for a more premium testimonial presentation
-- [ ] T022 [US3] Review and tune testimonial interaction affordances in `src/components/sections/TestimonialsCarousel.tsx` and `src/components/modal/ModalShell.tsx` so state changes feel smooth and consistent rather than abrupt
-- [ ] T023 [US3] Manually validate premium feel, motion restraint, and cross-role credibility breadth across `src/components/sections/Testimonials.tsx` and `src/components/modal/content/TestimonialModal.tsx`
+- [x] T019 [US3] Enhance testimonial card visual polish, spacing rhythm, and editorial emphasis in `src/components/sections/Testimonials.tsx` and `src/components/sections/TestimonialsCarousel.tsx`
+- [x] T020 [US3] Enhance modal visual polish, typography treatment, and supporting metadata composition in `src/components/modal/content/TestimonialModal.tsx`
+- [x] T021 [P] [US3] Refine supporting iconography, chips, or emphasis treatments in `src/components/ui/` and `src/lib/utils.ts` if needed for a more premium testimonial presentation
+- [x] T022 [US3] Review and tune testimonial interaction affordances in `src/components/sections/TestimonialsCarousel.tsx` and `src/components/modal/ModalShell.tsx` so state changes feel smooth and consistent rather than abrupt
+- [x] T023 [US3] Manually validate premium feel, motion restraint, and cross-role credibility breadth across `src/components/sections/Testimonials.tsx` and `src/components/modal/content/TestimonialModal.tsx`
 
 **Checkpoint**: All three user stories are independently functional, with the final experience reading as premium, curated, and memorable.
 
@@ -104,11 +104,11 @@
 
 **Purpose**: Final bilingual, accessibility, responsiveness, and build-quality checks across all stories.
 
-- [ ] T024 [P] Review testimonial keyboard access and focus visibility in `src/components/sections/TestimonialsCarousel.tsx`, `src/components/modal/ModalShell.tsx`, and `src/components/modal/content/TestimonialModal.tsx`
-- [ ] T025 [P] Review EN/TH parity and summary/full-quote meaning consistency in `src/data/testimonials.ts`, `messages/en.json`, and `messages/th.json`
-- [ ] T026 [P] Decide whether testimonial-specific analytics refinement is justified in `src/lib/analytics.ts` and `src/components/modal/ModalContext.tsx`; leave existing events unchanged if no clear question is answered
-- [ ] T027 Run implementation validation from `specs/005-curated-testimonials/quickstart.md` using `npm run build` and `npm run lint`
-- [ ] T028 Perform final responsive and experience QA across `src/components/sections/Testimonials.tsx`, `src/components/sections/TestimonialsCarousel.tsx`, and `src/components/modal/content/TestimonialModal.tsx`
+- [x] T024 [P] Review testimonial keyboard access and focus visibility in `src/components/sections/TestimonialsCarousel.tsx`, `src/components/modal/ModalShell.tsx`, and `src/components/modal/content/TestimonialModal.tsx`
+- [x] T025 [P] Review EN/TH parity and summary/full-quote meaning consistency in `src/data/testimonials.ts`, `messages/en.json`, and `messages/th.json`
+- [x] T026 [P] Decide whether testimonial-specific analytics refinement is justified in `src/lib/analytics.ts` and `src/components/modal/ModalContext.tsx`; leave existing events unchanged if no clear question is answered
+- [x] T027 Run implementation validation from `specs/005-curated-testimonials/quickstart.md` using `npm run build` and `npm run lint`
+- [x] T028 Perform final responsive and experience QA across `src/components/sections/Testimonials.tsx`, `src/components/sections/TestimonialsCarousel.tsx`, and `src/components/modal/content/TestimonialModal.tsx`
 
 ---
 

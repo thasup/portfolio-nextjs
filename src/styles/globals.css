@@ -170,4 +170,51 @@
     user-select: none;
     pointer-events: none;
   }
+
+  .testimonial-swiper {
+    padding-bottom: 5.5rem;
+    position: relative;
+  }
+
+  .testimonial-swiper .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  .testimonial-swiper .swiper-slide {
+    display: flex !important;
+    height: auto !important;
+  }
+
+  .testimonial-swiper .swiper-pagination {
+    bottom: -0.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding-inline: 1rem;
+  }
+
+  .testimonial-swiper .swiper-pagination-bullet {
+    background-color: color-mix(in oklch, var(--color-muted-foreground) 60%, transparent);
+    opacity: 0.65;
+    width: 0.85rem;
+    height: 0.85rem;
+    border: 1px solid color-mix(in oklch, var(--color-muted-foreground) 50%, transparent);
+    transition: all 200ms ease;
+    box-shadow: 0 0 10px color-mix(in oklch, var(--color-background) 70%, transparent);
+  }
+
+  .testimonial-swiper .swiper-pagination-bullet-active {
+    background-color: var(--color-primary);
+    width: 1.6rem;
+    border-radius: 9999px;
+    border-color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .testimonial-card {
+    width: 100%;
+    min-height: 100%;
+  }
 }

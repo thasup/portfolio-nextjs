@@ -23,41 +23,41 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
   const { open } = useModal()
 
   return (
-    <div className="pb-12">
+    <div className="pb-20">
       <Swiper
         modules={[Pagination, Autoplay, A11y]}
         spaceBetween={24}
         slidesPerView={1}
-        pagination={{ clickable: true, dynamicBullets: true }}
+        pagination={{ clickable: true }}
         autoplay={{ delay: 6000, disableOnInteraction: true }}
         breakpoints={{
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 2 },
+          768: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 2, spaceBetween: 20 },
         }}
-        className="w-full"
+        className="testimonial-swiper w-full pt-0.5"
       >
-        {testimonials.map((testim) => {
-          const summaryQuote = getLocalizedData(testim, 'summaryQuote', locale)
-          const authorRole = getLocalizedData(testim, 'authorRole', locale)
-          const relationship = getLocalizedData(testim, 'relationship', locale)
-          const proofThemeLabel = getLocalizedData(testim, 'proofThemeLabel', locale)
+        {testimonials.map((testimonial) => {
+          const summaryQuote = getLocalizedData(testimonial, 'summaryQuote', locale)
+          const authorRole = getLocalizedData(testimonial, 'authorRole', locale)
+          const relationship = getLocalizedData(testimonial, 'relationship', locale)
+          const proofThemeLabel = getLocalizedData(testimonial, 'proofThemeLabel', locale)
 
           return (
-            <SwiperSlide key={testim.id} className="h-auto">
+            <SwiperSlide key={testimonial.id} className="h-auto flex pb-2">
               <Card
-                className="h-full cursor-pointer border-border bg-background transition-colors hover:border-primary/40"
-                onClick={() => open({ type: 'testimonial', id: testim.id })}
+                className="testimonial-card flex h-full flex-col cursor-pointer border-border bg-background transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+                onClick={() => open({ type: 'testimonial', id: testimonial.id })}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
-                    open({ type: 'testimonial', id: testim.id })
+                    open({ type: 'testimonial', id: testimonial.id })
                   }
                 }}
-                aria-label={`${locale === 'th' ? 'อ่านคำรับรองเต็มจาก' : 'Read full testimonial from'} ${testim.authorName}, ${authorRole}`}
+                aria-label={`${locale === 'th' ? 'อ่านคำรับรองเต็มจาก' : 'Read full testimonial from'} ${testimonial.authorName}, ${authorRole}`}
               >
-                <CardContent className="p-8 flex flex-col justify-between h-full gap-6">
+                <CardContent className="p-8 flex flex-1 flex-col justify-between gap-6 min-h-[280px] md:min-h-[320px]">
                   <div className="flex flex-col gap-4">
                     <div className="flex items-start justify-between gap-4">
                       <Quote className="h-8 w-8 text-primary/20 shrink-0" />
@@ -77,10 +77,10 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                   
                   <div className="flex items-center gap-4 pt-4 border-t border-border/50">
                     <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0">
-                      {getInitials(testim.authorName)}
+                      {getInitials(testimonial.authorName)}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="font-semibold truncate">{testim.authorName}</div>
+                      <div className="font-semibold truncate">{testimonial.authorName}</div>
                       <div className="text-sm text-muted-foreground truncate">{authorRole}</div>
                       <div className="text-xs text-muted-foreground/80 truncate">{relationship}</div>
                     </div>
