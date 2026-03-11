@@ -24,9 +24,9 @@
 
 **Purpose**: Prepare the feature workspace and align implementation against the curated testimonial source of truth.
 
-- [ ] T001 Audit the curated source in `.windsurf/docs/curated_testimonials_strategy.md` against `src/data/testimonials.ts` and `src/types/testimonial.ts`
-- [ ] T002 Review current testimonial rendering contracts in `src/components/sections/Testimonials.tsx`, `src/components/sections/TestimonialsCarousel.tsx`, and `src/components/modal/content/TestimonialModal.tsx`
-- [ ] T003 [P] Review current testimonial interaction and analytics behavior in `src/components/modal/ModalContext.tsx` and `src/lib/analytics.ts`
+- [x] T001 Audit the curated source in `.windsurf/docs/curated_testimonials_strategy.md` against `src/data/testimonials.ts` and `src/types/testimonial.ts`
+- [x] T002 Review current testimonial rendering contracts in `src/components/sections/Testimonials.tsx`, `src/components/sections/TestimonialsCarousel.tsx`, and `src/components/modal/content/TestimonialModal.tsx`
+- [x] T003 [P] Review current testimonial interaction and analytics behavior in `src/components/modal/ModalContext.tsx` and `src/lib/analytics.ts`
 
 ---
 
@@ -36,11 +36,11 @@
 
 **⚠️ CRITICAL**: No user story work should begin until this phase is complete because cards, modal, and polish all depend on the same upgraded content schema.
 
-- [ ] T004 Update the testimonial type schema in `src/types/testimonial.ts` to support summary quotes, full quotes, proof themes, and richer speaker context
-- [ ] T005 Update the structured testimonial dataset in `src/data/testimonials.ts` to encode the curated testimonials strategy as the shipping source of truth
-- [ ] T006 [P] Add or refine testimonial-related localized support copy in `messages/en.json` for overview and modal presentation text if needed
-- [ ] T007 [P] Add or refine testimonial-related localized support copy in `messages/th.json` for overview and modal presentation text if needed
-- [ ] T008 Verify the upgraded testimonial data contract maps cleanly to `src/components/shared/LocalizedText.tsx` and existing locale helpers in `src/i18n/request.ts`
+- [x] T004 Update the testimonial type schema in `src/types/testimonial.ts` to support summary quotes, full quotes, proof themes, and richer speaker context
+- [x] T005 Update the structured testimonial dataset in `src/data/testimonials.ts` to encode all 10 curated testimonials with proof themes and summary/full quote separation
+- [x] T006 [P] Update localized support copy in `messages/en.json` for any new testimonial-related UI strings
+- [x] T007 [P] Update localized support copy in `messages/th.json` for any new testimonial-related UI strings
+- [x] T008 [P] Verify that the upgraded testimonial schema maps cleanly to existing locale helpers in `src/components/shared/LocalizedText.tsx` and existing locale helpers in `src/i18n/request.ts`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin.
 
@@ -54,11 +54,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Refactor section-level testimonial composition in `src/components/sections/Testimonials.tsx` to support the upgraded credibility-at-a-glance hierarchy
-- [ ] T010 [US1] Redesign overview card content and metadata presentation in `src/components/sections/TestimonialsCarousel.tsx` to surface summary quote, speaker attribution, and proof theme clearly
-- [ ] T011 [P] [US1] Add or refine shared testimonial card visual primitives in `src/components/ui/` for proof-theme labels, attribution metadata, or supporting chips if needed
-- [ ] T012 [US1] Align testimonial overview copy and locale-specific scan cues in `messages/en.json`, `messages/th.json`, and `src/components/sections/TestimonialsCarousel.tsx`
-- [ ] T013 [US1] Manually validate the overview state in `src/components/sections/Testimonials.tsx` and `src/components/sections/TestimonialsCarousel.tsx` for desktop/mobile scan clarity and non-generic proof variety
+- [x] T009 [US1] Refactor section-level testimonial composition in `src/components/sections/Testimonials.tsx` to support the upgraded credibility-at-a-glance hierarchy
+- [x] T010 [US1] Redesign overview card content and metadata presentation in `src/components/sections/TestimonialsCarousel.tsx` to surface summary quote, speaker attribution, and proof theme clearly
+- [x] T011 [P] [US1] Add or refine shared testimonial card visual primitives in `src/components/ui/` for proof-theme labels, attribution metadata, or supporting chips if needed
+- [x] T012 [US1] Align testimonial overview copy and locale-specific scan cues in `messages/en.json`, `messages/th.json`, and `src/components/sections/TestimonialsCarousel.tsx`
+- [x] T013 [US1] Manually validate the overview state in `src/components/sections/Testimonials.tsx` and `src/components/sections/TestimonialsCarousel.tsx` for desktop/mobile scan clarity and non-generic proof variety
 
 **Checkpoint**: User Story 1 is fully functional and testable as the MVP without relying on modal improvements.
 

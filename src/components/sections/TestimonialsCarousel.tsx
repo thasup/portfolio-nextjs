@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Quote } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
 import { useModal } from '@/hooks/useModal'
+import { getLocalizedData } from '@/components/shared/LocalizedText'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -22,7 +23,6 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
   const { open } = useModal()
 
   return (
-    // Add negative horizontal margin strictly for the padding so bullets sit outside the card neatly
     <div className="pb-12">
       <Swiper
         modules={[Pagination, Autoplay, A11y]}
@@ -36,37 +36,60 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
         }}
         className="w-full"
       >
-        {testimonials.map((testim) => (
-          <SwiperSlide key={testim.id} className="h-auto">
-            <Card
-              className="h-full cursor-pointer border-border bg-background transition-colors hover:border-primary/40"
-              onClick={() => open({ type: 'testimonial', id: testim.id })}
-            >
-              <CardContent className="p-8 flex flex-col justify-between h-full">
-                <div>
-                  <Quote className="h-8 w-8 text-primary/20 mb-4" />
-                  <p className="text-lg font-medium leading-relaxed relative z-10">
-                    &ldquo;{locale === 'th' ? (testim.sharpestLineTh ?? testim.quoteTh) : (testim.sharpestLineEn ?? testim.quoteEn)}&rdquo;
-                  </p>
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    {locale === 'th' ? 'แตะเพื่ออ่านข้อความเต็ม' : 'Tap to read the full quote'}
-                  </p>
-                </div>
-                
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0">
-                    {getInitials(testim.authorName)}
+        {testimonials.map((testim) => {
+          const summaryQuote = getLocalizedData(testim, 'summaryQuote', locale)
+          const authorRole = getLocalizedData(testim, 'authorRole', locale)
+          const relationship = getLocalizedData(testim, 'relationship', locale)
+          const proofThemeLabel = getLocalizedData(testim, 'proofThemeLabel', locale)
+
+          return (
+            <SwiperSlide key={testim.id} className="h-auto">
+              <Card
+                className="h-full cursor-pointer border-border bg-background transition-colors hover:border-primary/40"
+                onClick={() => open({ type: 'testimonial', id: testim.id })}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    open({ type: 'testimonial', id: testim.id })
+                  }
+                }}
+                aria-label={`${locale === 'th' ? 'อ่านคำรับรองเต็มจาก' : 'Read full testimonial from'} ${testim.authorName}, ${authorRole}`}
+              >
+                <CardContent className="p-8 flex flex-col justify-between h-full gap-6">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <Quote className="h-8 w-8 text-primary/20 shrink-0" />
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium uppercase tracking-wider">
+                        {proofThemeLabel}
+                      </div>
+                    </div>
+                    
+                    <p className="text-lg font-medium leading-relaxed">
+                      &ldquo;{summaryQuote}&rdquo;
+                    </p>
+                    
+                    <p className="text-sm text-muted-foreground">
+                      {locale === 'th' ? 'แตะเพื่ออ่านข้อความเต็ม' : 'Tap to read the full quote'}
+                    </p>
                   </div>
-                  <div>
-                    <div className="font-semibold">{testim.authorName}</div>
-                    <div className="text-sm text-muted-foreground">{locale === 'th' ? testim.authorRoleTh : testim.authorRoleEn}</div>
-                    <div className="text-xs text-muted-foreground">{locale === 'th' ? testim.relationshipTh : testim.relationshipEn}</div>
+                  
+                  <div className="flex items-center gap-4 pt-4 border-t border-border/50">
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0">
+                      {getInitials(testim.authorName)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold truncate">{testim.authorName}</div>
+                      <div className="text-sm text-muted-foreground truncate">{authorRole}</div>
+                      <div className="text-xs text-muted-foreground/80 truncate">{relationship}</div>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </SwiperSlide>
-        ))}
+                </CardContent>
+              </Card>
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
     </div>
   )
