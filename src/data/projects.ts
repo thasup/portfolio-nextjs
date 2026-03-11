@@ -39,7 +39,7 @@ export const projects: Project[] = [
       'ความท้าทายหลักคือการออกแบบสิ่งที่ยัง evolving อยู่ตลอดเวลา ต้องแปลง strategic intent ให้เป็นระบบที่เริ่มใช้งานได้จริงโดยไม่ล็อกทีมไว้กับ architecture ที่แข็งตัวเกินไป',
     challengesEn:
       'The hardest part is designing for an evolving product. The system has to become useful now without freezing the team into an architecture that is too rigid for what comes next.',
-    heroImage: '/images/projects/the-air-product/hero.webp',
+    heroImage: '/images/projects/the-air-product/hero.svg',
     screenshots: [],
     featured: true,
     strategicPriority: 1,
@@ -135,7 +135,7 @@ export const projects: Project[] = [
       'โจทย์สำคัญคือการตัดขอบเขตให้คมพอสำหรับ MVP โดยไม่ทำลายทิศทางระยะยาวของผลิตภัณฑ์',
     challengesEn:
       'The hardest part was scoping sharply enough for MVP without undermining the longer-term direction of the product.',
-    heroImage: '/images/projects/teamstack-roster/hero.webp',
+    heroImage: '/images/projects/teamstack-roster/hero.svg',
     screenshots: [],
     featured: false,
     strategicPriority: 3,
