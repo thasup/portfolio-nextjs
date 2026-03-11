@@ -172,8 +172,9 @@
   }
 
   .testimonial-swiper {
-    padding-bottom: 5.5rem;
+    padding: 2rem 0 !important;
     position: relative;
+    overflow: visible;
   }
 
   .testimonial-swiper .swiper-wrapper {
@@ -186,21 +187,22 @@
   }
 
   .testimonial-swiper .swiper-pagination {
-    bottom: -0.5rem !important;
+    bottom: 0.5rem !important;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     width: 100%;
     padding-inline: 1rem;
+    z-index: 10;
   }
 
   .testimonial-swiper .swiper-pagination-bullet {
-    background-color: color-mix(in oklch, var(--color-muted-foreground) 60%, transparent);
-    opacity: 0.65;
+    background-color: color-mix(in oklch, var(--color-foreground) 70%, transparent);
+    opacity: 0.9;
     width: 0.85rem;
     height: 0.85rem;
-    border: 1px solid color-mix(in oklch, var(--color-muted-foreground) 50%, transparent);
+    border: 1px solid color-mix(in oklch, var(--color-foreground) 50%, transparent);
     transition: all 200ms ease;
     box-shadow: 0 0 10px color-mix(in oklch, var(--color-background) 70%, transparent);
   }
@@ -211,6 +213,19 @@
     border-radius: 9999px;
     border-color: var(--color-primary);
     opacity: 1;
+  }
+
+  .dark .testimonial-swiper .swiper-pagination-bullet {
+    background-color: color-mix(in oklch, #ffffff 85%, transparent);
+    border-color: color-mix(in oklch, #ffffff 65%, transparent);
+    opacity: 1;
+    box-shadow: 0 0 16px color-mix(in oklch, #ffffff 20%, transparent);
+  }
+
+  .dark .testimonial-swiper .swiper-pagination-bullet-active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 18px color-mix(in oklch, var(--color-primary) 60%, transparent);
   }
 
   .testimonial-card {
