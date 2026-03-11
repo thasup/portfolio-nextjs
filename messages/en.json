@@ -68,6 +68,17 @@
     "title": "A 7+ Year Engineering Arc",
     "subtitle": "From MEP systems to self-taught software to AI-first product building — with proof at every stage",
     "deepDive": "Deep Dive",
+    "eventCard": {
+      "capability": "Capability gained:",
+      "evidence": "Evidence:"
+    },
+    "modal": {
+      "impact": "Impact",
+      "technologies": "Technologies",
+      "media": "Media",
+      "eventNotFound": "Event not found",
+      "mediaAlt": "Event media"
+    },
     "visionCta": "What's Next",
     "visionTitle": "What This Arc Points Toward",
     "visionDescription": "I’m now optimizing for AI-first product roles where systems thinking, ownership, and founder proximity matter — and where this trajectory keeps compounding."
@@ -81,7 +92,10 @@
     "label": "TESTIMONIALS",
     "title": "External Validation",
     "subtitle": "Real quotes from clients, managers, and collaborators who saw the work up close",
-    "loading": "Loading testimonials..."
+    "loading": "Loading testimonials...",
+    "card": {
+      "tapToRead": "Tap to read the full quote"
+    }
   },
   "value": {
     "label": "VALUE",

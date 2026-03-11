@@ -7,6 +7,7 @@ import { Testimonials } from '@/components/sections/Testimonials'
 import { ValueProp } from '@/components/sections/ValueProp'
 import { Contact } from '@/components/sections/Contact'
 import { siteConfig } from '@/data/siteConfig'
+import { featureFlags } from '@/lib/featureFlags'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -38,16 +39,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export default function HomePage() {
+  const { showWipSections } = featureFlags
+
   return (
     <>
       <Hero />
       <ValueStrip />
       <Timeline />
       <Projects />
-      <Skills />
+      {showWipSections && <Skills />}
       <Testimonials />
-      <ValueProp />
-      <Contact />
+      {showWipSections && <ValueProp />}
+      {showWipSections && <Contact />}
     </>
   )
 }

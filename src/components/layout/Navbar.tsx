@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Menu, FileText } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
@@ -11,14 +11,41 @@ import { siteConfig } from '@/data/siteConfig'
 import { useScrollSpy } from '@/hooks/useScrollSpy'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
-
-const sectionIds = ['hero', 'timeline', 'projects', 'skills', 'testimonials', 'value', 'contact']
+import { featureFlags } from '@/lib/featureFlags'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const activeSection = useScrollSpy(sectionIds)
   const t = useTranslations('nav')
+  const { showWipSections } = featureFlags
+
+  const baseItems = useMemo(
+    () => [
+      { id: 'hero', label: t('about'), href: '/#hero' },
+      { id: 'timeline', label: t('experience'), href: '/#timeline' },
+      { id: 'projects', label: t('projects'), href: '/#projects' },
+      { id: 'skills', label: t('skills'), href: '/#skills', isWip: true },
+      { id: 'testimonials', label: t('testimonials'), href: '/#testimonials' },
+      { id: 'value', label: t('value'), href: '/#value', isWip: true },
+      { id: 'contact', label: t('contact'), href: '/#contact', isWip: true },
+    ],
+    [t]
+  )
+
+  const navItems = useMemo(
+    () => baseItems.filter((item) => showWipSections || !item.isWip),
+    [baseItems, showWipSections]
+  )
+
+  const sectionIds = useMemo(
+    () =>
+      navItems
+        .filter((item) => item.href.startsWith('/#'))
+        .map((item) => item.href.split('#')[1] || ''),
+    [navItems]
+  )
+
+  const activeSection = useScrollSpy(sectionIds)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -30,16 +57,6 @@ export function Navbar() {
     if (!activeSection) return false
     return href.includes(`#${activeSection}`)
   }
-
-  const items = [
-    { label: t('about'), href: '/#hero' },
-    { label: t('experience'), href: '/#timeline' },
-    { label: t('projects'), href: '/#projects' },
-    { label: t('skills'), href: '/#skills' },
-    { label: t('testimonials'), href: '/#testimonials' },
-    { label: t('value'), href: '/#value' },
-    { label: t('contact'), href: '/#contact' },
-  ]
 
   return (
     <nav
@@ -63,7 +80,7 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden items-center gap-1 md:flex absolute left-1/2 -translate-x-1/2">
-          {items.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -109,7 +126,7 @@ export function Navbar() {
             <SheetContent side="right" className="w-72">
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="mt-8 flex flex-col gap-1">
-                {items.map((item) => (
+                {navItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

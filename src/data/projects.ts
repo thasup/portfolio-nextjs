@@ -39,7 +39,7 @@ export const projects: Project[] = [
       'ความท้าทายหลักคือการออกแบบสิ่งที่ยัง evolving อยู่ตลอดเวลา ต้องแปลง strategic intent ให้เป็นระบบที่เริ่มใช้งานได้จริงโดยไม่ล็อกทีมไว้กับ architecture ที่แข็งตัวเกินไป',
     challengesEn:
       'The hardest part is designing for an evolving product. The system has to become useful now without freezing the team into an architecture that is too rigid for what comes next.',
-    heroImage: '/images/projects/the-air-product/hero.svg',
+    heroImage: '/images/projects/the-air-product/hero.png',
     screenshots: [],
     featured: true,
     strategicPriority: 1,
@@ -87,7 +87,7 @@ export const projects: Project[] = [
       'ความท้าทายคือการทำให้ AI เข้ากับ product behavior จริง ต้องตัดสินใจทั้งด้าน prompt behavior, UX confidence และ production reliability พร้อมกัน',
     challengesEn:
       'The main challenge was making AI fit real product behavior. Prompt design, user confidence, and production reliability all had to be solved together.',
-    heroImage: '/images/projects/ai-event-platform/hero.webp',
+    heroImage: '/images/projects/ai-event-platform/hero.png',
     screenshots: [],
     featured: true,
     strategicPriority: 2,
@@ -135,7 +135,7 @@ export const projects: Project[] = [
       'โจทย์สำคัญคือการตัดขอบเขตให้คมพอสำหรับ MVP โดยไม่ทำลายทิศทางระยะยาวของผลิตภัณฑ์',
     challengesEn:
       'The hardest part was scoping sharply enough for MVP without undermining the longer-term direction of the product.',
-    heroImage: '/images/projects/teamstack-roster/hero.svg',
+    heroImage: '/images/projects/teamstack-roster/hero.png',
     screenshots: [],
     featured: false,
     strategicPriority: 3,
@@ -183,7 +183,7 @@ export const projects: Project[] = [
       'ต้องออกแบบทั้ง contract behavior และ user trust พร้อมกัน เพราะ on-chain systems ลงผิดพลาดแล้วแก้ย้อนหลังได้ยากกว่าซอฟต์แวร์ทั่วไป',
     challengesEn:
       'Both contract behavior and user trust had to be designed together, because mistakes in on-chain systems are far less forgiving than in ordinary software.',
-    heroImage: '/images/projects/tangier-dao/hero.webp',
+    heroImage: '/images/projects/tangier-dao/hero.png',
     screenshots: [],
     featured: true,
     strategicPriority: 4,
@@ -227,7 +227,7 @@ export const projects: Project[] = [
     outcomesTh: 'พิสูจน์ว่าผมสามารถเรียนรู้โดเมนใหม่เร็วและเปลี่ยนมันให้กลายเป็นระบบที่ ship ได้จริง',
     outcomesEn:
       'Proved I can learn a new domain quickly and turn it into a system that actually ships.',
-    heroImage: '/images/projects/token-gating/hero.webp',
+    heroImage: '/images/projects/token-gating/hero.png',
     screenshots: [],
     featured: false,
     strategicPriority: 5,
@@ -271,7 +271,7 @@ export const projects: Project[] = [
     outcomesTh: 'เป็นหลักฐานแรกของ scale, analytics-driven development และการส่งมอบคุณภาพ production ในเส้นทาง software ของผม',
     outcomesEn:
       'An early proof point for scale, analytics-driven development, and production-quality delivery in my software career.',
-    heroImage: '/images/projects/ap-thai/hero.webp',
+    heroImage: '/images/projects/ap-thai/hero.png',
     screenshots: [],
     featured: false,
     strategicPriority: 6,
@@ -315,7 +315,7 @@ export const projects: Project[] = [
     outcomesTh: 'ขยาย range ของผมไปสู่ commerce architecture และย้ำว่าผมเข้าใจวิธีที่ business context เปลี่ยนงานวิศวกรรม',
     outcomesEn:
       'Expanded my range into commerce architecture and reinforced how deeply business context reshapes engineering work.',
-    heroImage: '/images/projects/b2b-catalog/hero.webp',
+    heroImage: '/images/projects/b2b-catalog/hero.png',
     screenshots: [],
     featured: false,
     strategicPriority: 7,
@@ -359,7 +359,7 @@ export const projects: Project[] = [
     outcomesTh: 'เป็นจุดพิสูจน์ด้านความน่าเชื่อถือ ความคิดเชิงระบบ และความสามารถในการเป็นเจ้าของงานอย่างต่อเนื่อง',
     outcomesEn:
       'A proof point for reliability, systematic thinking, and sustained ownership over a real production asset.',
-    heroImage: '/images/projects/maqe-website/hero.webp',
+    heroImage: '/images/projects/maqe-website/hero.png',
     screenshots: [],
     featured: false,
     strategicPriority: 8,

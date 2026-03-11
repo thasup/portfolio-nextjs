@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase, Code2, Trophy, BookOpen, Rocket, LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { TimelineEvent } from "@/types/timeline";
 import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
 import { useModal } from "@/hooks/useModal";
@@ -66,6 +67,7 @@ export function TimelineEventCard({
   index,
   locale,
 }: TimelineEventCardProps) {
+  const t = useTranslations("timeline");
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { open } = useModal();
@@ -149,7 +151,7 @@ export function TimelineEventCard({
       {capabilityGained && (
         <div className="mb-3 text-sm">
           <span className="font-medium" style={{ color: theme.accentHex }}>
-            {locale === "th" ? "ความสามารถที่ได้:" : "Capability gained:"}{" "}
+            {t("eventCard.capability")}{" "}
           </span>
           <span className="text-muted-foreground">{capabilityGained}</span>
         </div>
@@ -162,7 +164,7 @@ export function TimelineEventCard({
           style={{ backgroundColor: `${theme.accentHex}08` }}
         >
           <span className="font-medium" style={{ color: theme.accentHex }}>
-            {locale === "th" ? "หลักฐาน:" : "Evidence:"}{" "}
+            {t("eventCard.evidence")}{" "}
           </span>
           {impact}
         </div>
@@ -204,10 +206,10 @@ export function TimelineEventCard({
       {/* Deep Dive button */}
       <button
         onClick={handleDeepDive}
-        className="text-sm font-medium hover:underline transition-colors"
+        className="text-sm font-medium hover:underline transition-colors cursor-pointer"
         style={{ color: theme.accentHex }}
       >
-        {locale === "th" ? "เจาะลึก" : "Deep Dive"} →
+        {t("deepDive")}
       </button>
     </motion.div>
   );
