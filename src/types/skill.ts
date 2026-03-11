@@ -1,3 +1,10 @@
+export interface SkillEvidence {
+  name: string
+  level: number
+  tagEn?: string
+  tagTh?: string
+}
+
 export interface Skill {
   name: string
   icon?: string
@@ -10,7 +17,10 @@ export interface SkillCluster {
   nameTh: string
   narrativeEn: string
   narrativeTh: string
+  statusEn?: string
+  statusTh?: string
   order: number
   emphasized: boolean
-  skills: Skill[]
+  evidenceRefs?: string[]
+  skills: SkillEvidence[]
 }

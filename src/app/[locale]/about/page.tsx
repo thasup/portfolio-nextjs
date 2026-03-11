@@ -12,6 +12,12 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   const t = await getTranslations('about')
+  const acts = [
+    { title: t('act1Title'), body: t('act1Body') },
+    { title: t('act2Title'), body: t('act2Body') },
+    { title: t('act3Title'), body: t('act3Body') },
+    { title: t('act4Title'), body: t('act4Body') },
+  ]
 
   return (
     <div className="pt-24 pb-16">
@@ -19,20 +25,35 @@ export default async function AboutPage() {
          <SectionHeader
             label={t('label')}
             title={t('title')}
+            subtitle={t('subtitle')}
           />
           <div className="mx-auto flex justify-center mb-10 w-full">
             <div className="relative h-64 w-64 md:h-80 md:w-80 overflow-hidden rounded-full border-4 border-border bg-muted">
-                 {/* Fallback pattern matching the hero avatar */ }
                   <div className="flex h-full w-full items-center justify-center text-5xl md:text-7xl font-bold bg-muted text-muted-foreground p-8">
                    {siteConfig.name.split(' ').map(n => n[0]).join('')}
                  </div>
             </div>
           </div>
 
-          <div className="text-lg md:text-xl leading-relaxed text-muted-foreground space-y-6 text-left mb-12">
-             <p>{t('bio1')}</p>
-             <p>{t('bio2')}</p>
-             <p>{t('bio3')}</p>
+          <div className="space-y-8 text-left mb-12">
+             {acts.map((act) => (
+               <div key={act.title} className="rounded-2xl border border-border bg-card/60 p-6 md:p-8">
+                 <h2 className="mb-4 text-2xl font-bold">{act.title}</h2>
+                 <div className="space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                   {act.body.split('\n\n').map((paragraph) => (
+                     <p key={paragraph}>{paragraph}</p>
+                   ))}
+                 </div>
+               </div>
+             ))}
+             <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 md:p-8">
+               <h2 className="mb-4 text-2xl font-bold">{t('personalityTitle')}</h2>
+               <div className="space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                 {t('personalityBody').split('\n\n').map((paragraph) => (
+                   <p key={paragraph}>{paragraph}</p>
+                 ))}
+               </div>
+             </div>
           </div>
 
            <div className="flex justify-center flex-wrap gap-4">
@@ -46,8 +67,6 @@ export default async function AboutPage() {
                )}
            </div>
       </div>
-      
-      {/* We reuse the timeline section here as the story */}
       <Timeline />
     </div>
   )

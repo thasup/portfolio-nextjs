@@ -1,3 +1,5 @@
+import type { SignalId } from '@/types/content'
+
 export interface ValueProposition {
   id: string
   titleEn: string
@@ -5,6 +7,9 @@ export interface ValueProposition {
   descriptionEn: string
   descriptionTh: string
   icon: string
-  crossRefType?: 'project' | 'timeline' | 'section' | null
-  crossRefId?: string
+  proofEn?: string
+  proofTh?: string
+  crossRef?: string | null
+  signalTag?: SignalId
+  clientValidation?: string
 }

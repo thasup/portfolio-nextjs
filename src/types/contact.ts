@@ -2,12 +2,14 @@ import { z } from 'zod'
 
 export interface ContactIntent {
   key: string
-  label: string
-  labelTh?: string
-  heading: string
-  headingTh?: string
-  placeholder: string
-  placeholderTh?: string
+  labelEn: string
+  labelTh: string
+  headingEn: string
+  headingTh: string
+  previewEn: string
+  previewTh: string
+  placeholderEn: string
+  placeholderTh: string
   icon: string
 }
 

@@ -25,9 +25,9 @@
 
 **Purpose**: Confirm the current content baseline and align implementation against the approved source brief.
 
-- [ ] T001 Audit current portfolio content against `.windsurf/docs/full_portfolio_content_revision.md` and record section-by-section contradictions in `specs/004-portfolio-content-revision/quickstart.md`
-- [ ] T002 Review the current localized content structure in `messages/en.json` and `messages/th.json` to identify keys that must be updated or added for this feature
-- [ ] T003 Review the current structured content shape in `src/data/siteConfig.ts`, `src/data/timelineChapters.ts`, `src/data/timelineEvents.ts`, `src/data/projects.ts`, `src/data/testimonials.ts`, `src/data/skills.ts`, `src/data/valuePropositions.ts`, and `src/data/contactIntents.ts`
+- [x] T001 Audit current portfolio content against `.windsurf/docs/full_portfolio_content_revision.md` and record section-by-section contradictions in `specs/004-portfolio-content-revision/quickstart.md`
+- [x] T002 Review the current localized content structure in `messages/en.json` and `messages/th.json` to identify keys that must be updated or added for this feature
+- [x] T003 Review the current structured content shape in `src/data/siteConfig.ts`, `src/data/timelineChapters.ts`, `src/data/timelineEvents.ts`, `src/data/projects.ts`, `src/data/testimonials.ts`, `src/data/skills.ts`, `src/data/valuePropositions.ts`, and `src/data/contactIntents.ts`
 
 ---
 
@@ -37,11 +37,11 @@
 
 **⚠️ CRITICAL**: No user story work should begin until these foundations are in place.
 
-- [ ] T004 Create or extend shared content types for narrative claims, signals, proof references, testimonial preview fields, project ownership fields, and capability clusters in `src/types/`
-- [ ] T005 [P] Add or normalize shared signal taxonomy and evidence-link capable data structures in `src/data/`
-- [ ] T006 [P] Normalize locale-aware content access patterns and fallback assumptions in `messages/en.json`, `messages/th.json`, and `src/i18n/`
-- [ ] T007 Update shared section-level content contracts and any supporting helpers for cross-section consistency in `src/lib/` and `src/components/shared/`
-- [ ] T008 Define a manual consistency checklist covering role, company, years of experience, flagship work, naming, and testimonials in `specs/004-portfolio-content-revision/quickstart.md`
+- [x] T004 Create or extend shared content types for narrative claims, signals, proof references, testimonial preview fields, project ownership fields, and capability clusters in `src/types/`
+- [x] T005 [P] Add or normalize shared signal taxonomy and evidence-link capable data structures in `src/data/`
+- [x] T006 [P] Normalize locale-aware content access patterns and fallback assumptions in `messages/en.json`, `messages/th.json`, and `src/i18n/`
+- [x] T007 Update shared section-level content contracts and any supporting helpers for cross-section consistency in `src/lib/` and `src/components/shared/`
+- [x] T008 Define a manual consistency checklist covering role, company, years of experience, flagship work, naming, and testimonials in `specs/004-portfolio-content-revision/quickstart.md`
 
 **Checkpoint**: Foundation ready — user story work can now proceed in priority order or in parallel where capacity allows.
 
@@ -55,12 +55,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T009 [P] [US1] Update core identity and first-screen trust data in `src/data/siteConfig.ts`
-- [ ] T010 [P] [US1] Revise hero-related English copy and trust-signal strings in `messages/en.json`
-- [ ] T011 [P] [US1] Revise hero-related Thai copy and trust-signal strings in `messages/th.json`
-- [ ] T012 [US1] Implement revised first-screen narrative, CTA hierarchy, and trust-signal presentation in `src/components/sections/Hero.tsx`
-- [ ] T013 [US1] Align homepage opening section composition and ordering for the revised first-impression flow in `src/app/[locale]/page.tsx`
-- [ ] T014 [US1] Verify the revised hero preserves equivalent meaning across locales in `src/components/sections/Hero.tsx`, `messages/en.json`, and `messages/th.json`
+- [x] T009 [P] [US1] Update core identity and first-screen trust data in `src/data/siteConfig.ts`
+- [x] T010 [P] [US1] Revise hero-related English copy and trust-signal strings in `messages/en.json`
+- [x] T011 [P] [US1] Revise hero-related Thai copy and trust-signal strings in `messages/th.json`
+- [x] T012 [US1] Implement revised first-screen narrative, CTA hierarchy, and trust-signal presentation in `src/components/sections/Hero.tsx`
+- [x] T013 [US1] Align homepage opening section composition and ordering for the revised first-impression flow in `src/app/[locale]/page.tsx`
+- [x] T014 [US1] Verify the revised hero preserves equivalent meaning across locales in `src/components/sections/Hero.tsx`, `messages/en.json`, and `messages/th.json`
 
 **Checkpoint**: User Story 1 should be independently functional and reviewable as the MVP.
 
@@ -74,17 +74,17 @@
 
 ### Implementation for User Story 2
 
-- [ ] T015 [P] [US2] Rewrite career chapter framing and chronology for the full 7+ year arc in `src/data/timelineChapters.ts`
-- [ ] T016 [P] [US2] Rewrite timeline events to cover pre-software engineering, transition, MAQE, and TeamStack proof in `src/data/timelineEvents.ts`
-- [ ] T017 [P] [US2] Re-rank featured work and add ownership/strategic contribution fields in `src/data/projects.ts`
-- [ ] T018 [P] [US2] Replace placeholder social proof with real attributed testimonials and strongest-line preview fields in `src/data/testimonials.ts`
-- [ ] T019 [US2] Update the timeline section narrative and evidence flow in `src/components/sections/Timeline.tsx`
-- [ ] T020 [P] [US2] Update timeline event rendering to surface revised summaries, impacts, and signal links in `src/components/timeline/TimelineEventCard.tsx`
-- [ ] T021 [US2] Update timeline year/chapter presentation for clearer capability progression in `src/components/timeline/TimelineYear.tsx` and `src/components/timeline/TimelineSpine.tsx`
-- [ ] T022 [US2] Update project listing and flagship ordering presentation in `src/components/sections/Projects.tsx`
-- [ ] T023 [P] [US2] Update project detail or modal presentation for ownership framing in `src/components/projects/` and `src/components/modals/`
-- [ ] T024 [US2] Update testimonial preview and full-quote presentation in `src/components/sections/Testimonials.tsx` and `src/components/sections/TestimonialsCarousel.tsx`
-- [ ] T025 [US2] Align localized project, timeline, and testimonial strings with the revised evidence story in `messages/en.json` and `messages/th.json`
+- [x] T015 [P] [US2] Rewrite career chapter framing and chronology for the full 7+ year arc in `src/data/timelineChapters.ts`
+- [x] T016 [P] [US2] Rewrite timeline events to cover pre-software engineering, transition, MAQE, and TeamStack proof in `src/data/timelineEvents.ts`
+- [x] T017 [P] [US2] Re-rank featured work and add ownership/strategic contribution fields in `src/data/projects.ts`
+- [x] T018 [P] [US2] Replace placeholder social proof with real attributed testimonials and strongest-line preview fields in `src/data/testimonials.ts`
+- [x] T019 [US2] Update the timeline section narrative and evidence flow in `src/components/sections/Timeline.tsx`
+- [x] T020 [P] [US2] Update timeline event rendering to surface revised summaries, impacts, and signal links in `src/components/timeline/TimelineEventCard.tsx`
+- [x] T021 [US2] Update timeline year/chapter presentation for clearer capability progression in `src/components/timeline/TimelineYear.tsx` and `src/components/timeline/TimelineSpine.tsx`
+- [x] T022 [US2] Update project listing and flagship ordering presentation in `src/components/sections/Projects.tsx`
+- [x] T023 [P] [US2] Update project detail or modal presentation for ownership framing in `src/components/projects/` and `src/components/modals/`
+- [x] T024 [US2] Update testimonial preview and full-quote presentation in `src/components/sections/Testimonials.tsx` and `src/components/sections/TestimonialsCarousel.tsx`
+- [x] T025 [US2] Align localized project, timeline, and testimonial strings with the revised evidence story in `messages/en.json` and `messages/th.json`
 
 **Checkpoint**: User Story 2 should independently prove the revised career arc, flagship work, and trust-building evidence.
 
@@ -98,14 +98,14 @@
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Reframe capability clusters and evidence-backed skills positioning in `src/data/skills.ts`
-- [ ] T027 [P] [US3] Revise audience-specific value propositions and supporting proof links in `src/data/valuePropositions.ts`
-- [ ] T028 [P] [US3] Revise contact intent copy for AI hiring, product ownership, collaboration, and general outreach in `src/data/contactIntents.ts`
-- [ ] T029 [US3] Implement the revised skills framing UI in `src/components/sections/Skills.tsx`
-- [ ] T030 [US3] Implement revised value proposition and audience-fit messaging in `src/components/sections/ValueProp.tsx` and `src/components/sections/ValueStrip.tsx`
-- [ ] T031 [US3] Implement tailored contact-intent presentation and prompts in `src/components/sections/Contact.tsx`
-- [ ] T032 [US3] Revise the about-page narrative to support founder trajectory, systems thinking, and Gaia framing in `src/app/[locale]/about/page.tsx`
-- [ ] T033 [US3] Align localized audience-fit messaging and CTAs in `messages/en.json` and `messages/th.json`
+- [x] T026 [P] [US3] Reframe capability clusters and evidence-backed skills positioning in `src/data/skills.ts`
+- [x] T027 [P] [US3] Revise audience-specific value propositions and supporting proof links in `src/data/valuePropositions.ts`
+- [x] T028 [P] [US3] Revise contact intent copy for AI hiring, product ownership, collaboration, and general outreach in `src/data/contactIntents.ts`
+- [x] T029 [US3] Implement the revised skills framing UI in `src/components/sections/Skills.tsx`
+- [x] T030 [US3] Implement revised value proposition and audience-fit messaging in `src/components/sections/ValueProp.tsx` and `src/components/sections/ValueStrip.tsx`
+- [x] T031 [US3] Implement tailored contact-intent presentation and prompts in `src/components/sections/Contact.tsx`
+- [x] T032 [US3] Revise the about-page narrative to support founder trajectory, systems thinking, and Gaia framing in `src/app/[locale]/about/page.tsx`
+- [x] T033 [US3] Align localized audience-fit messaging and CTAs in `messages/en.json` and `messages/th.json`
 
 **Checkpoint**: User Story 3 should independently help different audiences recognize fit and select a clear next action.
 
@@ -119,11 +119,11 @@
 
 ### Implementation for User Story 4
 
-- [ ] T034 [P] [US4] Review and reconcile bilingual identity, chronology, and proof claims in `messages/en.json` and `messages/th.json`
-- [ ] T035 [P] [US4] Add or refine locale-specific content keys needed by revised hero, timeline, projects, testimonials, value proposition, and contact surfaces in `messages/en.json` and `messages/th.json`
-- [ ] T036 [US4] Validate and adjust locale-aware rendering for revised section content in `src/app/[locale]/layout.tsx` and `src/app/[locale]/page.tsx`
-- [ ] T037 [US4] Validate and adjust locale-aware rendering for revised about and contact routes in `src/app/[locale]/about/page.tsx` and `src/app/[locale]/contact/page.tsx`
-- [ ] T038 [US4] Reconcile any remaining Thai/English parity gaps across `src/components/sections/Hero.tsx`, `src/components/sections/Timeline.tsx`, `src/components/sections/Projects.tsx`, `src/components/sections/Testimonials.tsx`, `src/components/sections/Skills.tsx`, `src/components/sections/ValueProp.tsx`, and `src/components/sections/Contact.tsx`
+- [x] T034 [P] [US4] Review and reconcile bilingual identity, chronology, and proof claims in `messages/en.json` and `messages/th.json`
+- [x] T035 [P] [US4] Add or refine locale-specific content keys needed by revised hero, timeline, projects, testimonials, value proposition, and contact surfaces in `messages/en.json` and `messages/th.json`
+- [x] T036 [US4] Validate and adjust locale-aware rendering for revised section content in `src/app/[locale]/layout.tsx` and `src/app/[locale]/page.tsx`
+- [x] T037 [US4] Validate and adjust locale-aware rendering for revised about and contact routes in `src/app/[locale]/about/page.tsx` and `src/app/[locale]/contact/page.tsx`
+- [x] T038 [US4] Reconcile any remaining Thai/English parity gaps across `src/components/sections/Hero.tsx`, `src/components/sections/Timeline.tsx`, `src/components/sections/Projects.tsx`, `src/components/sections/Testimonials.tsx`, `src/components/sections/Skills.tsx`, `src/components/sections/ValueProp.tsx`, and `src/components/sections/Contact.tsx`
 
 **Checkpoint**: User Story 4 should independently validate bilingual parity across the revised portfolio experience.
 
@@ -133,11 +133,11 @@
 
 **Purpose**: Finish cross-section consistency, quality checks, and final validation across all stories.
 
-- [ ] T039 [P] Run final contradiction review across `src/data/`, `messages/`, `src/components/sections/`, and `src/app/[locale]/` using the checklist in `specs/004-portfolio-content-revision/quickstart.md`
-- [ ] T040 [P] Refine evidence loops and repeated signal presentation across `src/data/projects.ts`, `src/data/testimonials.ts`, `src/data/timelineEvents.ts`, and `src/data/valuePropositions.ts`
-- [ ] T041 Run `npm run lint` and resolve resulting issues in the touched files across `/Users/first/git/me/portfolio-nextjs`
-- [ ] T042 Run `npm run build` and resolve resulting issues in the touched files across `/Users/first/git/me/portfolio-nextjs`
-- [ ] T043 Perform final EN/TH manual review using `specs/004-portfolio-content-revision/quickstart.md` and record any follow-up notes in `specs/004-portfolio-content-revision/quickstart.md`
+- [x] T039 [P] Run final contradiction review across `src/data/`, `messages/`, `src/components/sections/`, and `src/app/[locale]/` using the checklist in `specs/004-portfolio-content-revision/quickstart.md`
+- [x] T040 [P] Refine evidence loops and repeated signal presentation across `src/data/projects.ts`, `src/data/testimonials.ts`, `src/data/timelineEvents.ts`, and `src/data/valuePropositions.ts`
+- [x] T041 Run `npm run lint` and resolve resulting issues in the touched files across `/Users/first/git/me/portfolio-nextjs`
+- [x] T042 Run `npm run build` and resolve resulting issues in the touched files across `/Users/first/git/me/portfolio-nextjs`
+- [x] T043 Perform final EN/TH manual review using `specs/004-portfolio-content-revision/quickstart.md` and record any follow-up notes in `specs/004-portfolio-content-revision/quickstart.md`
 
 ---
 

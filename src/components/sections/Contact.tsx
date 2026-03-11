@@ -139,7 +139,10 @@ export function Contact() {
                                   )}
                                 >
                                   <span className="font-semibold text-foreground">
-                                    <LocalizedText en={intent.label} th={intent.labelTh || intent.label} />
+                                    <LocalizedText en={intent.labelEn} th={intent.labelTh} />
+                                  </span>
+                                  <span className="text-sm text-muted-foreground">
+                                    <LocalizedText en={intent.previewEn} th={intent.previewTh} />
                                   </span>
                                 </button>
                               ))}
@@ -187,7 +190,7 @@ export function Contact() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            <LocalizedText en={currentIntentConfig.heading} th={currentIntentConfig.headingTh || currentIntentConfig.heading} />
+                            <LocalizedText en={currentIntentConfig.headingEn} th={currentIntentConfig.headingTh} />
                           </FormLabel>
                           <FormControl>
                             <Textarea
