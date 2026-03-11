@@ -30,7 +30,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden pt-16"
+      className="relative flex min-h-[70vh] items-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16"
     >
       {/* Background pattern */}
       <div
@@ -93,12 +93,12 @@ export function Hero() {
                   </Button>
                   <p className="text-xs text-muted-foreground">{t('ctaPrimaryHint')}</p>
                 </div>
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Button size="lg" variant="outline" asChild>
                     <Link href="/contact/">{t('ctaSecondary')}</Link>
                   </Button>
                   <p className="text-xs text-muted-foreground">{t('ctaSecondaryHint')}</p>
-                </div>
+                </div> */}
               </div>
             </Wrapper>
 

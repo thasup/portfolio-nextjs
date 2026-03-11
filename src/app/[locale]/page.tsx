@@ -1,5 +1,4 @@
-import { Hero } from '@/components/sections/Hero'
-import { ValueStrip } from '@/components/sections/ValueStrip'
+import { HeroWithStats } from '@/components/sections/HeroWithStats'
 import { Timeline } from '@/components/sections/Timeline'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
@@ -8,6 +7,7 @@ import { ValueProp } from '@/components/sections/ValueProp'
 import { Contact } from '@/components/sections/Contact'
 import { siteConfig } from '@/data/siteConfig'
 import { featureFlags } from '@/lib/featureFlags'
+import { fetchGitHubStats } from '@/lib/github'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -38,13 +38,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const { showWipSections } = featureFlags
+  const githubUsername = siteConfig.githubUrl.split('/').pop() || 'thasup'
+  const githubStats = await fetchGitHubStats(githubUsername)
 
   return (
     <>
-      <Hero />
-      <ValueStrip />
+      <HeroWithStats githubStats={githubStats} />
       <Timeline />
       <Projects />
       {showWipSections && <Skills />}

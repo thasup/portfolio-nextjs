@@ -30,7 +30,11 @@
     "ctaSecondaryHint": "เปิดคุยเรื่องการจ้างงาน ความร่วมมือ และ founder conversations",
     "stripYears": "ปีในสายวิศวกรรม",
     "stripSoftware": "ปีที่ ship ซอฟต์แวร์",
-    "stripDomains": "โดเมนหลักที่พิสูจน์งาน"
+    "stripDomains": "โดเมนหลักที่พิสูจน์งาน",
+    "stripStars": "ดาวที่ได้รับทั้งหมด",
+    "stripCommits": "Commits ปีนี้",
+    "stripContributions": "Contributions ทั้งหมด",
+    "stripRepos": "Repos ที่มีส่วนร่วม"
   },
   "about": {
     "label": "เกี่ยวกับฉัน",

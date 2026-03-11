@@ -7,8 +7,8 @@ export const siteConfig = {
   tagline:
     'Senior software engineer building AI-first products with product ownership, systems thinking, and a long-term founder trajectory.',
   location: 'Bangkok, Thailand',
-  email: 'thanachon.sup@gmail.com',
-  linkedinUrl: 'https://linkedin.com/in/thanachon',
+  email: 'thanachonfirst@hotmail.com',
+  linkedinUrl: 'https://linkedin.com/in/thasup',
   githubUrl: 'https://github.com/thasup',
   avatarImage: '/images/avatar.webp',
   resumeUrl: '/resume.pdf',

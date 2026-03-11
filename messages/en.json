@@ -30,7 +30,11 @@
     "ctaSecondaryHint": "Open to hiring, collaboration, and founder conversations",
     "stripYears": "Years in engineering",
     "stripSoftware": "Years shipping software",
-    "stripDomains": "Core proof domains"
+    "stripDomains": "Core proof domains",
+    "stripStars": "Total stars earned",
+    "stripCommits": "Commits this year",
+    "stripContributions": "Total contributions",
+    "stripRepos": "Repos contributed to"
   },
   "about": {
     "label": "ABOUT ME",
