@@ -1,36 +1,53 @@
-## Still have to take a long way to finish this project
+# Thanachon Supasatian Portfolio
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This repository contains a premium bilingual portfolio built with Next.js App
+Router, TypeScript, TailwindCSS, and shadcn/ui. The site is designed as a
+high-conversion narrative experience centered on first impression, attention
+retention, and evidence-backed storytelling.
+
+## Core Experience Goals
+
+- Deliver clear professional positioning within the first 5 seconds.
+- Show meaningful proof within the first 30 seconds.
+- Support both English and Thai audiences with audience-appropriate messaging.
+- Keep exploration inside the portfolio through deep dives, modals, and
+  cross-linked evidence where appropriate.
+
+## Tech Stack
+
+- Next.js 15 App Router
+- TypeScript
+- TailwindCSS
+- shadcn/ui
+- next-intl
+- Framer Motion
+- Google Analytics 4
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Quality Expectations
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- `npm run build` must succeed without errors.
+- `npm run lint` must succeed before merge.
+- Experience changes should be reviewed against performance, accessibility,
+  bilingual quality, and the 60-second impact window.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Architecture Notes
 
-## Learn More
+- App routes live under `src/app/`.
+- Structured portfolio content lives in `src/data/`.
+- Localized strings live in `messages/`.
+- The timeline is a primary narrative surface, not just a résumé list.
+- Supplemental detail should preserve reading context wherever possible.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The site deploys to Vercel. Static content should remain deterministic at build
+time, while narrowly scoped server capabilities may be used where justified by
+the implemented architecture.

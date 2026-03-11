@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "timeline": "Timeline",
+    "projects": "Projects",
+    "skills": "Skills",
+    "about": "About",
+    "value": "Value",
+    "contact": "Contact",
+    "resume": "Resume",
+    "hire_me": "Hire Me",
+    "experience": "Experience",
+    "testimonials": "Testimonials",
+    "sr_navigation": "Navigation"
+  },
+  "hero": {
+    "availability": "Open to senior AI engineering, product-minded software, and international roles",
+    "intro": "Thanachon \"First\" Suppasatian",
+    "roleLine": "Senior Software Engineer",
+    "tagline": "Building AI-first products. Thinking like a founder.",
+    "directionLine": "MEP Engineer → Self-taught Dev → AI Product Builder",
+    "proofHeadline": "7 years in engineering. 4 years shipping software.",
+    "proofSubheadline": "1 clear direction: AI systems that actually work.",
+    "trust1": "AWS Certified Cloud Practitioner · 2025",
+    "trust2": "TOEIC 915/990 · English proficiency",
+    "trust3": "MEP Engineering → Software → AI (7 years compounding)",
+    "trust4": "Bangkok, Thailand · Open to international roles",
+    "ctaPrimary": "See My Work",
+    "ctaPrimaryHint": "Best way to assess execution quality fast",
+    "ctaSecondary": "Get In Touch",
+    "ctaSecondaryHint": "Open to hiring, collaboration, and founder conversations",
+    "stripYears": "Years in engineering",
+    "stripSoftware": "Years shipping software",
+    "stripDomains": "Core proof domains",
+    "stripStars": "Total stars earned",
+    "stripCommits": "Commits this year",
+    "stripContributions": "Total contributions",
+    "stripRepos": "Repos contributed to"
+  },
+  "about": {
+    "label": "ABOUT ME",
+    "title": "From Blueprint to Bytecode to Intelligence",
+    "subtitle": "A systems engineer who found his real medium.",
+    "act1Title": "Act I: The Engineer (2018–2021)",
+    "act1Body": "I spent the first chapter of my career designing mechanical, electrical, and plumbing systems for commercial buildings at Toparch in Bangkok. MEP engineering is constraint management at scale — budget limits, physics, building codes, and the needs of thousands of people who will live inside the systems you design but never see.\n\nThat is where I learned what good engineering actually is: solutions that survive contact with reality.\n\nI was competent. I was stable. I was also quietly writing my first lines of JavaScript on evenings and weekends, and realizing that software was the same discipline in a different, more malleable medium.",
+    "act2Title": "Act II: The Bet (2021–2022)",
+    "act2Body": "In April 2021, I resigned.\n\nNo job lined up. No bootcamp enrolled. Just a year of savings, a conviction, and the systems-thinking discipline I'd built in engineering.\n\nI taught myself JavaScript, TypeScript, React, and the fundamentals of modern software architecture. I scored 890 on my first TOEIC attempt — clearing the language barrier that stops most Thai engineers from accessing global opportunities. Twelve months later, I had a portfolio and walked into MAQE.\n\nThe bet worked.",
+    "act3Title": "Act III: The Craft (2022–2025)",
+    "act3Body": "Three years at MAQE Bangkok, one of Thailand's premier digital agencies. I shipped software that real people use — a homebuying platform for AP Thailand's thousands of customers, a decentralized governance tool for Web3 communities, an AI-powered event platform that made creation intelligent.\n\nI also learned something more important than any technology: the engineers who compound their value are the ones who make their teams better, not just their codebases. I co-founded the FEDx Frontend Guild, hosted knowledge sessions, mentored peers, and became the kind of engineer that clients specifically ask to keep working with.",
+    "act4Title": "Act IV: The Vision (2025–Present)",
+    "act4Body": "I joined TeamStack in 2025 — a product-focused environment where I could work directly on building products, not just delivering client projects. I'm currently building The Air Product: an AI-first internal tool with a 3-year strategic roadmap, working directly with the CEO on vision and architecture.\n\nThis is the closest I've been to the work I ultimately want to do: building a product that genuinely solves a problem, with a team that cares about the outcome, in a market that needs it.\n\nThe decade-long goal is a SaaS product in Southeast Asia. Every project, every certification, and every deliberate technology choice has been preparation. The Gaia Project — my personal second brain and life operating system — is what happens when a systems engineer turns the lens inward.",
+    "personalityTitle": "The INTJ Behind the Work",
+    "personalityBody": "MBTI: INTJ — The Architect. I design systems before I build them, and I prefer a precise vision over broad ambiguity. I am direct, I work independently, and I have a deep aversion to work that does not compound toward something.\n\nI believe in three things professionally: relentless progress, autonomy with integrity, and leverage through knowledge — meaning I invest in learning that makes me and everyone around me more capable, not just checking boxes.",
+    "ctaProjects": "View Recent Work",
+    "ctaResume": "Download Resume"
+  },
+  "contact": {
+    "label": "CONTACT",
+    "title": "Choose the Right Conversation",
+    "subtitle": "AI hiring, product ownership, collaboration, or a thoughtful hello — pick the path that fits",
+    "formIntentLabel": "What are you looking for?",
+    "formNameLabel": "Name",
+    "formEmailLabel": "Email",
+    "formSubmit": "Send Message",
+    "formSubmitting": "Sending...",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thanks for reaching out. I'll get back to you within 24 hours.",
+    "successCta": "Send another message",
+    "errorGeneric": "Something went wrong. Please try again or email me directly."
+  },
+  "timeline": {
+    "label": "Experience",
+    "title": "A 7+ Year Engineering Arc",
+    "subtitle": "From MEP systems to self-taught software to AI-first product building — with proof at every stage",
+    "deepDive": "Deep Dive",
+    "eventCard": {
+      "capability": "Capability gained:",
+      "evidence": "Evidence:"
+    },
+    "modal": {
+      "impact": "Impact",
+      "technologies": "Technologies",
+      "media": "Media",
+      "eventNotFound": "Event not found",
+      "mediaAlt": "Event media"
+    },
+    "visionCta": "What's Next",
+    "visionTitle": "What This Arc Points Toward",
+    "visionDescription": "I’m now optimizing for AI-first product roles where systems thinking, ownership, and founder proximity matter — and where this trajectory keeps compounding."
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "connect": "Connect",
+    "allRightsReserved": "All rights reserved."
+  },
+  "testimonials": {
+    "label": "TESTIMONIALS",
+    "title": "Voices from Collaborators",
+    "subtitle": "Real quotes from clients, managers, and collaborators who saw the work up close",
+    "loading": "Loading testimonials...",
+    "card": {
+      "tapToRead": "Tap to read the full quote"
+    }
+  },
+  "value": {
+    "label": "VALUE",
+    "title": "Why Work With Me",
+    "subtitle": "Five things I bring to any team or project",
+    "evidence": "See more"
+  },
+  "site": {
+    "title": "Senior Software Engineer",
+    "description": "Senior software engineer at the intersection of AI-first products, systems thinking, and product ownership with a 7+ year engineering arc."
+  }
+}
