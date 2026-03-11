@@ -15,10 +15,8 @@ const LocaleContext = createContext<LocaleContextType | undefined>(undefined)
 
 export function LocaleProvider({
   children,
-  initialLocale,
 }: {
   children: ReactNode
-  initialLocale: Locale
 }) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()

@@ -50,6 +50,7 @@ export function ProjectModal({ id }: { id: string }) {
     : project.featuresEn;
 
   const title = getLocalizedData(project, 'title', locale);
+  const whatIOwned = locale === 'th' ? project.whatIOwnedTh : project.whatIOwnedEn;
 
   return (
     <div className="flex flex-col h-full relative" ref={scrollRef}>
@@ -151,6 +152,17 @@ export function ProjectModal({ id }: { id: string }) {
           </div>
 
           <aside className="space-y-8">
+            {whatIOwned && (
+              <div className="rounded-xl border border-border p-6 shadow-sm">
+                <h3 className="text-lg font-bold mb-3">
+                  <LocalizedText en="What I Owned" th="สิ่งที่ผมเป็นเจ้าของ" />
+                </h3>
+                <p className="leading-relaxed text-sm text-muted-foreground">
+                  {whatIOwned}
+                </p>
+              </div>
+            )}
+
             <div className="rounded-xl bg-primary/5 border border-primary/10 p-6 shadow-sm">
               <h3 className="text-xl font-bold mb-4 text-primary">
                 <LocalizedText en="Impact & Outcomes" th="ผลลัพธ์ที่ได้" />

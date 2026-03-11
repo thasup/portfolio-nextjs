@@ -14,10 +14,16 @@ export const GA_EVENTS = {
 } as const;
 
 export type EventName = typeof GA_EVENTS[keyof typeof GA_EVENTS];
+type GtagFunction = (
+  command: 'event',
+  name: EventName | string,
+  params?: Record<string, string | number | boolean>
+) => void;
 
 export function trackEvent(name: EventName | string, params?: Record<string, string | number | boolean>) {
-  if (typeof window !== 'undefined' && 'gtag' in window) {
-    (window as any).gtag('event', name, params);
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    const gtag = window.gtag as GtagFunction;
+    gtag('event', name, params);
   }
 }
 

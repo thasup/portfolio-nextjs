@@ -10,7 +10,7 @@ import { TimelineYear } from "@/components/timeline/TimelineYear";
 import { TimelineEventCard } from "@/components/timeline/TimelineEventCard";
 import { timelineEvents } from "@/data/timelineEvents";
 import { YearKey } from "@/data/timelineChapters";
-import { trackEvent, GA_EVENTS, TimelineProgressEvent } from "@/lib/analytics";
+import { trackEvent, GA_EVENTS } from "@/lib/analytics";
 
 export function Timeline() {
   const t = useTranslations("timeline");
@@ -63,7 +63,7 @@ export function Timeline() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const years: YearKey[] = [2022, 2023, 2024, 2025];
+    const years: YearKey[] = [2018, 2021, 2022, 2023, 2024, 2025];
     const yearElements = years.map((y) =>
       sectionRef.current!.querySelector(`[data-year="${y}"]`)
     );
@@ -141,7 +141,6 @@ export function Timeline() {
                 <TimelineYear
                   key={year}
                   year={year}
-                  events={events}
                   locale={locale}
                   onYearEnter={handleYearEnter}
                 >

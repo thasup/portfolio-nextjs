@@ -2,11 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
-import type { TimelineEvent } from "@/types/timeline";
-
 interface TimelineYearProps {
   year: YearKey;
-  events: TimelineEvent[];
   locale: "en" | "th";
   onYearEnter: (year: YearKey, offsetTop: number) => void;
   children: React.ReactNode;
@@ -14,7 +11,6 @@ interface TimelineYearProps {
 
 export function TimelineYear({
   year,
-  events,
   locale,
   onYearEnter,
   children,
@@ -47,9 +43,13 @@ export function TimelineYear({
             className="h-0.5 w-12"
             style={{ backgroundColor: theme.accentHex }}
           />
-          <h3 className={`text-xl md:text-2xl font-bold ${theme.accentClass}`}>
-            {yearLabel}
-          </h3>
+          <div className="space-y-1">
+            <h3 className={`text-xl md:text-2xl font-bold ${theme.accentClass}`}>
+              {yearLabel}
+            </h3>
+            <div className="text-sm text-muted-foreground">{theme.period}</div>
+            <div className="text-sm font-medium">{locale === "th" ? theme.tagTh : theme.tagEn}</div>
+          </div>
         </div>
       </div>
 

@@ -57,12 +57,12 @@
   },
   "timeline": {
     "label": "Experience",
-    "title": "My Journey",
-    "subtitle": "A cinematic journey through milestones, projects, and growth",
+    "title": "A 7+ Year Engineering Arc",
+    "subtitle": "From MEP systems to self-taught software to AI-first product building — with proof at every stage",
     "deepDive": "Deep Dive",
     "visionCta": "What's Next",
-    "visionTitle": "Building the Future",
-    "visionDescription": "Currently exploring opportunities in AI Engineering and Product Ownership, with a vision to found a successful SaaS company in the next decade."
+    "visionTitle": "What This Arc Points Toward",
+    "visionDescription": "I’m now optimizing for AI-first product roles where systems thinking, ownership, and founder proximity matter — and where this trajectory keeps compounding."
   },
   "footer": {
     "navigation": "Navigation",
@@ -71,8 +71,8 @@
   },
   "testimonials": {
     "label": "TESTIMONIALS",
-    "title": "What People Say",
-    "subtitle": "Feedback from colleagues, managers, and collaborators",
+    "title": "External Validation",
+    "subtitle": "Real quotes from clients, managers, and collaborators who saw the work up close",
     "loading": "Loading testimonials..."
   },
   "value": {

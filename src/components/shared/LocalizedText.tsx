@@ -1,6 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
+import { locales } from '@/i18n/request';
 
 interface LocalizedTextProps {
   en: string;
@@ -16,11 +17,15 @@ export function LocalizedText({ en, th, fallback = '' }: LocalizedTextProps) {
   return <>{en || fallback}</>;
 }
 
-export function getLocalizedData<T extends Record<string, any>>(obj: T, fieldName: string, locale: string): string {
-  const isThai = locale === 'th';
+type LocalizedRecord = Record<string, string | undefined>;
+
+export function getLocalizedData<T extends object>(obj: T, fieldName: string, locale: string): string {
+  const normalizedLocale = locales.includes(locale as (typeof locales)[number]) ? locale : 'en';
+  const isThai = normalizedLocale === 'th';
+  const localizedRecord = obj as LocalizedRecord;
   if (isThai) {
-    const thValue = (obj as any)[`${String(fieldName)}Th`];
+    const thValue = localizedRecord[`${String(fieldName)}Th`];
     if (thValue) return thValue;
   }
-  return (obj as any)[`${String(fieldName)}En`] || '';
+  return localizedRecord[`${String(fieldName)}En`] || '';
 }

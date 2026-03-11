@@ -49,18 +49,18 @@ export function Contact() {
     setErrorMsg('')
 
     try {
-      // Netlify Forms submission
-      const formData = new FormData()
-      formData.append('form-name', 'contact')
-      formData.append('name', values.name)
-      formData.append('email', values.email)
-      formData.append('intent', values.intent)
-      formData.append('message', values.message)
+      const formData = new URLSearchParams({
+        'form-name': 'contact',
+        name: values.name,
+        email: values.email,
+        intent: values.intent,
+        message: values.message,
+      })
 
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString(),
+        body: formData.toString(),
       })
 
       if (!res.ok) throw new Error('Form submission failed')
@@ -191,7 +191,7 @@ export function Contact() {
                           </FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder={getLocalizedData(currentIntentConfig, 'placeholder', useLocale())}
+                              placeholder={getLocalizedData(currentIntentConfig, 'placeholder', locale)}
                               className="min-h-[160px] resize-y"
                               {...field}
                             />

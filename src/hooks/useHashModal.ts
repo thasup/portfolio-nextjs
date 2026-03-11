@@ -2,6 +2,9 @@
 
 import { useEffect, useRef } from 'react';
 import { useModal } from './useModal';
+type HashOpenType = 'project' | 'timeline-event' | 'testimonial';
+
+const HASH_MODAL_TYPES: HashOpenType[] = ['project', 'timeline-event', 'testimonial'];
 
 export function useHashModal() {
   const { open, close, isOpen, payload } = useModal();
@@ -30,8 +33,8 @@ export function useHashModal() {
       const typeStr = hash.substring(0, firstHyphen);
       const idStr = hash.substring(firstHyphen + 1);
 
-      if (['project', 'timeline-event', 'certificate', 'testimonial'].includes(typeStr)) {
-        open({ type: typeStr as any, id: idStr });
+      if (HASH_MODAL_TYPES.includes(typeStr as HashOpenType)) {
+        open({ type: typeStr as HashOpenType, id: idStr });
       }
     };
 
@@ -48,7 +51,7 @@ export function useHashModal() {
       const firstHyphen = hash.indexOf('-');
       if (firstHyphen !== -1) {
         const typeStr = hash.substring(0, firstHyphen);
-        if (['project', 'timeline-event', 'certificate', 'testimonial'].includes(typeStr)) {
+        if (HASH_MODAL_TYPES.includes(typeStr as HashOpenType)) {
           isInternalChange.current = true;
           window.history.pushState(null, '', window.location.pathname + window.location.search);
         }

@@ -1,3 +1,5 @@
+import type { SignalId } from '@/types/content'
+
 export type TimelineEventType = 'work' | 'project' | 'education' | 'achievement' | 'learning' | 'milestone'
 
 export interface TimelineChapter {
@@ -5,6 +7,8 @@ export interface TimelineChapter {
   order: number
   titleEn: string
   titleTh: string
+  tagEn?: string
+  tagTh?: string
   descriptionEn: string
   descriptionTh: string
   period: string
@@ -34,8 +38,13 @@ export interface TimelineEvent {
   descriptionTh: string
   impactEn: string
   impactTh: string
+  capabilityGainedEn?: string
+  capabilityGainedTh?: string
   skills: string[]
   featured: boolean
+  signals?: SignalId[]
+  testimonialRef?: string
+  duration?: string
   mediaLinks?: MediaLink[]
   icon?: string
   tech?: string[]
