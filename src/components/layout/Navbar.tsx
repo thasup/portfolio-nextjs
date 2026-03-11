@@ -97,7 +97,7 @@ export function Navbar() {
         </div>
 
         {/* Desktop Actions */}
-        <div className="hidden items-center gap-2 md:flex">
+        {/* <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
           <LanguageToggle />
           {siteConfig.resumeUrl && (
@@ -108,10 +108,10 @@ export function Navbar() {
               </a>
             </Button>
           )}
-          {/* <Button size="sm" asChild>
+          <Button size="sm" asChild>
             <Link href="/contact/">{t('hire_me')}</Link>
-          </Button> */}
-        </div>
+          </Button>
+        </div> */}
 
         {/* Mobile Menu */}
         <div className="flex items-center gap-2 md:hidden">

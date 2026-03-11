@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Quote } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
 import { useModal } from '@/hooks/useModal'
+import { getLocalizedData } from '@/components/shared/LocalizedText'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -22,51 +23,73 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
   const { open } = useModal()
 
   return (
-    // Add negative horizontal margin strictly for the padding so bullets sit outside the card neatly
-    <div className="pb-12">
+    <div className="pb-20">
       <Swiper
         modules={[Pagination, Autoplay, A11y]}
         spaceBetween={24}
         slidesPerView={1}
-        pagination={{ clickable: true, dynamicBullets: true }}
+        pagination={{ clickable: true }}
         autoplay={{ delay: 6000, disableOnInteraction: true }}
         breakpoints={{
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 2 },
+          768: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 2, spaceBetween: 20 },
         }}
-        className="w-full"
+        className="testimonial-swiper w-full pt-0.5"
       >
-        {testimonials.map((testim) => (
-          <SwiperSlide key={testim.id} className="h-auto">
-            <Card
-              className="h-full cursor-pointer border-border bg-background transition-colors hover:border-primary/40"
-              onClick={() => open({ type: 'testimonial', id: testim.id })}
-            >
-              <CardContent className="p-8 flex flex-col justify-between h-full">
-                <div>
-                  <Quote className="h-8 w-8 text-primary/20 mb-4" />
-                  <p className="text-lg font-medium leading-relaxed relative z-10">
-                    &ldquo;{locale === 'th' ? (testim.sharpestLineTh ?? testim.quoteTh) : (testim.sharpestLineEn ?? testim.quoteEn)}&rdquo;
-                  </p>
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    {locale === 'th' ? 'แตะเพื่ออ่านข้อความเต็ม' : 'Tap to read the full quote'}
-                  </p>
-                </div>
-                
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0">
-                    {getInitials(testim.authorName)}
+        {testimonials.map((testimonial) => {
+          const summaryQuote = getLocalizedData(testimonial, 'summaryQuote', locale)
+          const authorRole = getLocalizedData(testimonial, 'authorRole', locale)
+          const relationship = getLocalizedData(testimonial, 'relationship', locale)
+          const proofThemeLabel = getLocalizedData(testimonial, 'proofThemeLabel', locale)
+
+          return (
+            <SwiperSlide key={testimonial.id} className="h-auto flex pb-2">
+              <Card
+                className="testimonial-card flex h-full flex-col cursor-pointer border-border bg-background transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+                onClick={() => open({ type: 'testimonial', id: testimonial.id })}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    open({ type: 'testimonial', id: testimonial.id })
+                  }
+                }}
+                aria-label={`${locale === 'th' ? 'อ่านคำรับรองเต็มจาก' : 'Read full testimonial from'} ${testimonial.authorName}, ${authorRole}`}
+              >
+                <CardContent className="p-8 flex flex-1 flex-col justify-between gap-6 min-h-[280px] md:min-h-[320px]">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <Quote className="h-8 w-8 text-primary/20 shrink-0" />
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium uppercase tracking-wider">
+                        {proofThemeLabel}
+                      </div>
+                    </div>
+                    
+                    <p className="text-lg font-medium leading-relaxed">
+                      &ldquo;{summaryQuote}&rdquo;
+                    </p>
+                    
+                    <p className="text-sm text-muted-foreground">
+                      {locale === 'th' ? 'แตะเพื่ออ่านข้อความเต็ม' : 'Tap to read the full quote'}
+                    </p>
                   </div>
-                  <div>
-                    <div className="font-semibold">{testim.authorName}</div>
-                    <div className="text-sm text-muted-foreground">{locale === 'th' ? testim.authorRoleTh : testim.authorRoleEn}</div>
-                    <div className="text-xs text-muted-foreground">{locale === 'th' ? testim.relationshipTh : testim.relationshipEn}</div>
+                  
+                  <div className="flex items-center gap-4 pt-4 border-t border-border/50">
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0">
+                      {getInitials(testimonial.authorName)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold truncate">{testimonial.authorName}</div>
+                      <div className="text-sm text-muted-foreground truncate">{authorRole}</div>
+                      <div className="text-xs text-muted-foreground/80 truncate">{relationship}</div>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </SwiperSlide>
-        ))}
+                </CardContent>
+              </Card>
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
     </div>
   )

@@ -6,42 +6,78 @@ import { getLocalizedData } from '@/components/shared/LocalizedText';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Quote } from 'lucide-react';
 import { getInitials } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { useModal } from '@/hooks/useModal';
 
 export function TestimonialModal({ id }: { id: string }) {
   const locale = useLocale();
-  const { close } = useModal();
   const testimonial = testimonials.find((t) => t.id === id);
 
-  if (!testimonial) return <div className="p-8 text-center text-muted-foreground">Testimonial not found</div>;
+  if (!testimonial) {
+    return (
+      <div className="p-8 text-center text-muted-foreground">
+        {locale === 'th' ? 'ไม่พบคำรับรอง' : 'Testimonial not found'}
+      </div>
+    );
+  }
 
-  const quote = getLocalizedData(testimonial, 'quote', locale);
+  const fullQuote = getLocalizedData(testimonial, 'fullQuote', locale);
   const authorRole = getLocalizedData(testimonial, 'authorRole', locale);
   const relationship = getLocalizedData(testimonial, 'relationship', locale);
+  const proofThemeLabel = getLocalizedData(testimonial, 'proofThemeLabel', locale);
+  const contextNote = getLocalizedData(testimonial, 'contextNote', locale);
+
+  // Split quote by double newlines to preserve paragraph structure
+  const paragraphs = fullQuote.split('\n\n').filter(p => p.trim());
 
   return (
-    <div className="flex flex-col h-full relative p-6 sm:p-8 lg:p-12 items-center justify-center text-center">
-      <DialogHeader className="mb-0 flex-col items-center flex-grow flex justify-center w-full max-w-3xl mx-auto">
-        
-        <Quote className="h-16 w-16 text-primary/20 mb-8" />
-        
-        <DialogTitle className="text-2xl sm:text-3xl md:text-5xl font-serif italic text-foreground leading-relaxed text-balance mb-12">
-          &ldquo;{quote}&rdquo;
-        </DialogTitle>
-        
-        <div className="flex flex-col items-center mt-6">
+    <div className="flex flex-col h-full relative p-6 sm:p-8 lg:p-12 overflow-y-auto">
+      <div className="w-full max-w-3xl mx-auto">
+        <DialogHeader className="mb-8 flex-col items-center text-center">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <Quote className="h-10 w-10 text-primary/20" />
+            <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium uppercase tracking-wider">
+              {proofThemeLabel}
+            </div>
+          </div>
+          
+          <DialogTitle className="sr-only">
+            {locale === 'th' ? 'คำรับรองจาก' : 'Testimonial from'} {testimonial.authorName}
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-6 mb-10 px-4">
+          {paragraphs.map((paragraph, index) => (
+            <p 
+              key={index}
+              className="text-base sm:text-lg md:text-xl font-serif leading-relaxed text-foreground text-left"
+            >
+              {index === 0 && <span className="text-3xl text-primary/40 mr-1">&ldquo;</span>}
+              {paragraph}
+              {index === paragraphs.length - 1 && <span className="text-3xl text-primary/40 ml-1">&rdquo;</span>}
+            </p>
+          ))}
+        </div>
+
+        {contextNote && (
+          <div className="mb-8 p-4 rounded-lg bg-muted/50 border border-border/50">
+            <p className="text-sm text-muted-foreground italic text-center">
+              {contextNote}
+            </p>
+          </div>
+        )}
+
+        <div className="flex flex-col items-center pt-8 border-t border-border/50">
           <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary mb-4">
             {getInitials(testimonial.authorName)}
           </div>
-          <div className="text-xl font-bold">{testimonial.authorName}</div>
-          <div className="text-muted-foreground mt-1">{authorRole}</div>
-          <div className="text-sm text-muted-foreground/80 mt-1 uppercase tracking-wider">{relationship}</div>
+          <div className="text-xl font-bold text-center">{testimonial.authorName}</div>
+          <div className="text-base text-muted-foreground mt-2 text-center">{authorRole}</div>
+          {testimonial.company && (
+            <div className="text-sm text-muted-foreground/80 mt-1 text-center">{testimonial.company}</div>
+          )}
+          <div className="text-sm text-muted-foreground/70 mt-1 uppercase tracking-wider text-center">
+            {relationship}
+          </div>
         </div>
-      </DialogHeader>
-
-      <div className="absolute top-4 right-4 sm:top-8 sm:right-8">
-         <Button variant="ghost" className="hidden" onClick={close}>Close</Button>
       </div>
     </div>
   );

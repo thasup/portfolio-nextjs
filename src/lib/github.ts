@@ -91,7 +91,7 @@ function calculateStreaks(weeks: ContributionWeek[]): { current: number; longest
   return { current: currentStreak, longest: longestStreak }
 }
 
-async function fetchGraphQL(token: string, query: string, variables: any) {
+async function fetchGraphQL(token: string, query: string, variables: Record<string, unknown>) {
   const response = await fetch('https://api.github.com/graphql', {
     method: 'POST',
     headers: {

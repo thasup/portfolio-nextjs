@@ -311,7 +311,7 @@ export const timelineEvents: TimelineEvent[] = [
     chapterId: 'chapter-vision',
     date: 'Apr 2025',
     sortDate: '2025-04-01',
-    titleEn: 'Joined TeamStack — Building From the Ground Up',
+    titleEn: 'Transition to TeamStack — Building From the Ground Up',
     titleTh: 'เข้าร่วม TeamStack — สร้างจากศูนย์',
     company: 'TeamStack',
     type: 'milestone',
