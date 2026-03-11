@@ -27,7 +27,7 @@ export function TestimonialModal({ id }: { id: string }) {
         <Quote className="h-16 w-16 text-primary/20 mb-8" />
         
         <DialogTitle className="text-2xl sm:text-3xl md:text-5xl font-serif italic text-foreground leading-relaxed text-balance mb-12">
-          "{quote}"
+          &ldquo;{quote}&rdquo;
         </DialogTitle>
         
         <div className="flex flex-col items-center mt-6">

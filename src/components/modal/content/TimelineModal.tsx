@@ -33,7 +33,6 @@ export function TimelineModal({ id }: { id: string }) {
   }
 
   const chapter = timelineChapters.find(c => c.id === event.chapterId);
-  const chapterName = chapter ? getLocalizedData(chapter, 'title', locale) : '';
 
   return (
     <div className="flex flex-col h-full relative p-6 sm:p-8 lg:p-10">

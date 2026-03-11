@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { sarabun } from '@/lib/fonts'
 import { ThemeProvider } from 'next-themes'
+import Script from 'next/script'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
@@ -67,6 +68,7 @@ export default async function RootLayout({
 }) {
   const { locale } = await params
   const messages = await getMessages()
+  const chatbaseEmbedId = process.env.NEXT_PUBLIC_CHATBASE_EMBED_ID
 
   return (
     <html
@@ -97,6 +99,15 @@ export default async function RootLayout({
         </NextIntlClientProvider>
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        {chatbaseEmbedId && (
+          <Script
+            id="chatbase-inline-loader"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="${chatbaseEmbedId}";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();`,
+            }}
+          />
         )}
       </body>
     </html>

@@ -49,18 +49,18 @@ export function Contact() {
     setErrorMsg('')
 
     try {
-      // Netlify Forms submission
-      const formData = new FormData()
-      formData.append('form-name', 'contact')
-      formData.append('name', values.name)
-      formData.append('email', values.email)
-      formData.append('intent', values.intent)
-      formData.append('message', values.message)
+      const formData = new URLSearchParams({
+        'form-name': 'contact',
+        name: values.name,
+        email: values.email,
+        intent: values.intent,
+        message: values.message,
+      })
 
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString(),
+        body: formData.toString(),
       })
 
       if (!res.ok) throw new Error('Form submission failed')
@@ -139,7 +139,10 @@ export function Contact() {
                                   )}
                                 >
                                   <span className="font-semibold text-foreground">
-                                    <LocalizedText en={intent.label} th={intent.labelTh || intent.label} />
+                                    <LocalizedText en={intent.labelEn} th={intent.labelTh} />
+                                  </span>
+                                  <span className="text-sm text-muted-foreground">
+                                    <LocalizedText en={intent.previewEn} th={intent.previewTh} />
                                   </span>
                                 </button>
                               ))}
@@ -187,11 +190,11 @@ export function Contact() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            <LocalizedText en={currentIntentConfig.heading} th={currentIntentConfig.headingTh || currentIntentConfig.heading} />
+                            <LocalizedText en={currentIntentConfig.headingEn} th={currentIntentConfig.headingTh} />
                           </FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder={getLocalizedData(currentIntentConfig, 'placeholder', useLocale())}
+                              placeholder={getLocalizedData(currentIntentConfig, 'placeholder', locale)}
                               className="min-h-[160px] resize-y"
                               {...field}
                             />

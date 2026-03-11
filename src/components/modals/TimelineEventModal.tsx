@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLocale } from "next-intl";
 import { timelineEvents } from "@/data/timelineEvents";
 
@@ -85,11 +86,15 @@ export function TimelineEventModal({ eventId }: TimelineEventModalProps) {
                 <div key={index} className="rounded-lg border border-border overflow-hidden">
                   {media.type === "image" && (
                     <div>
-                      <img
-                        src={media.url}
-                        alt={caption || "Event media"}
-                        className="w-full h-auto"
-                      />
+                      <div className="relative w-full aspect-video">
+                        <Image
+                          src={media.url}
+                          alt={caption || "Event media"}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 768px"
+                        />
+                      </div>
                       {caption && (
                         <p className="p-3 text-sm text-muted-foreground bg-muted/30">
                           {caption}

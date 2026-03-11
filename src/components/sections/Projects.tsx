@@ -10,6 +10,7 @@ import { SectionHeader } from '@/components/shared/SectionHeader'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { LocalizedText } from '@/components/shared/LocalizedText'
 import { trackEvent, GA_EVENTS } from '@/lib/analytics'
+import { sortFeaturedFirst } from '@/lib/content'
 
 export function Projects() {
   const [activeDomain, setActiveDomain] = useState<ProjectDomain | 'all'>('all')
@@ -22,7 +23,7 @@ export function Projects() {
     });
   }
 
-  const filteredProjects = projects.filter(
+  const filteredProjects = sortFeaturedFirst(projects).filter(
     (project) => activeDomain === 'all' || project.domain === activeDomain
   )
 
@@ -31,8 +32,8 @@ export function Projects() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           label={<LocalizedText en="MY WORK" th="ผลงาน" />}
-          title={<LocalizedText en="Featured Projects" th="ผลงานที่โดดเด่น" />}
-          subtitle={<LocalizedText en="Real problems solved with code that shipped to production" th="แก้ไขปัญหาจริงด้วยโค้ดที่ใช้งานได้ระดับโปรดักชัน" />}
+          title={<LocalizedText en="Flagship Work & Proof" th="ผลงานหลักและหลักฐาน" />}
+          subtitle={<LocalizedText en="Ordered by strategic signal strength: current flagship work, shipped AI, and the ownership stories behind each build" th="จัดเรียงตามความเข้มของสัญญาณเชิงกลยุทธ์: งาน flagship ปัจจุบัน งาน AI ที่ ship แล้ว และเรื่องราวความเป็นเจ้าของเบื้องหลังแต่ละโปรเจกต์" />}
         />
 
         <ProjectFilter activeDomain={activeDomain} onDomainChange={handleDomainChange} />

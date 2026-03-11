@@ -5,6 +5,7 @@ import { skillClusters } from '@/data/skills'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { LocalizedText } from '@/components/shared/LocalizedText'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 export function Skills() {
   return (
@@ -34,6 +35,13 @@ export function Skills() {
                       <span className="flex h-2 w-2 rounded-full bg-primary" />
                     )}
                   </CardTitle>
+                  {(cluster.statusEn || cluster.statusTh) && (
+                    <div>
+                      <span className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground">
+                        <LocalizedText en={cluster.statusEn || ''} th={cluster.statusTh || cluster.statusEn || ''} />
+                      </span>
+                    </div>
+                  )}
                   <p className="text-sm text-muted-foreground">
                     <LocalizedText en={cluster.narrativeEn} th={cluster.narrativeTh} />
                   </p>
@@ -42,6 +50,19 @@ export function Skills() {
                   {cluster.skills.map((skill) => (
                     <SkillBar key={skill.name} name={skill.name} level={skill.level} />
                   ))}
+                  {cluster.evidenceRefs && cluster.evidenceRefs.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {cluster.evidenceRefs.map((ref) => (
+                        <Link
+                          key={ref}
+                          href={`/projects/${ref}`}
+                          className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground hover:text-foreground"
+                        >
+                          {ref}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </ScrollReveal>

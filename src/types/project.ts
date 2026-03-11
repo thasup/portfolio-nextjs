@@ -1,3 +1,5 @@
+import type { SignalId } from '@/types/content'
+
 export type ProjectDomain = 'ai' | 'web3' | 'ecommerce' | 'frontend'
 
 export const DOMAIN_LABELS: Record<ProjectDomain, string> = {
@@ -19,6 +21,7 @@ export interface Project {
   titleEn: string
   titleTh: string
   domain: ProjectDomain
+  company?: string
   taglineEn: string
   taglineTh: string
   problemSummaryEn: string
@@ -37,6 +40,11 @@ export interface Project {
   heroImage: string
   screenshots?: string[]
   featured: boolean
+  strategicPriority?: number
+  whatIOwnedEn?: string
+  whatIOwnedTh?: string
+  signals?: SignalId[]
+  proofRefs?: string[]
   liveUrl?: string
   sourceUrl?: string
   year: string

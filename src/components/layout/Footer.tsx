@@ -2,10 +2,13 @@ import Link from 'next/link'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
+import { featureFlags } from '@/lib/featureFlags'
 import { useTranslations } from 'next-intl'
 
 export function Footer() {
   const t = useTranslations('footer')
+  const { showWipSections } = featureFlags
+  const footerNavItems = navigationItems.filter((item) => showWipSections || !item.isWip)
 
   return (
     <footer className="border-t border-border bg-muted/30">
@@ -28,7 +31,7 @@ export function Footer() {
               {t('navigation')}
             </h3>
             <ul className="space-y-2">
-              {navigationItems.map((item) => (
+              {footerNavItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}

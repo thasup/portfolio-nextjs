@@ -2,9 +2,10 @@ import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ScrollReveal } from '@/components/shared/ScrollReveal'
 import { valuePropositions } from '@/data/valuePropositions'
 import { Card, CardContent } from '@/components/ui/card'
-import { Brain, Target, Layers, Zap, Rocket, ArrowRight } from 'lucide-react'
+import { Sparkles, Target, Layers, Zap, Rocket, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
+import { getSignalLabel } from '@/lib/content'
 
 export function ValueProp() {
   const t = useTranslations('value')
@@ -13,7 +14,7 @@ export function ValueProp() {
 
   const getIcon = (name: string) => {
     switch (name) {
-      case 'Brain': return <Brain className="h-6 w-6" />
+      case 'Sparkles': return <Sparkles className="h-6 w-6" />
       case 'Target': return <Target className="h-6 w-6" />
       case 'Layers': return <Layers className="h-6 w-6" />
       case 'Zap': return <Zap className="h-6 w-6" />
@@ -33,10 +34,20 @@ export function ValueProp() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {valuePropositions.map((value, index) => {
-            // Give the last one a column span if it's orphaned on its own row in the grid
-            const isLastOrphaned = index === valuePropositions.length - 1 && valuePropositions.length % 2 !== 0;
+            const isLastOrphaned = index === valuePropositions.length - 1 && valuePropositions.length % 2 !== 0
             const title = isThai && value.titleTh ? value.titleTh : value.titleEn
             const description = isThai && value.descriptionTh ? value.descriptionTh : value.descriptionEn
+            const proof = isThai && value.proofTh ? value.proofTh : value.proofEn
+            const signalLabel = value.signalTag ? getSignalLabel(value.signalTag, isThai ? 'th' : 'en') : null
+            const href = value.crossRef
+              ? value.crossRef.startsWith('project:')
+                ? `/projects/${value.crossRef.replace('project:', '')}`
+                : value.crossRef.startsWith('timeline:')
+                  ? `/#${value.crossRef.replace('timeline:', '')}`
+                  : value.crossRef.startsWith('section:')
+                    ? `/#${value.crossRef.replace('section:', '')}`
+                    : value.crossRef
+              : null
             return (
               <ScrollReveal 
                 key={value.id} 
@@ -48,13 +59,25 @@ export function ValueProp() {
                     <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       {getIcon(value.icon)}
                     </div>
+                    {signalLabel && (
+                      <div className="mb-3">
+                        <span className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground">
+                          {signalLabel}
+                        </span>
+                      </div>
+                    )}
                     <h3 className="mb-3 text-xl font-bold">{title}</h3>
                     <p className="text-muted-foreground leading-relaxed flex-grow">
                       {description}
                     </p>
-                    {value.crossRefId && (
+                    {proof && (
+                      <p className="mt-5 rounded-lg border border-border/60 bg-muted/30 px-3 py-3 text-sm text-muted-foreground">
+                        {proof}
+                      </p>
+                    )}
+                    {href && (
                       <Link 
-                        href={value.crossRefId}
+                        href={href}
                         className="mt-6 flex items-center text-sm font-medium text-primary hover:underline hover:underline-offset-4"
                       >
                         {t('evidence')}

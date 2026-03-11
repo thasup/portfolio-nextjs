@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
 
 interface TimelineSpineProps {
@@ -16,7 +16,7 @@ export function TimelineSpine({
   activeYear,
   yearPositions,
 }: TimelineSpineProps) {
-  const years: YearKey[] = [2022, 2023, 2024, 2025];
+  const years: YearKey[] = [2018, 2021, 2022, 2023, 2024, 2025];
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (

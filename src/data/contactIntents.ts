@@ -2,43 +2,65 @@ import type { ContactIntent } from '@/types/contact'
 
 export const contactIntents: ContactIntent[] = [
   {
-    key: 'hire_ai',
-    label: 'Hire as AI Engineer',
-    labelTh: 'ร่วมงานในฐานะ AI Engineer',
-    heading: "Let's talk about AI engineering",
+    key: 'hire-ai',
+    labelEn: 'Hire as AI Engineer',
+    labelTh: 'จ้างเป็น AI Engineer',
+    headingEn: "Let's talk AI engineering",
     headingTh: 'คุยเรื่อง AI Engineering',
-    placeholder: 'Tell me about the AI/LLM challenges your team is facing...',
-    placeholderTh: 'เล่าให้ผมฟังเกี่ยวกับโจทย์ AI/LLM ที่ทีมคุณกำลังเจอ...',
-    icon: 'Cpu',
+    previewEn:
+      "Tell me about the AI product you're building. What's the problem it solves, what's the technical context, and what gap you're trying to fill. I'll reply with genuine thoughts on fit.",
+    previewTh:
+      'เล่าเรื่อง AI product ที่คุณกำลังสร้าง ปัญหาที่แก้ บริบทเทคนิค และช่องว่างที่คุณพยายามเติม ผมจะตอบกลับด้วยความคิดจริงๆ เกี่ยวกับความเหมาะสม',
+    placeholderEn:
+      "E.g. We're building a RAG-based internal knowledge tool and need someone who can own the AI integration layer and frontend...",
+    placeholderTh:
+      'เช่น เรากำลังสร้างเครื่องมือ knowledge ภายในแบบ RAG และต้องการคนที่รับผิดชอบ AI integration layer และ frontend...',
+    icon: 'Sparkles',
   },
   {
-    key: 'hire_po',
-    label: 'Hire as Product Owner',
-    labelTh: 'ร่วมงานในฐานะ Product Owner',
-    heading: "Let's talk about product leadership",
-    headingTh: 'คุยเรื่องการบริหารผลิตภัณฑ์',
-    placeholder: 'Tell me about the product challenges and team dynamics...',
-    placeholderTh: 'เล่าให้ผมฟังเกี่ยวกับความท้าทายของผลิตภัณฑ์และทีม...',
+    key: 'hire-po',
+    labelEn: 'Hire as Product Owner',
+    labelTh: 'จ้างเป็น Product Owner',
+    headingEn: "Let's talk product ownership",
+    headingTh: 'คุยเรื่อง Product Ownership',
+    previewEn:
+      "Tell me about your product and team. What decisions need to be owned, what's the technical complexity, and what success looks like at 6 months. Engineers who think in products are rare — I'm one.",
+    previewTh:
+      'เล่าเรื่อง product และทีมของคุณ การตัดสินใจอะไรที่ต้องการเจ้าของ ความซับซ้อนทางเทคนิคเป็นอย่างไร และความสำเร็จในรอบ 6 เดือนหน้าตาอย่างไร วิศวกรที่คิดแบบ product หายาก ผมเป็นคนนั้น',
+    placeholderEn:
+      "E.g. We're a Series A startup with a technical product and need a PO who can translate between engineering and business...",
+    placeholderTh:
+      'เช่น เราเป็น startup Series A ที่มีผลิตภัณฑ์ทางเทคนิคและต้องการ PO ที่เชื่อมวิศวกรรมกับธุรกิจได้...',
     icon: 'Target',
   },
   {
     key: 'collaborate',
-    label: 'Collaborate on SaaS',
-    labelTh: 'ร่วมสร้าง SaaS ด้วยกัน',
-    heading: "Let's build something together",
-    headingTh: 'สร้างอะไรบางอย่างด้วยกัน',
-    placeholder: 'Tell me about your SaaS idea and what you need from a co-founder...',
-    placeholderTh: 'เล่าไอเดีย SaaS ของคุณและสิ่งที่คุณมองหาจาก Co-founder...',
+    labelEn: 'Co-build Something',
+    labelTh: 'ร่วมสร้างบางอย่าง',
+    headingEn: "Let's build together",
+    headingTh: 'สร้างด้วยกัน',
+    previewEn:
+      "Have an idea for a SaaS product — especially targeting Southeast Asia? Tell me the problem, the market, and why now. I'm actively looking for the right co-founder conversation.",
+    previewTh:
+      'มีไอเดียสำหรับ SaaS product โดยเฉพาะ Southeast Asia? เล่าปัญหา ตลาด และทำไมต้องตอนนี้ ผมกำลังมองหาการสนทนา co-founder ที่ใช่อยู่',
+    placeholderEn:
+      "E.g. I've been working on an AI tool for Thai SMEs and need a technical co-founder who can own the product...",
+    placeholderTh:
+      'เช่น ผมกำลังทำ AI tool สำหรับ SME ไทยและต้องการ co-founder ทางเทคนิคที่รับผิดชอบผลิตภัณฑ์ได้...',
     icon: 'Handshake',
   },
   {
     key: 'general',
-    label: 'General Inquiry',
-    labelTh: 'เรื่องอื่นๆ',
-    heading: "What's on your mind?",
-    headingTh: 'คุณมีอะไรในใจ?',
-    placeholder: 'Ask me anything — I respond to every message...',
-    placeholderTh: 'สอบถามได้ทุกเรื่อง ผมตอบทุกข้อความครับ...',
+    labelEn: 'Just Saying Hi',
+    labelTh: 'แค่ทักทาย',
+    headingEn: 'Say hi',
+    headingTh: 'ทักทาย',
+    previewEn:
+      "Even if you're not sure of fit yet, send context and I'll reply thoughtfully. I usually respond within 24 hours on weekdays.",
+    previewTh:
+      'แม้ยังไม่แน่ใจว่าเหมาะสมหรือเปล่า ส่งบริบทมาและผมจะตอบกลับอย่างใส่ใจ ปกติตอบภายใน 24 ชั่วโมงในวันทำงาน สามารถติดต่อเป็นภาษาไทยได้เลย 🙏',
+    placeholderEn: "Whatever's on your mind...",
+    placeholderTh: 'อะไรก็ตามที่อยู่ในใจ...',
     icon: 'MessageSquare',
   },
 ]

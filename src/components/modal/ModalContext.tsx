@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useState, useCallback, ReactNode, useEffect, useRef } from 'react';
 import { ModalPayload, ModalContextValue } from '@/types/modal';
 import { trackEvent, GA_EVENTS } from '@/lib/analytics';
 
@@ -16,6 +16,11 @@ function HashModalManager() {
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [payload, setPayload] = useState<ModalPayload | null>(null);
+  const payloadRef = useRef<ModalPayload | null>(payload);
+
+  useEffect(() => {
+    payloadRef.current = payload;
+  }, [payload]);
 
   const open = useCallback((newPayload: ModalPayload) => {
     setPayload(newPayload);
@@ -31,13 +36,13 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     // Cleanup payload to prevent flashing, but allow exit animation (approx 300ms)
     setTimeout(() => setPayload(null), 300); 
     
-    if (payload) {
+    if (payloadRef.current) {
       trackEvent(GA_EVENTS.MODAL_CLOSE, { 
-        modal_type: payload.type, 
-        modal_id: payload.id 
+        modal_type: payloadRef.current.type, 
+        modal_id: payloadRef.current.id 
       });
     }
-  }, [payload]);
+  }, []);
 
   return (
     <ModalContext.Provider value={{ isOpen, payload, open, close }}>

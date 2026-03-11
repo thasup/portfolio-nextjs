@@ -1,5 +1,4 @@
-import { Hero } from '@/components/sections/Hero'
-import { ValueStrip } from '@/components/sections/ValueStrip'
+import { HeroWithStats } from '@/components/sections/HeroWithStats'
 import { Timeline } from '@/components/sections/Timeline'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
@@ -7,15 +6,17 @@ import { Testimonials } from '@/components/sections/Testimonials'
 import { ValueProp } from '@/components/sections/ValueProp'
 import { Contact } from '@/components/sections/Contact'
 import { siteConfig } from '@/data/siteConfig'
+import { featureFlags } from '@/lib/featureFlags'
+import { fetchGitHubStats } from '@/lib/github'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const isThai = locale === 'th';
   
   return {
-    title: isThai ? `${siteConfig.name} | วิศวกร AI ชั้นแนวหน้า` : `${siteConfig.name} | Senior AI Engineer`,
+    title: `${siteConfig.name} | Senior Software Engineer`,
     description: isThai 
-      ? 'ผสมผสานความฉลาดของ AI เข้ากับวิศวกรรมฟรอนต์เอนด์ระดับสูง' 
+      ? 'Senior Software Engineer ที่สร้างผลิตภัณฑ์ AI-first ด้วย systems thinking และ product ownership'
       : siteConfig.tagline,
     // Provide correct alternate links relying on the route locale layout
     alternates: {
@@ -37,17 +38,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { showWipSections } = featureFlags
+  const githubUsername = siteConfig.githubUrl.split('/').pop() || 'thasup'
+  const githubStats = await fetchGitHubStats(githubUsername)
+
   return (
     <>
-      <Hero />
-      <ValueStrip />
+      <HeroWithStats githubStats={githubStats} />
       <Timeline />
       <Projects />
-      <Skills />
+      {showWipSections && <Skills />}
       <Testimonials />
-      <ValueProp />
-      <Contact />
+      {showWipSections && <ValueProp />}
+      {showWipSections && <Contact />}
     </>
   )
 }
