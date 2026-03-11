@@ -13,10 +13,24 @@
     "sr_navigation": "Navigation"
   },
   "hero": {
-    "availability": "Open to AI Engineer / Software Engineer / Product Owner role",
-    "tagline": "I build systems that think.",
+    "availability": "Open to senior AI engineering, product-minded software, and international roles",
+    "intro": "Thanachon \"First\" Suppasatian",
+    "roleLine": "Senior Software Engineer",
+    "tagline": "Building AI-first products. Thinking like a founder.",
+    "directionLine": "MEP Engineer → Self-taught Dev → AI Product Builder",
+    "proofHeadline": "7 years in engineering. 4 years shipping software.",
+    "proofSubheadline": "1 clear direction: AI systems that actually work.",
+    "trust1": "AWS Certified Cloud Practitioner · 2025",
+    "trust2": "TOEIC 915/990 · English proficiency",
+    "trust3": "MEP Engineering → Software → AI (7 years compounding)",
+    "trust4": "Bangkok, Thailand · Open to international roles",
     "ctaPrimary": "See My Work",
-    "ctaSecondary": "Get In Touch"
+    "ctaPrimaryHint": "Best way to assess execution quality fast",
+    "ctaSecondary": "Get In Touch",
+    "ctaSecondaryHint": "Open to hiring, collaboration, and founder conversations",
+    "stripYears": "Years in engineering",
+    "stripSoftware": "Years shipping software",
+    "stripDomains": "Core proof domains"
   },
   "about": {
     "label": "ABOUT ME",
@@ -69,6 +83,6 @@
   },
   "site": {
     "title": "Senior Software Engineer",
-    "description": "Building production AI systems and full-stack products. Pivoting from 4 years of shipping across Web3, e-commerce, and frontend into Senior AI Engineer — with a 10-year vision of founding a SaaS company."
+    "description": "Senior software engineer at the intersection of AI-first products, systems thinking, and product ownership with a 7+ year engineering arc."
   }
 }

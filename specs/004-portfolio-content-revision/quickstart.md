@@ -12,6 +12,23 @@
 - Familiarity with the existing content architecture in `src/data/`, `messages/`, and homepage section components
 - Source brief available at `.windsurf/docs/full_portfolio_content_revision.md`
 
+## Setup Audit Notes
+
+- **Current contradictions found**: `src/data/siteConfig.ts` still reflected a 4-year-only software narrative, legacy naming, and older positioning instead of the TeamStack-era 7+ year story.
+- **Hero gap**: `src/components/sections/Hero.tsx` used a generic rotating-role presentation and did not surface the approved first-screen proof strip from the revision brief.
+- **Locale gap**: `messages/en.json` and `messages/th.json` described the older career framing and lacked the revised trust-strip, direction, and first-screen support copy.
+- **Shared schema gap**: `src/types/` and `src/data/` lacked centralized signal metadata and richer proof fields for ownership, testimonial previews, and evidence loops.
+
+## Cross-Section Consistency Checklist
+
+- Preferred naming uses `Thanachon "First"` or the Thai-market equivalent consistently.
+- Current company and present-direction references align with TeamStack-era positioning.
+- Years of experience reflect the full 7+ year arc rather than only software-agency years.
+- Current flagship emphasis outranks outdated legacy work.
+- Testimonials are attributed and specific rather than placeholder praise.
+- EN and TH preserve the same meaning, trust, and next-step clarity.
+- Shared proof signals mean the same thing anywhere they appear.
+
 ---
 
 ## Implementation Sequence

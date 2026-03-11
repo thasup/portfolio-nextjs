@@ -13,9 +13,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const isThai = locale === 'th';
   
   return {
-    title: isThai ? `${siteConfig.name} | วิศวกร AI ชั้นแนวหน้า` : `${siteConfig.name} | Senior AI Engineer`,
+    title: `${siteConfig.name} | Senior Software Engineer`,
     description: isThai 
-      ? 'ผสมผสานความฉลาดของ AI เข้ากับวิศวกรรมฟรอนต์เอนด์ระดับสูง' 
+      ? 'Senior Software Engineer ที่สร้างผลิตภัณฑ์ AI-first ด้วย systems thinking และ product ownership'
       : siteConfig.tagline,
     // Provide correct alternate links relying on the route locale layout
     alternates: {

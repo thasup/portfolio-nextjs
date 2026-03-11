@@ -1,12 +1,15 @@
+import { useTranslations } from 'next-intl'
 import { ScrollReveal } from '@/components/shared/ScrollReveal'
 import { AnimatedCounter } from '@/components/shared/AnimatedCounter'
 import { siteConfig } from '@/data/siteConfig'
 
 export function ValueStrip() {
+  const t = useTranslations('hero')
+
   const stats = [
-    { value: siteConfig.stats.yearsExperience, suffix: '+', label: 'Years Experience' },
-    { value: siteConfig.stats.projectsShipped, suffix: '', label: 'Projects Shipped' },
-    { value: siteConfig.stats.domains, suffix: '', label: 'Industry Domains' },
+    { value: siteConfig.stats.yearsExperience, suffix: '+', label: t('stripYears') },
+    { value: siteConfig.stats.softwareYears, suffix: '+', label: t('stripSoftware') },
+    { value: siteConfig.stats.domains, suffix: '', label: t('stripDomains') },
   ]
 
   return (

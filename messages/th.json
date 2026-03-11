@@ -13,10 +13,24 @@
     "sr_navigation": "เมนูนำทาง"
   },
   "hero": {
-    "availability": "กำลังมองหาตำแหน่ง AI Engineer / Software Engineer / Product Owner",
-    "tagline": "ผมสร้างระบบที่คิดเองได้.",
+    "availability": "เปิดรับโอกาสระดับ senior ด้าน AI engineering, software product และงานต่างประเทศ",
+    "intro": "ธนชน \"เฟิร์ส\" ศุภเสถียร",
+    "roleLine": "Senior Software Engineer",
+    "tagline": "สร้างผลิตภัณฑ์ AI ที่ใช้งานได้จริง คิดแบบ Founder",
+    "directionLine": "วิศวกร MEP → นักพัฒนาที่เรียนรู้เอง → AI Product Builder",
+    "proofHeadline": "7 ปีในวิศวกรรม 4 ปีในการ ship ซอฟต์แวร์",
+    "proofSubheadline": "ทิศทางชัดเจนหนึ่งเดียว: AI systems ที่ใช้ได้จริงใน production",
+    "trust1": "AWS Certified Cloud Practitioner · 2025",
+    "trust2": "TOEIC 915/990 · ความพร้อมด้านภาษาอังกฤษ",
+    "trust3": "MEP Engineering → Software → AI (ประสบการณ์ที่ทบต้นต่อเนื่อง 7 ปี)",
+    "trust4": "กรุงเทพฯ ประเทศไทย · เปิดรับโอกาสระดับนานาชาติ",
     "ctaPrimary": "ชมผลงาน",
-    "ctaSecondary": "ติดต่อ"
+    "ctaPrimaryHint": "วิธีที่เร็วที่สุดในการประเมินคุณภาพการลงมือทำ",
+    "ctaSecondary": "ติดต่อ",
+    "ctaSecondaryHint": "เปิดคุยเรื่องการจ้างงาน ความร่วมมือ และ founder conversations",
+    "stripYears": "ปีในสายวิศวกรรม",
+    "stripSoftware": "ปีที่ ship ซอฟต์แวร์",
+    "stripDomains": "โดเมนหลักที่พิสูจน์งาน"
   },
   "about": {
     "label": "เกี่ยวกับฉัน",
@@ -69,6 +83,6 @@
   },
   "site": {
     "title": "วิศวกรซอฟต์แวร์อาวุโส",
-    "description": "สร้างระบบ AI สำหรับการผลิตและผลิตภัณฑ์แบบเต็มสแตก. กำลังเปลี่ยนจากการส่งมอบงาน 4 ปีใน Web3, อีคอมเมิร์ซ และฟรอนต์เอนด์ ไปสู่ Senior AI Engineer — พร้อมวิสัยทัศน์ 10 ปีในการก่อตั้งบริษัท SaaS"
+    "description": "Senior Software Engineer ที่ทำงานตรงจุดตัดของ AI-first products, systems thinking และ product ownership ด้วยประสบการณ์วิศวกรรมตลอด 7+ ปี"
   }
 }

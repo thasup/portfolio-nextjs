@@ -2,8 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { siteConfig } from '@/data/siteConfig'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
@@ -12,14 +11,6 @@ import { useTranslations } from 'next-intl'
 export function Hero() {
   const reducedMotion = useReducedMotion()
   const t = useTranslations('hero')
-  const [roleIndex, setRoleIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % siteConfig.roles.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -70,44 +61,63 @@ export function Hero() {
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                {siteConfig.name.split(' ')[0]}
-                <br />
-                <span className="text-gradient">{siteConfig.name.split(' ').slice(1).join(' ')}</span>
+              <p className="text-sm font-medium tracking-[0.18em] text-primary uppercase">
+                {t('intro')}
+              </p>
+              <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+                {t('roleLine')}
               </h1>
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <div className="mt-4 h-8 text-xl font-medium text-muted-foreground sm:text-2xl">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={roleIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="inline-block"
-                  >
-                    {siteConfig.roles[roleIndex]}
-                  </motion.span>
-                </AnimatePresence>
+              <div className="mt-6 max-w-2xl space-y-4">
+                <p className="text-base leading-relaxed text-foreground md:text-xl">
+                  {t('tagline')}
+                </p>
+                <div className="max-w-xl rounded-2xl border border-border bg-muted/40 px-4 py-4">
+                  <p className="text-sm font-semibold text-foreground md:text-base">
+                    {t('proofHeadline')}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground md:text-base">
+                    {t('proofSubheadline')}
+                  </p>
+                </div>
               </div>
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground md:text-lg">
-                {siteConfig.tagline}
+              <div className="mt-8 flex flex-wrap gap-3">
+                <div className="space-y-2">
+                  <Button size="lg" asChild>
+                    <Link href="/#projects">{t('ctaPrimary')}</Link>
+                  </Button>
+                  <p className="text-xs text-muted-foreground">{t('ctaPrimaryHint')}</p>
+                </div>
+                <div className="space-y-2">
+                  <Button size="lg" variant="outline" asChild>
+                    <Link href="/contact/">{t('ctaSecondary')}</Link>
+                  </Button>
+                  <p className="text-xs text-muted-foreground">{t('ctaSecondaryHint')}</p>
+                </div>
+              </div>
+            </Wrapper>
+
+            <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
+              <p className="mt-8 text-sm font-medium text-muted-foreground md:text-base">
+                {t('directionLine')}
               </p>
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button size="lg" asChild>
-                  <a href="/#projects">{t('ctaPrimary')}</a>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/contact/">{t('ctaSecondary')}</Link>
-                </Button>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {[t('trust1'), t('trust2'), t('trust3'), t('trust4')].map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-muted-foreground"
+                  >
+                    {item}
+                  </div>
+                ))}
               </div>
             </Wrapper>
 
