@@ -10,6 +10,8 @@ import { TimelineYear } from "@/components/timeline/TimelineYear";
 import { TimelineEventCard } from "@/components/timeline/TimelineEventCard";
 import { timelineEvents } from "@/data/timelineEvents";
 import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { trackEvent, GA_EVENTS } from "@/lib/analytics";
 
 export function Timeline() {
@@ -22,6 +24,7 @@ export function Timeline() {
   const [yearPositions, setYearPositions] = useState<Record<YearKey, number>>({} as Record<YearKey, number>);
   const [totalHeight, setTotalHeight] = useState(0);
   const [milestones, setMilestones] = useState({ 25: false, 50: false, 75: false, 100: false });
+  const [isFiltered, setIsFiltered] = useState(true);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -53,13 +56,18 @@ export function Timeline() {
 
   // Calculate total height for spine
   useEffect(() => {
-    if (contentRef.current) {
-      setTotalHeight(contentRef.current.scrollHeight);
-    }
-  }, []);
+    // Small delay to ensure content is rendered before measuring
+    const timer = setTimeout(() => {
+      if (contentRef.current) {
+        setTotalHeight(contentRef.current.scrollHeight);
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [isFiltered]); // Re-calculate when filter changes
 
   // IntersectionObserver for active year detection
-  const years = Object.keys(YEAR_THEMES).map(Number) as YearKey[];
+  const allYears = Object.keys(YEAR_THEMES).map(Number).sort((a, b) => a - b) as YearKey[];
+  const years = isFiltered ? allYears.filter(y => y >= 2022) : allYears;
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -116,6 +124,24 @@ export function Timeline() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeader label={t("label")} title={t("title")} subtitle={t("subtitle")} />
 
+        {/* Filter Toggle */}
+        <div className="flex justify-end items-center gap-3 mt-8 -mb-4 relative z-10">
+          <Label 
+            htmlFor="timeline-filter" 
+            className="text-sm font-medium text-muted-foreground cursor-pointer select-none"
+          >
+            {t("labels.filterLabel")}
+          </Label>
+          <Switch 
+            id="timeline-filter" 
+            checked={isFiltered}
+            onCheckedChange={(checked) => {
+              setIsFiltered(checked);
+              trackEvent(GA_EVENTS.TIMELINE_FILTER, { filtered: checked });
+            }}
+          />
+        </div>
+
         <div className="flex gap-6 sm:gap-8 lg:gap-12 mt-12 md:mt-16">
           {/* Spine column */}
           <div className="hidden md:block relative shrink-0 w-10">
@@ -137,7 +163,7 @@ export function Timeline() {
 
               return (
                 <TimelineYear
-                  key={year}
+                  key={`${year}-${isFiltered}`}
                   year={year}
                   onYearEnter={handleYearEnter}
                 >

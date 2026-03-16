@@ -107,7 +107,8 @@
       "technologies": "Technologies",
       "media": "Media",
       "eventNotFound": "Event not found",
-      "mediaAlt": "Event media"
+      "mediaAlt": "Event media",
+      "filterLabel": "Tech Industry Focus"
     },
     "visionCta": "What's Next",
     "visionTitle": "What This Arc Points Toward",

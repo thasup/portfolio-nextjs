@@ -9,6 +9,7 @@ export const GA_EVENTS = {
   HERO_CTA_CLICK: 'hero_cta_click',
   TIMELINE_PROGRESS: 'timeline_progress',
   TIMELINE_DEEPDIVE_OPEN: 'timeline_deepdive_open',
+  TIMELINE_FILTER: 'timeline_filter',
   SCROLL_DEPTH: 'scroll_depth',
   RESUME_DOWNLOAD: 'resume_download',
 } as const;

@@ -107,7 +107,8 @@
       "technologies": "เทคโนโลยี",
       "media": "สื่อ",
       "eventNotFound": "ไม่พบเหตุการณ์",
-      "mediaAlt": "สื่อประกอบเหตุการณ์"
+      "mediaAlt": "สื่อประกอบเหตุการณ์",
+      "filterLabel": "เน้นเฉพาะสายงาน Tech"
     },
     "visionCta": "อนาคตข้างหน้า",
     "visionTitle": "เส้นทางนี้กำลังชี้ไปที่อะไร",
