@@ -1,31 +1,22 @@
 <!--
   Sync Impact Report
   ────────────────────────────────────────────────────
-  Version change: 2.1.0 → 3.0.0
+  Version change: 3.0.0 → 3.1.0
 
   Modified principles:
-    - I. Hybrid Static Rendering (Vercel) → I. Product Impact Over Implementation Folklore
-    - II. TailwindCSS + shadcn/ui Only → II. Fast, Premium, Accessible Delivery
-    - IV. Image Optimization Is Mandatory → III. Insight-Dense Storytelling
-    - V. Component Hierarchy → IV. Bilingual Quality With Audience Fit
-    - VI. Animation Philosophy — Subtle Only → V. Cinematic Narrative, Subordinate to Clarity
-    - VIII. Data-Driven Architecture → VI. Evidence-Led Content System
-    - XVI. Analytics Event Tracking — Comprehensive Granular Insights → VII. Measurement Must Inform Decisions
-    - XVII. First Impression Standards — The 60-Second Impact Rule → VIII. Conversion Paths Must Stay Obvious
-    - XIX. Modal-First Navigation → IX. Attention Retention Without Dead Ends
-    - XX. Accessibility Commitments → X. Honest Technical Governance
+    - II. Fast, Premium, Accessible Delivery (Expanded with Liquid Glass and Performance-First mandate)
+    - V. Cinematic Narrative, Subordinate to Clarity (Included organic "buoyancy" cues and Liquid polish)
 
   Added sections:
-    - Experience Standards
+    - none
 
   Removed sections:
-    - Fixed Library Stack
+    - none
 
   Templates requiring updates:
-    - .specify/templates/plan-template.md       ✅ updated
+    - .specify/templates/plan-template.md       ✅ reviewed — no updates needed
     - .specify/templates/spec-template.md       ✅ reviewed — no updates needed
     - .specify/templates/tasks-template.md      ✅ reviewed — no updates needed
-    - README.md                                 ✅ updated
 
   Follow-up TODOs: none
 -->
@@ -50,8 +41,13 @@ content, and UI choices MUST be evaluated against those outcomes first.
 ### II. Fast, Premium, Accessible Delivery
 
 The site MUST feel premium without sacrificing performance or accessibility.
-Polish is a requirement, not decoration.
+Polish is a requirement, not decoration. The design language follows a
+**"Liquid Glass"** aesthetic—futuristic, classy, and vibrant—representative of
+the Age of AI.
 
+- **Performance-First Aesthetics**: Visual beauty MUST NEVER compromise load
+  speed or responsiveness. GPU-accelerated CSS (transforms, blurs, opacity) is
+  the standard for "Liquid Glass" effects.
 - Production targets remain non-negotiable: Lighthouse 100 desktop and 95+
   mobile across Performance, Accessibility, Best Practices, and SEO.
 - Above-the-fold content MUST load fast enough to preserve the first 5-second
@@ -92,6 +88,8 @@ adapted to their audiences.
 The timeline is the portfolio centerpiece, and rich interactions are allowed
 only when they strengthen comprehension and recall.
 
+- Interactions MUST exhibit **"Liquid" interactive polish** with organic
+  **buoyancy** reactions (spring-based physics) that feel tactile and premium.
 - The timeline MUST read as a narrative of capability evolution, not a raw log
   of dates and job titles.
 - Motion MUST guide attention, reinforce chapter changes, and reveal meaning in
@@ -204,7 +202,8 @@ belong in specs, plans, or code.
 ### Technical Delivery Baseline
 
 - Use Next.js App Router with TypeScript strict mode.
-- Use TailwindCSS for styling and shadcn/ui as the component foundation.
+- Implementation MUST use **"Liquid Glass"** components built on **shadcn/ui**
+  and **Framer Motion**.
 - Prefer `next/image` and modern image formats for all managed imagery.
 - Respect reduced motion and progressive enhancement for interactive features.
 - Keep user-facing content statically sourceable and deterministic at build
@@ -255,4 +254,4 @@ Every implementation plan MUST explicitly verify:
 - Code reviews and planning reviews MUST reject work that is polished yet weak
   on clarity, truthful evidence, accessibility, or performance.
 
-**Version**: 3.0.0 | **Ratified**: 2026-03-08 | **Last Amended**: 2026-03-11
+**Version**: 3.1.0 | **Ratified**: 2026-03-08 | **Last Amended**: 2026-03-16
