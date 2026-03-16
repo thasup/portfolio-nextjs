@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
 interface TimelineYearProps {
   year: YearKey;
-  locale: "en" | "th";
   onYearEnter: (year: YearKey, offsetTop: number) => void;
   children: React.ReactNode;
 }
 
 export function TimelineYear({
   year,
-  locale,
   onYearEnter,
   children,
 }: TimelineYearProps) {
   const yearRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("timeline.chapters");
   const theme = YEAR_THEMES[year];
 
   useEffect(() => {
@@ -24,8 +24,6 @@ export function TimelineYear({
       onYearEnter(year, offsetTop);
     }
   }, [year, onYearEnter]);
-
-  const yearLabel = locale === "th" ? theme.labelTh : theme.label;
 
   return (
     <div ref={yearRef} data-year={year} className="relative mb-24 md:mb-32">
@@ -45,10 +43,10 @@ export function TimelineYear({
           />
           <div className="space-y-1">
             <h3 className={`text-xl md:text-2xl font-bold ${theme.accentClass}`}>
-              {yearLabel}
+              {t(theme.labelKey)}
             </h3>
             <div className="text-sm text-muted-foreground">{theme.period}</div>
-            <div className="text-sm font-medium">{locale === "th" ? theme.tagTh : theme.tagEn}</div>
+            <div className="text-sm font-medium">{t(theme.tagKey)}</div>
           </div>
         </div>
       </div>

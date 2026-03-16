@@ -7,7 +7,7 @@ import { siteConfig } from '@/data/siteConfig'
 import { DomainBadge } from '@/components/shared/DomainBadge'
 import { ProjectGallery } from '@/components/projects/ProjectGallery'
 import { ProjectMeta } from '@/components/projects/ProjectMeta'
-import { LocalizedText, getLocalizedData } from '@/components/shared/LocalizedText'
+import { getTranslations } from 'next-intl/server'
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -20,12 +20,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project = projects.find((p) => p.slug === slug)
   if (!project) return {}
 
-  const title = getLocalizedData(project, 'title', locale);
-  const tagline = getLocalizedData(project, 'tagline', locale);
+  const t = await getTranslations({ locale, namespace: 'projects.' + slug })
 
   return {
-    title: `${title} | Projects | ${siteConfig.name}`,
-    description: tagline,
+    title: `${t('title')} | Projects | ${siteConfig.name}`,
+    description: t('tagline'),
   }
 }
 
@@ -37,15 +36,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     notFound()
   }
 
-  const features = locale === 'th' && project.featuresTh && project.featuresTh.length > 0 
-    ? project.featuresTh 
-    : project.featuresEn;
+  const t = await getTranslations({ locale, namespace: 'projects.' + slug })
+  const labelsT = await getTranslations({ locale, namespace: 'projects.labels' })
+  const features = t.raw('features') as string[]
 
-  const title = getLocalizedData(project, 'title', locale);
-  const problem = getLocalizedData(project, 'problem', locale);
-  const approach = getLocalizedData(project, 'approach', locale);
-  const outcomes = getLocalizedData(project, 'outcomes', locale);
-  const challenges = getLocalizedData(project, 'challenges', locale);
+  const title = t('title')
+  const problem = t('problem')
+  const approach = t('approach')
+  const outcomes = t('outcomes')
+  const challenges = t.raw('challenges') as string | undefined
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -61,7 +60,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       '@type': 'Organization',
       name: siteConfig.name,
     },
-    description: getLocalizedData(project, 'tagline', locale),
+    description: t('tagline'),
   };
 
   return (
@@ -79,7 +78,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           className="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          <LocalizedText en="Back to all projects" th="กลับไปที่โปรเจกต์ทั้งหมด" />
+          {labelsT('backToAll')}
         </Link>
         
         {/* Header */}
@@ -88,10 +87,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <DomainBadge domain={project.domain} />
           </div>
           <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-balance">
-            <LocalizedText en={project.titleEn} th={project.titleTh} />
+            {title}
           </h1>
           <p className="text-xl text-muted-foreground md:text-2xl text-balance max-w-3xl">
-            <LocalizedText en={project.taglineEn} th={project.taglineTh} />
+            {t('tagline')}
           </p>
         </header>
         
@@ -113,7 +112,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             
             {/* Context/Problem */}
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold"><LocalizedText en="The Challenge" th="โจทย์และปัญหา" /></h2>
+              <h2 className="text-2xl font-bold">{labelsT('theChallenge')}</h2>
               <p className="leading-relaxed text-muted-foreground text-lg">
                 {problem}
               </p>
@@ -121,7 +120,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             
             {/* Approach */}
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold"><LocalizedText en="The Approach" th="แนวทางการแก้ไข" /></h2>
+              <h2 className="text-2xl font-bold">{labelsT('theApproach')}</h2>
               <p className="leading-relaxed text-muted-foreground text-lg">
                 {approach}
               </p>
@@ -129,7 +128,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
             {/* Key Features */}
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold"><LocalizedText en="Key Features" th="ฟีเจอร์หลัก" /></h2>
+              <h2 className="text-2xl font-bold">{labelsT('keyFeatures')}</h2>
               <ul className="space-y-3">
                 {features.map((feature: string, idx: number) => (
                   <li key={idx} className="flex items-start text-muted-foreground">
@@ -143,20 +142,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {/* Gallery */}
             {project.screenshots && project.screenshots.length > 0 && (
               <section className="space-y-6 pt-6">
-                <h2 className="text-2xl font-bold"><LocalizedText en="Screenshots" th="ภาพประกอบ" /></h2>
+                <h2 className="text-2xl font-bold">{labelsT('screenshots')}</h2>
                 <ProjectGallery images={project.screenshots} altText={title} />
               </section>
             )}
 
             {/* Outcomes & Challenges */}
             <section className="space-y-4 rounded-xl border-l-4 border-l-primary bg-primary/5 p-6 md:p-8">
-              <h2 className="text-2xl font-bold"><LocalizedText en="Impact & Outcomes" th="ผลลัพธ์ที่ได้" /></h2>
+              <h2 className="text-2xl font-bold">{labelsT('outcomesTitle')}</h2>
               <p className="leading-relaxed font-medium text-lg">
                 {outcomes}
               </p>
-              {project.challengesEn && (
+              {challenges && (
                 <>
-                  <h3 className="text-xl font-bold mt-6 mb-2"><LocalizedText en="Technical Challenges" th="ความท้าทายทางเทคนิค" /></h3>
+                  <h3 className="text-xl font-bold mt-6 mb-2">{labelsT('challengesTitle')}</h3>
                   <p className="leading-relaxed text-muted-foreground text-lg">
                     {challenges}
                   </p>

@@ -1,8 +1,7 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { timelineEvents } from '@/data/timelineEvents';
-import { LocalizedText, getLocalizedData } from '@/components/shared/LocalizedText';
 import { TechBadge } from '@/components/shared/TechBadge';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Calendar, Building2, Briefcase, GraduationCap, Award } from 'lucide-react';
@@ -11,16 +10,16 @@ import { useModal } from '@/hooks/useModal';
 import { timelineChapters } from '@/data/timelineChapters';
 
 export function TimelineModal({ id }: { id: string }) {
-  const locale = useLocale();
+  const t = useTranslations('timeline');
   const { close } = useModal();
   const event = timelineEvents.find((e) => e.id === id);
 
-  if (!event) return <div className="p-8 text-center text-muted-foreground">Event not found</div>;
+  if (!event) return <div className="p-8 text-center text-muted-foreground">{t('modal.notFound')}</div>;
 
-  const title = getLocalizedData(event, 'title', locale);
+  const title = t(`events.${event.id}.title`);
   const company = event.company;
-  const description = getLocalizedData(event, 'description', locale);
-  const impact = getLocalizedData(event, 'impact', locale);
+  const description = t(`events.${event.id}.description`);
+  const impact = t(`events.${event.id}.impact`);
 
   const getTypeIcon = (type: string) => {
     switch(type) {
@@ -43,7 +42,7 @@ export function TimelineModal({ id }: { id: string }) {
           </div>
           <div>
             <div className="text-sm font-medium text-muted-foreground mb-1 uppercase tracking-wider">
-               <LocalizedText en={chapter?.titleEn || ''} th={chapter?.titleTh || ''} />
+               {chapter ? t(`chapters.${chapter.id}.title`) : ''}
             </div>
           </div>
         </div>
@@ -66,7 +65,7 @@ export function TimelineModal({ id }: { id: string }) {
 
       <div className="space-y-8 flex-grow">
         <div className="space-y-4">
-           <h3 className="text-xl font-bold"><LocalizedText en="Context" th="บริบทและหน้าที่" /></h3>
+           <h3 className="text-xl font-bold">{t('modal.context')}</h3>
            <p className="text-muted-foreground leading-relaxed md:text-lg">
              {description}
            </p>
@@ -74,7 +73,7 @@ export function TimelineModal({ id }: { id: string }) {
 
         {impact && (
           <div className="space-y-4 rounded-xl border-l-4 border-primary bg-primary/5 p-6 shadow-sm">
-             <h3 className="text-lg font-bold text-primary"><LocalizedText en="Impact" th="ผลกระทบและผลลัพธ์" /></h3>
+             <h3 className="text-lg font-bold text-primary">{t('modal.impact')}</h3>
              <p className="font-medium text-muted-foreground text-base leading-relaxed">
                {impact}
              </p>
@@ -83,7 +82,7 @@ export function TimelineModal({ id }: { id: string }) {
 
         {event.skills && event.skills.length > 0 && (
           <div className="space-y-4">
-             <h3 className="text-lg font-bold"><LocalizedText en="Skills Executed" th="ทักษะที่ใช้" /></h3>
+             <h3 className="text-lg font-bold">{t('modal.skills')}</h3>
              <div className="flex flex-wrap gap-2">
                {event.skills.map((skill) => (
                  <TechBadge key={skill} name={skill} />
@@ -95,7 +94,7 @@ export function TimelineModal({ id }: { id: string }) {
       
       <div className="mt-12 pt-6 border-t border-border flex justify-end">
         <Button onClick={close} variant="default">
-          <LocalizedText en="Close Narrative" th="ปิดการอ่าน" />
+          {t('modal.close')}
         </Button>
       </div>
     </div>

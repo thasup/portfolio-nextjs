@@ -8,7 +8,7 @@ interface YearBackgroundProps {
 }
 
 export function YearBackground({ activeYear }: YearBackgroundProps) {
-  const years: YearKey[] = [2018, 2021, 2022, 2023, 2024, 2025];
+  const years: YearKey[] = [2018, 2021, 2022, 2023, 2024, 2025, 2026];
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">

@@ -49,5 +49,8 @@
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-darwin-arm64": "^16.1.6"
   }
 }

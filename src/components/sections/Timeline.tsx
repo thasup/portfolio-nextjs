@@ -2,19 +2,18 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { YearBackground } from "@/components/timeline/YearBackground";
 import { TimelineSpine } from "@/components/timeline/TimelineSpine";
 import { TimelineYear } from "@/components/timeline/TimelineYear";
 import { TimelineEventCard } from "@/components/timeline/TimelineEventCard";
 import { timelineEvents } from "@/data/timelineEvents";
-import { YearKey } from "@/data/timelineChapters";
+import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
 import { trackEvent, GA_EVENTS } from "@/lib/analytics";
 
 export function Timeline() {
   const t = useTranslations("timeline");
-  const locale = useLocale() as "en" | "th";
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   
@@ -60,10 +59,11 @@ export function Timeline() {
   }, []);
 
   // IntersectionObserver for active year detection
+  const years = Object.keys(YEAR_THEMES).map(Number) as YearKey[];
+
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const years: YearKey[] = [2018, 2021, 2022, 2023, 2024, 2025];
     const yearElements = years.map((y) =>
       sectionRef.current!.querySelector(`[data-year="${y}"]`)
     );
@@ -88,7 +88,7 @@ export function Timeline() {
 
     yearElements.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [years]);
 
   // Group events by year
   const eventsByYear = timelineEvents.reduce((acc, event) => {
@@ -104,8 +104,6 @@ export function Timeline() {
       (a, b) => new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime()
     );
   });
-
-  const years: YearKey[] = [2022, 2023, 2024, 2025];
 
   const handleYearEnter = useCallback((year: YearKey, offsetTop: number) => {
     setYearPositions((prev) => ({ ...prev, [year]: offsetTop }));
@@ -141,7 +139,6 @@ export function Timeline() {
                 <TimelineYear
                   key={year}
                   year={year}
-                  locale={locale}
                   onYearEnter={handleYearEnter}
                 >
                   {events.map((event, index) => (
@@ -150,7 +147,6 @@ export function Timeline() {
                       event={event}
                       year={year}
                       index={index}
-                      locale={locale}
                     />
                   ))}
                 </TimelineYear>

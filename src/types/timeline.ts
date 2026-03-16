@@ -5,12 +5,6 @@ export type TimelineEventType = 'work' | 'project' | 'education' | 'achievement'
 export interface TimelineChapter {
   id: string
   order: number
-  titleEn: string
-  titleTh: string
-  tagEn?: string
-  tagTh?: string
-  descriptionEn: string
-  descriptionTh: string
   period: string
   accentColor: string
   eventIds: string[]
@@ -19,8 +13,6 @@ export interface TimelineChapter {
 export interface MediaLink {
   type: 'image' | 'video' | 'link'
   url: string
-  caption?: string
-  captionTh?: string
 }
 
 export interface TimelineEvent {
@@ -28,18 +20,8 @@ export interface TimelineEvent {
   chapterId: string
   date: string
   sortDate: string
-  titleEn: string
-  titleTh: string
   company: string
   type: TimelineEventType
-  summaryEn: string
-  summaryTh: string
-  descriptionEn: string
-  descriptionTh: string
-  impactEn: string
-  impactTh: string
-  capabilityGainedEn?: string
-  capabilityGainedTh?: string
   skills: string[]
   featured: boolean
   signals?: SignalId[]

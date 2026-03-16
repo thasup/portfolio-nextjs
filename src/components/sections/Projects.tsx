@@ -2,17 +2,18 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { type ProjectDomain } from '@/types/project'
 import { projects } from '@/data/projects'
 import { ProjectCard } from '../projects/ProjectCard'
 import { ProjectFilter } from '../projects/ProjectFilter'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { LocalizedText } from '@/components/shared/LocalizedText'
 import { trackEvent, GA_EVENTS } from '@/lib/analytics'
 import { sortFeaturedFirst } from '@/lib/content'
 
 export function Projects() {
+  const t = useTranslations('projects')
   const [activeDomain, setActiveDomain] = useState<ProjectDomain | 'all'>('all')
   const reducedMotion = useReducedMotion()
 
@@ -31,9 +32,9 @@ export function Projects() {
     <section id="projects" className="section-padding bg-muted/30">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
-          label={<LocalizedText en="MY WORK" th="ผลงาน" />}
-          title={<LocalizedText en="Flagship Work & Proof" th="ผลงานหลักและหลักฐาน" />}
-          subtitle={<LocalizedText en="Ordered by strategic signal strength: current flagship work, shipped AI, and the ownership stories behind each build" th="จัดเรียงตามความเข้มของสัญญาณเชิงกลยุทธ์: งาน flagship ปัจจุบัน งาน AI ที่ ship แล้ว และเรื่องราวความเป็นเจ้าของเบื้องหลังแต่ละโปรเจกต์" />}
+          label={t('header.label')}
+          title={t('header.title')}
+          subtitle={t('header.subtitle')}
         />
 
         <ProjectFilter activeDomain={activeDomain} onDomainChange={handleDomainChange} />
@@ -61,7 +62,7 @@ export function Projects() {
 
         {filteredProjects.length === 0 && (
           <div className="py-20 text-center text-muted-foreground">
-            <LocalizedText en="No projects found for this category." th="ไม่พบโปรเจกต์ในหมวดหมู่นี้" />
+            {t('noProjects')}
           </div>
         )}
       </div>

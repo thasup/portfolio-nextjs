@@ -1,4 +1,5 @@
 import { HeroWithStats } from '@/components/sections/HeroWithStats'
+import { getTranslations } from 'next-intl/server'
 import { Timeline } from '@/components/sections/Timeline'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
@@ -11,13 +12,12 @@ import { fetchGitHubStats } from '@/lib/github'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'siteConfig' });
   const isThai = locale === 'th';
   
   return {
     title: `${siteConfig.name} | Senior Software Engineer`,
-    description: isThai 
-      ? 'Senior Software Engineer ที่สร้างผลิตภัณฑ์ AI-first ด้วย systems thinking และ product ownership'
-      : siteConfig.tagline,
+    description: t('tagline'),
     // Provide correct alternate links relying on the route locale layout
     alternates: {
       canonical: isThai ? `${siteConfig.siteUrl}/th` : siteConfig.siteUrl,

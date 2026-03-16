@@ -18,31 +18,13 @@ export const DOMAIN_COLORS: Record<ProjectDomain, string> = {
 
 export interface Project {
   slug: string
-  titleEn: string
-  titleTh: string
   domain: ProjectDomain
   company?: string
-  taglineEn: string
-  taglineTh: string
-  problemSummaryEn: string
-  problemSummaryTh?: string
-  problemEn: string
-  problemTh: string
-  approachEn: string
-  approachTh: string
-  featuresEn: string[]
-  featuresTh?: string[]
   techStack: string[]
-  outcomesEn: string
-  outcomesTh: string
-  challengesEn?: string
-  challengesTh?: string
   heroImage: string
   screenshots?: string[]
   featured: boolean
   strategicPriority?: number
-  whatIOwnedEn?: string
-  whatIOwnedTh?: string
   signals?: SignalId[]
   proofRefs?: string[]
   liveUrl?: string

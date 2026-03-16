@@ -20,12 +20,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2, Loader2, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { LocalizedText, getLocalizedData } from '@/components/shared/LocalizedText'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 export function Contact() {
   const t = useTranslations('contact')
-  const locale = useLocale()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
@@ -139,10 +137,10 @@ export function Contact() {
                                   )}
                                 >
                                   <span className="font-semibold text-foreground">
-                                    <LocalizedText en={intent.labelEn} th={intent.labelTh} />
+                                    {t(intent.labelKey as string)}
                                   </span>
                                   <span className="text-sm text-muted-foreground">
-                                    <LocalizedText en={intent.previewEn} th={intent.previewTh} />
+                                    {t(intent.previewKey as string)}
                                   </span>
                                 </button>
                               ))}
@@ -190,11 +188,12 @@ export function Contact() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            <LocalizedText en={currentIntentConfig.headingEn} th={currentIntentConfig.headingTh} />
+                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                            {t(currentIntentConfig.headingKey as any)}
                           </FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder={getLocalizedData(currentIntentConfig, 'placeholder', locale)}
+                              placeholder={t(currentIntentConfig.placeholderKey as string)}
                               className="min-h-[160px] resize-y"
                               {...field}
                             />

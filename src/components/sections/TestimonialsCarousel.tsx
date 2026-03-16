@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay, A11y } from 'swiper/modules'
 import { type Testimonial } from '@/types/testimonial'
@@ -8,18 +8,18 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Quote } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
 import { useModal } from '@/hooks/useModal'
-import { getLocalizedData } from '@/components/shared/LocalizedText'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/a11y'
+
 
 interface TestimonialCarouselProps {
   testimonials: Testimonial[]
 }
 
 export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
-  const locale = useLocale()
+  const t = useTranslations('testimonials')
   const { open } = useModal()
 
   return (
@@ -37,10 +37,10 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
         className="testimonial-swiper w-full pt-0.5"
       >
         {testimonials.map((testimonial) => {
-          const summaryQuote = getLocalizedData(testimonial, 'summaryQuote', locale)
-          const authorRole = getLocalizedData(testimonial, 'authorRole', locale)
-          const relationship = getLocalizedData(testimonial, 'relationship', locale)
-          const proofThemeLabel = getLocalizedData(testimonial, 'proofThemeLabel', locale)
+          const summaryQuote = t(`entries.${testimonial.id}.summaryQuote`)
+          const authorRole = t(`entries.${testimonial.id}.authorRole`)
+          const relationship = t(`entries.${testimonial.id}.relationship`)
+          const proofThemeLabel = t(`entries.${testimonial.id}.proofThemeLabel`)
 
           return (
             <SwiperSlide key={testimonial.id} className="h-auto flex pb-2">
@@ -49,13 +49,13 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                 onClick={() => open({ type: 'testimonial', id: testimonial.id })}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => {
+                onKeyDown={(e: React.KeyboardEvent) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
                     open({ type: 'testimonial', id: testimonial.id })
                   }
                 }}
-                aria-label={`${locale === 'th' ? 'อ่านคำรับรองเต็มจาก' : 'Read full testimonial from'} ${testimonial.authorName}, ${authorRole}`}
+                aria-label={`${t('card.ariaLabelRead')} ${testimonial.authorName}, ${authorRole}`}
               >
                 <CardContent className="p-8 flex flex-1 flex-col justify-between gap-6 min-h-[280px] md:min-h-[320px]">
                   <div className="flex flex-col gap-4">
@@ -71,7 +71,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                     </p>
                     
                     <p className="text-sm text-muted-foreground">
-                      {locale === 'th' ? 'แตะเพื่ออ่านข้อความเต็ม' : 'Tap to read the full quote'}
+                      {t('card.tapToRead')}
                     </p>
                   </div>
                   

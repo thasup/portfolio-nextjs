@@ -1,8 +1,7 @@
 export interface SkillEvidence {
   name: string
   level: number
-  tagEn?: string
-  tagTh?: string
+  tagKey?: string
 }
 
 export interface Skill {
@@ -13,12 +12,9 @@ export interface Skill {
 
 export interface SkillCluster {
   id: string
-  nameEn: string
-  nameTh: string
-  narrativeEn: string
-  narrativeTh: string
-  statusEn?: string
-  statusTh?: string
+  labelKey: string
+  descriptionKey: string
+  statusKey?: string
   order: number
   emphasized: boolean
   evidenceRefs?: string[]

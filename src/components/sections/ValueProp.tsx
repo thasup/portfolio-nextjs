@@ -4,13 +4,12 @@ import { valuePropositions } from '@/data/valuePropositions'
 import { Card, CardContent } from '@/components/ui/card'
 import { Sparkles, Target, Layers, Zap, Rocket, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { getSignalLabel } from '@/lib/content'
 
 export function ValueProp() {
   const t = useTranslations('value')
-  const locale = useLocale()
-  const isThai = locale === 'th'
+  const tRoot = useTranslations()
 
   const getIcon = (name: string) => {
     switch (name) {
@@ -35,10 +34,13 @@ export function ValueProp() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {valuePropositions.map((value, index) => {
             const isLastOrphaned = index === valuePropositions.length - 1 && valuePropositions.length % 2 !== 0
-            const title = isThai && value.titleTh ? value.titleTh : value.titleEn
-            const description = isThai && value.descriptionTh ? value.descriptionTh : value.descriptionEn
-            const proof = isThai && value.proofTh ? value.proofTh : value.proofEn
-            const signalLabel = value.signalTag ? getSignalLabel(value.signalTag, isThai ? 'th' : 'en') : null
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const title = t(value.titleKey as any)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const description = t(value.descriptionKey as any)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const proof = value.proofKey ? t(value.proofKey as any) : null
+            const signalKey = value.signalTag ? getSignalLabel(value.signalTag) : null
             const href = value.crossRef
               ? value.crossRef.startsWith('project:')
                 ? `/projects/${value.crossRef.replace('project:', '')}`
@@ -59,10 +61,11 @@ export function ValueProp() {
                     <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       {getIcon(value.icon)}
                     </div>
-                    {signalLabel && (
+                    {signalKey && (
                       <div className="mb-3">
                         <span className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground">
-                          {signalLabel}
+                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                          {tRoot(signalKey as any)}
                         </span>
                       </div>
                     )}

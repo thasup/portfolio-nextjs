@@ -23,29 +23,14 @@ export interface TestimonialProofTheme {
 export interface Testimonial {
   id: string
   authorName: string
-  authorRoleEn: string
-  authorRoleTh: string
+  authorRoleKey: string
   company?: string
-  relationshipEn: string
-  relationshipTh: string
+  relationshipKey: string
   proofThemeId: TestimonialProofThemeId
-  proofThemeLabelEn: string
-  proofThemeLabelTh: string
-  summaryQuoteEn: string
-  summaryQuoteTh: string
-  fullQuoteEn: string
-  fullQuoteTh: string
-  contextNoteEn?: string
-  contextNoteTh?: string
+  proofThemeLabelKey: string
+  summaryQuoteKey: string
+  fullQuoteKey: string
+  contextNoteKey?: string
   validates?: SignalId[]
   authorAvatar?: string
-  // Deprecated fields for backward compatibility during migration
-  /** @deprecated Use summaryQuoteEn instead */
-  sharpestLineEn?: string
-  /** @deprecated Use summaryQuoteTh instead */
-  sharpestLineTh?: string
-  /** @deprecated Use fullQuoteEn instead */
-  quoteEn?: string
-  /** @deprecated Use fullQuoteTh instead */
-  quoteTh?: string
 }

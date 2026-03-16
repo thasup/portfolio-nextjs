@@ -1,14 +1,7 @@
-import { signalMap } from '@/data/signals'
 import type { SignalId } from '@/types/content'
 
-export function getSignalLabel(signalId: SignalId, locale: 'en' | 'th' = 'en') {
-  const signal = signalMap[signalId]
-
-  if (!signal) {
-    return signalId
-  }
-
-  return locale === 'th' ? signal.labelTh : signal.labelEn
+export function getSignalLabel(signalId: SignalId) {
+  return `common.signals.${signalId}`
 }
 
 export function sortFeaturedFirst<T extends { featured?: boolean; strategicPriority?: number }>(items: T[]) {

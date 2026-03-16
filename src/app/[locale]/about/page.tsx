@@ -5,9 +5,14 @@ import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: `About Me | ${siteConfig.name}`,
-  description: siteConfig.tagline,
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'siteConfig' });
+  
+  return {
+    title: `${siteConfig.name} | ${t('title')}`,
+    description: t('tagline'),
+  }
 }
 
 export default async function AboutPage() {

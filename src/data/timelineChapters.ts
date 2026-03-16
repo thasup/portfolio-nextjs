@@ -4,12 +4,6 @@ export const timelineChapters: TimelineChapter[] = [
   {
     id: 'chapter-foundation',
     order: 1,
-    titleEn: 'The Foundation',
-    titleTh: 'รากฐาน',
-    tagEn: 'Systems Thinking Origin',
-    tagTh: 'จุดเริ่มต้นของการคิดเชิงระบบ',
-    descriptionEn: 'MEP engineering built the systems-thinking baseline that still shapes how complex software gets designed today.',
-    descriptionTh: 'วิศวกรรม MEP สร้างรากฐานการคิดเชิงระบบที่ยังคงกำหนดวิธีออกแบบซอฟต์แวร์ที่ซับซ้อนในปัจจุบัน',
     period: '2018–2021',
     accentColor: '#78716C',
     eventIds: ['toparch-mep'],
@@ -17,12 +11,6 @@ export const timelineChapters: TimelineChapter[] = [
   {
     id: 'chapter-bet',
     order: 2,
-    titleEn: 'The Bet',
-    titleTh: 'การพนัน',
-    tagEn: 'Career Reinvention',
-    tagTh: 'การสร้างอาชีพใหม่',
-    descriptionEn: 'A deliberate reset: leaving stability, self-studying software full-time, and proving a new career could be built from first principles.',
-    descriptionTh: 'การเริ่มใหม่อย่างตั้งใจ: ออกจากความมั่นคง เรียนซอฟต์แวร์ด้วยตัวเองเต็มเวลา และพิสูจน์ว่าสามารถสร้างอาชีพใหม่จากหลักการพื้นฐานได้',
     period: '2021–2022',
     accentColor: '#F97316',
     eventIds: ['career-pivot', 'toeic-first'],
@@ -30,12 +18,6 @@ export const timelineChapters: TimelineChapter[] = [
   {
     id: 'chapter-craft',
     order: 3,
-    titleEn: 'The Craft',
-    titleTh: 'การฝึกฝนฝีมือ',
-    tagEn: 'Professional Engineering Foundation',
-    tagTh: 'รากฐานวิศวกรรมมืออาชีพ',
-    descriptionEn: 'The MAQE chapter where software delivery became professional craft, client trust, and repeatable execution.',
-    descriptionTh: 'บท MAQE ที่การส่งมอบซอฟต์แวร์กลายเป็นฝีมือวิชาชีพ ความไว้วางใจจากลูกค้า และการลงมือทำที่ทำซ้ำได้',
     period: '2022–2023',
     accentColor: '#F59E0B',
     eventIds: ['join-maqe', 'ap-thai', 'peatix-series'],
@@ -43,12 +25,6 @@ export const timelineChapters: TimelineChapter[] = [
   {
     id: 'chapter-frontier',
     order: 4,
-    titleEn: 'The Frontier',
-    titleTh: 'ชายแดนใหม่',
-    tagEn: 'Web3 & Leadership Emergence',
-    tagTh: 'Web3 และการเกิดขึ้นของภาวะผู้นำ',
-    descriptionEn: 'Web3 systems, internal leadership, and deeper ownership showed up at the same time.',
-    descriptionTh: 'ระบบ Web3 ภาวะผู้นำภายใน และความเป็นเจ้าของที่ลึกขึ้นเกิดขึ้นพร้อมกันในช่วงเดียวกัน',
     period: '2023–2024',
     accentColor: '#8B5CF6',
     eventIds: ['fedx-guild', 'token-gating', 'maqe-website-v5', 'toeic-second', 'online-catalog'],
@@ -56,12 +32,6 @@ export const timelineChapters: TimelineChapter[] = [
   {
     id: 'chapter-intelligence',
     order: 5,
-    titleEn: 'The Intelligence Layer',
-    titleTh: 'ชั้น Intelligence',
-    tagEn: 'AI Integration & Transition',
-    tagTh: 'AI Integration และการเปลี่ยนผ่าน',
-    descriptionEn: 'The point where AI stopped being interesting theory and became production responsibility.',
-    descriptionTh: 'จุดที่ AI หยุดเป็นเพียงเรื่องน่าสนใจเชิงทฤษฎีและกลายเป็นความรับผิดชอบใน production',
     period: '2024–2025',
     accentColor: '#6366F1',
     eventIds: ['tangier-dao', 'ai-event-platform', 'aws-certified'],
@@ -69,26 +39,23 @@ export const timelineChapters: TimelineChapter[] = [
   {
     id: 'chapter-vision',
     order: 6,
-    titleEn: 'The Vision',
-    titleTh: 'วิสัยทัศน์',
-    tagEn: 'Product Builder & Founder Formation',
-    tagTh: 'Product Builder และการก่อตัวของ Founder',
-    descriptionEn: 'TeamStack turns client-delivery experience into product ownership, founder proximity, and AI-first product building.',
-    descriptionTh: 'TeamStack เปลี่ยนประสบการณ์ client delivery ให้กลายเป็น product ownership ความใกล้ชิดกับ founder และการสร้างผลิตภัณฑ์ AI-first',
     period: '2025–Present',
     accentColor: '#10B981',
     eventIds: ['join-teamstack', 'the-air-product', 'teamstack-roster', 'gaia-project'],
   },
+  {
+    id: 'chapter-acceleration',
+    order: 7,
+    period: '2026–Present',
+    accentColor: '#06B6D4',
+    eventIds: ['portfolio-refactor'],
+  },
 ];
 
-export type YearKey = 2018 | 2021 | 2022 | 2023 | 2024 | 2025;
+export type YearKey = 2018 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026;
 
 export interface YearTheme {
-  label: string;
-  labelTh: string;
   period: string;
-  tagEn: string;
-  tagTh: string;
   gradientFrom: string;
   gradientTo: string;
   spineColor: string;
@@ -96,15 +63,13 @@ export interface YearTheme {
   accentHex: string;
   accentClass: string;
   bgClass: string;
+  labelKey: string;
+  tagKey: string;
 }
 
 export const YEAR_THEMES: Record<YearKey, YearTheme> = {
   2018: {
-    label: 'The Foundation',
-    labelTh: 'รากฐาน',
     period: '2018–2021',
-    tagEn: 'Systems Thinking Origin',
-    tagTh: 'จุดเริ่มต้นของการคิดเชิงระบบ',
     gradientFrom: 'rgba(120, 113, 108, 0.08)',
     gradientTo: 'rgba(168, 162, 158, 0.03)',
     spineColor: '#78716C',
@@ -112,13 +77,11 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     accentHex: '#78716C',
     accentClass: 'text-stone-500',
     bgClass: 'from-stone-500/5 via-stone-400/3 to-transparent',
+    labelKey: '2018.label',
+    tagKey: '2018.tag',
   },
   2021: {
-    label: 'The Bet',
-    labelTh: 'การพนัน',
     period: '2021–2022',
-    tagEn: 'Career Reinvention',
-    tagTh: 'การสร้างอาชีพใหม่',
     gradientFrom: 'rgba(249, 115, 22, 0.08)',
     gradientTo: 'rgba(253, 186, 116, 0.03)',
     spineColor: '#F97316',
@@ -126,13 +89,11 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     accentHex: '#F97316',
     accentClass: 'text-orange-500',
     bgClass: 'from-orange-500/5 via-orange-400/3 to-transparent',
+    labelKey: '2021.label',
+    tagKey: '2021.tag',
   },
   2022: {
-    label: 'The Craft',
-    labelTh: 'การฝึกฝนฝีมือ',
     period: '2022–2023',
-    tagEn: 'Professional Engineering Foundation',
-    tagTh: 'รากฐานวิศวกรรมมืออาชีพ',
     gradientFrom: 'rgba(251, 191, 36, 0.06)',
     gradientTo: 'rgba(245, 158, 11, 0.03)',
     spineColor: '#F59E0B',
@@ -140,13 +101,11 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     accentHex: '#F59E0B',
     accentClass: 'text-amber-500',
     bgClass: 'from-amber-500/5 via-amber-400/3 to-transparent',
+    labelKey: '2022.label',
+    tagKey: '2022.tag',
   },
   2023: {
-    label: 'The Frontier',
-    labelTh: 'ชายแดนใหม่',
     period: '2023–2024',
-    tagEn: 'Web3 & Leadership Emergence',
-    tagTh: 'Web3 และการเกิดขึ้นของภาวะผู้นำ',
     gradientFrom: 'rgba(139, 92, 246, 0.06)',
     gradientTo: 'rgba(109, 40, 217, 0.03)',
     spineColor: '#8B5CF6',
@@ -154,13 +113,11 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     accentHex: '#8B5CF6',
     accentClass: 'text-violet-500',
     bgClass: 'from-violet-500/5 via-violet-400/3 to-transparent',
+    labelKey: '2023.label',
+    tagKey: '2023.tag',
   },
   2024: {
-    label: 'The Intelligence Layer',
-    labelTh: 'ชั้น Intelligence',
     period: '2024–2025',
-    tagEn: 'AI Integration & Transition',
-    tagTh: 'AI Integration และการเปลี่ยนผ่าน',
     gradientFrom: 'rgba(99, 102, 241, 0.07)',
     gradientTo: 'rgba(67, 56, 202, 0.03)',
     spineColor: '#6366F1',
@@ -168,13 +125,11 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     accentHex: '#6366F1',
     accentClass: 'text-indigo-500',
     bgClass: 'from-indigo-500/6 via-indigo-400/3 to-transparent',
+    labelKey: '2024.label',
+    tagKey: '2024.tag',
   },
   2025: {
-    label: 'The Vision',
-    labelTh: 'วิสัยทัศน์',
-    period: '2025–Present',
-    tagEn: 'Product Builder & Founder Formation',
-    tagTh: 'Product Builder และการก่อตัวของ Founder',
+    period: '2025–2026',
     gradientFrom: 'rgba(16, 185, 129, 0.06)',
     gradientTo: 'rgba(5, 150, 105, 0.03)',
     spineColor: '#10B981',
@@ -182,5 +137,19 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     accentHex: '#10B981',
     accentClass: 'text-emerald-500',
     bgClass: 'from-emerald-500/5 via-emerald-400/3 to-transparent',
+    labelKey: '2025.label',
+    tagKey: '2025.tag',
+  },
+  2026: {
+    period: '2026–Present',
+    gradientFrom: 'rgba(6, 182, 212, 0.06)',
+    gradientTo: 'rgba(8, 145, 178, 0.03)',
+    spineColor: '#06B6D4',
+    dotColor: '#67E8F9',
+    accentHex: '#06B6D4',
+    accentClass: 'text-cyan-500',
+    bgClass: 'from-cyan-500/5 via-cyan-400/3 to-transparent',
+    labelKey: '2026.label',
+    tagKey: '2026.tag',
   },
 } as const;

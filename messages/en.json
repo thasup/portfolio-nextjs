@@ -10,54 +10,56 @@
     "hire_me": "Hire Me",
     "experience": "Experience",
     "testimonials": "Testimonials",
-    "sr_navigation": "Navigation"
+    "sr_navigation": "Navigation",
+    "open_menu": "Open menu",
+    "menu_title": "Navigation Menu"
   },
   "hero": {
-    "availability": "Open to senior AI engineering, product-minded software, and international roles",
-    "intro": "Thanachon \"First\" Suppasatian",
+    "availability": "Open for Senior AI Engineering, Product, and Intl roles",
+    "intro": "Thanachon \"First\" Suphasathien",
     "roleLine": "Senior Software Engineer",
-    "tagline": "Building AI-first products. Thinking like a founder.",
-    "directionLine": "MEP Engineer → Self-taught Dev → AI Product Builder",
+    "tagline": "Building AI products that stick. Founder-minded architecture.",
+    "directionLine": "MEP Engineer → Self-taught Developer → AI Product Builder",
     "proofHeadline": "7 years in engineering. 4 years shipping software.",
-    "proofSubheadline": "1 clear direction: AI systems that actually work.",
+    "proofSubheadline": "One direction: Practical AI systems in production.",
     "trust1": "AWS Certified Cloud Practitioner · 2025",
-    "trust2": "TOEIC 915/990 · English proficiency",
-    "trust3": "MEP Engineering → Software → AI (7 years compounding)",
-    "trust4": "Bangkok, Thailand · Open to international roles",
-    "ctaPrimary": "See My Work",
-    "ctaPrimaryHint": "Best way to assess execution quality fast",
-    "ctaSecondary": "Get In Touch",
-    "ctaSecondaryHint": "Open to hiring, collaboration, and founder conversations",
-    "stripYears": "Years in engineering",
-    "stripSoftware": "Years shipping software",
-    "stripDomains": "Core proof domains",
-    "stripStars": "Total stars earned",
-    "stripCommits": "Commits this year",
-    "stripContributions": "Total contributions",
-    "stripRepos": "Repos contributed to"
+    "trust2": "TOEIC 915/990 · English Proficiency",
+    "trust3": "MEP Engineering → Software → AI (7Y Compounded)",
+    "trust4": "Bangkok, TH · Open for International Opportunity",
+    "ctaPrimary": "Explore Projects",
+    "ctaPrimaryHint": "The fastest way to judge execution quality",
+    "ctaSecondary": "Get in Touch",
+    "ctaSecondaryHint": "Open for hiring, partnerships, and founder conversations",
+    "stripYears": "Years in Engineering",
+    "stripSoftware": "Years Shipping Software",
+    "stripDomains": "Domains Proven",
+    "stripStars": "Total GitHub Stars",
+    "stripCommits": "Commits This Year",
+    "stripContributions": "Total Contributions",
+    "stripRepos": "Participated Repos"
   },
   "about": {
-    "label": "ABOUT ME",
-    "title": "From Blueprint to Bytecode to Intelligence",
-    "subtitle": "A systems engineer who found his real medium.",
+    "label": "About Me",
+    "title": "From Blueprints to Bytecode to Intelligence",
+    "subtitle": "A systems engineer who found his most resilient medium",
     "act1Title": "Act I: The Engineer (2018–2021)",
-    "act1Body": "I spent the first chapter of my career designing mechanical, electrical, and plumbing systems for commercial buildings at Toparch in Bangkok. MEP engineering is constraint management at scale — budget limits, physics, building codes, and the needs of thousands of people who will live inside the systems you design but never see.\n\nThat is where I learned what good engineering actually is: solutions that survive contact with reality.\n\nI was competent. I was stable. I was also quietly writing my first lines of JavaScript on evenings and weekends, and realizing that software was the same discipline in a different, more malleable medium.",
+    "act1Body": "The first chapter of my career was spent designing MEP systems for commercial developments at Toparch in Bangkok. MEP engineering is about managing constraints at scale — budget, physics, building codes, and the needs of thousands of people who will inhabit a system you design but never see.\n\nThat is where I learned what good engineering actually is: a solution that survives first contact with reality.\n\nI was capable, stable, and yet — I wrote my first line of JavaScript on evenings and weekends and realized software was the same discipline in a different, more fluid medium.",
     "act2Title": "Act II: The Bet (2021–2022)",
-    "act2Body": "In April 2021, I resigned.\n\nNo job lined up. No bootcamp enrolled. Just a year of savings, a conviction, and the systems-thinking discipline I'd built in engineering.\n\nI taught myself JavaScript, TypeScript, React, and the fundamentals of modern software architecture. I scored 890 on my first TOEIC attempt — clearing the language barrier that stops most Thai engineers from accessing global opportunities. Twelve months later, I had a portfolio and walked into MAQE.\n\nThe bet worked.",
+    "act2Body": "In April 2021, I resigned.\n\nNo job waiting, no bootcamp, just a year of savings, conviction, and the systems-thinking discipline built in physical engineering.\n\nI taught myself JavaScript, TypeScript, React, and the fundamentals of modern software architecture. I scored 890 on my first TOEIC — opening doors to international opportunities many Thai engineers miss. Twelve months later, I had a portfolio and walked into MAQE.\n\nThe bet paid off.",
     "act3Title": "Act III: The Craft (2022–2025)",
-    "act3Body": "Three years at MAQE Bangkok, one of Thailand's premier digital agencies. I shipped software that real people use — a homebuying platform for AP Thailand's thousands of customers, a decentralized governance tool for Web3 communities, an AI-powered event platform that made creation intelligent.\n\nI also learned something more important than any technology: the engineers who compound their value are the ones who make their teams better, not just their codebases. I co-founded the FEDx Frontend Guild, hosted knowledge sessions, mentored peers, and became the kind of engineer that clients specifically ask to keep working with.",
+    "act3Body": "Three years at MAQE Bangkok, one of Thailand's premier digital agencies, I shipped software that real people use — home-buying platforms for thousands of AP Thailand customers, decentralized governance tools for Web3 communities, and AI event platforms that put intelligence into creation.\n\nI also learned what matters more than any tech stack: a value-compounding engineer is one who makes the team better, not just the codebase. I co-founded the FEDx Frontend Guild, hosted knowledge sessions, mentored peers, and became the engineer clients specifically requested for.",
     "act4Title": "Act IV: The Vision (2025–Present)",
-    "act4Body": "I joined TeamStack in 2025 — a product-focused environment where I could work directly on building products, not just delivering client projects. I'm currently building The Air Product: an AI-first internal tool with a 3-year strategic roadmap, working directly with the CEO on vision and architecture.\n\nThis is the closest I've been to the work I ultimately want to do: building a product that genuinely solves a problem, with a team that cares about the outcome, in a market that needs it.\n\nThe decade-long goal is a SaaS product in Southeast Asia. Every project, every certification, and every deliberate technology choice has been preparation. The Gaia Project — my personal second brain and life operating system — is what happens when a systems engineer turns the lens inward.",
-    "personalityTitle": "The INTJ Behind the Work",
-    "personalityBody": "MBTI: INTJ — The Architect. I design systems before I build them, and I prefer a precise vision over broad ambiguity. I am direct, I work independently, and I have a deep aversion to work that does not compound toward something.\n\nI believe in three things professionally: relentless progress, autonomy with integrity, and leverage through knowledge — meaning I invest in learning that makes me and everyone around me more capable, not just checking boxes.",
-    "ctaProjects": "View Recent Work",
+    "act4Body": "I joined TeamStack in 2025 — a product-focused environment where I could work on a product, not just deliver client projects. Currently building The Air Product: an AI-first internal tool with a 3-year strategic roadmap, working directly with the CEO on vision and architecture.\n\nThis is the point where I am closest to the work I want to do ultimately: building products that solve real problems with teams that care about outcomes, in markets that need them.\n\nThe ten-year goal is SaaS products in Southeast Asia. Every project, every certification, and every deliberate technology choice is preparation. The Gaia Project — a personal second brain and life operating system — is what happens when a systems engineer turns the lens inward.",
+    "personalityTitle": "The INTJ Behind the Machine",
+    "personalityBody": "MBTI: INTJ — The Architect. I design systems before I build them, and I prefer precise vision over broad ambiguity. I am direct, autonomous, and allergic to work that doesn't compound.\n\nProfessionally, I believe in three things: relentless improvement, autonomy earned through integrity, and leverage through knowledge — learning things that actually make me and everyone around me better, not just checking boxes.",
+    "ctaProjects": "View Recent Projects",
     "ctaResume": "Download Resume"
   },
   "contact": {
-    "label": "CONTACT",
-    "title": "Choose the Right Conversation",
-    "subtitle": "AI hiring, product ownership, collaboration, or a thoughtful hello — pick the path that fits",
-    "formIntentLabel": "What are you looking for?",
+    "label": "Contact",
+    "title": "Start the Right Conversation",
+    "subtitle": "Whether it's AI engineering, product ownership, collaboration, or just a hello — choose the path that gets us there faster.",
+    "formIntentLabel": "What would you like to discuss?",
     "formNameLabel": "Name",
     "formEmailLabel": "Email",
     "formSubmit": "Send Message",
@@ -65,18 +67,42 @@
     "successTitle": "Message Sent!",
     "successMessage": "Thanks for reaching out. I'll get back to you within 24 hours.",
     "successCta": "Send another message",
-    "errorGeneric": "Something went wrong. Please try again or email me directly."
+    "errorGeneric": "Something went wrong. Please try again or email me directly.",
+    "intents": {
+      "hire-ai": {
+        "label": "Hire as AI Engineer",
+        "heading": "Let's talk AI engineering",
+        "preview": "Tell me about the AI product you're building. What's the problem it solves, what's the technical context, and what gap you're trying to fill. I'll reply with genuine thoughts on fit.",
+        "placeholder": "E.g. We're building a RAG-based internal knowledge tool and need someone who can own the AI integration layer and frontend..."
+      },
+      "hire-po": {
+        "label": "Hire as Product Owner",
+        "heading": "Let's talk product ownership",
+        "preview": "Tell me about your product and team. What decisions need to be owned, what's the technical complexity, and what success looks like at 6 months. Engineers who think in products are rare — I'm one.",
+        "placeholder": "E.g. We're a Series A startup with a technical product and need a PO who can translate between engineering and business..."
+      },
+      "collaborate": {
+        "label": "Co-build Something",
+        "heading": "Let's build together",
+        "preview": "Have an idea for a SaaS product — especially targeting Southeast Asia? Tell me the problem, the market, and why now. I'm actively looking for the right co-founder conversation.",
+        "placeholder": "E.g. I've been working on an AI tool for Thai SMEs and need a technical co-founder who can own the product..."
+      },
+      "general": {
+        "label": "Just Saying Hi",
+        "heading": "Say hi",
+        "preview": "Even if you're not sure of fit yet, send context and I'll reply thoughtfully. I usually respond within 24 hours on weekdays.",
+        "placeholder": "Whatever's on your mind..."
+      }
+    }
   },
   "timeline": {
     "label": "Experience",
     "title": "A 7+ Year Engineering Arc",
     "subtitle": "From MEP systems to self-taught software to AI-first product building — with proof at every stage",
     "deepDive": "Deep Dive",
-    "eventCard": {
+    "labels": {
       "capability": "Capability gained:",
-      "evidence": "Evidence:"
-    },
-    "modal": {
+      "evidence": "Evidence:",
       "impact": "Impact",
       "technologies": "Technologies",
       "media": "Media",
@@ -85,7 +111,224 @@
     },
     "visionCta": "What's Next",
     "visionTitle": "What This Arc Points Toward",
-    "visionDescription": "I’m now optimizing for AI-first product roles where systems thinking, ownership, and founder proximity matter — and where this trajectory keeps compounding."
+    "visionDescription": "I’m now optimizing for AI-first product roles where systems thinking, ownership, and founder proximity matter — and where this trajectory keeps compounding.",
+    "chapters": {
+      "2018": {
+        "label": "The Foundation",
+        "tag": "Systems Thinking Origin"
+      },
+      "2021": {
+        "label": "The Bet",
+        "tag": "Career Reinvention"
+      },
+      "2022": {
+        "label": "The Craft",
+        "tag": "Professional Engineering Foundation"
+      },
+      "2023": {
+        "label": "The Frontier",
+        "tag": "Web3 & Leadership Emergence"
+      },
+      "2024": {
+        "label": "The Intelligence Layer",
+        "tag": "AI Integration & Transition"
+      },
+      "2025": {
+        "label": "The Vision",
+        "tag": "Product Builder & Founder Formation"
+      },
+      "2026": {
+        "label": "The Acceleration",
+        "tag": "AI-First Scale & Execution"
+      },
+      "chapter-foundation": {
+        "title": "The Foundation",
+        "tag": "Systems Thinking Origin",
+        "description": "MEP engineering built the systems-thinking baseline that still shapes how complex software gets designed today."
+      },
+      "chapter-bet": {
+        "title": "The Bet",
+        "tag": "Career Reinvention",
+        "description": "A deliberate reset: leaving stability, self-studying software full-time, and proving a new career could be built from first principles."
+      },
+      "chapter-craft": {
+        "title": "The Craft",
+        "tag": "Professional Engineering Foundation",
+        "description": "The MAQE chapter where software delivery became professional craft, client trust, and repeatable execution."
+      },
+      "chapter-frontier": {
+        "title": "The Frontier",
+        "tag": "Web3 & Leadership Emergence",
+        "description": "Web3 systems, internal leadership, and deeper ownership showed up at the same time."
+      },
+      "chapter-intelligence": {
+        "title": "The Intelligence Layer",
+        "tag": "AI Integration & Transition",
+        "description": "The point where AI stopped being interesting theory and became production responsibility."
+      },
+      "chapter-vision": {
+        "title": "The Vision",
+        "tag": "Product Builder & Founder Formation",
+        "description": "TeamStack turns client-delivery experience into product ownership, founder proximity, and AI-first product building."
+      },
+      "chapter-acceleration": {
+        "title": "The Acceleration",
+        "tag": "AI-First Scale & Execution",
+        "description": "2026 marks the move from AI experiments to deep AI-human pairing in every layer of delivery."
+      }
+    },
+    "events": {
+      "toparch-mep": {
+        "title": "MEP Engineer — Toparch",
+        "summary": "First professional role as an MEP engineer in Bangkok. Designed building systems, read blueprints, and debugged real-world infrastructure constraints.",
+        "description": "Spent 2.3 years designing mechanical, electrical, and plumbing systems for commercial buildings. Every project was a constraint-satisfaction problem involving budget, physics, regulations, and the needs of people who would live inside these systems.",
+        "impact": "Built the systems-thinking baseline that now shapes how complex software gets designed, debugged, and maintained.",
+        "capabilityGained": "Systems Thinking"
+      },
+      "career-pivot": {
+        "title": "Resigned. Started Over. On Purpose.",
+        "summary": "Left a stable engineering career to self-study programming full-time. No job lined up, no bootcamp, just a laptop and conviction.",
+        "description": "Spent a year rebuilding from scratch: JavaScript, HTML, CSS, software architecture fundamentals, and portfolio projects. The pivot was financially risky and emotionally expensive, but it proved a new career could be built deliberately.",
+        "impact": "Established the evidence that I can rebuild competence in a new domain without external structure.",
+        "capabilityGained": "Self-Directed Learning & Courage"
+      },
+      "toeic-first": {
+        "title": "TOEIC 890 — First Attempt",
+        "summary": "Scored 890/990 while simultaneously learning software engineering — an intentional investment in international readiness.",
+        "description": "English fluency was part of the plan, not a side goal. I treated communication as a professional leverage point in the same way I treated coding practice.",
+        "impact": "Removed a major barrier to global-facing work and cross-border collaboration.",
+        "capabilityGained": "Global Communication Readiness"
+      },
+      "join-maqe": {
+        "title": "Joined MAQE Bangkok",
+        "summary": "Started as a professional Software Engineer after a 12-month self-study pivot and entered a high-trust agency environment serving enterprise clients.",
+        "description": "Joined one of Bangkok’s premier digital agencies and began shipping software for Japanese enterprise clients and global brands. This was the proving ground where the pivot became a profession.",
+        "impact": "Confirmed that systems thinking from MEP engineering compounds quickly in software delivery.",
+        "capabilityGained": "Professional Software Delivery"
+      },
+      "ap-thai": {
+        "title": "AP Thai — Property Discovery Platform",
+        "summary": "Consumer-facing home discovery platform for one of Thailand’s largest property developers. Early proof of scale, analytics, and production quality.",
+        "description": "Built a modernized property-discovery experience with CMS-backed architecture, analytics instrumentation, and mobile-first delivery. It was one of the first times I saw user-behavior data directly shape what got built next.",
+        "impact": "Shipped a homebuying journey for thousands of users and learned how analytics changes product decision-making.",
+        "capabilityGained": "Scale & Analytics-Driven Development"
+      },
+      "peatix-series": {
+        "title": "Peatix Series — Long-Term Product Partnership",
+        "summary": "A long-running engagement that evolved into the deepest client-trust proof in the portfolio. Became the trusted frontend owner over multiple years.",
+        "description": "Over a multi-year client relationship, I moved from contributor to trusted owner. The work compounded across product delivery, technical judgment, and cross-cultural communication.",
+        "impact": "A direct client called me a primary reason they wanted to keep working with MAQE.",
+        "capabilityGained": "Long-Term Product Ownership & Client Trust"
+      },
+      "fedx-guild": {
+        "title": "FEDx Guild — Knowledge Leadership",
+        "summary": "Co-founded and led the Frontend Excellence Guild, turning personal craft into team-wide leverage over 400+ days.",
+        "description": "Organized sessions, aligned standards, and became a knowledge anchor across teams. The guild became evidence that value compounds beyond the codebase when you help others level up too.",
+        "impact": "Praew described me as someone who “glued everyone together” and sits at the top rank of trust.",
+        "capabilityGained": "Knowledge Multiplication & Engineering Culture"
+      },
+      "token-gating": {
+        "title": "Token Gating — NFT Access Control",
+        "summary": "Full-stack NFT access control shipped under delivery pressure. Learned Web3 by building it in production, not by studying it in isolation.",
+        "description": "Built a reusable access-control system validating token ownership across chains, with frontend, API, and infrastructure all moving together.",
+        "impact": "Proved that unfamiliar domains can become shippable systems quickly when approached through systems thinking.",
+        "capabilityGained": "Blockchain Domain Adaptation"
+      },
+      "maqe-website-v5": {
+        "title": "MAQE Website v5 — Full Ownership",
+        "summary": "Primary owner for MAQE’s corporate website rebuild across architecture, design implementation, performance, and maintenance.",
+        "description": "The first sustained end-to-end ownership experience where I cared for the whole system, not just the next ticket. It sharpened both product judgment and collaboration with design.",
+        "impact": "A design collaborator explicitly highlighted my systematic thinking as a rare trait.",
+        "capabilityGained": "End-to-End Product Ownership"
+      },
+      "toeic-second": {
+        "title": "TOEIC 910 — Second Attempt",
+        "summary": "Re-certified with a higher score to maintain international standards and demonstrate continuous improvement in global communication.",
+        "description": "Achieving 910/990 was about maintaining an edge. High-stakes communication with international stakeholders and founders requires zero friction, and this was the proof of that readiness.",
+        "impact": "Reinforced confidence for high-stakes international stakeholder management and product leadership.",
+        "capabilityGained": "Cross-Cultural Stakeholder Management"
+      },
+      "online-catalog": {
+        "title": "B2B Online Catalog Platform",
+        "summary": "Headless B2B commerce work that replaced manual sales workflows with a digital catalog and business-ready frontend experience.",
+        "description": "A deep introduction to GraphQL architecture, Magento, and the very different UX constraints of B2B workflows: bulk ordering, pricing logic, and operational context.",
+        "impact": "Expanded range beyond B2C and taught me how business context changes technical choices.",
+        "capabilityGained": "Commerce Architecture & Business Context"
+      },
+      "tangier-dao": {
+        "title": "Tangier — Web3 DAO Giving Circles",
+        "summary": "Decentralized governance infrastructure on Ethereum with smart contracts, proposal flows, voting, and fund distribution.",
+        "description": "Built the frontend and wrote the Solidity contracts that governed community proposals and treasury logic. It is a rare production Solidity proof point in the local market.",
+        "impact": "Demonstrated frontier-tech range while still shipping complete, user-facing systems.",
+        "capabilityGained": "Smart Contract Development & On-Chain Architecture"
+      },
+      "ai-event-platform": {
+        "title": "AI Event Creation Platform — Production GenAI",
+        "summary": "First production AI feature shipped to real users, where the job stopped being “build interfaces” and became “build interfaces that think.”",
+        "description": "Integrated generative AI into a live event-management product to help real organizers create better content faster. The challenge was not demo quality but production reliability and UX fit.",
+        "impact": "Established reusable AI integration patterns and proved I can bridge the gap between AI demos and AI products.",
+        "capabilityGained": "Production AI Integration"
+      },
+      "aws-certified": {
+        "title": "AWS Certified Cloud Practitioner",
+        "summary": "Formalized cloud architecture knowledge built across years of production delivery during the TeamStack transition.",
+        "description": "Certification mattered less as a badge than as confirmation that years of infrastructure exposure had become coherent architectural judgment.",
+        "impact": "Improved confidence in infrastructure decisions and systems-level discussions.",
+        "capabilityGained": "Cloud Architecture Independence"
+      },
+      "join-teamstack": {
+        "title": "Transition to TeamStack — Building From the Ground Up",
+        "summary": "Moved from client delivery into a product-focused environment with founder proximity, direct ownership, and a 3-year product roadmap.",
+        "description": "This shift mattered because it changed the context: not shipping for a client, but helping shape a product from the inside with direct strategic collaboration.",
+        "impact": "Created the closest environment yet to the kind of product building I want to do long term.",
+        "capabilityGained": "Product Builder Mindset"
+      },
+      "the-air-product": {
+        "title": "The Air Product — AI-First SaaS",
+        "summary": "Current flagship work: building an AI-first internal product with a 3-year strategic vision, directly with the CEO across product, architecture, and UX.",
+        "description": "This is the strongest founder-proximity proof in the portfolio. The work is active, strategic, and deeply product-shaped rather than task-shaped.",
+        "impact": "Active project. CEO feedback directly validates reliability, initiative, and contribution beyond day-to-day delivery.",
+        "capabilityGained": "AI Product Architecture & Founder-Proximity Execution"
+      },
+      "teamstack-roster": {
+        "title": "TeamStack Roster — Team Management Product",
+        "summary": "Shipped a real team-management product to MVP with end-to-end ownership from architecture to release.",
+        "description": "One of the clearest 0→1 product-delivery proofs in the portfolio. The product demanded product judgment, execution discipline, and cross-functional alignment.",
+        "impact": "First product I can point to as mine across both internal architecture and user-facing delivery.",
+        "capabilityGained": "0→1 Product Delivery"
+      },
+      "gaia-project": {
+        "title": "Gaia Project — Personal Life Operating System",
+        "summary": "A personal second brain and life operating system that applies systems thinking inward — tracking work, learning, goals, and reflection.",
+        "description": "Gaia is the founder-trajectory signal expressed personally: a systems engineer designing leverage not just in products, but in life itself.",
+        "impact": "Acts as the personal infrastructure behind how I learn, document, and think long term.",
+        "capabilityGained": "Systems Applied to Self-Mastery"
+      },
+      "portfolio-refactor": {
+        "title": "Portfolio Localization & Refactor",
+        "summary": "Full-scale refactor of this portfolio using AI-pairing to implement next-intl, centralized content management, and SEO optimization.",
+        "description": "Implemented deep localization (EN/TH) across the entire stack. This wasn't just a translation task, but a structural refactor of how content is managed and served, ensuring the site is production-ready and globally accessible.",
+        "impact": "Achieved a 100% centralized content model and proved the efficiency of AI-human pair programming for complex structural refactors.",
+        "capabilityGained": "I18n Architecture & AI-Augmented Engineering"
+      }
+    },
+    "categories": {
+      "work": "Work",
+      "project": "Project",
+      "achievement": "Achievement",
+      "education": "Learning",
+      "learning": "Learning",
+      "milestone": "Milestone"
+    },
+    "modal": {
+      "notFound": "Event not found",
+      "context": "Context & Responsibilities",
+      "impact": "Impact & Outcomes",
+      "skills": "Skills Executed",
+      "technologies": "Technologies",
+      "media": "Media",
+      "close": "Close Narrative"
+    }
   },
   "footer": {
     "navigation": "Navigation",
@@ -93,22 +336,379 @@
     "allRightsReserved": "All rights reserved."
   },
   "testimonials": {
-    "label": "TESTIMONIALS",
-    "title": "Voices from Collaborators",
-    "subtitle": "Real quotes from clients, managers, and collaborators who saw the work up close",
+    "label": "Testimonials",
+    "title": "Voices from the Field",
+    "subtitle": "Real words from clients, managers, and collaborators who have seen my work in the arena.",
     "loading": "Loading testimonials...",
     "card": {
-      "tapToRead": "Tap to read the full quote"
+      "tapToRead": "Tap to read full testimonial",
+      "ariaLabelRead": "Read full testimonial from",
+      "modalTitle": "Testimonial from",
+      "notFound": "Testimonial not found"
+    },
+    "entries": {
+      "andreas": {
+        "authorRole": "Founder and Chief Executive Officer",
+        "relationship": "Direct manager / CEO · 1+ year",
+        "proofThemeLabel": "Business Impact & Value Creation",
+        "summaryQuote": "Your main goal at TeamStack is to provide value for PTX—and you have done so in spades.",
+        "fullQuote": "Your main goal at TeamStack is to provide value for PTX—and you have done so in spades. Proof is in the contract extension and client feedback. I appreciate greatly your can-do attitude. Whatever I throw at you, you take in stride."
+      },
+      "edward": {
+        "authorRole": "Vice President",
+        "relationship": "Client · Peatix Series · 3+ years",
+        "proofThemeLabel": "Client Retention & Ownership",
+        "summaryQuote": "First is a great asset to our project and also a primary reason why I want to keep working with MAQE.",
+        "fullQuote": "For our project, First is responsible for all of the frontend development work. During practically every sprint, First has demonstrated all of these things - providing guidance, removing obstacles, collaborating effectively, sharing knowledge, and contributing to the success of the team and project. I believe First has done a tremendous job of taking ownership and responsibility and we trust his knowledge and expertise. First is a great asset to our project and also a primary reason why I want to keep working with MAQE. He truly exemplifies characteristics that I value - thoughtful, considerate, kind, professional, responsible, and the list goes on. First is not only a great engineer, but a truly wonderful person. We greatly appreciate the opportunity to work with First."
+      },
+      "daniel": {
+        "authorRole": "Senior Lead Product Manager",
+        "relationship": "Client · Peatix Series · 3+ years",
+        "proofThemeLabel": "Stakeholder Confidence & Security",
+        "summaryQuote": "He also has set a very high standard for himself for the work he is doing - which makes Ed and myself feel very secure when First is involved in a feature, as we know we can rely on him to make something great.",
+        "fullQuote": "First has played such an integral part in the success of our team's ability to deploy new features. In general, I appreciate how committed First is to being there for everyone involved in this development process. He has a strong openness to using every experience and new challenge as an important opportunity for learning something new - and then sharing what he has learned with the rest of us. He also has set a very high standard for himself for the work he is doing - which makes Ed and myself feel very secure when First is involved in a feature, as we know we can rely on him to make something great. He is very open to collaboration and he has worked with Bank to clear many obstacles - especially by introducing a detailed overview of how he is solving bugs and QA related items, outlining what went wrong and how it was fixed. It is very valuable information he is sharing with everyone. First's motivation and dedication is a really valuable component to team success and team morale with this project."
+      },
+      "pai": {
+        "authorRole": "Senior Frontend Engineer",
+        "relationship": "Senior colleague · Peatix Series · 2+ years",
+        "proofThemeLabel": "Multidisciplinary Force Multiplier",
+        "summaryQuote": "Well organized - First always find a method for the team to work smoothly and easily sync.",
+        "fullQuote": "Well organized - First always finds a method for the team to work smoothly and easily sync. For example, he introduced tools like Excalidraw to create flowcharts (e.g., login, checkout). We can use those flowcharts for reference and to communicate with the Peatix team. When we encounter complex requirements such as ticket statuses, he always lists down all the cases and collects them in a Google Sheet to make sure everyone is on the same page.\n\nGreat communication - I think First has the best English skills in our Dev team, so he's always the person who helps the team communicate with the Peatix team and helps clarify when both parties are not aligned due to language barriers. You're the MVP for this. 😆\n\nSharing and seeking new knowledge - First is always involved in the FE guild to share his knowledge and even leads the FedX guild. It's not easy to multitask like that, but he always nails it. 👍\n\nI think First has shown great signs of being a good developer, and I can even see signs of him being a good PM (if you're interested, LOL). So just keep up the good work ka. The more things you experience, the stronger you become 💪"
+      },
+      "meow": {
+        "authorRole": "Manager, DesignOps & Innovation",
+        "relationship": "Manager · MAQE Website v5",
+        "proofThemeLabel": "Systematic Problem Solving",
+        "summaryQuote": "Think systematically. This trait of yours is a rare gem to encounter. It applies to your working process, problem-solving approach, and how to work better as a team.",
+        "fullQuote": "I often work with First on MAQE Website as a designer. Here's what I admire about you:\n\n• Reliable & Responsible: It's admirable that you usually share your working progress and thoughts behind those solutions every week, not only completed tasks. You can manage your tasks in sync with team members like Bank, Big, and me. I'm grateful to have your goodwill and skills in the team.\n\n• Think systematically: This trait of yours is a rare gem to encounter. It applies to your working process, problem-solving approach, and how to work better as a team. You take one step further to solve the problem in the long run (e.g. the recent issue with padding).\n\n• Open-minded/Compromisable: When we discussed the technical feasibility of particular designs, you shared opinions and built on top of each other ideas to find better ways to reach the same goal."
+      },
+      "praew": {
+        "authorRole": "UX/UI Designer",
+        "relationship": "Colleague · FEDx Guild co-organizer · 2+ years",
+        "proofThemeLabel": "Resilience & Psychological Safety",
+        "summaryQuote": "My top choice for initiating impactful projects",
+        "fullQuote": "He is incredibly supportive; He listens well and is open-minded - I feel very comfortable expressing my opinions freely with him.\n\nMy top choice for initiating impactful projects; He is eager to explore. His enthusiasm for collaboration and learning new things is evident, making it inspiring and positive to work with him.\n\nDemonstrates resilience and adaptability; He adeptly handles unexpected incidents and seamlessly adapts to workflow changes, facilitating a smooth collaboration."
+      },
+      "big": {
+        "authorRole": "Lead Frontend Engineer",
+        "relationship": "Squad Lead · 3+ years",
+        "proofThemeLabel": "Cultural Catalyst & Ripple Effect",
+        "summaryQuote": "Your eagerness and numerous contributions create a ripple that causes a positive, learning environment for the team.",
+        "fullQuote": "There are so many good things from you! You help on various projects apart from the billable (Peatix) project: the MAQE Website, linting packages, guild contributions and initiations (notably FE & FEDX), and those sessions outside of working hours!\n\nYour eagerness to learn and positive energy create a positive vibe for the people around you. There are many traits that are very good to mention: your presentation ability, and your attention to detail in POCs and research.\n\nYour eagerness and numerous contributions create a ripple that causes a positive, learning environment for the team. I can say, without a doubt, that First is a good developer."
+      },
+      "bank": {
+        "authorRole": "Backend Engineer",
+        "relationship": "Colleague · 3+ years",
+        "proofThemeLabel": "Root-Cause & Collaborative Solution",
+        "summaryQuote": "I'm sure that whenever someone encounters an issue, First will always step up, address it, and quickly get to the root of the problem.",
+        "fullQuote": "I'm sure that whenever someone encounters an issue, First will always step up, address it, and quickly get to the root of the problem. He always lets me know if he has questions or if I've missed something. It's great that he asks when he's unsure and initiates conversations with the team for discussion.\n\nSometimes, when the frontend needs support from the backend, he understands the limitations of the customer's system, which may restrict my ability to implement his specific solution. Then, we find another solution together.\n\nUsing tools like Excalidraw to communicate with the customer is great. I like that he always ensures we're seeing things from the same perspective.\n\nIt's not only about work, either; he often introduces good things, like Duolingo, to the team! :D"
+      },
+      "chok": {
+        "authorRole": "Senior Frontend Engineer",
+        "relationship": "Senior colleague · 2+ years",
+        "proofThemeLabel": "Engineering Culture & Mentorship",
+        "summaryQuote": "He always raises his hand to contribute to extra work that benefits the company, such as the MAQE website, developer standards, and linting.",
+        "fullQuote": "He always raises his hand to contribute to extra work that benefits the company, such as the MAQE website, standards and linting for developers, and guild contributions. Even though he takes on so much, he still maintains high performance on his main project.\n\nAnother thing—not just over the past six months, but consistently—is that he likes helping those around him improve their soft skills, such as English and financial tracking. I have also benefited from this; my English skills improved after I practiced with him."
+      },
+      "ning": {
+        "authorRole": "Project Manager",
+        "relationship": "Manager · 2+ years",
+        "proofThemeLabel": "Trust & Organization",
+        "summaryQuote": "His communication style is engaging and sincere, which helps build trust and align both team and customer.",
+        "fullQuote": "First is proactive in planning and drive team actions. He has a strong organization and structured work. His communication style is engaging and sincere, which helps build trust and align both team and customer. First's positive attitude towards learning is also inspiring for the team.\n\nYou are a strong team player with excellent communication and leadership skills. You work independently, provide valuable feedback, and encourage teamwork. Your ability to align the team and share knowledge is greatly appreciated."
+      }
     }
   },
   "value": {
-    "label": "VALUE",
+    "label": "Value Proposition",
     "title": "Why Work With Me",
-    "subtitle": "Five things I bring to any team or project",
-    "evidence": "See more"
+    "subtitle": "5 things I bring to every team",
+    "evidence": "Read Evidence",
+    "propositions": {
+      "production-ai": {
+        "title": "Ships Production AI",
+        "description": "Integrated OpenAI SDK into a live event platform used by real organizers — not a demo, not a side project. I know the difference between AI that works in a notebook and AI that survives production.",
+        "proof": "AI Event Platform + The Air Product at TeamStack"
+      },
+      "product-thinking": {
+        "title": "Thinks Product, Not Tickets",
+        "description": "I host guild sessions, write internal docs, and built a personal second brain to manage my own learning system. Engineers who think about product impact ship features that actually matter to the business.",
+        "proof": "FEDx Guild (434 days) + MAQE Website v5 ownership"
+      },
+      "full-stack-delivery": {
+        "title": "Owns the Full Delivery Chain",
+        "description": "From Figma handoff to AWS deployment. No waiting for specialists, no throwing over the fence. From MEP blueprints to Solidity contracts — I've always operated across the full system.",
+        "proof": "7 years across MEP → Frontend → Full-stack → AI"
+      },
+      "fast-domain-mastery": {
+        "title": "Masters New Domains Under Pressure",
+        "description": "MEP Engineer → self-taught dev → Web3 → AI. Every domain switch delivered production software. I don't spend months studying before contributing — I learn by shipping.",
+        "proof": "Solidity, Web3.js, OpenAI SDK — all shipped in production"
+      },
+      "founder-trajectory": {
+        "title": "Thinks Like an Owner — Because I'm Becoming One",
+        "description": "Every project, certification, and skill has been deliberate preparation. The Gaia Project is my personal life OS. The Air Product is my first product built with founder proximity. SaaS in Southeast Asia is the destination.",
+        "proof": "TeamStack → The Air Product → 3-Year SaaS Strategy"
+      }
+    }
+  },
+  "common": {
+    "signals": {
+      "production-ai": "Production AI",
+      "product-ownership": "Product Ownership",
+      "systems-thinking": "Systems Thinking",
+      "founder-trajectory": "Founder Trajectory",
+      "cross-functional-trust": "Cross-Functional Trust",
+      "knowledge-sharing": "Knowledge Sharing",
+      "full-stack-delivery": "Full-Stack Delivery"
+    }
   },
   "site": {
     "title": "Senior Software Engineer",
-    "description": "Senior software engineer at the intersection of AI-first products, systems thinking, and product ownership with a 7+ year engineering arc."
+    "description": "Senior Software Engineer working at the intersection of AI-first products, systems thinking, and product ownership with 7+ years of engineering experience."
+  },
+  "siteConfig": {
+    "name": "Thanachon \"First\" Suphasathien",
+    "shortName": "First",
+    "title": "Senior Software Engineer",
+    "currentCompany": "TeamStack",
+    "currentFocus": "Building AI-first products",
+    "tagline": "Senior software engineer building AI-first products with a background in product ownership, systems thinking, and life-long learning.",
+    "location": "Bangkok, Thailand",
+    "roles": {
+      "senior": "Senior Software Engineer",
+      "ai_builder": "AI-first Product Builder",
+      "thinker": "Systems Thinker",
+      "learner": "Life-long Learner"
+    },
+    "trustHighlights": [
+      "AWS Certified Cloud Practitioner · 2025",
+      "TOEIC 915/990 · English Proficiency",
+      "MEP Engineering → Software → AI",
+      "Bangkok, TH · Open for International Opportunity"
+    ]
+  },
+  "projects": {
+    "header": {
+      "label": "MY WORK",
+      "title": "Flagship Work & Proof",
+      "subtitle": "Ordered by strategic signal strength: current flagship work, shipped AI, and the ownership stories behind each build"
+    },
+    "noProjects": "No projects found for this category.",
+    "labels": {
+      "all": "All Projects",
+      "domains": {
+        "ai": "AI & LLM",
+        "web3": "Web3",
+        "ecommerce": "E-Commerce",
+        "frontend": "Frontend"
+      },
+      "whatIOwned": "What I Owned",
+      "theChallenge": "The Challenge",
+      "theApproach": "The Approach",
+      "keyFeatures": "Key Features",
+      "screenshots": "Screenshots",
+      "outcomesTitle": "Impact & Outcomes",
+      "challengesTitle": "Technical Challenges",
+      "viewCaseStudy": "View Case Study",
+      "backToAll": "Back to all projects",
+      "yearDelivered": "Year Delivered",
+      "fullPage": "Full Page",
+      "viewFullPage": "View Full Page Version",
+      "more": "more",
+      "liveDemo": "Live Demo",
+      "sourceCode": "Source Code",
+      "notFound": "Project not found",
+      "heroAlt": "hero graphic"
+    },
+    "the-air-product": {
+      "title": "The Air Product",
+      "tagline": "AI-first internal product with a 3-year strategic vision",
+      "problemSummary": "The team lacked an intelligent, context-aware internal tool that adapted to real-world workflows.",
+      "problem": "TeamStack is building an internal product that needs to think beyond simple dashboards. The tool must help the team perform better based on real context, support a long-term roadmap, and balance UX, product strategy, and technical feasibility from day one.",
+      "approach": "I work closely with the CEO to translate the vision into a practical product architecture. I am responsible for the frontend experience, AI workflow design, and turning strategic requirements into a system that compounds value over time.",
+      "features": [
+        "AI-assisted workflows designed from real usage context",
+        "Direct product direction alignment with the CEO",
+        "Architecture supporting a 3-year roadmap",
+        "Bridging product thinking, UX, and technical execution"
+      ],
+      "outcomes": "A strategic ongoing project reflecting deep product ownership, founder proximity, and practical AI product design.",
+      "challenges": "The main challenge is designing for an evolving scope — translating strategic intent into a workable system without locking the team into rigid architecture.",
+      "whatIOwned": "Architecture, frontend, AI workflow integration, and direct strategic collaboration with the CEO."
+    },
+    "ai-event-platform": {
+      "title": "AI Event Creation Platform",
+      "tagline": "Making event creation intelligent, not just digital",
+      "problemSummary": "Event organizers spent too much time on repetitive content tasks that AI could reliably handle.",
+      "problem": "Organizers have to write event descriptions, tweak copy, and make content decisions repeatedly under tight deadlines. The goal wasn't just an AI demo, but making AI a trusted part of a production workflow.",
+      "approach": "I owned the OpenAI SDK integration into the live product, designed AI UX patterns for production, led the frontend delivery, and connected AI features to existing deployment and analytics systems.",
+      "features": [
+        "Generative AI for automated event content creation",
+        "AI UX patterns designed for production reliability",
+        "Integration with analytics for post-launch measurement",
+        "Frontend experience that feels native to the product core"
+      ],
+      "outcomes": "Proven ability to bridge the gap between AI demos and AI products, creating patterns the team continues to use.",
+      "challenges": "Balancing AI behavior with existing product expectations, managing prompt reliability, and ensuring UX confidence in a production environment.",
+      "whatIOwned": "OpenAI SDK integration, AI UX patterns, full frontend delivery, and production rollout on AWS."
+    },
+    "teamstack-roster": {
+      "title": "TeamStack Roster",
+      "tagline": "Team management product shipped from 0 to MVP",
+      "problemSummary": "High-performance teams need better tools for roster management and coordination.",
+      "problem": "Managing teams and rosters in a real business context involves complex workflows beyond simple tables. It requires collaboration, handling frequent changes, and making product-level decisions on MVP scope.",
+      "approach": "Owned the project from initial architecture to user-facing features, pushing the product from concept to a functional MVP by balancing system design, prioritization, and delivery quality.",
+      "features": [
+        "Dynamic team and roster management workflows",
+        "MVP design focused on real-world utility",
+        "End-to-end ownership from architecture to release",
+        "Tight coordination with product stakeholders"
+      ],
+      "outcomes": "A clear evidence of 0→1 delivery and the first product I can point to as mine from system to experience.",
+      "challenges": "Defining a sharp MVP scope without compromising the long-term product direction.",
+      "whatIOwned": "Full product ownership: architecture, feature definition, and release readiness."
+    },
+    "tangier-dao": {
+      "title": "Tangier — Decentralized Giving",
+      "tagline": "Trustless community fundraising on Ethereum",
+      "problemSummary": "Communities need transparent, immutable systems for governance and fund allocation.",
+      "problem": "The goal was to build a governance system communities could trust. This wasn't just UI — it required smart contract logic for proposals, voting, and treasury behavior on-chain.",
+      "approach": "Developed the Solidity contracts, built the frontend, and connected Web3 flows to create a production-ready application.",
+      "features": [
+        "Ethereum-based smart contract governance",
+        "Proposal and voting flows for community trust",
+        "Frontend bridging on-chain experience for users",
+        "System merging product and protocol thinking"
+      ],
+      "outcomes": "A rare full-stack Web3 delivery proof in the local market, demonstrating frontier-tech capability.",
+      "challenges": "Designing for user trust and immutable contract behavior simultaneously, where mistakes are permanent.",
+      "whatIOwned": "Solidity contracts, full frontend delivery, and Web3 integration architecture."
+    },
+    "token-gating": {
+      "title": "Token Gating — NFT Access Control",
+      "tagline": "Your NFT is your ticket, verified across chains",
+      "problemSummary": "Clients needed to control access based on NFT ownership without high user friction.",
+      "problem": "NFT access control is more than just checking tokens; it's about making the wallet flow, backend checks, and user experience smooth enough for production.",
+      "approach": "Created a reusable system connecting frontend, API, and Web3 checks to enable production-grade access control.",
+      "features": [
+        "NFT ownership verification for access control",
+        "Wallet-integrated user flow",
+        "Full-stack verification: frontend to backend",
+        "Reusable integration pattern"
+      ],
+      "outcomes": "Proven ability to learn new domains quickly and turn them into shippable production systems.",
+      "whatIOwned": "Full-stack delivery covering Vue 3 frontend, NestJS API, and multi-chain Web3 integration."
+    },
+    "ap-thai": {
+      "title": "AP Thai — Property Discovery",
+      "tagline": "Modernizing the home-buying experience for Thailand’s top developer",
+      "problemSummary": "Property discovery needs to handle high scale and complex search behaviors on mobile-first devices.",
+      "problem": "AP Thai needed a modern property discovery experience that worked at scale, including robust analytics and high-quality mobile usage.",
+      "approach": "Led the core frontend development, including analytics instrumentation and test coverage for production stability.",
+      "features": [
+        "Property discovery flow for high-scale real usage",
+        "Analytics instrumentation for data-driven decisions",
+        "Production-grade test coverage",
+        "Mobile-first delivery"
+      ],
+      "outcomes": "Early evidence of scale, analytics-driven development, and production-quality delivery.",
+      "whatIOwned": "Main NuxtJS frontend, GA4 analytics instrumentation, and Cypress E2E coverage."
+    },
+    "b2b-catalog": {
+      "title": "B2B Catalog Platform",
+      "tagline": "Replacing manual B2B sales with headless commerce",
+      "problemSummary": "B2B work has specific constraints like bulk ordering, complex pricing, and business workflows.",
+      "problem": "B2B catalog systems aren't just about UI; they must reflect business logic like inventory, filtering, and complex ordering workflows.",
+      "approach": "Built the frontend on React/GraphQL/Apollo, integrating with the commerce ecosystem to digitize manual sales processes.",
+      "features": [
+        "Headless commerce frontend architecture",
+        "GraphQL-driven data flows",
+        "B2B-specific user experience",
+        "Bridging technical choices with business constraints"
+      ],
+      "outcomes": "Expanded expertise into commerce architecture and business-context engineering.",
+      "whatIOwned": "React, GraphQL, Apollo frontend delivery, and Magento integration architecture."
+    },
+    "maqe-website": {
+      "title": "MAQE Website v5",
+      "tagline": "Full ownership of a core production asset",
+      "problemSummary": "Corporate websites require ongoing ownership across architecture, performance, and maintenance.",
+      "problem": "The challenge of a corporate site isn't just the launch, but maintaining a production asset that bridges design quality with long-term stability.",
+      "approach": "Owned the rebuild and ongoing maintenance, working closely with design to ensure implementation quality and system stability.",
+      "features": [
+        "End-to-end production asset ownership",
+        "Close design-implementation collaboration",
+        "Maintenance and build pipeline ownership",
+        "Systemic quality improvements"
+      ],
+      "outcomes": "Evidence of reliability, systems thinking, and the ability to own a system long-term.",
+      "whatIOwned": "Primary ownership of architecture, implementation quality, performance, and maintenance."
+    }
+  },
+  "skills": {
+    "label": "SKILLS",
+    "title": "Technical Arsenal",
+    "subtitle": "Intentionally building toward AI engineering mastery",
+    "clusters": {
+      "ai-systems": {
+        "label": "AI & Intelligent Systems",
+        "description": "Where I'm doubling down. Shipped production OpenAI integration. Now architecting deeper: LangChain pipelines, RAG systems, agentic workflows.",
+        "status": "Current Focus",
+        "tags": {
+          "shipped": "Shipped in production",
+          "learning": "Active learning",
+          "building": "Building now",
+          "applied": "Applied",
+          "tested": "Production-tested"
+        }
+      },
+      "frontend": {
+        "label": "Frontend Engineering",
+        "description": "My craft foundation. 4 years of production React, Vue, and TypeScript across enterprise-scale applications from Bangkok to Japan.",
+        "status": "Core Strength",
+        "tags": {
+          "core": "Core strength",
+          "applied": "Applied"
+        }
+      },
+      "backend-infra": {
+        "label": "Backend & Infrastructure",
+        "description": "Full-stack fluency. From NestJS APIs to AWS deployment — I own the entire delivery chain without needing handoffs.",
+        "status": "Strong Working Capability",
+        "tags": {
+          "production": "Production",
+          "certified": "Certified",
+          "applied": "Applied"
+        }
+      },
+      "web3": {
+        "label": "Web3 & Blockchain",
+        "description": "Rare production Solidity experience in the Bangkok developer market. Shipped on Ethereum mainnet. Understands DAO governance, token standards, and the UX challenges of on-chain interactions.",
+        "status": "Frontier Experience",
+        "tags": {
+          "shipped": "Production shipped",
+          "production": "Production",
+          "mainnet": "Shipped on mainnet",
+          "applied": "Applied"
+        }
+      }
+    }
+  },
+  "certificates": {
+    "aws-ccp": {
+      "title": "AWS Certified Cloud Practitioner",
+      "date": "August 2023"
+    },
+    "toeic": {
+      "title": "TOEIC Listening and Reading - Score: 990",
+      "date": "January 2024"
+    },
+    "modal": {
+      "notFound": "Certificate not found",
+      "issued": "Issued: {date}",
+      "close": "Close",
+      "verify": "Verify Credential"
+    }
   }
 }

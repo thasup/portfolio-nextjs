@@ -1,13 +1,12 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, Github, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { projects } from '@/data/projects';
 import { DomainBadge } from '@/components/shared/DomainBadge';
 import { TechBadge } from '@/components/shared/TechBadge';
-import { LocalizedText, getLocalizedData } from '@/components/shared/LocalizedText';
 import { ProjectGallery } from '@/components/projects/ProjectGallery';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/useModal';
@@ -19,6 +18,8 @@ export function ProjectModal({ id }: { id: string }) {
   const { close } = useModal();
   const scrollRef = useRef<HTMLDivElement>(null);
   const project = projects.find((p) => p.slug === id);
+  const t = useTranslations('projects.' + id);
+  const labelsT = useTranslations('projects.labels');
 
   useEffect(() => {
     // Track scroll depth for the modal specifically
@@ -43,14 +44,15 @@ export function ProjectModal({ id }: { id: string }) {
     }
   }, [id]);
 
-  if (!project) return <div className="p-8 text-center text-muted-foreground">Project not found</div>;
+  if (!project) return <div className="p-8 text-center text-muted-foreground">{labelsT('notFound')}</div>;
 
-  const features = locale === 'th' && project.featuresTh && project.featuresTh.length > 0 
-    ? project.featuresTh 
-    : project.featuresEn;
-
-  const title = getLocalizedData(project, 'title', locale);
-  const whatIOwned = locale === 'th' ? project.whatIOwnedTh : project.whatIOwnedEn;
+  const features = t.raw('features') as string[];
+  const title = t('title');
+  const whatIOwned = t.raw('whatIOwned');
+  const problem = t('problem');
+  const approach = t('approach');
+  const outcomes = t('outcomes');
+  const challenges = t.raw('challenges') as string | undefined;
 
   return (
     <div className="flex flex-col h-full relative" ref={scrollRef}>
@@ -58,7 +60,7 @@ export function ProjectModal({ id }: { id: string }) {
       <div className="relative w-full aspect-[21/9] sm:aspect-[16/7] md:aspect-[3/1] bg-muted overflow-hidden shrink-0">
         <Image
           src={project.heroImage}
-          alt={`${title} hero graphic`}
+          alt={`${title} ${labelsT('heroAlt')}`}
           fill
           className="object-cover"
           priority
@@ -71,10 +73,10 @@ export function ProjectModal({ id }: { id: string }) {
             <DomainBadge domain={project.domain} />
           </div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground text-balance">
-            <LocalizedText en={project.titleEn} th={project.titleTh} />
+            {title}
           </h2>
           <p className="mt-2 text-lg md:text-xl text-muted-foreground text-balance max-w-3xl drop-shadow-sm">
-            <LocalizedText en={project.taglineEn} th={project.taglineTh} />
+            {t('tagline')}
           </p>
         </div>
       </div>
@@ -94,20 +96,20 @@ export function ProjectModal({ id }: { id: string }) {
             {project.sourceUrl && (
               <Button variant="outline" size="sm" asChild>
                 <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer">
-                  <Github className="mr-2 h-4 w-4" /> Code
+                  <Github className="mr-2 h-4 w-4" /> {labelsT('sourceCode')}
                 </a>
               </Button>
             )}
             {project.liveUrl && (
               <Button size="sm" asChild>
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                  <ExternalLink className="mr-2 h-4 w-4" /> {labelsT('liveDemo')}
                 </a>
               </Button>
             )}
             <Button variant="ghost" size="sm" className="hidden sm:inline-flex" asChild onClick={close}>
               <Link href={`/${locale === 'th' ? 'th/' : ''}projects/${project.slug}`}>
-                Full Page <ArrowRight className="ml-2 h-4 w-4" />
+                {labelsT('fullPage')} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -118,21 +120,21 @@ export function ProjectModal({ id }: { id: string }) {
           <div className="lg:col-span-2 space-y-10 border-r-0 lg:border-r lg:border-border lg:pr-12">
             
             <section className="space-y-4">
-              <h3 className="text-2xl font-bold"><LocalizedText en="The Challenge" th="โจทย์และปัญหา" /></h3>
+              <h3 className="text-2xl font-bold">{labelsT('theChallenge')}</h3>
               <p className="leading-relaxed text-muted-foreground text-lg">
-                <LocalizedText en={project.problemEn} th={project.problemTh} />
+                {problem}
               </p>
             </section>
             
             <section className="space-y-4">
-              <h3 className="text-2xl font-bold"><LocalizedText en="The Approach" th="แนวทางการแก้ไข" /></h3>
+              <h3 className="text-2xl font-bold">{labelsT('theApproach')}</h3>
               <p className="leading-relaxed text-muted-foreground text-lg">
-                <LocalizedText en={project.approachEn} th={project.approachTh} />
+                {approach}
               </p>
             </section>
 
             <section className="space-y-4">
-              <h3 className="text-2xl font-bold"><LocalizedText en="Key Features" th="ฟีเจอร์หลัก" /></h3>
+              <h3 className="text-2xl font-bold">{labelsT('keyFeatures')}</h3>
               <ul className="space-y-3">
                 {features.map((feature: string, idx: number) => (
                   <li key={idx} className="flex items-start text-muted-foreground">
@@ -145,7 +147,7 @@ export function ProjectModal({ id }: { id: string }) {
 
             {project.screenshots && project.screenshots.length > 0 && (
               <section className="space-y-6 pt-6">
-                <h3 className="text-2xl font-bold"><LocalizedText en="Screenshots" th="ภาพประกอบ" /></h3>
+                <h3 className="text-2xl font-bold">{labelsT('screenshots')}</h3>
                 <ProjectGallery images={project.screenshots} altText={title} />
               </section>
             )}
@@ -155,7 +157,7 @@ export function ProjectModal({ id }: { id: string }) {
             {whatIOwned && (
               <div className="rounded-xl border border-border p-6 shadow-sm">
                 <h3 className="text-lg font-bold mb-3">
-                  <LocalizedText en="What I Owned" th="สิ่งที่ผมเป็นเจ้าของ" />
+                  {labelsT('whatIOwned')}
                 </h3>
                 <p className="leading-relaxed text-sm text-muted-foreground">
                   {whatIOwned}
@@ -165,32 +167,32 @@ export function ProjectModal({ id }: { id: string }) {
 
             <div className="rounded-xl bg-primary/5 border border-primary/10 p-6 shadow-sm">
               <h3 className="text-xl font-bold mb-4 text-primary">
-                <LocalizedText en="Impact & Outcomes" th="ผลลัพธ์ที่ได้" />
+                {labelsT('outcomesTitle')}
               </h3>
               <p className="leading-relaxed font-medium">
-                <LocalizedText en={project.outcomesEn} th={project.outcomesTh} />
+                {outcomes}
               </p>
             </div>
             
-            {project.challengesEn && (
+            {challenges && (
               <div className="rounded-xl border border-border p-6 shadow-sm">
                 <h3 className="text-lg font-bold mb-3">
-                  <LocalizedText en="Technical Challenges" th="ความท้าทายทางเทคนิค" />
+                  {labelsT('challengesTitle')}
                 </h3>
                 <p className="leading-relaxed text-sm text-muted-foreground">
-                  <LocalizedText en={project.challengesEn} th={project.challengesTh} />
+                  {challenges}
                 </p>
               </div>
             )}
             
             <div className="rounded-xl bg-card border border-border p-6 shadow-sm hidden md:block">
-              <div className="text-sm text-muted-foreground mb-1"><LocalizedText en="Year Delivered" th="ปีที่ส่งมอบ" /></div>
+              <div className="text-sm text-muted-foreground mb-1">{labelsT('yearDelivered')}</div>
               <div className="text-2xl font-medium">{project.year}</div>
             </div>
             
             <Button variant="secondary" className="w-full sm:hidden" asChild onClick={close}>
               <Link href={`/${locale === 'th' ? 'th/' : ''}projects/${project.slug}`}>
-                <LocalizedText en="View Full Page Version" th="ดูหน้ารายละเอียดเต็ม" /> <ArrowRight className="ml-2 h-4 w-4" />
+                {labelsT('viewFullPage')} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </aside>

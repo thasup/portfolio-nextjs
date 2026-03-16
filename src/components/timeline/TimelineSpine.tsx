@@ -16,7 +16,7 @@ export function TimelineSpine({
   activeYear,
   yearPositions,
 }: TimelineSpineProps) {
-  const years: YearKey[] = [2018, 2021, 2022, 2023, 2024, 2025];
+  const years = Object.keys(YEAR_THEMES).map(Number) as YearKey[];
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (

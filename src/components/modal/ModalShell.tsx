@@ -24,7 +24,7 @@ export function ModalShell() {
         <div className="w-full flex-grow relative overflow-auto rounded-b-lg">
           {payload.type === 'project' && <ProjectModal id={payload.id} />}
           {payload.type === 'timeline-event' && <TimelineModal id={payload.id} />}
-          {payload.type === 'certificate' && <CertificateModal id={payload.id as 'aws-ccp' | 'toeic'} />}
+          {payload.type === 'certificate' && <CertificateModal id={payload.id} />}
           {payload.type === 'testimonial' && <TestimonialModal id={payload.id} />}
         </div>
       </DialogContent>

@@ -1,32 +1,34 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { testimonials } from '@/data/testimonials';
-import { getLocalizedData } from '@/components/shared/LocalizedText';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Quote } from 'lucide-react';
 import { getInitials } from '@/lib/utils';
+import { type Testimonial } from '@/types/testimonial';
 
 export function TestimonialModal({ id }: { id: string }) {
-  const locale = useLocale();
-  const testimonial = testimonials.find((t) => t.id === id);
+  const t = useTranslations('testimonials');
+  const testimonial = testimonials.find((t: Testimonial) => t.id === id);
 
   if (!testimonial) {
     return (
       <div className="p-8 text-center text-muted-foreground">
-        {locale === 'th' ? 'ไม่พบคำรับรอง' : 'Testimonial not found'}
+        {t('card.notFound')}
       </div>
     );
   }
 
-  const fullQuote = getLocalizedData(testimonial, 'fullQuote', locale);
-  const authorRole = getLocalizedData(testimonial, 'authorRole', locale);
-  const relationship = getLocalizedData(testimonial, 'relationship', locale);
-  const proofThemeLabel = getLocalizedData(testimonial, 'proofThemeLabel', locale);
-  const contextNote = getLocalizedData(testimonial, 'contextNote', locale);
+  const fullQuote = t(`entries.${testimonial.id}.fullQuote`);
+  const authorRole = t(`entries.${testimonial.id}.authorRole`);
+  const relationship = t(`entries.${testimonial.id}.relationship`);
+  const proofThemeLabel = t(`entries.${testimonial.id}.proofThemeLabel`);
+  // Note: contextNote is optional and might need a t.has() check if added in JSON later
+  // For now let's assume it's optional in JSON too but not added yet
+  const contextNote = t.has(`entries.${testimonial.id}.contextNote`) ? t(`entries.${testimonial.id}.contextNote`) : null;
 
   // Split quote by double newlines to preserve paragraph structure
-  const paragraphs = fullQuote.split('\n\n').filter(p => p.trim());
+  const paragraphs = fullQuote.split('\n\n').filter((p: string) => p.trim());
 
   return (
     <div className="flex flex-col h-full relative p-6 sm:p-8 lg:p-12 overflow-y-auto">
@@ -40,12 +42,12 @@ export function TestimonialModal({ id }: { id: string }) {
           </div>
           
           <DialogTitle className="sr-only">
-            {locale === 'th' ? 'คำรับรองจาก' : 'Testimonial from'} {testimonial.authorName}
+            {t('card.modalTitle')} {testimonial.authorName}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6 mb-10 px-4">
-          {paragraphs.map((paragraph, index) => (
+          {paragraphs.map((paragraph: string, index: number) => (
             <p 
               key={index}
               className="text-base sm:text-lg md:text-xl font-serif leading-relaxed text-foreground text-left"

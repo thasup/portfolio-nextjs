@@ -1,40 +1,22 @@
-'use client';
-
-import { useLocale } from 'next-intl';
-import { getLocalizedData, LocalizedText } from '@/components/shared/LocalizedText';
+import { useTranslations } from 'next-intl';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Award, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/useModal';
 import Image from 'next/image';
+import { certificates } from '@/data/certificates';
 
-const mockCerts = {
-  'aws-ccp': {
-    issuer: 'Amazon Web Services',
-    titleEn: 'AWS Certified Cloud Practitioner',
-    titleTh: 'ผู้ดูแลระบบคลาวด์รับรองโดย AWS',
-    date: 'August 2023',
-    url: 'https://aws.amazon.com/certification/',
-    image: '/images/cert-placeholder.webp',
-  },
-  'toeic': {
-    issuer: 'ETS',
-    titleEn: 'TOEIC Listening and Reading - Score: 990',
-    titleTh: 'พนักงาน TOEIC - คะแนน: 990',
-    date: 'January 2024',
-    url: '#',
-    image: '/images/cert-placeholder.webp',
-  }
-}
-
-export function CertificateModal({ id }: { id: 'aws-ccp' | 'toeic' }) {
-  const locale = useLocale();
+export function CertificateModal({ id }: { id: string }) {
+  const t = useTranslations('certificates');
   const { close } = useModal();
-  const cert = mockCerts[id];
+  const cert = certificates.find((c) => c.id === id);
 
-  if (!cert) return <div className="p-8 text-center text-muted-foreground">Certificate not found</div>;
+  if (!cert) return <div className="p-8 text-center text-muted-foreground">{t('modal.notFound')}</div>;
 
-  const title = getLocalizedData(cert, 'title', locale);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const title = t(cert.titleKey as any);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const date = t(cert.dateKey as any);
 
   return (
     <div className="flex flex-col h-full relative p-6 sm:p-8 lg:p-10">
@@ -50,7 +32,7 @@ export function CertificateModal({ id }: { id: 'aws-ccp' | 'toeic' }) {
             </DialogTitle>
             <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium">
                <ShieldCheck className="w-4 h-4 text-green-500" />
-               <LocalizedText en={`Issued: ${cert.date}`} th={`ออกเมื่อ: ${cert.date}`} />
+               <span>{t('modal.issued', { date })}</span>
             </div>
           </div>
         </div>
@@ -74,10 +56,10 @@ export function CertificateModal({ id }: { id: 'aws-ccp' | 'toeic' }) {
       
       <div className="mt-4 pt-6 flex justify-between items-center sm:justify-end gap-3 w-full">
          <Button variant="outline" onClick={close}>
-            <LocalizedText en="Close" th="ปิด" />
+            {t('modal.close')}
          </Button>
          <Button onClick={() => window.open(cert.url, '_blank')} disabled={cert.url === '#'}>
-            <LocalizedText en="Verify Credential" th="ตรวจสอบข้อมูลยืนยัน" />
+            {t('modal.verify')}
          </Button>
       </div>
     </div>

@@ -7,8 +7,7 @@ import { TechBadge } from '@/components/shared/TechBadge'
 import { DomainBadge } from '@/components/shared/DomainBadge'
 import { ArrowRight } from 'lucide-react'
 import { useModal } from '@/hooks/useModal'
-import { LocalizedText, getLocalizedData } from '@/components/shared/LocalizedText'
-import { useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { getSignalLabel } from '@/lib/content'
 
 interface ProjectCardProps {
@@ -17,14 +16,17 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const { open } = useModal()
-  const locale = useLocale()
+  const t = useTranslations('projects.' + project.slug)
+  const labelsT = useTranslations('projects.labels')
 
-  const title = getLocalizedData(project, 'title', locale);
-  const problemSummary = locale === 'th' ? project.problemSummaryTh : project.problemSummaryEn;
-  const tagline = getLocalizedData(project, 'tagline', locale);
-  const whatIOwned = locale === 'th' ? project.whatIOwnedTh : project.whatIOwnedEn;
-  const signalLabels = (project.signals ?? []).slice(0, 3).map((signal) =>
-    getSignalLabel(signal, locale === 'th' ? 'th' : 'en')
+  const tRoot = useTranslations()
+  const title = t('title')
+  const tagline = t('tagline')
+  const problemSummary = t('problemSummary')
+  const whatIOwned = t.raw('whatIOwned')
+  
+  const signalKeys = (project.signals ?? []).slice(0, 3).map((signal) =>
+    getSignalLabel(signal)
   )
 
   const handleClick = (e: React.MouseEvent) => {
@@ -61,9 +63,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="mb-3 flex items-start justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               <DomainBadge domain={project.domain} />
-              {signalLabels.map((label) => (
-                <span key={label} className="rounded-full border border-border px-2 py-1 text-[10px] text-muted-foreground">
-                  {label}
+              {signalKeys.map((key) => (
+                <span key={key} className="rounded-full border border-border px-2 py-1 text-[10px] text-muted-foreground">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {tRoot(key as any)}
                 </span>
               ))}
             </div>
@@ -84,7 +87,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {whatIOwned && (
             <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
               <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                <LocalizedText en="What I Owned" th="สิ่งที่ผมเป็นเจ้าของ" />
+                {labelsT('whatIOwned')}
               </div>
               <p className="text-sm">{whatIOwned}</p>
             </div>
@@ -98,13 +101,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
             ))}
             {project.techStack.length > 3 && (
               <span className="text-[10px] text-muted-foreground px-1 py-0.5">
-                +{project.techStack.length - 3} <LocalizedText en="more" th="อื่นๆ" />
+                +{project.techStack.length - 3} {labelsT('more')}
               </span>
             )}
           </div>
           
           <div className="flex items-center text-sm font-medium text-primary mt-2">
-            <LocalizedText en="View Case Study" th="ดูรายละเอียดโปรเจกต์" />
+            {labelsT('viewCaseStudy')}
             <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
           </div>
         </CardFooter>
