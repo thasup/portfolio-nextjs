@@ -54,6 +54,28 @@ export function GlassThemeTest() {
           </p>
         </GlassPanel>
       </div>
+
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Liquid Distortion (New)</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          <GlassCard elevation="e3" distortion distortionIntensity="low" className="p-6">
+            <h3 className="font-semibold">Low Distortion</h3>
+            <p className="text-sm text-muted-foreground">Subtle liquid texture.</p>
+          </GlassCard>
+          <GlassCard elevation="e3" distortion distortionIntensity="medium" className="p-6">
+            <h3 className="font-semibold">Medium Distortion</h3>
+            <p className="text-sm text-muted-foreground">Balanced liquid texture.</p>
+          </GlassCard>
+          <GlassCard elevation="e3" distortion distortionIntensity="high" className="p-6">
+            <h3 className="font-semibold">High Distortion</h3>
+            <p className="text-sm text-muted-foreground">Dramatic liquid texture.</p>
+          </GlassCard>
+          <GlassCard elevation="e3" distortion shine className="p-6">
+            <h3 className="font-semibold">Distortion + Shine</h3>
+            <p className="text-sm text-muted-foreground">Liquid texture with edge highlights.</p>
+          </GlassCard>
+        </div>
+      </div>
     </div>
   );
 }
