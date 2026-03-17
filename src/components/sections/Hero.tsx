@@ -110,7 +110,7 @@ export function Hero() {
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {[t("trust1"), t("trust2"), t("trust3"), t("trust4")].map((item) => (
+                {[t("trust1"), t("trust2")].map((item) => (
                   <div
                     key={item}
                     className="rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-muted-foreground"
