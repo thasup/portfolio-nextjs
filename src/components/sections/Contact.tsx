@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { contactFormSchema, type ContactFormData } from '@/types/contact'
 import { contactIntents } from '@/data/contactIntents'
 import { SectionHeader } from '@/components/shared/SectionHeader'
+import { GlassCard } from '@/components/glass'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,7 +18,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2, Loader2, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
@@ -84,13 +84,13 @@ export function Contact() {
 
         <div className="mx-auto mt-12 w-full max-w-2xl">
           {isSuccess ? (
-            <Card className="border-primary/50 bg-primary/5 text-center">
-              <CardContent className="flex flex-col items-center justify-center p-12">
-                <CheckCircle2 className="mb-4 h-12 w-12 text-primary" />
-                <h3 className="text-2xl font-bold">{t('successTitle')}</h3>
-                <p className="mt-2 text-muted-foreground">
-                  {t('successMessage')}
-                </p>
+            <GlassCard elevation="e3">
+              <div className="flex flex-col items-center justify-center p-12 text-center">
+                <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10">
+                  <CheckCircle2 className="h-10 w-10 text-green-500" />
+                </div>
+                <h3 className="mb-2 text-2xl font-bold">{t('successTitle')}</h3>
+                <p className="mb-6 text-muted-foreground">{t('successMessage')}</p>
                 <Button
                   className="mt-8"
                   variant="outline"
@@ -98,11 +98,11 @@ export function Contact() {
                 >
                   {t('successCta')}
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </GlassCard>
           ) : (
-            <Card className="border-border bg-card">
-              <CardContent className="p-6 sm:p-8">
+            <GlassCard elevation="e3">
+              <div className="p-6 sm:p-8">
                 {/* Netlify needs this hidden form so it picks up the schema during build */}
                 <form name="contact" data-netlify="true" hidden>
                   <input type="hidden" name="form-name" value="contact" />
@@ -224,8 +224,8 @@ export function Contact() {
                     </Button>
                   </form>
                 </Form>
-              </CardContent>
-            </Card>
+              </div>
+            </GlassCard>
           )}
         </div>
       </div>

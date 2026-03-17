@@ -1,7 +1,7 @@
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ScrollReveal } from '@/components/shared/ScrollReveal'
+import { GlassCard } from '@/components/glass'
 import { valuePropositions } from '@/data/valuePropositions'
-import { Card, CardContent } from '@/components/ui/card'
 import { Sparkles, Target, Layers, Zap, Rocket, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
@@ -56,8 +56,8 @@ export function ValueProp() {
                 delay={index * 0.1}
                 className={isLastOrphaned ? "md:col-span-2 lg:col-span-1" : ""}
               >
-                <Card className="h-full border-border bg-card hover:border-primary/50 transition-colors group">
-                  <CardContent className="p-6 md:p-8 flex flex-col h-full">
+                <GlassCard elevation="e2" hover className="h-full group">
+                  <div className="p-6 md:p-8 flex flex-col h-full">
                     <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       {getIcon(value.icon)}
                     </div>
@@ -70,7 +70,7 @@ export function ValueProp() {
                       </div>
                     )}
                     <h3 className="mb-3 text-xl font-bold">{title}</h3>
-                    <p className="text-muted-foreground leading-relaxed flex-grow">
+                    <p className="text-muted-foreground leading-relaxed grow">
                       {description}
                     </p>
                     {proof && (
@@ -87,8 +87,8 @@ export function ValueProp() {
                         <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Link>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </GlassCard>
               </ScrollReveal>
             )
           })}
