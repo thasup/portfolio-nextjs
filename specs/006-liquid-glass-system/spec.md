@@ -81,27 +81,25 @@ As a visitor, I want to distinguish between layers of information instantly thro
 
 - **Stacked Blur Layers**: Performance degrades exponentially with overlapping backdrop-filters. Requirement: System MUST cap active layers at 4.
 - **High-Contrast Needs**: Translucency can kill contrast. Requirement: Content within glass MUST use high-contrast tokens (WCAG AA/AAA).
-- **Reduced Motion**: Respect `prefers-reduced-motion` by swapping spring buoyant animations for simple opacity fades.
+- **Reduced Motion**: Respect `prefers-reduced-motion` by swapping spring buoyant animations for simple opacity fades and disabling specular motion.
+- **Fallback Support**: Browsers without `backdrop-filter` MUST fall back to high-quality semi-transparent solid colors.
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-- **FR-001: The Liquid Token Set**: System MUST define CSS variables/Tailwind primitives for:
-    - `glass-blur`: base (8px), elevated (16px), floating (24px).
-    - `glass-border`: multi-layered translucent borders (1px outer + inner glow).
-    - `glass-surface`: `rgba()` values for Light (white 0.15) and Dark (black 0.1).
-- **FR-002: Adaptive Materiality**: Components MUST accept an `elevation` prop that automatically adjusts blur intensity and shadow depth.
-- **FR-003: "Liquid" Physics Engine**: Export standardized `Framer Motion` transition objects:
-    - `SPRING_BUOYANT`: high stiffness, lower damping.
-    - `SPRING_GENTLE`: for subtle ambient breathing.
-    - `SPRING_SNAPPY`: for tooltips and rapid feedback.
-- **FR-004: Specular Highlight System**: Semi-transparent radial gradient ::before element that can (optionally) track mouse position.
-- **FR-005: Adaptive Shadow Framework**: CSS layered shadows (ambient + key light) using color-mix for vibrancy.
-- **FR-006: Performance Guardrails**: 
-    - MUST NOT animate `backdrop-filter` radius (use opacity instead).
-    - MUST NOT use `box-shadow` blur values greater than 60px.
-    - MUST NOT use Canvas or WebGL.
+- **FR-001: The Liquid Token Set**: System MUST define CSS variables/Tailwind primitives for glass surfaces, borders, and blurs with distinct Light/Dark treatments.
+- **FR-002: Adaptive Materiality**: Components MUST automatically adjust transparency, blur, and border prominence based on their elevation in the visual hierarchy.
+- **FR-003: "Liquid" Physics Engine**: Export standardized Framer Motion transitions: `SPRING_BUOYANT`, `SPRING_GENTLE`, and `SPRING_SNAPPY`.
+- **FR-004: Specular Highlight System**: Components at Elevation 2+ MUST include a radial gradient highlight that tracks the mouse on desktop (30fps) and remains static on mobile.
+- **FR-005: Vibration Bridge (Color Bleed)**: Color bleeding MUST be achieved via pure CSS `backdrop-filter`; no JavaScript color sampling is permitted.
+- **FR-006: Performance Guardrails**: System MUST NOT animate `backdrop-filter` radius and MUST cap active layers at 4 per viewport.
+- **FR-007: Animation Density (Purposeful Fluid)**: Motion MUST signal state change or spatial relationships. Staggered entrances are capped at 4 items.
+- **FR-008: Full Refactor Scope**: This feature branch MUST refactor all existing core sections (Navbar, Timeline, Projects, etc.) to the Liquid Glass system.
+- **FR-009: Two-Layer Border Treatment**: Glass edges MUST implement a directional gradient-mask border with an outer shadow ring for physical depth.
+- **FR-010: Adaptive Shadow Framework**: CSS layered shadows (ambient + key light) using `color-mix` for vibrancy.
+- **FR-011: Apple-Inspired Typography**: System MUST enforce high-contrast, perfectly spaced typography that "sits" correctly on top of liquid materials.
+- **FR-012: Dual-Tier Performance Monitor**: System MUST include build-time Lighthouse CI checks and a runtime `usePerformanceTier()` hook for device classification.
 
 ### Key Entities
 
@@ -127,10 +125,20 @@ To ensure the "Liquid Glass" system remains performance-first as mandated by the
 
 ## Implementation Strategy
 
-1. **Token Foundation**: Define CSS variables in `globals.css` for glass surfaces, borders, and blurs.
-2. **Glass Component primitive**: Create a reusable `GlassCard` or `GlassPanel` that handles backdrop-filter fallback logic.
-3. **Motion Integration**: Standardize Framer Motion `spring` configs to ensure consistent "buoyancy" across the app.
-4. **Specular Highlight**: Implement the mouse-tracking highlight as an optional, performance-gated feature.
+1. **Token Foundation**: Define CSS variables in `globals.css` with distinct Light/Dark glass tokens (Background, Border, Shadow, Specular).
+2. **Glass Component Primitive**: Create a reusable `GlassCard` that handles `elevation` props and fallback logic.
+3. **Motion Integration**: Standardize `SPRING_BUOYANT`, `SPRING_GENTLE`, and `SPRING_SNAPPY` configurations.
+4. **Section Refactor**: Execute refactor in priority order: Navbar → Timeline → Hero → Projects → Skills → Testimonials → ValueProp → ContactCTA.
+
+## Clarifications
+
+### Session 2026-03-16
+- **Q: Animation Density (FR-007) → A: Purposeful Fluid.** Motion restricted to state changes and entrance staggers (max 4 items). Hover/Click use specific springs. Ambient motion is CSS-only.
+- **Q: Refactor Scope (FR-008) → A: Full refactor.** Included in this branch: Navbar, Timeline, Hero, Projects, Skills, Testimonials, ValueProp, ContactCTA. Excludes form inputs and backgrounds.
+- **Q: Specular Highlight → A: Elevation 2+ only.** Dynamic on desktop, static on mobile/reduced-motion. Radial gradient ::before element.
+- **Q: Vibration Bridge → A: Pure CSS.** Relies on `backdrop-filter` color bleed; no JS sampling allowed.
+- **Q: Edge Treatment → A: Two-layer.** Gradient-mask border + outer shadow ring. Fallback to simple border where mask is unsupported.
+- **Q: Performance Monitoring → A: Build + Runtime.** Lighthouse CI in GitHub Actions + `usePerformanceTier` runtime hook.
 
 ## Success Criteria *(mandatory)*
 
