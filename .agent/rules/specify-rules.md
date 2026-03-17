@@ -34,9 +34,9 @@ npm test && npm run lint
 TypeScript 5.x (strict mode), React 19, Node 20+: Follow standard conventions
 
 ## Recent Changes
+- 007-liquid-distortion-enhancement: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 - 006-liquid-glass-system: Added TypeScript 5.7 + Next.js 15.2 (App Router) with React 19 + TailwindCSS 4 (utility tokens), shadcn/ui, Framer Motion 11, next-themes, next-intl, Radix UI primitives
 - 005-curated-testimonials: Added TypeScript 5.x, React 19, Next.js 15 App Router + `next`, `react`, `next-intl`, `swiper`, `lucide-react`, `@radix-ui/react-dialog`, `tailwindcss`, shared shadcn/ui-style components, existing modal/analytics utilities
-- 004-portfolio-content-revision: Added TypeScript 5.x, React 19, Next.js 15 App Router + `next`, `react`, `next-intl`, `framer-motion`, `lucide-react`, `@radix-ui/*`, `tailwindcss`, `shadcn/ui`-style component primitives
 
 
 
