@@ -7,6 +7,14 @@ const meta: Meta<typeof GlassModal> = {
   title: 'Glass/GlassModal',
   component: GlassModal,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: 'Glassmorphism modal dialog with backdrop overlay. Features high elevation, focus trapping, and optional liquid distortion effects. Includes smooth entry/exit animations.'
+      },
+    },
+  },
   argTypes: {
     open: {
       control: 'boolean',
@@ -21,9 +29,6 @@ const meta: Meta<typeof GlassModal> = {
     shine: {
       control: 'boolean',
     },
-  },
-  parameters: {
-    layout: 'fullscreen', // Modals need fullscreen layout
   },
 };
 
@@ -44,10 +49,9 @@ const ModalWithState = (args: any) => {
         onClose={() => setIsOpen(false)}
       >
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Glass Modal</h2>
+          <h2 className="text-2xl font-bold">Confirm Action</h2>
           <p className="text-muted-foreground">
-            This modal uses a high-elevation glass effect with optional distortion.
-            It sits on top of the content and traps focus.
+            Are you sure you want to proceed with this action? This modal demonstrates glassmorphism with high elevation and smooth animations.
           </p>
           <div className="flex justify-end gap-2 pt-4">
             <GlassButton onClick={() => setIsOpen(false)} elevation="e2">
@@ -66,18 +70,32 @@ const ModalWithState = (args: any) => {
 export const Default: Story = {
   render: (args) => <ModalWithState {...args} />,
   args: {
-    open: true, // Start open for autodocs/screenshot
+    open: false,
     elevation: 'e4',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Standard glass modal with high elevation (e4) and backdrop overlay. Click "Open Modal" button to display.'
+      },
+    },
   },
 };
 
 export const LiquidDistortion: Story = {
   render: (args) => <ModalWithState {...args} />,
   args: {
-    open: true,
+    open: false,
     elevation: 'e4',
     distortion: true,
-    distortionIntensity: 'high',
+    distortionIntensity: 'medium',
     shine: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Modal with liquid glass distortion effects for premium visual appeal. Click "Open Modal" to view.'
+      },
+    },
   },
 };

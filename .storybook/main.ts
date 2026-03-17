@@ -1,4 +1,9 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
   stories: [
@@ -18,19 +23,19 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     const { mergeConfig } = await import('vite');
     const react = await import('@vitejs/plugin-react');
-    const path = await import('path');
+    const tailwindcss = await import('@tailwindcss/postcss');
     
     return mergeConfig(config, {
       plugins: [react.default()],
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, '../src'),
+          '@': resolve(__dirname, '../src'),
         },
       },
       css: {
         postcss: {
           plugins: [
-            require('@tailwindcss/postcss'),
+            tailwindcss.default(),
           ],
         },
       },
