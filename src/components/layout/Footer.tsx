@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl'
 
 export function Footer() {
   const t = useTranslations('footer')
-  const tConfig = useTranslations('siteConfig')
   const { showWipSections } = featureFlags
   const footerNavItems = navigationItems.filter((item) => showWipSections || !item.isWip)
 
@@ -22,7 +21,7 @@ export function Footer() {
               <span className="text-primary">.</span>
             </Link>
             <p className="mt-2 text-sm text-muted-foreground">
-              {tConfig('title')} · {tConfig('location')}
+              {t('headline')}
             </p>
           </div>
 

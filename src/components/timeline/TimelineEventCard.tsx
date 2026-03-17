@@ -5,6 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase, Code2, Trophy, BookOpen, Rocket, LucideIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { GlassCard } from "@/components/glass";
 import type { TimelineEvent } from "@/types/timeline";
 import { YearKey, YEAR_THEMES } from "@/data/timelineChapters";
 import { useModal } from "@/hooks/useModal";
@@ -78,19 +79,23 @@ export function TimelineEventCard({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`relative rounded-xl border bg-card/60 backdrop-blur-sm p-6 timeline-card-hover ring-1`}
-      style={{
-        borderColor: `${theme.accentHex}40`,
-        "--tw-ring-color": `${theme.accentHex}30`,
-      } as RingColorStyle}
     >
-      {/* Glow strip */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl"
+      <GlassCard
+        elevation="e2"
+        hover
+        className="p-6 ring-1"
         style={{
-          background: `linear-gradient(to right, transparent, ${theme.accentHex}, transparent)`,
-        }}
-      />
+          borderColor: `${theme.accentHex}40`,
+          "--tw-ring-color": `${theme.accentHex}30`,
+        } as RingColorStyle}
+      >
+        {/* Glow strip */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl"
+          style={{
+            background: `linear-gradient(to right, transparent, ${theme.accentHex}, transparent)`,
+          }}
+        />
 
       {/* Category badge */}
       <div className="flex items-center gap-2 mb-3">
@@ -180,6 +185,7 @@ export function TimelineEventCard({
       >
         {t("deepDive")}
       </button>
+      </GlassCard>
     </motion.div>
   );
 }

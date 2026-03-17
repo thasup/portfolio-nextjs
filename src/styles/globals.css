@@ -31,6 +31,27 @@
   --animate-fade-up: fade-up 0.5s ease-out;
   --animate-fade-in: fade-in 0.3s ease-out;
   --animate-shimmer: shimmer 2s infinite;
+
+  /* Glass elevation tokens (light mode) */
+  --glass-e1-fill: color-mix(in oklch, var(--color-background) 50%, transparent);
+  --glass-e1-border: color-mix(in oklch, var(--color-foreground) 12%, transparent);
+  --glass-e1-shadow: 0 2px 8px -2px color-mix(in oklch, var(--color-foreground) 6%, transparent);
+
+  --glass-e2-fill: color-mix(in oklch, var(--color-background) 55%, transparent);
+  --glass-e2-border: color-mix(in oklch, var(--color-foreground) 14%, transparent);
+  --glass-e2-shadow: 0 4px 12px -2px color-mix(in oklch, var(--color-foreground) 8%, transparent);
+
+  --glass-e3-fill: color-mix(in oklch, var(--color-background) 60%, transparent);
+  --glass-e3-border: color-mix(in oklch, var(--color-foreground) 16%, transparent);
+  --glass-e3-shadow: 0 8px 16px -4px color-mix(in oklch, var(--color-foreground) 10%, transparent);
+
+  --glass-e4-fill: color-mix(in oklch, var(--color-background) 65%, transparent);
+  --glass-e4-border: color-mix(in oklch, var(--color-foreground) 18%, transparent);
+  --glass-e4-shadow: 0 12px 24px -6px color-mix(in oklch, var(--color-foreground) 12%, transparent);
+
+  --glass-e5-fill: color-mix(in oklch, var(--color-background) 70%, transparent);
+  --glass-e5-border: color-mix(in oklch, var(--color-foreground) 22%, transparent);
+  --glass-e5-shadow: 0 16px 32px -8px color-mix(in oklch, var(--color-foreground) 15%, transparent);
 }
 
 @keyframes fade-up {
@@ -81,6 +102,39 @@
   --color-ring: oklch(0.7 0.17 264);
   --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
+
+  --glass-fill-light: color-mix(in oklch, var(--color-background) 60%, transparent);
+  --glass-fill-medium: color-mix(in oklch, var(--color-background) 75%, transparent);
+  --glass-fill-heavy: color-mix(in oklch, var(--color-background) 85%, transparent);
+
+  --glass-border-subtle: color-mix(in oklch, var(--color-foreground) 12%, transparent);
+  --glass-border-medium: color-mix(in oklch, var(--color-foreground) 16%, transparent);
+  --glass-border-strong: color-mix(in oklch, var(--color-foreground) 22%, transparent);
+
+  --glass-specular-subtle: color-mix(in oklch, var(--color-foreground) 8%, transparent);
+  --glass-specular-medium: color-mix(in oklch, var(--color-foreground) 12%, transparent);
+  --glass-specular-strong: color-mix(in oklch, var(--color-foreground) 18%, transparent);
+
+  /* Elevation-specific tokens for e1-e5 */
+  --glass-e1-fill: color-mix(in oklch, var(--color-background) 40%, transparent);
+  --glass-e1-border: color-mix(in oklch, var(--color-foreground) 15%, transparent);
+  --glass-e1-shadow: 0 2px 8px -2px color-mix(in oklch, var(--color-foreground) 8%, transparent);
+
+  --glass-e2-fill: color-mix(in oklch, var(--color-background) 45%, transparent);
+  --glass-e2-border: color-mix(in oklch, var(--color-foreground) 18%, transparent);
+  --glass-e2-shadow: 0 4px 12px -2px color-mix(in oklch, var(--color-foreground) 10%, transparent);
+
+  --glass-e3-fill: color-mix(in oklch, var(--color-background) 50%, transparent);
+  --glass-e3-border: color-mix(in oklch, var(--color-foreground) 20%, transparent);
+  --glass-e3-shadow: 0 8px 16px -4px color-mix(in oklch, var(--color-foreground) 12%, transparent);
+
+  --glass-e4-fill: color-mix(in oklch, var(--color-background) 55%, transparent);
+  --glass-e4-border: color-mix(in oklch, var(--color-foreground) 24%, transparent);
+  --glass-e4-shadow: 0 12px 24px -6px color-mix(in oklch, var(--color-foreground) 15%, transparent);
+
+  --glass-e5-fill: color-mix(in oklch, var(--color-background) 60%, transparent);
+  --glass-e5-border: color-mix(in oklch, var(--color-foreground) 28%, transparent);
+  --glass-e5-shadow: 0 16px 32px -8px color-mix(in oklch, var(--color-foreground) 18%, transparent);
 }
 
 @layer base {
