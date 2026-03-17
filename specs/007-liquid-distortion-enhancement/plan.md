@@ -1,14 +1,13 @@
-# Implementation Plan: Liquid Distortion Enhancement
+# Implementation Plan: [FEATURE]
 
-**Branch**: `007-liquid-distortion-enhancement` | **Date**: 2026-03-17 | **Spec**: [spec.md](./spec.md)  
-**Input**: Feature specification from `/specs/007-liquid-distortion-enhancement/spec.md`
+**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+
+**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
 
 ## Summary
 
-This feature enhances the existing Liquid Glass system (006) with SVG filter-based distortion effects to create realistic "liquid glass" appearance. The implementation adds optional turbulence distortion, layered DOM architecture (effect/tint/shine/content), and configurable intensity presets while maintaining backward compatibility and performance targets.
-
-**Primary Requirement**: Add SVG-based liquid distortion to glass components  
-**Technical Approach**: Layer feTurbulence + feDisplacementMap filters over backdrop-filter blur, with performance tier detection for graceful degradation
+[Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
 
@@ -18,40 +17,32 @@ This feature enhances the existing Liquid Glass system (006) with SVG filter-bas
   the iteration process.
 -->
 
-**Language/Version**: TypeScript 5.x, React 18, Next.js 15  
-**Primary Dependencies**: Framer Motion 11, existing Liquid Glass system (006)  
-**Storage**: N/A (UI-only feature)  
-**Testing**: Manual visual QA, Storybook interactive testing (feature 008)  
-**Target Platform**: Modern browsers (Chrome 20+, Firefox 35+, Safari 9+, Edge 79+)  
-**Project Type**: Next.js web application (portfolio)  
-**Performance Goals**: 60fps rendering, <16ms frame time, Lighthouse 95+ mobile  
-**Constraints**: WCAG 2.1 AA compliance, prefers-reduced-motion support, <5MB heap increase  
-**Scale/Scope**: 4 glass components (Card/Panel/Button/Modal), 3 distortion intensity presets
+**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
+**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- **Product impact**: This feature directly supports Constitution Principle II ("Fast, Premium, Accessible Delivery") and Principle V ("Liquid interactive polish with organic buoyancy"). The liquid distortion effect elevates the portfolio's premium feel, creating a memorable first impression (Principle I: "Product Impact Over Implementation Folklore"). The effect strengthens the "Age of AI" aesthetic mentioned in the constitution, making the portfolio stand out in the first 5-15 second window (Experience Standards: 60-Second Impact Window).
-
-- **Performance + accessibility**:
-  - **Performance**: Leverages existing performance tier detection (usePerformanceTier) to enable distortion only on Tier 1 devices. SVG filters are GPU-accelerated on modern browsers. Graceful degradation maintains Lighthouse 95+ mobile target.
-  - **Accessibility**: Distortion applies only to background layers, not content. Text readability remains WCAG 2.1 AA compliant (4.5:1 contrast). Respects prefers-reduced-motion by disabling any animated distortion.
-  - **Loading**: No impact on initial page load (SVG filter is inline, no external assets). First Contentful Paint unaffected.
-  - **Keyboard/Semantic**: No changes to interactive behavior or semantic structure.
-
-- **Evidence-led content**: No new content claims introduced. This is a visual polish enhancement to existing components. Does not affect portfolio narrative, project descriptions, or credibility evidence.
-
-- **Bilingual fit**: No impact on EN/TH content, routing, or messaging. Visual effect is language-agnostic.
-
-- **Measurement**:
-  - Success signals: Subjective "premium feel" feedback from stakeholders, zero performance regression (Lighthouse scores), zero accessibility violations.
-  - Analytics: No new tracking needed. Existing performance monitoring covers frame rates and Core Web Vitals.
-  - Worth instrumenting: Optional performance profiling during development to validate <16ms frame budget.
-
-- **Appropriate level of detail**: Implementation details (SVG filter parameters, z-index layering, CSS classes) belong in this plan and component code, not in the constitution. The constitution correctly captures the "Liquid Glass" aesthetic requirement without specifying implementation.
-
-**GATE STATUS**: ✅ **PASS** - Feature aligns with constitutional principles, maintains performance/accessibility baselines, and delivers on "premium polish" mandate.
+- **Product impact**: Explain how this feature improves first impression,
+  attention retention, insight density, or conversion quality.
+- **Performance + accessibility**: State the likely impact on Lighthouse,
+  motion, loading, keyboard access, and semantic structure.
+- **Evidence-led content**: Identify what claims, proof points, or content
+  sources this feature introduces or depends on.
+- **Bilingual fit**: Note whether EN/TH content, metadata, routing, or
+  culturally adapted messaging are affected.
+- **Measurement**: Define what success signals matter and which analytics, if
+  any, are worth instrumenting.
+- **Appropriate level of detail**: Confirm any implementation-specific rules are
+  captured in the spec or README rather than incorrectly promoted to doctrine.
 
 ## Project Structure
 
@@ -68,32 +59,57 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+<!--
+  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
+  for this feature. Delete unused options and expand the chosen structure with
+  real paths (e.g., apps/admin, packages/something). The delivered plan must
+  not include Option labels.
+-->
 
 ```text
+# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
-├── components/
-│   └── glass/
-│       ├── GlassCard.tsx           # MODIFIED: Add distortion support, layered DOM
-│       ├── GlassPanel.tsx          # MODIFIED: Add distortion support
-│       ├── GlassButton.tsx         # MODIFIED: Add distortion support
-│       ├── GlassModal.tsx          # MODIFIED: Add distortion support (if applicable)
-│       ├── GlassSVGFilters.tsx     # NEW: SVG filter definitions component
-│       ├── glass-types.ts          # MODIFIED: Add DistortionConfig, intensity types
-│       └── README.md               # MODIFIED: Document distortion props and usage
-│
-├── lib/
-│   └── glass-distortion.ts         # NEW: Distortion configuration presets, helpers
-│
-└── styles/
-    └── globals.css                 # MODIFIED: Add .liquidGlass-* layer classes if needed
+├── models/
+├── services/
+├── cli/
+└── lib/
 
-tests/ (future - Storybook provides interactive testing for now)
+tests/
+├── contract/
+├── integration/
+└── unit/
+
+# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
+backend/
+├── src/
+│   ├── models/
+│   ├── services/
+│   └── api/
+└── tests/
+
+frontend/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+└── tests/
+
+# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
+api/
+└── [same as backend above]
+
+ios/ or android/
+└── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: Extend existing `src/components/glass/` directory with new SVG filter component and helper utilities. Maintain co-location of glass-related code. No new top-level directories needed since this builds on the existing Liquid Glass system (006).
+**Structure Decision**: [Document the selected structure and reference the real
+directories captured above]
 
 ## Complexity Tracking
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-N/A - No constitutional violations. Feature aligns with established principles.
+| Violation                  | Why Needed          | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------- | ------------------------------------ |
+| [e.g., 4th project]        | [current need]      | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem]  | [why direct DB access insufficient]  |
