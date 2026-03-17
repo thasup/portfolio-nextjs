@@ -30,6 +30,7 @@ import { GlassCard, GlassPanel, GlassButton, GlassModal } from '@/components/gla
 Interactive card with optional hover and specular effects.
 
 **Props:**
+
 - `elevation?: 'e1' | 'e2' | 'e3' | 'e4' | 'e5'` - Visual depth (default: 'e2')
 - `hover?: boolean` - Enable hover lift animation (default: false)
 - `interactive?: boolean` - Make card interactive with motion (default: false)
@@ -40,6 +41,7 @@ Interactive card with optional hover and specular effects.
 Static panel for containers and sections.
 
 **Props:**
+
 - `elevation?: 'e1' | 'e2' | 'e3' | 'e4' | 'e5'` - Visual depth (default: 'e3')
 - `specular?: boolean` - Enable mouse-tracking highlight (default: false)
 
@@ -48,19 +50,73 @@ Static panel for containers and sections.
 Button with glass styling and spring animations.
 
 **Props:**
+
 - `elevation?: 'e1' | 'e2' | 'e3' | 'e4' | 'e5'` - Visual depth (default: 'e2')
 - `specular?: boolean` - Enable mouse-tracking highlight (default: false)
 - `disabled?: boolean` - Disable button (default: false)
 - `type?: 'button' | 'submit' | 'reset'` - Button type (default: 'button')
+- `distortion?: boolean` - Enable liquid distortion effect (default: false)
+- `distortionIntensity?: 'low' | 'medium' | 'high'` - Control distortion strength (default: 'low')
+- `shine?: boolean` - Add specular edge highlight (default: false)
 
 ### GlassModal
 
 Modal dialog with glass effect and AnimatePresence.
 
 **Props:**
+
 - `open: boolean` - Control modal visibility
 - `onClose: () => void` - Close callback
 - `elevation?: 'e1' | 'e2' | 'e3' | 'e4' | 'e5'` - Visual depth (default: 'e4')
+- `distortion?: boolean` - Enable liquid distortion effect (default: false)
+- `distortionIntensity?: 'low' | 'medium' | 'high'` - Control distortion strength (default: 'high')
+- `shine?: boolean` - Add specular edge highlight (default: false)
+
+## Liquid Distortion
+
+The system now supports organic "liquid" distortion effects using SVG filters. This creates a realistic glass refraction look.
+
+### Enabling Distortion
+
+Add the `distortion` prop to any glass component:
+
+```tsx
+<GlassCard elevation="e2" distortion>
+  <p>Liquid glass effect enabled</p>
+</GlassCard>
+```
+
+### Intensity Levels
+
+Control the strength of the distortion with `distortionIntensity`:
+
+- `'low'` (Default for cards): Subtle texture, good for text legibility.
+- `'medium'` (Default for panels): Balanced liquid look.
+- `'high'` (Default for modals/hero): Dramatic refraction.
+
+```tsx
+<GlassCard distortion distortionIntensity="high">
+  <h1>Hero Title</h1>
+</GlassCard>
+```
+
+### Edge Shine
+
+Add a specular edge highlight with the `shine` prop:
+
+```tsx
+<GlassCard distortion shine>
+  <p>Glass with refractive edges</p>
+</GlassCard>
+```
+
+### Performance & Fallbacks
+
+- **Tier 1 Devices**: Full liquid distortion (SVG filters + blur).
+- **Tier 2 Devices**: Standard glass blur (no distortion).
+- **Low-end / Legacy**: Solid semi-transparent background.
+
+Distortion is automatically disabled on low-power devices to maintain 60fps.
 
 ## Elevation Scale
 
@@ -78,6 +134,7 @@ The system automatically adapts to device capabilities:
 - **Tier 2 (Low-performance)**: Solid backgrounds without blur
 
 Detection is based on:
+
 - Device memory < 4GB → Tier 2
 - CPU cores < 4 → Tier 2
 - Otherwise → Tier 1

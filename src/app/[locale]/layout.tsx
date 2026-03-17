@@ -12,6 +12,7 @@ import { Footer } from '@/components/layout/Footer'
 import { ScrollProgress } from '@/components/layout/ScrollProgress'
 import { ModalProvider } from '@/components/modal/ModalContext'
 import { ModalShell } from '@/components/modal/ModalShell'
+import { GlassSVGFilters } from '@/components/glass/GlassSVGFilters'
 import { siteConfig } from '@/data/siteConfig'
 import '@/styles/globals.css'
 
@@ -81,6 +82,7 @@ export default async function RootLayout({
           locale === 'th' ? 'font-sarabun leading-loose' : ''
         }`}
       >
+        <GlassSVGFilters />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
