@@ -38,63 +38,6 @@
     "stripContributions": "Total Contributions",
     "stripRepos": "Participated Repos"
   },
-  "about": {
-    "label": "About Me",
-    "title": "From Blueprints to Bytecode to Intelligence",
-    "subtitle": "A systems engineer who found his most resilient medium",
-    "act1Title": "Act I: The Engineer (2018–2021)",
-    "act1Body": "The first chapter of my career was spent designing MEP systems for commercial developments at Toparch in Bangkok. MEP engineering is about managing constraints at scale — budget, physics, building codes, and the needs of thousands of people who will inhabit a system you design but never see.\n\nThat is where I learned what good engineering actually is: a solution that survives first contact with reality.\n\nI was capable, stable, and yet — I wrote my first line of JavaScript on evenings and weekends and realized software was the same discipline in a different, more fluid medium.",
-    "act2Title": "Act II: The Bet (2021–2022)",
-    "act2Body": "In April 2021, I resigned.\n\nNo job waiting, no bootcamp, just a year of savings, conviction, and the systems-thinking discipline built in physical engineering.\n\nI taught myself JavaScript, TypeScript, React, and the fundamentals of modern software architecture. I scored 890 on my first TOEIC — opening doors to international opportunities many Thai engineers miss. Twelve months later, I had a portfolio and walked into MAQE.\n\nThe bet paid off.",
-    "act3Title": "Act III: The Craft (2022–2025)",
-    "act3Body": "Three years at MAQE Bangkok, one of Thailand's premier digital agencies, I shipped software that real people use — home-buying platforms for thousands of AP Thailand customers, decentralized governance tools for Web3 communities, and AI event platforms that put intelligence into creation.\n\nI also learned what matters more than any tech stack: a value-compounding engineer is one who makes the team better, not just the codebase. I co-founded the FEDx Frontend Guild, hosted knowledge sessions, mentored peers, and became the engineer clients specifically requested for.",
-    "act4Title": "Act IV: The Vision (2025–Present)",
-    "act4Body": "I joined TeamStack in 2025 — a product-focused environment where I could work on a product, not just deliver client projects. Currently building The Air Product: an AI-first internal tool with a 3-year strategic roadmap, working directly with the CEO on vision and architecture.\n\nThis is the point where I am closest to the work I want to do ultimately: building products that solve real problems with teams that care about outcomes, in markets that need them.\n\nThe ten-year goal is SaaS products in Southeast Asia. Every project, every certification, and every deliberate technology choice is preparation. The Gaia Project — a personal second brain and life operating system — is what happens when a systems engineer turns the lens inward.",
-    "personalityTitle": "The INTJ Behind the Machine",
-    "personalityBody": "MBTI: INTJ — The Architect. I design systems before I build them, and I prefer precise vision over broad ambiguity. I am direct, autonomous, and allergic to work that doesn't compound.\n\nProfessionally, I believe in three things: relentless improvement, autonomy earned through integrity, and leverage through knowledge — learning things that actually make me and everyone around me better, not just checking boxes.",
-    "ctaProjects": "View Recent Projects",
-    "ctaResume": "Download Resume"
-  },
-  "contact": {
-    "label": "Contact",
-    "title": "Start the Right Conversation",
-    "subtitle": "Whether it's AI engineering, product ownership, collaboration, or just a hello — choose the path that gets us there faster.",
-    "formIntentLabel": "What would you like to discuss?",
-    "formNameLabel": "Name",
-    "formEmailLabel": "Email",
-    "formSubmit": "Send Message",
-    "formSubmitting": "Sending...",
-    "successTitle": "Message Sent!",
-    "successMessage": "Thanks for reaching out. I'll get back to you within 24 hours.",
-    "successCta": "Send another message",
-    "errorGeneric": "Something went wrong. Please try again or email me directly.",
-    "intents": {
-      "hire-ai": {
-        "label": "Hire as AI Engineer",
-        "heading": "Let's talk AI engineering",
-        "preview": "Tell me about the AI product you're building. What's the problem it solves, what's the technical context, and what gap you're trying to fill. I'll reply with genuine thoughts on fit.",
-        "placeholder": "E.g. We're building a RAG-based internal knowledge tool and need someone who can own the AI integration layer and frontend..."
-      },
-      "hire-po": {
-        "label": "Hire as Product Owner",
-        "heading": "Let's talk product ownership",
-        "preview": "Tell me about your product and team. What decisions need to be owned, what's the technical complexity, and what success looks like at 6 months. Engineers who think in products are rare — I'm one.",
-        "placeholder": "E.g. We're a Series A startup with a technical product and need a PO who can translate between engineering and business..."
-      },
-      "collaborate": {
-        "label": "Co-build Something",
-        "heading": "Let's build together",
-        "preview": "Have an idea for a SaaS product — especially targeting Southeast Asia? Tell me the problem, the market, and why now. I'm actively looking for the right co-founder conversation.",
-        "placeholder": "E.g. I've been working on an AI tool for Thai SMEs and need a technical co-founder who can own the product..."
-      },
-      "general": {
-        "label": "Just Saying Hi",
-        "heading": "Say hi",
-        "preview": "Even if you're not sure of fit yet, send context and I'll reply thoughtfully. I usually respond within 24 hours on weekdays.",
-        "placeholder": "Whatever's on your mind..."
-      }
-    }
-  },
   "timeline": {
     "label": "Experience",
     "title": "A 7+ Year Engineering Arc",
@@ -330,165 +273,6 @@
       "media": "Media",
       "close": "Close Narrative"
     }
-  },
-  "footer": {
-    "headline": "Software Engineer by Profession, Lifelong Learner at Heart",
-    "navigation": "Navigation",
-    "connect": "Connect",
-    "allRightsReserved": "All rights reserved."
-  },
-  "testimonials": {
-    "label": "Testimonials",
-    "title": "Voices from the Field",
-    "subtitle": "Real words from clients, managers, and collaborators who have seen my work in the arena.",
-    "loading": "Loading testimonials...",
-    "card": {
-      "tapToRead": "Tap to read full testimonial",
-      "ariaLabelRead": "Read full testimonial from",
-      "modalTitle": "Testimonial from",
-      "notFound": "Testimonial not found"
-    },
-    "entries": {
-      "andreas": {
-        "authorRole": "Founder and Chief Executive Officer",
-        "relationship": "Direct manager / CEO · 1+ year",
-        "proofThemeLabel": "Business Impact & Value Creation",
-        "summaryQuote": "Your main goal at TeamStack is to provide value for PTX—and you have done so in spades.",
-        "fullQuote": "Your main goal at TeamStack is to provide value for PTX—and you have done so in spades. Proof is in the contract extension and client feedback. I appreciate greatly your can-do attitude. Whatever I throw at you, you take in stride."
-      },
-      "edward": {
-        "authorRole": "Vice President",
-        "relationship": "Client · Peatix Series · 3+ years",
-        "proofThemeLabel": "Client Retention & Ownership",
-        "summaryQuote": "First is a great asset to our project and also a primary reason why I want to keep working with MAQE.",
-        "fullQuote": "For our project, First is responsible for all of the frontend development work. During practically every sprint, First has demonstrated all of these things - providing guidance, removing obstacles, collaborating effectively, sharing knowledge, and contributing to the success of the team and project. I believe First has done a tremendous job of taking ownership and responsibility and we trust his knowledge and expertise. First is a great asset to our project and also a primary reason why I want to keep working with MAQE. He truly exemplifies characteristics that I value - thoughtful, considerate, kind, professional, responsible, and the list goes on. First is not only a great engineer, but a truly wonderful person. We greatly appreciate the opportunity to work with First."
-      },
-      "daniel": {
-        "authorRole": "Senior Lead Product Manager",
-        "relationship": "Client · Peatix Series · 3+ years",
-        "proofThemeLabel": "Stakeholder Confidence & Security",
-        "summaryQuote": "He also has set a very high standard for himself for the work he is doing - which makes Ed and myself feel very secure when First is involved in a feature, as we know we can rely on him to make something great.",
-        "fullQuote": "First has played such an integral part in the success of our team's ability to deploy new features. In general, I appreciate how committed First is to being there for everyone involved in this development process. He has a strong openness to using every experience and new challenge as an important opportunity for learning something new - and then sharing what he has learned with the rest of us. He also has set a very high standard for himself for the work he is doing - which makes Ed and myself feel very secure when First is involved in a feature, as we know we can rely on him to make something great. He is very open to collaboration and he has worked with Bank to clear many obstacles - especially by introducing a detailed overview of how he is solving bugs and QA related items, outlining what went wrong and how it was fixed. It is very valuable information he is sharing with everyone. First's motivation and dedication is a really valuable component to team success and team morale with this project."
-      },
-      "pai": {
-        "authorRole": "Senior Frontend Engineer",
-        "relationship": "Senior colleague · Peatix Series · 2+ years",
-        "proofThemeLabel": "Multidisciplinary Force Multiplier",
-        "summaryQuote": "Well organized - First always find a method for the team to work smoothly and easily sync.",
-        "fullQuote": "Well organized - First always finds a method for the team to work smoothly and easily sync. For example, he introduced tools like Excalidraw to create flowcharts (e.g., login, checkout). We can use those flowcharts for reference and to communicate with the Peatix team. When we encounter complex requirements such as ticket statuses, he always lists down all the cases and collects them in a Google Sheet to make sure everyone is on the same page.\n\nGreat communication - I think First has the best English skills in our Dev team, so he's always the person who helps the team communicate with the Peatix team and helps clarify when both parties are not aligned due to language barriers. You're the MVP for this. 😆\n\nSharing and seeking new knowledge - First is always involved in the FE guild to share his knowledge and even leads the FedX guild. It's not easy to multitask like that, but he always nails it. 👍\n\nI think First has shown great signs of being a good developer, and I can even see signs of him being a good PM (if you're interested, LOL). So just keep up the good work ka. The more things you experience, the stronger you become 💪"
-      },
-      "meow": {
-        "authorRole": "Manager, DesignOps & Innovation",
-        "relationship": "Manager · MAQE Website v5",
-        "proofThemeLabel": "Systematic Problem Solving",
-        "summaryQuote": "Think systematically. This trait of yours is a rare gem to encounter. It applies to your working process, problem-solving approach, and how to work better as a team.",
-        "fullQuote": "I often work with First on MAQE Website as a designer. Here's what I admire about you:\n\n• Reliable & Responsible: It's admirable that you usually share your working progress and thoughts behind those solutions every week, not only completed tasks. You can manage your tasks in sync with team members like Bank, Big, and me. I'm grateful to have your goodwill and skills in the team.\n\n• Think systematically: This trait of yours is a rare gem to encounter. It applies to your working process, problem-solving approach, and how to work better as a team. You take one step further to solve the problem in the long run (e.g. the recent issue with padding).\n\n• Open-minded/Compromisable: When we discussed the technical feasibility of particular designs, you shared opinions and built on top of each other ideas to find better ways to reach the same goal."
-      },
-      "praew": {
-        "authorRole": "UX/UI Designer",
-        "relationship": "Colleague · FEDx Guild co-organizer · 2+ years",
-        "proofThemeLabel": "Resilience & Psychological Safety",
-        "summaryQuote": "My top choice for initiating impactful projects",
-        "fullQuote": "He is incredibly supportive; He listens well and is open-minded - I feel very comfortable expressing my opinions freely with him.\n\nMy top choice for initiating impactful projects; He is eager to explore. His enthusiasm for collaboration and learning new things is evident, making it inspiring and positive to work with him.\n\nDemonstrates resilience and adaptability; He adeptly handles unexpected incidents and seamlessly adapts to workflow changes, facilitating a smooth collaboration."
-      },
-      "big": {
-        "authorRole": "Lead Frontend Engineer",
-        "relationship": "Squad Lead · 3+ years",
-        "proofThemeLabel": "Cultural Catalyst & Ripple Effect",
-        "summaryQuote": "Your eagerness and numerous contributions create a ripple that causes a positive, learning environment for the team.",
-        "fullQuote": "There are so many good things from you! You help on various projects apart from the billable (Peatix) project: the MAQE Website, linting packages, guild contributions and initiations (notably FE & FEDX), and those sessions outside of working hours!\n\nYour eagerness to learn and positive energy create a positive vibe for the people around you. There are many traits that are very good to mention: your presentation ability, and your attention to detail in POCs and research.\n\nYour eagerness and numerous contributions create a ripple that causes a positive, learning environment for the team. I can say, without a doubt, that First is a good developer."
-      },
-      "bank": {
-        "authorRole": "Backend Engineer",
-        "relationship": "Colleague · 3+ years",
-        "proofThemeLabel": "Root-Cause & Collaborative Solution",
-        "summaryQuote": "I'm sure that whenever someone encounters an issue, First will always step up, address it, and quickly get to the root of the problem.",
-        "fullQuote": "I'm sure that whenever someone encounters an issue, First will always step up, address it, and quickly get to the root of the problem. He always lets me know if he has questions or if I've missed something. It's great that he asks when he's unsure and initiates conversations with the team for discussion.\n\nSometimes, when the frontend needs support from the backend, he understands the limitations of the customer's system, which may restrict my ability to implement his specific solution. Then, we find another solution together.\n\nUsing tools like Excalidraw to communicate with the customer is great. I like that he always ensures we're seeing things from the same perspective.\n\nIt's not only about work, either; he often introduces good things, like Duolingo, to the team! :D"
-      },
-      "chok": {
-        "authorRole": "Senior Frontend Engineer",
-        "relationship": "Senior colleague · 2+ years",
-        "proofThemeLabel": "Engineering Culture & Mentorship",
-        "summaryQuote": "He always raises his hand to contribute to extra work that benefits the company, such as the MAQE website, developer standards, and linting.",
-        "fullQuote": "He always raises his hand to contribute to extra work that benefits the company, such as the MAQE website, standards and linting for developers, and guild contributions. Even though he takes on so much, he still maintains high performance on his main project.\n\nAnother thing—not just over the past six months, but consistently—is that he likes helping those around him improve their soft skills, such as English and financial tracking. I have also benefited from this; my English skills improved after I practiced with him."
-      },
-      "ning": {
-        "authorRole": "Project Manager",
-        "relationship": "Manager · 2+ years",
-        "proofThemeLabel": "Trust & Organization",
-        "summaryQuote": "His communication style is engaging and sincere, which helps build trust and align both team and customer.",
-        "fullQuote": "First is proactive in planning and drive team actions. He has a strong organization and structured work. His communication style is engaging and sincere, which helps build trust and align both team and customer. First's positive attitude towards learning is also inspiring for the team.\n\nYou are a strong team player with excellent communication and leadership skills. You work independently, provide valuable feedback, and encourage teamwork. Your ability to align the team and share knowledge is greatly appreciated."
-      }
-    }
-  },
-  "value": {
-    "label": "Value Proposition",
-    "title": "Why Work With Me",
-    "subtitle": "5 things I bring to every team",
-    "evidence": "Read Evidence",
-    "propositions": {
-      "production-ai": {
-        "title": "Ships Production AI",
-        "description": "Integrated OpenAI SDK into a live event platform used by real organizers — not a demo, not a side project. I know the difference between AI that works in a notebook and AI that survives production.",
-        "proof": "AI Event Platform + The Air Product at TeamStack"
-      },
-      "product-thinking": {
-        "title": "Thinks Product, Not Tickets",
-        "description": "I host guild sessions, write internal docs, and built a personal second brain to manage my own learning system. Engineers who think about product impact ship features that actually matter to the business.",
-        "proof": "FEDx Guild (434 days) + MAQE Website v5 ownership"
-      },
-      "full-stack-delivery": {
-        "title": "Owns the Full Delivery Chain",
-        "description": "From Figma handoff to AWS deployment. No waiting for specialists, no throwing over the fence. From MEP blueprints to Solidity contracts — I've always operated across the full system.",
-        "proof": "7 years across MEP → Frontend → Full-stack → AI"
-      },
-      "fast-domain-mastery": {
-        "title": "Masters New Domains Under Pressure",
-        "description": "MEP Engineer → self-taught dev → Web3 → AI. Every domain switch delivered production software. I don't spend months studying before contributing — I learn by shipping.",
-        "proof": "Solidity, Web3.js, OpenAI SDK — all shipped in production"
-      },
-      "founder-trajectory": {
-        "title": "Thinks Like an Owner — Because I'm Becoming One",
-        "description": "Every project, certification, and skill has been deliberate preparation. The Gaia Project is my personal life OS. The Air Product is my first product built with founder proximity. SaaS in Southeast Asia is the destination.",
-        "proof": "TeamStack → The Air Product → 3-Year SaaS Strategy"
-      }
-    }
-  },
-  "common": {
-    "signals": {
-      "production-ai": "Production AI",
-      "product-ownership": "Product Ownership",
-      "systems-thinking": "Systems Thinking",
-      "founder-trajectory": "Founder Trajectory",
-      "cross-functional-trust": "Cross-Functional Trust",
-      "knowledge-sharing": "Knowledge Sharing",
-      "full-stack-delivery": "Full-Stack Delivery"
-    }
-  },
-  "site": {
-    "title": "Senior Software Engineer",
-    "description": "Senior Software Engineer working at the intersection of AI-first products, systems thinking, and product ownership with 7+ years of engineering experience."
-  },
-  "siteConfig": {
-    "name": "Thanachon \"First\" Suphasathien",
-    "shortName": "First",
-    "title": "Senior Software Engineer",
-    "currentCompany": "TeamStack",
-    "currentFocus": "Building AI-first products",
-    "tagline": "Senior software engineer building AI-first products with a background in product ownership, systems thinking, and life-long learning.",
-    "location": "Bangkok, Thailand",
-    "roles": {
-      "senior": "Senior Software Engineer",
-      "ai_builder": "AI-first Product Builder",
-      "thinker": "Systems Thinker",
-      "learner": "Life-long Learner"
-    },
-    "trustHighlights": [
-      "AWS Certified Cloud Practitioner · 2025",
-      "TOEIC 915/990 · English Proficiency",
-      "MEP Engineering → Software → AI",
-      "Bangkok, TH · Open for International Opportunity"
-    ]
   },
   "projects": {
     "header": {
@@ -768,5 +552,204 @@
       "close": "Close",
       "verify": "Verify Credential"
     }
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "Voices from the Field",
+    "subtitle": "Real words from clients, managers, and collaborators who have seen my work in the arena.",
+    "loading": "Loading testimonials...",
+    "card": {
+      "tapToRead": "Tap to read full testimonial",
+      "ariaLabelRead": "Read full testimonial from",
+      "modalTitle": "Testimonial from",
+      "notFound": "Testimonial not found"
+    },
+    "entries": {
+      "andreas": {
+        "authorRole": "Founder and Chief Executive Officer",
+        "relationship": "Direct manager / CEO · 1+ year",
+        "proofThemeLabel": "Business Impact & Value Creation",
+        "summaryQuote": "Your main goal at TeamStack is to provide value for PTX—and you have done so in spades.",
+        "fullQuote": "Your main goal at TeamStack is to provide value for PTX—and you have done so in spades. Proof is in the contract extension and client feedback. I appreciate greatly your can-do attitude. Whatever I throw at you, you take in stride."
+      },
+      "edward": {
+        "authorRole": "Vice President",
+        "relationship": "Client · Peatix Series · 3+ years",
+        "proofThemeLabel": "Client Retention & Ownership",
+        "summaryQuote": "First is a great asset to our project and also a primary reason why I want to keep working with MAQE.",
+        "fullQuote": "For our project, First is responsible for all of the frontend development work. During practically every sprint, First has demonstrated all of these things - providing guidance, removing obstacles, collaborating effectively, sharing knowledge, and contributing to the success of the team and project. I believe First has done a tremendous job of taking ownership and responsibility and we trust his knowledge and expertise. First is a great asset to our project and also a primary reason why I want to keep working with MAQE. He truly exemplifies characteristics that I value - thoughtful, considerate, kind, professional, responsible, and the list goes on. First is not only a great engineer, but a truly wonderful person. We greatly appreciate the opportunity to work with First."
+      },
+      "daniel": {
+        "authorRole": "Senior Lead Product Manager",
+        "relationship": "Client · Peatix Series · 3+ years",
+        "proofThemeLabel": "Stakeholder Confidence & Security",
+        "summaryQuote": "He also has set a very high standard for himself for the work he is doing - which makes Ed and myself feel very secure when First is involved in a feature, as we know we can rely on him to make something great.",
+        "fullQuote": "First has played such an integral part in the success of our team's ability to deploy new features. In general, I appreciate how committed First is to being there for everyone involved in this development process. He has a strong openness to using every experience and new challenge as an important opportunity for learning something new - and then sharing what he has learned with the rest of us. He also has set a very high standard for himself for the work he is doing - which makes Ed and myself feel very secure when First is involved in a feature, as we know we can rely on him to make something great. He is very open to collaboration and he has worked with Bank to clear many obstacles - especially by introducing a detailed overview of how he is solving bugs and QA related items, outlining what went wrong and how it was fixed. It is very valuable information he is sharing with everyone. First's motivation and dedication is a really valuable component to team success and team morale with this project."
+      },
+      "pai": {
+        "authorRole": "Senior Frontend Engineer",
+        "relationship": "Senior colleague · Peatix Series · 2+ years",
+        "proofThemeLabel": "Multidisciplinary Force Multiplier",
+        "summaryQuote": "Well organized - First always find a method for the team to work smoothly and easily sync.",
+        "fullQuote": "Well organized - First always finds a method for the team to work smoothly and easily sync. For example, he introduced tools like Excalidraw to create flowcharts (e.g., login, checkout). We can use those flowcharts for reference and to communicate with the Peatix team. When we encounter complex requirements such as ticket statuses, he always lists down all the cases and collects them in a Google Sheet to make sure everyone is on the same page.\n\nGreat communication - I think First has the best English skills in our Dev team, so he's always the person who helps the team communicate with the Peatix team and helps clarify when both parties are not aligned due to language barriers. You're the MVP for this. 😆\n\nSharing and seeking new knowledge - First is always involved in the FE guild to share his knowledge and even leads the FedX guild. It's not easy to multitask like that, but he always nails it. 👍\n\nI think First has shown great signs of being a good developer, and I can even see signs of him being a good PM (if you're interested, LOL). So just keep up the good work ka. The more things you experience, the stronger you become 💪"
+      },
+      "meow": {
+        "authorRole": "Manager, DesignOps & Innovation",
+        "relationship": "Manager · MAQE Website v5",
+        "proofThemeLabel": "Systematic Problem Solving",
+        "summaryQuote": "Think systematically. This trait of yours is a rare gem to encounter. It applies to your working process, problem-solving approach, and how to work better as a team.",
+        "fullQuote": "I often work with First on MAQE Website as a designer. Here's what I admire about you:\n\n• Reliable & Responsible: It's admirable that you usually share your working progress and thoughts behind those solutions every week, not only completed tasks. You can manage your tasks in sync with team members like Bank, Big, and me. I'm grateful to have your goodwill and skills in the team.\n\n• Think systematically: This trait of yours is a rare gem to encounter. It applies to your working process, problem-solving approach, and how to work better as a team. You take one step further to solve the problem in the long run (e.g. the recent issue with padding).\n\n• Open-minded/Compromisable: When we discussed the technical feasibility of particular designs, you shared opinions and built on top of each other ideas to find better ways to reach the same goal."
+      },
+      "praew": {
+        "authorRole": "UX/UI Designer",
+        "relationship": "Colleague · FEDx Guild co-organizer · 2+ years",
+        "proofThemeLabel": "Resilience & Psychological Safety",
+        "summaryQuote": "My top choice for initiating impactful projects",
+        "fullQuote": "He is incredibly supportive; He listens well and is open-minded - I feel very comfortable expressing my opinions freely with him.\n\nMy top choice for initiating impactful projects; He is eager to explore. His enthusiasm for collaboration and learning new things is evident, making it inspiring and positive to work with him.\n\nDemonstrates resilience and adaptability; He adeptly handles unexpected incidents and seamlessly adapts to workflow changes, facilitating a smooth collaboration."
+      },
+      "big": {
+        "authorRole": "Lead Frontend Engineer",
+        "relationship": "Squad Lead · 3+ years",
+        "proofThemeLabel": "Cultural Catalyst & Ripple Effect",
+        "summaryQuote": "Your eagerness and numerous contributions create a ripple that causes a positive, learning environment for the team.",
+        "fullQuote": "There are so many good things from you! You help on various projects apart from the billable (Peatix) project: the MAQE Website, linting packages, guild contributions and initiations (notably FE & FEDX), and those sessions outside of working hours!\n\nYour eagerness to learn and positive energy create a positive vibe for the people around you. There are many traits that are very good to mention: your presentation ability, and your attention to detail in POCs and research.\n\nYour eagerness and numerous contributions create a ripple that causes a positive, learning environment for the team. I can say, without a doubt, that First is a good developer."
+      },
+      "bank": {
+        "authorRole": "Backend Engineer",
+        "relationship": "Colleague · 3+ years",
+        "proofThemeLabel": "Root-Cause & Collaborative Solution",
+        "summaryQuote": "I'm sure that whenever someone encounters an issue, First will always step up, address it, and quickly get to the root of the problem.",
+        "fullQuote": "I'm sure that whenever someone encounters an issue, First will always step up, address it, and quickly get to the root of the problem. He always lets me know if he has questions or if I've missed something. It's great that he asks when he's unsure and initiates conversations with the team for discussion.\n\nSometimes, when the frontend needs support from the backend, he understands the limitations of the customer's system, which may restrict my ability to implement his specific solution. Then, we find another solution together.\n\nUsing tools like Excalidraw to communicate with the customer is great. I like that he always ensures we're seeing things from the same perspective.\n\nIt's not only about work, either; he often introduces good things, like Duolingo, to the team! :D"
+      },
+      "chok": {
+        "authorRole": "Senior Frontend Engineer",
+        "relationship": "Senior colleague · 2+ years",
+        "proofThemeLabel": "Engineering Culture & Mentorship",
+        "summaryQuote": "He always raises his hand to contribute to extra work that benefits the company, such as the MAQE website, developer standards, and linting.",
+        "fullQuote": "He always raises his hand to contribute to extra work that benefits the company, such as the MAQE website, standards and linting for developers, and guild contributions. Even though he takes on so much, he still maintains high performance on his main project.\n\nAnother thing—not just over the past six months, but consistently—is that he likes helping those around him improve their soft skills, such as English and financial tracking. I have also benefited from this; my English skills improved after I practiced with him."
+      },
+      "ning": {
+        "authorRole": "Project Manager",
+        "relationship": "Manager · 2+ years",
+        "proofThemeLabel": "Trust & Organization",
+        "summaryQuote": "His communication style is engaging and sincere, which helps build trust and align both team and customer.",
+        "fullQuote": "First is proactive in planning and drive team actions. He has a strong organization and structured work. His communication style is engaging and sincere, which helps build trust and align both team and customer. First's positive attitude towards learning is also inspiring for the team.\n\nYou are a strong team player with excellent communication and leadership skills. You work independently, provide valuable feedback, and encourage teamwork. Your ability to align the team and share knowledge is greatly appreciated."
+      }
+    }
+  },
+  "value": {
+    "label": "Value Proposition",
+    "title": "Why Work With Me",
+    "subtitle": "5 things I bring to every team",
+    "evidence": "Read Evidence",
+    "propositions": {
+      "production-ai": {
+        "title": "Ships Production AI",
+        "description": "Integrated OpenAI SDK into a live event platform used by real organizers — not a demo, not a side project. I know the difference between AI that works in a notebook and AI that survives production.",
+        "proof": "AI Event Platform + The Air Product at TeamStack"
+      },
+      "product-thinking": {
+        "title": "Thinks Product, Not Tickets",
+        "description": "I host guild sessions, write internal docs, and built a personal second brain to manage my own learning system. Engineers who think about product impact ship features that actually matter to the business.",
+        "proof": "FEDx Guild (434 days) + MAQE Website v5 ownership"
+      },
+      "full-stack-delivery": {
+        "title": "Owns the Full Delivery Chain",
+        "description": "From Figma handoff to AWS deployment. No waiting for specialists, no throwing over the fence. From MEP blueprints to Solidity contracts — I've always operated across the full system.",
+        "proof": "7 years across MEP → Frontend → Full-stack → AI"
+      },
+      "fast-domain-mastery": {
+        "title": "Masters New Domains Under Pressure",
+        "description": "MEP Engineer → self-taught dev → Web3 → AI. Every domain switch delivered production software. I don't spend months studying before contributing — I learn by shipping.",
+        "proof": "Solidity, Web3.js, OpenAI SDK — all shipped in production"
+      },
+      "founder-trajectory": {
+        "title": "Thinks Like an Owner — Because I'm Becoming One",
+        "description": "Every project, certification, and skill has been deliberate preparation. The Gaia Project is my personal life OS. The Air Product is my first product built with founder proximity. SaaS in Southeast Asia is the destination.",
+        "proof": "TeamStack → The Air Product → 3-Year SaaS Strategy"
+      }
+    }
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Start the Right Conversation",
+    "subtitle": "Whether it's AI engineering, product ownership, collaboration, or just a hello — choose the path that gets us there faster.",
+    "formIntentLabel": "What would you like to discuss?",
+    "formNameLabel": "Name",
+    "formEmailLabel": "Email",
+    "formSubmit": "Send Message",
+    "formSubmitting": "Sending...",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thanks for reaching out. I'll get back to you within 24 hours.",
+    "successCta": "Send another message",
+    "errorGeneric": "Something went wrong. Please try again or email me directly.",
+    "intents": {
+      "hire-ai": {
+        "label": "Hire as AI Engineer",
+        "heading": "Let's talk AI engineering",
+        "preview": "Tell me about the AI product you're building. What's the problem it solves, what's the technical context, and what gap you're trying to fill. I'll reply with genuine thoughts on fit.",
+        "placeholder": "E.g. We're building a RAG-based internal knowledge tool and need someone who can own the AI integration layer and frontend..."
+      },
+      "hire-po": {
+        "label": "Hire as Product Owner",
+        "heading": "Let's talk product ownership",
+        "preview": "Tell me about your product and team. What decisions need to be owned, what's the technical complexity, and what success looks like at 6 months. Engineers who think in products are rare — I'm one.",
+        "placeholder": "E.g. We're a Series A startup with a technical product and need a PO who can translate between engineering and business..."
+      },
+      "collaborate": {
+        "label": "Co-build Something",
+        "heading": "Let's build together",
+        "preview": "Have an idea for a SaaS product — especially targeting Southeast Asia? Tell me the problem, the market, and why now. I'm actively looking for the right co-founder conversation.",
+        "placeholder": "E.g. I've been working on an AI tool for Thai SMEs and need a technical co-founder who can own the product..."
+      },
+      "general": {
+        "label": "Just Saying Hi",
+        "heading": "Say hi",
+        "preview": "Even if you're not sure of fit yet, send context and I'll reply thoughtfully. I usually respond within 24 hours on weekdays.",
+        "placeholder": "Whatever's on your mind..."
+      }
+    }
+  },
+  "footer": {
+    "headline": "Software Engineer by Profession, Lifelong Learner at Heart",
+    "navigation": "Navigation",
+    "connect": "Connect",
+    "allRightsReserved": "All rights reserved."
+  },
+  "common": {
+    "signals": {
+      "production-ai": "Production AI",
+      "product-ownership": "Product Ownership",
+      "systems-thinking": "Systems Thinking",
+      "founder-trajectory": "Founder Trajectory",
+      "cross-functional-trust": "Cross-Functional Trust",
+      "knowledge-sharing": "Knowledge Sharing",
+      "full-stack-delivery": "Full-Stack Delivery"
+    }
+  },
+  "site": {
+    "title": "Senior Software Engineer",
+    "description": "Senior Software Engineer working at the intersection of AI-first products, systems thinking, and product ownership with 7+ years of engineering experience."
+  },
+  "siteConfig": {
+    "name": "Thanachon \"First\" Suphasathien",
+    "shortName": "First",
+    "title": "Senior Software Engineer",
+    "currentCompany": "TeamStack",
+    "currentFocus": "Building AI-first products",
+    "tagline": "Senior software engineer building AI-first products with a background in product ownership, systems thinking, and life-long learning.",
+    "location": "Bangkok, Thailand",
+    "roles": {
+      "senior": "Senior Software Engineer",
+      "ai_builder": "AI-first Product Builder",
+      "thinker": "Systems Thinker",
+      "learner": "Life-long Learner"
+    },
+    "trustHighlights": [
+      "AWS Certified Cloud Practitioner · 2025",
+      "TOEIC 915/990 · English Proficiency",
+      "MEP Engineering → Software → AI",
+      "Bangkok, TH · Open for International Opportunity"
+    ]
   }
 }
