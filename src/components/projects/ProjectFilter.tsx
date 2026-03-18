@@ -14,13 +14,13 @@ export function ProjectFilter({ activeDomain, onDomainChange }: ProjectFilterPro
   const domains: ProjectDomain[] = ['ai', 'web3', 'ecommerce', 'frontend']
 
   return (
-    <div className="mb-12 flex justify-center w-full overflow-x-auto pb-4">
+    <div className="mb-12 w-full overflow-x-auto pb-4">
       <Tabs
         value={activeDomain}
         onValueChange={(value) => onDomainChange(value as ProjectDomain | 'all')}
-        className="w-auto"
+        className="flex justify-items-start md:justify-center"
       >
-        <TabsList className="h-12 justify-start px-2 py-2">
+        <TabsList className="h-12 justify-start px-2 py-2 w-auto">
           <TabsTrigger value="all" className="px-4 py-2 font-medium">
             {t('all')}
           </TabsTrigger>
