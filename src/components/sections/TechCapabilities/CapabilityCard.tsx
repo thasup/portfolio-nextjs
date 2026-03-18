@@ -5,6 +5,7 @@ import { LayoutTemplate, Server, Target, Sparkles } from 'lucide-react';
 import { Capability } from '@/types/tech-capabilities';
 import { GlassCard } from '@/components/glass';
 import { useModal } from '@/hooks/useModal';
+import { featureFlags } from '@/lib/featureFlags'
 
 interface CapabilityCardProps {
   capability: Capability;
@@ -20,6 +21,7 @@ const iconMap = {
 
 export function CapabilityCard({ capability, index }: CapabilityCardProps) {
   const t = useTranslations();
+  const { showWipSections } = featureFlags
   const Icon = iconMap[capability.iconName];
 
   const cssVars = {
@@ -122,43 +124,45 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
         </div>
 
         {/* Measurable outcome */}
-        <div
-          className="mb-5 rounded-xl border p-4 transition-colors duration-300"
-          style={{
-            backgroundColor: `rgba(${capability.accentRgb}, 0.04)`,
-            borderColor: `rgba(${capability.accentRgb}, 0.15)`,
-          }}
-        >
-          <div className="mb-1.5 flex items-center gap-2">
-            <span
-              className="h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ backgroundColor: capability.accentColor }}
-            />
-            <span
-              className="text-[10px] font-bold uppercase tracking-wider"
-              style={{ color: capability.accentColor }}
-            >
-              {t('tech.outcomeLabel')}
-            </span>
-          </div>
-          <p className="text-sm leading-relaxed text-foreground/90">
-            {t(capability.outcomeTextKey)}
-          </p>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              const projectSlug = capability.outcomeProject.toLowerCase().replace(/\s+/g, '-').replace(/\/.*$/, '');
-              open({ type: 'project', id: projectSlug });
+        {showWipSections && (
+          <div
+            className="mb-5 rounded-xl border p-4 transition-colors duration-300"
+            style={{
+              backgroundColor: `rgba(${capability.accentRgb}, 0.04)`,
+              borderColor: `rgba(${capability.accentRgb}, 0.15)`,
             }}
-            className="group/flagship mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/60 transition-colors hover:text-foreground"
           >
-            <span>{t('tech.flagshipLabel')}:</span>
-            <span className="underline decoration-dotted underline-offset-2 group-hover/flagship:decoration-solid">
-              {capability.outcomeProject}
-            </span>
-            <span className="opacity-0 transition-opacity group-hover/flagship:opacity-100">→</span>
-          </button>
-        </div>
+            <div className="mb-1.5 flex items-center gap-2">
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ backgroundColor: capability.accentColor }}
+              />
+              <span
+                className="text-[10px] font-bold uppercase tracking-wider"
+                style={{ color: capability.accentColor }}
+              >
+                {t('tech.outcomeLabel')}
+              </span>
+            </div>
+            <p className="text-sm leading-relaxed text-foreground/90">
+              {t(capability.outcomeTextKey)}
+            </p>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const projectSlug = capability.outcomeProject.toLowerCase().replace(/\s+/g, '-').replace(/\/.*$/, '');
+                open({ type: 'project', id: projectSlug });
+              }}
+              className="group/flagship mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/60 transition-colors hover:text-foreground"
+            >
+              <span>{t('tech.flagshipLabel')}:</span>
+              <span className="underline decoration-dotted underline-offset-2 group-hover/flagship:decoration-solid">
+                {capability.outcomeProject}
+              </span>
+              <span className="opacity-0 transition-opacity group-hover/flagship:opacity-100">→</span>
+            </button>
+          </div>
+        )}
 
         {/* Signal quote */}
         <div
