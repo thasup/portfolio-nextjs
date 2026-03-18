@@ -723,7 +723,7 @@
         "outcomeText": "ส่งมอบโครงสร้างพื้นฐานที่ scale ได้ รองรับธุรกรรมที่ปลอดภัยและ high-availability"
       },
       "product": {
-        "title": "Product & Business Impact Engineering",
+        "title": "Product & Business Impact",
         "tagline": "Code ที่เปลี่ยน metrics ไม่ใช่แค่ pixels.",
         "signal": "ผมไม่ได้แค่สร้างฟีเจอร์ — ผมวัดผล debug และปรับปรุงผลลัพธ์ทางธุรกิจ",
         "outcomeText": "ฟื้นฟูระบบ tracking ที่สำคัญ ช่วยให้ผู้บริหารตัดสินใจด้วยข้อมูล"

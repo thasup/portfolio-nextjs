@@ -33,7 +33,7 @@ export const capabilities: Capability[] = [
       {
         name: 'State & Data Flow',
         tools: [
-          { name: 'TanStack Query', primary: true },
+          { name: 'TanStack Query' },
           { name: 'Zustand' },
           { name: 'Pinia' },
         ],
@@ -48,7 +48,7 @@ export const capabilities: Capability[] = [
       {
         name: 'UI Systems & Styling',
         tools: [
-          { name: 'TailwindCSS', primary: true },
+          { name: 'TailwindCSS' },
           { name: 'shadcn/ui' },
           { name: 'MUI' },
           { name: 'SCSS' },
@@ -66,7 +66,7 @@ export const capabilities: Capability[] = [
       {
         name: 'Tooling & Dev Experience',
         tools: [
-          { name: 'Vite', primary: true },
+          { name: 'Vite' },
           { name: 'ESLint' },
           { name: 'Prettier' },
           { name: 'Stylelint' },
@@ -90,15 +90,15 @@ export const capabilities: Capability[] = [
       {
         name: 'LLM Integration',
         tools: [
-          { name: 'OpenAI SDK', primary: true },
-          { name: 'Vercel AI SDK' },
+          { name: 'Vercel AI SDK', primary: true },
           { name: 'LangChain' },
+          { name: 'OpenAI SDK' },
         ],
       },
       {
         name: 'Retrieval & Context Systems',
         tools: [
-          { name: 'RAG Pipelines', primary: true },
+          { name: 'RAG Pipelines' },
           { name: 'Embeddings' },
           { name: 'Vector Databases' },
         ],
@@ -106,9 +106,9 @@ export const capabilities: Capability[] = [
       {
         name: 'AI Engineering Practices',
         tools: [
+          { name: 'Spec-driven Development', primary: true },
           { name: 'Prompt Engineering' },
           { name: 'Context Engineering' },
-          { name: 'Spec-driven Development' },
         ],
       },
       {
@@ -153,7 +153,7 @@ export const capabilities: Capability[] = [
       {
         name: 'Cloud & Platforms',
         tools: [
-          { name: 'AWS' },
+          { name: 'AWS', primary: true },
           { name: 'GCP' },
           { name: 'Firebase' },
           { name: 'Supabase' },
@@ -162,7 +162,7 @@ export const capabilities: Capability[] = [
       {
         name: 'DevOps & Deployment',
         tools: [
-          { name: 'Docker', primary: true },
+          { name: 'Docker' },
           { name: 'GitHub Actions' },
           { name: 'CircleCI' },
         ],
@@ -197,10 +197,38 @@ export const capabilities: Capability[] = [
         ],
       },
       {
-        name: 'Product & Collaboration',
+        name: 'Project Management & Documentation',
         tools: [
-          { name: 'Jira' },
+          { name: 'Jira', primary: true },
+          { name: 'Confluence' },
+          { name: 'Notion' },
+          { name: 'Airtable' },
+        ],
+      },
+      {
+        name: 'Design & Collaboration',
+        tools: [
+          { name: 'Figma', primary: true },
+          { name: 'Miro' },
+          { name: 'Canva' },
+          { name: 'Slack' },
+        ],
+      },
+      {
+        name: 'Agile Practices',
+        tools: [
           { name: 'Agile Methodologies' },
+          { name: 'Scrum' },
+          { name: 'Kanban' },
+          { name: 'Sprint Planning' },
+          { name: 'Retrospectives' },
+        ],
+      },
+      {
+        name: 'Automation & Workflow Tools',
+        tools: [
+          { name: 'Zapier' },
+          { name: 'n8n' },
         ],
       },
     ],
