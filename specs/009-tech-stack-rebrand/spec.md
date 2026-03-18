@@ -2,27 +2,40 @@
 
 **Feature Branch**: `009-tech-stack-rebrand`
 **Created**: 2026-03-17
-**Status**: Draft
-**Input**: User description: "Tech Stack Representation Strategy... The Constitutional Critique of the 'Icon Grid'..."
+**Revised**: 2026-03-18
+**Status**: Implemented
+**Revision Note**: Redesigned from 3-tier "proof points" to 4-capability "system ownership" model based on senior signal feedback.
+
+## Core Design Philosophy
+
+**Before**: Tool-first, tier-based display. Felt like "4 unrelated skill buckets."
+
+**After**: System-layer ownership model. Each capability = a system you own, not a list you've touched. Tools grouped by **engineering purpose**, not HR keywords.
+
+The framework: *Frontend → AI → Fullstack → Product* — a complete engineering narrative for modern product roles.
+
+---
 
 ## User Scenarios & Testing
 
 ### User Story 1 - Hiring Manager Evaluation (Priority: P1)
 
-As a hiring manager scanning the portfolio, I want to see the candidate's core delivering capability immediately, so that I can determine if they fit our senior-level needs within the "60-Second Impact Window".
+As a hiring manager scanning the portfolio, I want to see the candidate's senior engineering capability and ownership immediately, so that I can determine if they can own modern product systems end-to-end within the "60-Second Impact Window".
 
-**Why this priority**: This directly addresses the "Salesmanship vs. Reality" framework and Principle I (Product Impact Over Implementation Folklore). The current "Icon Grid" creates noise; the new strategy focuses on impact.
+**Why this priority**: Addresses Principle I (Product Impact Over Implementation Folklore). The new model signals systems thinking and decision authority, not just tool familiarity.
 
-**Independent Test**: Can be tested by navigating to the homepage and verifying the "Tech Stack" section displays the 3 Tiers with context, rather than a grid of logos.
+**Independent Test**: Navigate to the homepage, scroll to the "Core Capabilities" section, and verify all 4 cards render correctly with the complete anatomy.
 
 **Acceptance Scenarios**:
 
-1. **Given** a visitor on the homepage, **When** they scroll to the "Tech Stack" section, **Then** they see the section title "Technical Capabilities & Governance" and subtitle "Tools I use to engineer premium experiences, ensure reliability, and measure business impact."
-2. **Given** the Tier 1 (Core Delivery Stack) card, **When** viewed, **Then** it displays a Lightning Bolt icon (Yellow/Orange), the list of tools, positioning text, and the proof point: "Used in 80% of my shipped projects."
-3. **Given** the Tier 2 (Architecture & Quality) card, **When** viewed, **Then** it displays a Shield icon (Green), the list of tools, positioning text, and the proof point: "Praised by peers for setting developer standards."
-4. **Given** the Tier 3 (Data & Product Insights) card, **When** viewed, **Then** it displays a Bar Chart icon (Blue), the list of tools, positioning text, and the proof point: "Guided UX restructuring that improved conversion."
-5. **Given** the homepage, **When** scanned, **Then** there are NO sections labeled "To be learned", "Familiar", or "Used to use".
-6. **Given** the homepage, **When** scanned, **Then** there is NO grid of disembodied technology logos.
+1. **Given** a visitor on the homepage, **When** they scroll to the section, **Then** they see the layer pills (Frontend → AI → Fullstack → Product), the heading "Core Capabilities", and the positioning subtitle.
+2. **Given** each capability card, **When** viewed, **Then** it displays: numbered badge (01-04), Lucide icon, title, italic tagline, subsystem grid, measurable outcome box with project reference, and signal quote blockquote.
+3. **Given** the Frontend capability (01), **When** viewed, **Then** the signal reads "I design complete frontend systems, not just screens." and the outcome references "AP Thai / MAQE Website".
+4. **Given** the AI capability (02), **When** viewed, **Then** the signal reads "I can design real AI systems, not just call APIs." and the outcome references "The Air Product / AI Event Platform".
+5. **Given** emphasized cards (Frontend, AI), **When** viewed, **Then** they render with accent-colored border glow distinguishing them from supporting capabilities.
+6. **Given** any card, **When** hovered, **Then** the accent stripe brightens, an ambient glow appears, and the icon scales up.
+7. **Given** the homepage, **When** scanned, **Then** there are NO sections labeled "To be learned", "Familiar", or "Used to use".
+8. **Given** the homepage, **When** scanned, **Then** there is NO standalone grid of disembodied technology logos.
 
 ---
 
@@ -32,12 +45,13 @@ As a visitor viewing a specific project, I want to see the technologies used as 
 
 **Why this priority**: Connects Tool to Evidence (Principle VI).
 
-**Independent Test**: Can be tested by opening a Project Modal and verifying tech stack presence.
+**Independent Test**: Open a Project Modal and verify tech stack badges display correctly.
 
 **Acceptance Scenarios**:
 
 1. **Given** a Project Modal is open, **When** viewing the project details, **Then** the tech stack is displayed as Tags/Badges.
 2. **Given** the project details, **When** viewing the tags, **Then** they are relevant to that specific project (not a generic list).
+3. **Given** a project with no techStack defined, **When** the modal opens, **Then** no empty badge container is shown.
 
 ---
 
@@ -45,41 +59,43 @@ As a visitor viewing a specific project, I want to see the technologies used as 
 
 ### Functional Requirements
 
-- **FR-001**: The system MUST display the Tech Stack on the homepage categorized into exactly three tiers: Core Delivery, Architecture & Quality, and Data & Product Insights.
-- **FR-002**: The system MUST use the section title "Technical Capabilities & Governance" and subtitle "Tools I use to engineer premium experiences, ensure reliability, and measure business impact."
-- **FR-003**: The system MUST NOT display "To be learned", "Familiar", or "Used to use" categories or lists.
-- **FR-004**: The system MUST NOT display a standalone grid of icons without context.
-- **FR-005**: The system MUST render technology tags/badges within the Project Modals (or Project Detail views).
-- **FR-006**: The system MUST use the specific copy provided for each tier's positioning and proof points.
-  - **Tier 1 (Core Delivery)**:
-    - **Icon**: Lightning Bolt (Yellow/Orange)
-    - **Positioning**: "My primary stack for building fast, accessible, and premium web applications."
-    - **Proof Point**: "Used in 80% of my shipped projects."
-  - **Tier 2 (Architecture & Quality)**:
-    - **Icon**: Shield (Green)
-    - **Positioning**: "Tools I use to ensure type safety, scalable architecture, and production reliability."
-    - **Proof Point**: "Praised by peers for setting developer standards."
-  - **Tier 3 (Data & Product Insights)**:
-    - **Icon**: Bar Chart (Blue)
-    - **Positioning**: "Instrumentation and data tools used to measure impact and inform product decisions."
-    - **Proof Point**: "Guided UX restructuring that improved conversion."
+- **FR-001**: The system MUST display 4 capability cards in a 2-column grid: Frontend Systems, AI Systems, Fullstack Systems, Product Impact.
+- **FR-002**: The system MUST use "Core Capabilities" as the section heading and display layer pills (Frontend → AI → Fullstack → Product) above the heading.
+- **FR-003**: Each card MUST contain: numbered badge, icon, title, tagline, subsystem grid, measurable outcome box, and signal quote.
+- **FR-004**: Tools within each subsystem MUST be visually distinguished as primary (accent-colored) vs. supporting (muted).
+- **FR-005**: Emphasized cards (Frontend, AI) MUST render with accent-colored borders and glow to signal priority.
+- **FR-006**: Each card MUST use its own accent color system via CSS variables (`--card-accent`, `--card-accent-rgb`), driving stripe, glow, badges, and signal quote styling.
+- **FR-007**: The system MUST NOT display "To be learned", "Familiar", or "Used to use" categories.
+- **FR-008**: The system MUST NOT display a standalone grid of icons without context.
+- **FR-009**: The system MUST render technology tags/badges within Project Modals from `project.techStack`.
+
+### Capability Definitions
+
+| # | ID | Title | Icon | Accent | Emphasized | Signal |
+|---|---|---|---|---|---|---|
+| 01 | `frontend` | Frontend Systems & Experience Engineering | LayoutTemplate | `#4f8ef7` | ✅ | "I design complete frontend systems, not just screens." |
+| 02 | `ai` | AI Systems & Intelligent Automation | Sparkles | `#f59e0b` | ✅ | "I can design real AI systems, not just call APIs." |
+| 03 | `fullstack` | Fullstack Systems & Infrastructure Delivery | Server | `#a855f7` | ❌ | "Can independently ship and operate systems in production." |
+| 04 | `product` | Product & Business Impact Engineering | Target | `#10b981` | ❌ | "I don't just build features—I measure, debug, and improve business outcomes." |
 
 ### Key Entities
 
-- **Tech Stack Tier**: Represents a category of tools (Core, Architecture, Data) containing a title, icon, description/positioning, list of tools, and a proof point.
-- **Tech Tool**: Represents a specific technology (e.g., Next.js) with a name and potentially an icon (used only within the card/badge context, not as a standalone grid).
+- **Capability**: A system layer owned by the engineer. Contains numbered badge, icon, title, tagline, signal quote, measurable outcome (text + project reference), and grouped subsystems.
+- **Subsystem**: A named cluster of tools within a capability, organized by engineering purpose (e.g., "Frameworks & Rendering", "State & Data Flow").
+- **Tool**: A specific technology with a `primary` flag. Primary tools render with accent color; supporting tools render muted.
 
 ### Edge Cases
 
-- **EC-001**: **Mobile View**: On smaller screens, the 3-Tier cards should stack vertically to maintain readability.
-- **EC-002**: **Empty Project Stack**: If a specific project in the portfolio has no technologies defined, the "Tech Stack" section in the modal should be hidden rather than showing an empty state.
-- **EC-003**: **Long Text Handling**: Positioning text should wrap appropriately without breaking the card layout on mid-sized screens (tablets).
+- **EC-001**: On mobile, the 2-column card grid stacks to 1 column.
+- **EC-002**: If `project.techStack` is empty, the badge container in Project Modal is hidden.
+- **EC-003**: Non-primary tools in a subsystem render in muted text to avoid visual noise on cards with many tools.
 
 ## Success Criteria
 
 ### Measurable Outcomes
 
-- **SC-001**: The "Skills" section on the homepage is replaced by the 3-Tier Strategy cards.
-- **SC-002**: All "To be learned", "Familiar", and "Used to use" references are removed from the codebase/UI.
+- **SC-001**: The homepage "Skills" section is replaced by the 4-capability system ownership display.
+- **SC-002**: All proficiency-tier language ("To be learned", "Familiar", "Used to use") is removed from codebase and UI.
 - **SC-003**: 100% of Project Modals display technology tags.
-- **SC-004**: Page load performance (LCP) does not degrade due to the new layout (should likely improve by removing massive icon grids).
+- **SC-004**: Each capability card signals senior-level ownership through: system naming, engineering-purpose grouping, project-specific outcomes, and positioning quotes.
+- **SC-005**: Both English and Thai locales render the section correctly with translated marketing copy (signal, outcome, tagline) while technical tool names remain in English.

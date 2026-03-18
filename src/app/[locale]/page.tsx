@@ -9,12 +9,13 @@ import { Contact } from '@/components/sections/Contact'
 import { siteConfig } from '@/data/siteConfig'
 import { featureFlags } from '@/lib/featureFlags'
 import { fetchGitHubStats } from '@/lib/github'
+import { Skills } from '@/components/sections/Skills'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'siteConfig' });
   const isThai = locale === 'th';
-  
+
   return {
     title: `${siteConfig.name} | Senior Software Engineer`,
     description: t('tagline'),
@@ -49,6 +50,7 @@ export default async function HomePage() {
       <Timeline />
       <Projects />
       <TechCapabilities />
+      {showWipSections && <Skills />}
       <Testimonials />
       {showWipSections && <ValueProp />}
       {showWipSections && <Contact />}

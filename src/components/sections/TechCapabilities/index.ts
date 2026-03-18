@@ -1,2 +1,2 @@
 export { TechCapabilities } from './TechCapabilities';
-export { TierCard } from './TierCard';
+export { CapabilityCard } from './CapabilityCard';

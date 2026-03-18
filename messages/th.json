@@ -698,24 +698,35 @@
     }
   },
   "tech": {
-    "title": "ความสามารถทางเทคนิคและการกำกับดูแล",
-    "subtitle": "เครื่องมือที่ผมใช้ในการสร้างประสบการณ์ระดับพรีเมียม รักษาความน่าเชื่อถือ และวัดผลกระทบทางธุรกิจ",
     "label": "ทักษะ",
-    "tiers": {
-      "core": {
-        "title": "Core Delivery Stack",
-        "subtitle": "Stack หลักที่ผมใช้สร้างเว็บแอปพลิเคชันที่รวดเร็ว เข้าถึงได้ และระดับพรีเมียม",
-        "proof": "ใช้ใน 80% ของโปรเจคที่ผมส่งมอบ"
+    "sectionTitle": "ความสามารถหลัก",
+    "subtitle": "ผมออกแบบและส่งมอบระบบ production — ตั้งแต่ frontend ประสิทธิภาพสูงไปจนถึงฟีเจอร์ที่ขับเคลื่อนด้วย AI — ให้สอดคล้องกับผลลัพธ์ทางธุรกิจและ product",
+    "outcomeLabel": "ผลลัพธ์ที่วัดได้",
+    "flagshipLabel": "Flagship",
+    "capabilities": {
+      "frontend": {
+        "title": "Frontend Systems & Experience Engineering",
+        "tagline": "Framework-first. System-aware. User-obsessed.",
+        "signal": "ผมออกแบบระบบ frontend ที่สมบูรณ์ ไม่ใช่แค่หน้าจอ",
+        "outcomeText": "เพิ่ม conversion rate และลด bounce rate ผ่านการ render ที่รวดเร็วกว่า 1 วินาทีและ UX ที่ลื่นไหล"
       },
-      "architecture": {
-        "title": "สถาปัตยกรรมและคุณภาพ",
-        "subtitle": "เครื่องมือที่ผมใช้เพื่อให้มั่นใจในความปลอดภัยของ type สถาปัตยกรรมที่ scale ได้ และความน่าเชื่อถือใน production",
-        "proof": "เพื่อนร่วมงานชื่นชมในการตั้งมาตรฐานนักพัฒนา"
+      "ai": {
+        "title": "AI Systems & Intelligent Automation",
+        "tagline": "LLMs ใน production. ระบบที่คิดได้.",
+        "signal": "ผมออกแบบระบบ AI จริงได้ ไม่ใช่แค่เรียก API",
+        "outcomeText": "ทำให้ workflow ปฏิบัติงานที่ซับซ้อนเป็นอัตโนมัติโดยใช้การผสาน LLM ที่รับรู้ context"
       },
-      "data": {
-        "title": "ข้อมูลและ Product Insights",
-        "subtitle": "เครื่องมือวัดผลและข้อมูลที่ใช้วัดผลกระทบและแจ้งการตัดสินใจเกี่ยวกับผลิตภัณฑ์",
-        "proof": "ช่วยแนะนำการปรับโครงสร้าง UX ที่ปรับปรุง conversion"
+      "fullstack": {
+        "title": "Fullstack Systems & Infrastructure Delivery",
+        "tagline": "จาก API contract ไปจนถึง deployed container.",
+        "signal": "สามารถ ship และดำเนินระบบใน production ได้อย่างอิสระ",
+        "outcomeText": "ส่งมอบโครงสร้างพื้นฐานที่ scale ได้ รองรับธุรกรรมที่ปลอดภัยและ high-availability"
+      },
+      "product": {
+        "title": "Product & Business Impact Engineering",
+        "tagline": "Code ที่เปลี่ยน metrics ไม่ใช่แค่ pixels.",
+        "signal": "ผมไม่ได้แค่สร้างฟีเจอร์ — ผมวัดผล debug และปรับปรุงผลลัพธ์ทางธุรกิจ",
+        "outcomeText": "ฟื้นฟูระบบ tracking ที่สำคัญ ช่วยให้ผู้บริหารตัดสินใจด้วยข้อมูล"
       }
     }
   },

@@ -1,11 +1,26 @@
-export type TechTierId = 'core' | 'architecture' | 'data';
+export type CapabilityId = 'frontend' | 'fullstack' | 'product' | 'ai';
 
-export interface TechTier {
-  id: TechTierId;
+export interface Tool {
+  name: string;
+  primary?: boolean;
+}
+
+export interface Subsystem {
+  name: string;
+  tools: Tool[];
+}
+
+export interface Capability {
+  id: CapabilityId;
+  number: string;
   titleKey: string;
-  subtitleKey: string;
-  proofKey: string;
-  iconName: 'Zap' | 'Shield' | 'BarChart3';
-  tools: string[];
-  color: string;
+  taglineKey: string;
+  signalKey: string;
+  outcomeTextKey: string;
+  outcomeProject: string;
+  iconName: 'LayoutTemplate' | 'Server' | 'Target' | 'Sparkles';
+  emphasized: boolean;
+  accentColor: string;
+  accentRgb: string;
+  subsystems: Subsystem[];
 }

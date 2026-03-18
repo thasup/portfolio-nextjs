@@ -698,24 +698,35 @@
     }
   },
   "tech": {
-    "title": "Technical Capabilities & Governance",
-    "subtitle": "Tools I use to engineer premium experiences, ensure reliability, and measure business impact.",
     "label": "SKILLS",
-    "tiers": {
-      "core": {
-        "title": "Core Delivery Stack",
-        "subtitle": "My primary stack for building fast, accessible, and premium web applications.",
-        "proof": "Used in 80% of my shipped projects."
+    "sectionTitle": "Core Capabilities",
+    "subtitle": "I design and deliver production systems—from high-performance frontends to AI-powered features—aligned with product and business outcomes.",
+    "outcomeLabel": "Measurable Outcome",
+    "flagshipLabel": "Flagship",
+    "capabilities": {
+      "frontend": {
+        "title": "Frontend Systems & Experience Engineering",
+        "tagline": "Framework-first. System-aware. User-obsessed.",
+        "signal": "I design complete frontend systems, not just screens.",
+        "outcomeText": "Increased conversion rates and reduced bounce rates through sub-second rendering and fluid UX."
       },
-      "architecture": {
-        "title": "Architecture & Quality",
-        "subtitle": "Tools I use to ensure type safety, scalable architecture, and production reliability.",
-        "proof": "Praised by peers for setting developer standards."
+      "ai": {
+        "title": "AI Systems & Intelligent Automation",
+        "tagline": "LLMs in production. Systems that reason.",
+        "signal": "I can design real AI systems, not just call APIs.",
+        "outcomeText": "Automated complex operational workflows using context-aware LLM integrations."
       },
-      "data": {
-        "title": "Data & Product Insights",
-        "subtitle": "Instrumentation and data tools used to measure impact and inform product decisions.",
-        "proof": "Guided UX restructuring that improved conversion."
+      "fullstack": {
+        "title": "Fullstack Systems & Infrastructure Delivery",
+        "tagline": "From API contract to deployed container.",
+        "signal": "Can independently ship and operate systems in production.",
+        "outcomeText": "Delivered scalable infrastructure supporting secure, high-availability transactions."
+      },
+      "product": {
+        "title": "Product & Business Impact Engineering",
+        "tagline": "Code that moves metrics, not just pixels.",
+        "signal": "I don't just build features—I measure, debug, and improve business outcomes.",
+        "outcomeText": "Restored critical tracking systems, empowering executive data-driven decisions."
       }
     }
   },
