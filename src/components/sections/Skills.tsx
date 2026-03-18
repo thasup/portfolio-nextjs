@@ -12,7 +12,7 @@ export function Skills() {
   const locale = useLocale()
 
   return (
-    <section id="skills" className="section-padding">
+    <section className="section-padding">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           label={t('label')}

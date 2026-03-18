@@ -61,13 +61,18 @@ As a visitor viewing a specific project, I want to see the technologies used as 
 
 - **FR-001**: The system MUST display 4 capability cards in a 2-column grid: Frontend Systems, AI Systems, Fullstack Systems, Product Impact.
 - **FR-002**: The system MUST use "Core Capabilities" as the section heading and display layer pills (Frontend → AI → Fullstack → Product) above the heading.
-- **FR-003**: Each card MUST contain: numbered badge, icon, title, tagline, subsystem grid, measurable outcome box, and signal quote.
-- **FR-004**: Tools within each subsystem MUST be visually distinguished as primary (accent-colored) vs. supporting (muted).
-- **FR-005**: Emphasized cards (Frontend, AI) MUST render with accent-colored borders and glow to signal priority.
-- **FR-006**: Each card MUST use its own accent color system via CSS variables (`--card-accent`, `--card-accent-rgb`), driving stripe, glow, badges, and signal quote styling.
-- **FR-007**: The system MUST NOT display "To be learned", "Familiar", or "Used to use" categories.
-- **FR-008**: The system MUST NOT display a standalone grid of icons without context.
-- **FR-009**: The system MUST render technology tags/badges within Project Modals from `project.techStack`.
+- **FR-003**: The system MUST use the `SectionHeader` component for consistent styling with other sections.
+- **FR-004**: Each card MUST contain: icon, title, tagline, subsystem grid, measurable outcome box, and signal quote (numbered badge removed per user feedback).
+- **FR-005**: Each card MUST use `GlassCard` component with `elevation="e2"`, `hover={true}`, and `interactive={true}` for glassmorphism effect.
+- **FR-006**: Subsystem names MUST be localized via `tech.subsystems.*` keys, while tool names remain in English.
+- **FR-007**: Tech tags MUST be larger (`px-2.5 py-1 text-xs`) with hover scale animation (`hover:scale-105`).
+- **FR-008**: Tools within each subsystem MUST be visually distinguished as primary (accent-colored with border) vs. supporting (muted background).
+- **FR-009**: Emphasized cards (Frontend, AI) MUST render with accent-colored borders and glow to signal priority.
+- **FR-010**: Each card MUST use its own accent color system via CSS variables (`--card-accent`, `--card-accent-rgb`), driving stripe, glow, badges, and signal quote styling.
+- **FR-011**: The flagship project name MUST be clickable and open the corresponding project modal.
+- **FR-012**: The system MUST NOT display "To be learned", "Familiar", or "Used to use" categories.
+- **FR-013**: The system MUST NOT display a standalone grid of icons without context.
+- **FR-014**: The system MUST render technology tags/badges within Project Modals from `project.techStack`.
 
 ### Capability Definitions
 

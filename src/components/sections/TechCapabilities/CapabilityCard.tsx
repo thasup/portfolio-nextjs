@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { LayoutTemplate, Server, Target, Sparkles } from 'lucide-react';
 import { Capability } from '@/types/tech-capabilities';
+import { GlassCard } from '@/components/glass';
+import { useModal } from '@/hooks/useModal';
 
 interface CapabilityCardProps {
   capability: Capability;
@@ -26,9 +28,14 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
     '--card-delay': `${index * 110}ms`,
   } as React.CSSProperties;
 
+  const { open } = useModal();
+
   return (
-    <article
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-500 hover:-translate-y-1"
+    <GlassCard
+      elevation="e2"
+      hover={true}
+      interactive={true}
+      className="group relative flex flex-col overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
       style={{
         ...cssVars,
         borderColor: capability.emphasized
@@ -83,22 +90,26 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
         {/* Subsystems grid */}
         <div className="mb-6 grid grid-cols-2 gap-x-6 gap-y-4 border-b border-border/50 pb-6">
           {capability.subsystems.map((sub) => (
-            <div key={sub.name}>
+            <div key={sub.nameKey}>
               <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
-                {sub.name}
+                {t(sub.nameKey)}
               </p>
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-1.5">
                 {sub.tools.map((tool) => (
                   <span
                     key={tool.name}
-                    className="rounded px-1.5 py-0.5 text-[11.5px] font-medium transition-colors duration-200"
+                    className="rounded-md px-2.5 py-1 text-xs font-semibold transition-all duration-200 hover:scale-105 cursor-default"
                     style={
                       tool.primary
                         ? {
                           color: capability.accentColor,
-                          backgroundColor: `rgba(${capability.accentRgb}, 0.1)`,
+                          backgroundColor: `rgba(${capability.accentRgb}, 0.15)`,
+                          borderWidth: '1px',
+                          borderColor: `rgba(${capability.accentRgb}, 0.3)`,
                         }
-                        : undefined
+                        : {
+                          backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                        }
                     }
                     data-primary={tool.primary}
                   >
@@ -133,10 +144,20 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
           <p className="text-sm leading-relaxed text-foreground/90">
             {t(capability.outcomeTextKey)}
           </p>
-          <p className="mt-1.5 text-[11px] font-medium text-muted-foreground/60">
-            {t('tech.flagshipLabel')}:{' '}
-            <span className="text-muted-foreground/90">{capability.outcomeProject}</span>
-          </p>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const projectSlug = capability.outcomeProject.toLowerCase().replace(/\s+/g, '-').replace(/\/.*$/, '');
+              open({ type: 'project', id: projectSlug });
+            }}
+            className="group/flagship mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/60 transition-colors hover:text-foreground"
+          >
+            <span>{t('tech.flagshipLabel')}:</span>
+            <span className="underline decoration-dotted underline-offset-2 group-hover/flagship:decoration-solid">
+              {capability.outcomeProject}
+            </span>
+            <span className="opacity-0 transition-opacity group-hover/flagship:opacity-100">→</span>
+          </button>
         </div>
 
         {/* Signal quote */}
@@ -159,6 +180,6 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
           </blockquote>
         </div>
       </div>
-    </article>
+    </GlassCard>
   );
 }

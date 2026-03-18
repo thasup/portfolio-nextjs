@@ -6,7 +6,7 @@ export interface Tool {
 }
 
 export interface Subsystem {
-  name: string;
+  nameKey: string;
   tools: Tool[];
 }
 

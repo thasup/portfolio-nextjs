@@ -1,11 +1,12 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
-interface SectionHeaderProps {
+export interface SectionHeaderProps {
   title: ReactNode
   subtitle?: ReactNode
   label?: ReactNode
   align?: 'left' | 'center'
+  children?: ReactNode
 }
 
 export function SectionHeader({
@@ -13,6 +14,7 @@ export function SectionHeader({
   subtitle,
   label,
   align = 'center',
+  children,
 }: SectionHeaderProps) {
   return (
     <div
@@ -22,7 +24,7 @@ export function SectionHeader({
       )}
     >
       {label && (
-        <span className="mb-6 inline-block text-xs font-semibold tracking-[0.2em] uppercase text-primary">
+        <span className="my-6 inline-block text-xs font-semibold tracking-[0.2em] uppercase text-primary">
           {label}
         </span>
       )}
@@ -34,6 +36,7 @@ export function SectionHeader({
           {subtitle}
         </p>
       )}
+      {children}
     </div>
   )
 }

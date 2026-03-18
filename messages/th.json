@@ -698,35 +698,58 @@
     }
   },
   "tech": {
-    "label": "ทักษะ",
-    "sectionTitle": "ความสามารถหลัก",
-    "subtitle": "ผมออกแบบและส่งมอบระบบ production — ตั้งแต่ frontend ประสิทธิภาพสูงไปจนถึงฟีเจอร์ที่ขับเคลื่อนด้วย AI — ให้สอดคล้องกับผลลัพธ์ทางธุรกิจและ product",
+    "label": "SKILLS",
+    "sectionTitle": "ขีดความสามารถหลัก",
+    "subtitle": "ผมออกแบบและส่งมอบระบบระดับโปรดักชัน—ตั้งแต่ Frontend ประสิทธิภาพสูงไปจนถึงฟีเจอร์ที่ขับเคลื่อนด้วย AI—โดยสอดคล้องกับเป้าหมายของโปรดักต์และธุรกิจ",
     "outcomeLabel": "ผลลัพธ์ที่วัดได้",
-    "flagshipLabel": "Flagship",
+    "flagshipLabel": "ผลงานเด่น",
+    "subsystems": {
+      "frameworks_rendering": "Frameworks & Rendering",
+      "language_type_safety": "Language & Type Safety",
+      "state_data_flow": "State & Data Flow",
+      "forms_validation": "Forms & Validation",
+      "ui_systems_styling": "UI Systems & Styling",
+      "testing_quality": "Testing & Quality",
+      "tooling_dev_experience": "Tooling & Dev Experience",
+      "llm_integration": "LLM Integration",
+      "retrieval_context": "Retrieval & Context Systems",
+      "ai_practices": "AI Engineering Practices",
+      "cloud_ai_platforms": "Cloud AI Platforms",
+      "backend_architecture": "Backend Architecture",
+      "data_layer": "Data Layer",
+      "cloud_platforms": "Cloud & Platforms",
+      "devops_deployment": "DevOps & Deployment",
+      "analytics_tracking": "Analytics & Tracking",
+      "observability_reliability": "Observability & Reliability",
+      "project_management": "Project Management & Documentation",
+      "design_collaboration": "Design & Collaboration",
+      "agile_practices": "Agile Practices",
+      "automation_workflow": "Automation & Workflow Tools"
+    },
     "capabilities": {
       "frontend": {
         "title": "Frontend Systems & Experience Engineering",
-        "tagline": "Framework-first. System-aware. User-obsessed.",
-        "signal": "ผมออกแบบระบบ frontend ที่สมบูรณ์ ไม่ใช่แค่หน้าจอ",
-        "outcomeText": "เพิ่ม conversion rate และลด bounce rate ผ่านการ render ที่รวดเร็วกว่า 1 วินาทีและ UX ที่ลื่นไหล"
+        "tagline": "วางโครงสร้าง Framework เป็นหลัก มองภาพรวมของระบบ และยึดผู้ใช้งานเป็นศูนย์กลาง",
+        "signal": "ผมออกแบบสถาปัตยกรรม Frontend ทั้งระบบ ไม่ใช่แค่การทำหน้าจอ",
+        "outcomeText": "เพิ่มอัตรา Conversion และลด Bounce rate ผ่านการเรนเดอร์ที่รวดเร็วระดับ Sub-second และ UX ที่ลื่นไหล"
       },
       "ai": {
         "title": "AI Systems & Intelligent Automation",
-        "tagline": "LLMs ใน production. ระบบที่คิดได้.",
-        "signal": "ผมออกแบบระบบ AI จริงได้ ไม่ใช่แค่เรียก API",
-        "outcomeText": "ทำให้ workflow ปฏิบัติงานที่ซับซ้อนเป็นอัตโนมัติโดยใช้การผสาน LLM ที่รับรู้ context"
+        "tagline": "นำ LLM ไปใช้งานจริง สร้างระบบที่คิดและวิเคราะห์ได้",
+        "signal": "ผมออกแบบระบบ AI ที่ใช้งานได้จริง ไม่ใช่แค่การเรียกใช้ API ทั่วไป",
+        "outcomeText": "เปลี่ยนกระบวนการทำงานที่ซับซ้อนให้เป็นอัตโนมัติ ด้วยการผสานรวม LLM ที่เข้าใจบริบท (Context-aware)"
       },
       "fullstack": {
         "title": "Fullstack Systems & Infrastructure Delivery",
-        "tagline": "จาก API contract ไปจนถึง deployed container.",
-        "signal": "สามารถ ship และดำเนินระบบใน production ได้อย่างอิสระ",
-        "outcomeText": "ส่งมอบโครงสร้างพื้นฐานที่ scale ได้ รองรับธุรกรรมที่ปลอดภัยและ high-availability"
+        "tagline": "ดูแลตั้งแต่การออกแบบ API Contract ไปจนถึงการ Deploy ลง Container",
+        "signal": "สามารถพัฒนา ส่งมอบ และดูแลระบบในระดับโปรดักชันได้ด้วยตัวเอง",
+        "outcomeText": "ส่งมอบโครงสร้างพื้นฐานที่รองรับการขยายตัว (Scalable) สำหรับธุรกรรมที่ต้องการความปลอดภัยและมีความพร้อมใช้งานสูง (High availability)"
       },
       "product": {
         "title": "Product & Business Impact",
-        "tagline": "Code ที่เปลี่ยน metrics ไม่ใช่แค่ pixels.",
-        "signal": "ผมไม่ได้แค่สร้างฟีเจอร์ — ผมวัดผล debug และปรับปรุงผลลัพธ์ทางธุรกิจ",
-        "outcomeText": "ฟื้นฟูระบบ tracking ที่สำคัญ ช่วยให้ผู้บริหารตัดสินใจด้วยข้อมูล"
+        "tagline": "เขียนโค้ดที่ขับเคลื่อนตัวชี้วัดธุรกิจ ไม่ใช่แค่จัดการพิกเซลบนหน้าจอ",
+        "signal": "ผมไม่ได้แค่สร้างฟีเจอร์—แต่ยังวัดผล แก้ปัญหา และพัฒนาเพื่อผลลัพธ์ทางธุรกิจที่ดีขึ้น",
+        "outcomeText": "กู้คืนระบบ Tracking ที่สำคัญ ช่วยให้ผู้บริหารสามารถตัดสินใจบนพื้นฐานของข้อมูล (Data-driven) ได้อย่างแม่นยำ"
       }
     }
   },

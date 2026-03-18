@@ -15,23 +15,23 @@ export const capabilities: Capability[] = [
     accentRgb: '79, 142, 247',
     subsystems: [
       {
-        name: 'Frameworks & Rendering',
+        nameKey: 'tech.subsystems.frameworks_rendering',
         tools: [
-          { name: 'React', primary: true },
+          { name: 'React.js', primary: true },
           { name: 'Next.js', primary: true },
-          { name: 'Vue' },
-          { name: 'Nuxt' },
+          { name: 'Vue.js' },
+          { name: 'Nuxt.js' },
         ],
       },
       {
-        name: 'Language & Type Safety',
+        nameKey: 'tech.subsystems.language_type_safety',
         tools: [
           { name: 'TypeScript', primary: true },
           { name: 'JavaScript' },
         ],
       },
       {
-        name: 'State & Data Flow',
+        nameKey: 'tech.subsystems.state_data_flow',
         tools: [
           { name: 'TanStack Query' },
           { name: 'Zustand' },
@@ -39,14 +39,14 @@ export const capabilities: Capability[] = [
         ],
       },
       {
-        name: 'Forms & Validation',
+        nameKey: 'tech.subsystems.forms_validation',
         tools: [
           { name: 'Zod' },
           { name: 'React Hook Form' },
         ],
       },
       {
-        name: 'UI Systems & Styling',
+        nameKey: 'tech.subsystems.ui_systems_styling',
         tools: [
           { name: 'TailwindCSS' },
           { name: 'shadcn/ui' },
@@ -56,7 +56,7 @@ export const capabilities: Capability[] = [
         ],
       },
       {
-        name: 'Testing & Quality',
+        nameKey: 'tech.subsystems.testing_quality',
         tools: [
           { name: 'Vitest' },
           { name: 'Jest' },
@@ -64,7 +64,7 @@ export const capabilities: Capability[] = [
         ],
       },
       {
-        name: 'Tooling & Dev Experience',
+        nameKey: 'tech.subsystems.tooling_dev_experience',
         tools: [
           { name: 'Vite' },
           { name: 'ESLint' },
@@ -75,54 +75,8 @@ export const capabilities: Capability[] = [
     ],
   },
   {
-    id: 'ai',
-    number: '02',
-    titleKey: 'tech.capabilities.ai.title',
-    taglineKey: 'tech.capabilities.ai.tagline',
-    signalKey: 'tech.capabilities.ai.signal',
-    outcomeTextKey: 'tech.capabilities.ai.outcomeText',
-    outcomeProject: 'The Air Product / AI Event Platform',
-    iconName: 'Sparkles',
-    emphasized: true,
-    accentColor: '#f59e0b',
-    accentRgb: '245, 158, 11',
-    subsystems: [
-      {
-        name: 'LLM Integration',
-        tools: [
-          { name: 'Vercel AI SDK', primary: true },
-          { name: 'LangChain' },
-          { name: 'OpenAI SDK' },
-        ],
-      },
-      {
-        name: 'Retrieval & Context Systems',
-        tools: [
-          { name: 'RAG Pipelines' },
-          { name: 'Embeddings' },
-          { name: 'Vector Databases' },
-        ],
-      },
-      {
-        name: 'AI Engineering Practices',
-        tools: [
-          { name: 'Spec-driven Development', primary: true },
-          { name: 'Prompt Engineering' },
-          { name: 'Context Engineering' },
-        ],
-      },
-      {
-        name: 'Cloud AI Platforms',
-        tools: [
-          { name: 'Amazon Bedrock' },
-          { name: 'Amazon SageMaker' },
-        ],
-      },
-    ],
-  },
-  {
     id: 'fullstack',
-    number: '03',
+    number: '02',
     titleKey: 'tech.capabilities.fullstack.title',
     taglineKey: 'tech.capabilities.fullstack.tagline',
     signalKey: 'tech.capabilities.fullstack.signal',
@@ -134,37 +88,97 @@ export const capabilities: Capability[] = [
     accentRgb: '168, 85, 247',
     subsystems: [
       {
-        name: 'Backend Architecture',
+        nameKey: 'tech.subsystems.backend_architecture',
         tools: [
           { name: 'Node.js', primary: true },
-          { name: 'NestJS', primary: true },
+          { name: 'Nest.js', primary: true },
           { name: 'REST' },
           { name: 'GraphQL' },
           { name: 'Apollo' },
         ],
       },
       {
-        name: 'Data Layer',
+        nameKey: 'tech.subsystems.language',
+        tools: [
+          { name: 'Python' },
+          { name: 'PHP' },
+        ],
+      },
+      {
+        nameKey: 'tech.subsystems.data_layer',
         tools: [
           { name: 'PostgreSQL', primary: true },
           { name: 'MongoDB' },
         ],
       },
       {
-        name: 'Cloud & Platforms',
+        nameKey: 'tech.subsystems.cloud_platforms',
         tools: [
           { name: 'AWS', primary: true },
+          { name: 'Firebase', primary: true },
           { name: 'GCP' },
-          { name: 'Firebase' },
           { name: 'Supabase' },
         ],
       },
       {
-        name: 'DevOps & Deployment',
+        nameKey: 'tech.subsystems.devops_deployment',
         tools: [
           { name: 'Docker' },
           { name: 'GitHub Actions' },
           { name: 'CircleCI' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ai',
+    number: '03',
+    titleKey: 'tech.capabilities.ai.title',
+    taglineKey: 'tech.capabilities.ai.tagline',
+    signalKey: 'tech.capabilities.ai.signal',
+    outcomeTextKey: 'tech.capabilities.ai.outcomeText',
+    outcomeProject: 'The Air Product / AI Event Platform',
+    iconName: 'Sparkles',
+    emphasized: true,
+    accentColor: '#f59e0b',
+    accentRgb: '245, 158, 11',
+    subsystems: [
+      {
+        nameKey: 'tech.subsystems.llm_integration',
+        tools: [
+          { name: 'Vercel AI SDK', primary: true },
+          { name: 'LangChain' },
+          { name: 'OpenAI SDK' },
+        ],
+      },
+      {
+        nameKey: 'tech.subsystems.retrieval_context',
+        tools: [
+          { name: 'RAG Pipelines' },
+          { name: 'Embeddings' },
+          { name: 'Vector Databases' },
+        ],
+      },
+      {
+        nameKey: 'tech.subsystems.ai_practices',
+        tools: [
+          { name: 'Spec-driven Development', primary: true },
+          { name: 'Prompt Engineering' },
+          { name: 'Context Engineering' },
+        ],
+      },
+      {
+        nameKey: 'tech.subsystems.cloud_ai_platforms',
+        tools: [
+          { name: 'Amazon Bedrock' },
+          { name: 'Amazon SageMaker' },
+        ],
+      },
+      {
+        nameKey: 'tech.subsystems.automation_workflow',
+        tools: [
+          { name: 'Zapier' },
+          { name: 'n8n' },
         ],
       },
     ],
@@ -183,21 +197,21 @@ export const capabilities: Capability[] = [
     accentRgb: '16, 185, 129',
     subsystems: [
       {
-        name: 'Analytics & Tracking',
+        nameKey: 'tech.subsystems.analytics_tracking',
         tools: [
           { name: 'Google Analytics (GA4)', primary: true },
           { name: 'Google Tag Manager' },
         ],
       },
       {
-        name: 'Observability & Reliability',
+        nameKey: 'tech.subsystems.observability_reliability',
         tools: [
           { name: 'Sentry', primary: true },
           { name: 'OpenTelemetry' },
         ],
       },
       {
-        name: 'Project Management & Documentation',
+        nameKey: 'tech.subsystems.project_management',
         tools: [
           { name: 'Jira', primary: true },
           { name: 'Confluence' },
@@ -206,7 +220,7 @@ export const capabilities: Capability[] = [
         ],
       },
       {
-        name: 'Design & Collaboration',
+        nameKey: 'tech.subsystems.design_collaboration',
         tools: [
           { name: 'Figma', primary: true },
           { name: 'Miro' },
@@ -215,20 +229,13 @@ export const capabilities: Capability[] = [
         ],
       },
       {
-        name: 'Agile Practices',
+        nameKey: 'tech.subsystems.agile_practices',
         tools: [
           { name: 'Agile Methodologies' },
           { name: 'Scrum' },
           { name: 'Kanban' },
           { name: 'Sprint Planning' },
           { name: 'Retrospectives' },
-        ],
-      },
-      {
-        name: 'Automation & Workflow Tools',
-        tools: [
-          { name: 'Zapier' },
-          { name: 'n8n' },
         ],
       },
     ],
