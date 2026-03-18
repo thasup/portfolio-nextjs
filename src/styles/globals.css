@@ -193,13 +193,7 @@
   }
 
   .section-padding {
-    padding-block: 5rem;
-  }
-
-  @media (min-width: 768px) {
-    .section-padding {
-      padding-block: 7rem;
-    }
+    padding-block: 7rem;
   }
 
   .timeline-card-hover {

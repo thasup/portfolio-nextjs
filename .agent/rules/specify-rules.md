@@ -9,6 +9,8 @@ Auto-generated from all feature plans. Last updated: 2026-03-08
 - Version-controlled structured content in `src/data/` and localized UI copy in `messages/`; no database storage (005-curated-testimonials)
 - TypeScript 5.7 + Next.js 15.2 (App Router) with React 19 + TailwindCSS 4 (utility tokens), shadcn/ui, Framer Motion 11, next-themes, next-intl, Radix UI primitives (006-liquid-glass-system)
 - Static content via `src/data` and `messages/*` JSON (no runtime DB) (006-liquid-glass-system)
+- TypeScript 5.x, Node.js (via Next.js) + Next.js App Router, TailwindCSS, shadcn/ui, Lucide React, Framer Motion (009-tech-stack-rebrand)
+- Static Data (`src/data/*.ts`) and Localization Files (`messages/*.json`) (009-tech-stack-rebrand)
 
 - TypeScript 5.x, Node >= 18 + Next.js 15 (App Router), TailwindCSS v4 + shadcn/ui, Framer Motion (lazy-loaded), Swiper.js, React Hook Form + Zod, Resend, `next-intl`, `@next/third-parties/google` (002-bilingual-portfolio)
 - Version-controlled static TypeScript data files only; no build-time fetches (002-bilingual-portfolio)
@@ -34,9 +36,9 @@ npm test && npm run lint
 TypeScript 5.x (strict mode), React 19, Node 20+: Follow standard conventions
 
 ## Recent Changes
+- 009-tech-stack-rebrand: Added TypeScript 5.x, Node.js (via Next.js) + Next.js App Router, TailwindCSS, shadcn/ui, Lucide React, Framer Motion
 - 007-liquid-distortion-enhancement: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 - 006-liquid-glass-system: Added TypeScript 5.7 + Next.js 15.2 (App Router) with React 19 + TailwindCSS 4 (utility tokens), shadcn/ui, Framer Motion 11, next-themes, next-intl, Radix UI primitives
-- 005-curated-testimonials: Added TypeScript 5.x, React 19, Next.js 15 App Router + `next`, `react`, `next-intl`, `swiper`, `lucide-react`, `@radix-ui/react-dialog`, `tailwindcss`, shared shadcn/ui-style components, existing modal/analytics utilities
 
 
 

@@ -697,6 +697,62 @@
       }
     }
   },
+  "tech": {
+    "label": "SKILLS",
+    "sectionTitle": "Core Capabilities",
+    "subtitle": "I design and deliver production systems—from high-performance frontends to AI-powered features—aligned with product and business outcomes.",
+    "outcomeLabel": "Measurable Outcome",
+    "flagshipLabel": "Flagship",
+    "subsystems": {
+      "frameworks_rendering": "Frameworks & Rendering",
+      "language_type_safety": "Language & Type Safety",
+      "state_data_flow": "State & Data Flow",
+      "forms_validation": "Forms & Validation",
+      "ui_systems_styling": "UI Systems & Styling",
+      "testing_quality": "Testing & Quality",
+      "tooling_dev_experience": "Tooling & Dev Experience",
+      "llm_integration": "LLM Integration",
+      "retrieval_context": "Retrieval & Context Systems",
+      "ai_practices": "AI Engineering Practices",
+      "cloud_ai_platforms": "Cloud AI Platforms",
+      "backend_architecture": "Backend Architecture",
+      "data_layer": "Data Layer",
+      "cloud_platforms": "Cloud & Platforms",
+      "devops_deployment": "DevOps & Deployment",
+      "analytics_tracking": "Analytics & Tracking",
+      "observability_reliability": "Observability & Reliability",
+      "project_management": "Project Management & Documentation",
+      "design_collaboration": "Design & Collaboration",
+      "agile_practices": "Agile Practices",
+      "automation_workflow": "Automation & Workflow Tools"
+    },
+    "capabilities": {
+      "frontend": {
+        "title": "Frontend Systems & Experience Engineering",
+        "tagline": "Framework-first. System-aware. User-obsessed.",
+        "signal": "I design complete frontend systems, not just screens.",
+        "outcomeText": "Increased conversion rates and reduced bounce rates through sub-second rendering and fluid UX."
+      },
+      "ai": {
+        "title": "AI Systems & Intelligent Automation",
+        "tagline": "LLMs in production. Systems that reason.",
+        "signal": "I can design real AI systems, not just call APIs.",
+        "outcomeText": "Automated complex operational workflows using context-aware LLM integrations."
+      },
+      "fullstack": {
+        "title": "Fullstack Systems & Infrastructure Delivery",
+        "tagline": "From API contract to deployed container.",
+        "signal": "Can independently ship and operate systems in production.",
+        "outcomeText": "Delivered scalable infrastructure supporting secure, high-availability transactions."
+      },
+      "product": {
+        "title": "Product & Business Impact",
+        "tagline": "Code that moves metrics, not just pixels.",
+        "signal": "I don't just build features—I measure, debug, and improve business outcomes.",
+        "outcomeText": "Restored critical tracking systems, empowering executive data-driven decisions."
+      }
+    }
+  },
   "certificates": {
     "aws-ccp": {
       "title": "AWS Certified Cloud Practitioner",
