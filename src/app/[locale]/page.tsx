@@ -2,7 +2,7 @@ import { HeroWithStats } from '@/components/sections/HeroWithStats'
 import { getTranslations } from 'next-intl/server'
 import { Timeline } from '@/components/sections/Timeline'
 import { Projects } from '@/components/sections/Projects'
-import { Skills } from '@/components/sections/Skills'
+import { TechCapabilities } from '@/components/sections/TechCapabilities'
 import { Testimonials } from '@/components/sections/Testimonials'
 import { ValueProp } from '@/components/sections/ValueProp'
 import { Contact } from '@/components/sections/Contact'
@@ -48,7 +48,7 @@ export default async function HomePage() {
       <HeroWithStats githubStats={githubStats} />
       <Timeline />
       <Projects />
-      {showWipSections && <Skills />}
+      <TechCapabilities />
       <Testimonials />
       {showWipSections && <ValueProp />}
       {showWipSections && <Contact />}

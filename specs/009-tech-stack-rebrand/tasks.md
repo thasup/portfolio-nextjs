@@ -24,10 +24,10 @@ description: "Task list for Tech Stack Representation Strategy and Rebrand"
 
 **Purpose**: Create foundational types, data structures, and localization strings
 
-- [ ] T001 Create `src/types/tech-capabilities.ts` with `TechTier` interface and `TechTierId` type
-- [ ] T002 [P] Add English localization keys to `messages/en.json` under `tech.*` namespace
-- [ ] T003 [P] Add Thai localization keys to `messages/th.json` under `tech.*` namespace
-- [ ] T004 Create `src/data/tech-capabilities.ts` with `techTiers` array containing all 3 tiers (Core, Architecture, Data)
+- [x] T001 Create `src/types/tech-capabilities.ts` with `TechTier` interface and `TechTierId` type
+- [x] T002 [P] Add English localization keys to `messages/en.json` under `tech.*` namespace
+- [x] T003 [P] Add Thai localization keys to `messages/th.json` under `tech.*` namespace
+- [x] T004 Create `src/data/tech-capabilities.ts` with `techTiers` array containing all 3 tiers (Core, Architecture, Data)
 
 **Checkpoint**: Type definitions, localization strings, and data structure ready - user story implementation can now begin
 
@@ -38,6 +38,7 @@ description: "Task list for Tech Stack Representation Strategy and Rebrand"
 **Goal**: Replace the "Skills" section on the homepage with a 3-Tier strategic display showing Core Delivery, Architecture & Quality, and Data & Product Insights tiers with context and proof points.
 
 **Independent Test**: Navigate to the homepage, scroll to the "Tech Stack" section, and verify:
+
 1. Section displays "Technical Capabilities & Governance" title and subtitle
 2. Three cards are rendered with correct icons (Zap, Shield, BarChart3)
 3. Each card shows the correct tier title, positioning text, tools list, and proof point
@@ -46,12 +47,12 @@ description: "Task list for Tech Stack Representation Strategy and Rebrand"
 
 ### Implementation for User Story 1
 
-- [ ] T005 [P] [US1] Create `src/components/sections/TechCapabilities/TechCapabilities.tsx` component that renders the section title and subtitle
-- [ ] T006 [P] [US1] Create `src/components/sections/TechCapabilities/TierCard.tsx` component that renders a single tier card with icon, title, subtitle, tools list, and proof point
-- [ ] T007 [US1] Integrate `TechCapabilities` component into the homepage layout in `src/app/[locale]/page.tsx` (replace or remove the old Skills section)
-- [ ] T008 [US1] Remove or deprecate the old `src/components/sections/Skills/` directory and all related imports
-- [ ] T009 [US1] Verify no "To be learned", "Familiar", or "Used to use" text remains in the codebase and UI
-- [ ] T010 [US1] Test responsive behavior on mobile, tablet, and desktop viewports to ensure cards stack vertically on smaller screens
+- [x] T005 [P] [US1] Create `src/components/sections/TechCapabilities/TechCapabilities.tsx` component that renders the section title and subtitle
+- [x] T006 [P] [US1] Create `src/components/sections/TechCapabilities/TierCard.tsx` component that renders a single tier card with icon, title, subtitle, tools list, and proof point
+- [x] T007 [US1] Integrate `TechCapabilities` component into the homepage layout in `src/app/[locale]/page.tsx` (replace or remove the old Skills section)
+- [x] T008 [US1] Remove or deprecate the old `src/components/sections/Skills/` directory and all related imports
+- [x] T009 [US1] Verify no "To be learned", "Familiar", or "Used to use" text remains in the codebase and UI
+- [x] T010 [US1] Test responsive behavior on mobile, tablet, and desktop viewports to ensure cards stack vertically on smaller screens
 
 **Checkpoint**: User Story 1 complete - homepage displays 3-Tier tech stack with strategic context
 
@@ -62,17 +63,18 @@ description: "Task list for Tech Stack Representation Strategy and Rebrand"
 **Goal**: Display technologies used as badges/tags within Project Modals, connecting tools to specific evidence of work.
 
 **Independent Test**: Open a Project Modal and verify:
+
 1. Tech stack is displayed as Tags/Badges
 2. Tags are relevant to that specific project (not a generic list)
 3. Empty project stacks are handled gracefully (section hidden if no technologies defined)
 
 ### Implementation for User Story 2
 
-- [ ] T011 [P] [US2] Create `src/components/sections/TechCapabilities/TechBadge.tsx` component to render individual technology badges
-- [ ] T012 [US2] Update `src/components/modal/content/ProjectModal.tsx` to include a "Tech Stack" section that renders tech badges from `project.techStack`
-- [ ] T013 [US2] Add conditional rendering to hide the tech stack section if `project.techStack` is empty or undefined
-- [ ] T014 [US2] Verify all projects in `src/data/projects.ts` have properly defined `techStack` arrays
-- [ ] T015 [US2] Test tech badges display correctly across all project modals
+- [x] T011 [P] [US2] Create `src/components/sections/TechCapabilities/TechBadge.tsx` component to render individual technology badges
+- [x] T012 [US2] Update `src/components/modal/content/ProjectModal.tsx` to include a "Tech Stack" section that renders tech badges from `project.techStack`
+- [x] T013 [US2] Add conditional rendering to hide the tech stack section if `project.techStack` is empty or undefined
+- [x] T014 [US2] Verify all projects in `src/data/projects.ts` have properly defined `techStack` arrays
+- [x] T015 [US2] Test tech badges display correctly across all project modals
 
 **Checkpoint**: User Story 2 complete - all Project Modals display technology badges
 
@@ -82,14 +84,14 @@ description: "Task list for Tech Stack Representation Strategy and Rebrand"
 
 **Purpose**: Improvements affecting multiple user stories and final validation
 
-- [ ] T016 [P] Remove `src/data/skills.ts` file (replaced by `tech-capabilities.ts`)
-- [ ] T017 [P] Remove or update `src/types/skill.ts` file if no longer needed by other features
-- [ ] T018 [P] Update any imports referencing old Skills component or skills data throughout the codebase
-- [ ] T019 Verify bilingual content displays correctly in both English and Thai locales
-- [ ] T020 Run linting and formatting checks to ensure code quality
-- [ ] T021 Validate quickstart.md instructions work as documented
-- [ ] T022 Perform manual QA across all pages to ensure no broken references to removed Skills section
-- [ ] T023 Verify page load performance (LCP) has not degraded and ideally improved from removing icon grids
+- [x] T016 [P] Remove `src/data/skills.ts` file (replaced by `tech-capabilities.ts`)
+- [x] T017 [P] Remove or update `src/types/skill.ts` file if no longer needed by other features
+- [x] T018 [P] Update any imports referencing old Skills component or skills data throughout the codebase
+- [x] T019 Verify bilingual content displays correctly in both English and Thai locales
+- [x] T020 Run linting and formatting checks to ensure code quality
+- [x] T021 Validate quickstart.md instructions work as documented
+- [x] T022 Perform manual QA across all pages to ensure no broken references to removed Skills section
+- [x] T023 Verify page load performance (LCP) has not degraded and ideally improved from removing icon grids
 
 **Checkpoint**: Feature complete and validated - ready for deployment
 

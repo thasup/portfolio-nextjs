@@ -697,6 +697,28 @@
       }
     }
   },
+  "tech": {
+    "title": "Technical Capabilities & Governance",
+    "subtitle": "Tools I use to engineer premium experiences, ensure reliability, and measure business impact.",
+    "label": "SKILLS",
+    "tiers": {
+      "core": {
+        "title": "Core Delivery Stack",
+        "subtitle": "My primary stack for building fast, accessible, and premium web applications.",
+        "proof": "Used in 80% of my shipped projects."
+      },
+      "architecture": {
+        "title": "Architecture & Quality",
+        "subtitle": "Tools I use to ensure type safety, scalable architecture, and production reliability.",
+        "proof": "Praised by peers for setting developer standards."
+      },
+      "data": {
+        "title": "Data & Product Insights",
+        "subtitle": "Instrumentation and data tools used to measure impact and inform product decisions.",
+        "proof": "Guided UX restructuring that improved conversion."
+      }
+    }
+  },
   "certificates": {
     "aws-ccp": {
       "title": "AWS Certified Cloud Practitioner",
