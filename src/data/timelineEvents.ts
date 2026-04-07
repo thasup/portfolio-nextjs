@@ -172,8 +172,8 @@ export const timelineEvents: TimelineEvent[] = [
   {
     id: "the-air-product",
     chapterId: "chapter-vision",
-    date: "Jan 2025 - Present",
-    sortDate: "2025-01",
+    date: "Aug 2025 - Present",
+    sortDate: "2025-08",
     company: "TeamStack",
     type: "project",
     skills: ["AI Product Architecture", "Founder Proximity"],
@@ -209,6 +209,6 @@ export const timelineEvents: TimelineEvent[] = [
     company: "Personal",
     type: "project",
     skills: ["Next.js 15", "I18n", "AI Pairing"],
-    featured: true
+    featured: false
   }
 ];

@@ -180,8 +180,8 @@ export function TimelineEventCard({
       {/* Deep Dive button */}
       <button
         onClick={handleDeepDive}
-        className="text-sm font-medium hover:underline transition-colors cursor-pointer"
-        style={{ color: theme.accentHex }}
+        className="text-sm font-medium px-3 py-1.5 rounded border transition-colors cursor-pointer hover:opacity-80"
+        style={{ color: theme.accentHex, borderColor: theme.accentHex }}
       >
         {t("deepDive")}
       </button>

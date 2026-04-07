@@ -43,16 +43,16 @@ export const timelineChapters: TimelineChapter[] = [
     accentColor: '#10B981',
     eventIds: ['join-teamstack', 'the-air-product', 'teamstack-roster', 'gaia-project'],
   },
-  {
-    id: 'chapter-acceleration',
-    order: 7,
-    period: '2026–Present',
-    accentColor: '#06B6D4',
-    eventIds: ['portfolio-refactor'],
-  },
+  // {
+  //   id: 'chapter-acceleration',
+  //   order: 7,
+  //   period: '2026–Present',
+  //   accentColor: '#06B6D4',
+  //   eventIds: ['portfolio-refactor'],
+  // },
 ];
 
-export type YearKey = 2018 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026;
+export type YearKey = 2018 | 2021 | 2022 | 2023 | 2024 | 2025;
 
 export interface YearTheme {
   period: string;
@@ -129,7 +129,7 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     tagKey: '2024.tag',
   },
   2025: {
-    period: '2025–2026',
+    period: '2025–Present',
     gradientFrom: 'rgba(16, 185, 129, 0.06)',
     gradientTo: 'rgba(5, 150, 105, 0.03)',
     spineColor: '#10B981',
@@ -140,16 +140,16 @@ export const YEAR_THEMES: Record<YearKey, YearTheme> = {
     labelKey: '2025.label',
     tagKey: '2025.tag',
   },
-  2026: {
-    period: '2026–Present',
-    gradientFrom: 'rgba(6, 182, 212, 0.06)',
-    gradientTo: 'rgba(8, 145, 178, 0.03)',
-    spineColor: '#06B6D4',
-    dotColor: '#67E8F9',
-    accentHex: '#06B6D4',
-    accentClass: 'text-cyan-500',
-    bgClass: 'from-cyan-500/5 via-cyan-400/3 to-transparent',
-    labelKey: '2026.label',
-    tagKey: '2026.tag',
-  },
+  // 2026: {
+  //   period: '2026–Present',
+  //   gradientFrom: 'rgba(6, 182, 212, 0.06)',
+  //   gradientTo: 'rgba(8, 145, 178, 0.03)',
+  //   spineColor: '#06B6D4',
+  //   dotColor: '#67E8F9',
+  //   accentHex: '#06B6D4',
+  //   accentClass: 'text-cyan-500',
+  //   bgClass: 'from-cyan-500/5 via-cyan-400/3 to-transparent',
+  //   labelKey: '2026.label',
+  //   tagKey: '2026.tag',
+  // },
 } as const;
