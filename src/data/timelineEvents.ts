@@ -1,0 +1,214 @@
+import { TimelineEvent } from "@/types/timeline";
+
+export const timelineEvents: TimelineEvent[] = [
+  // Chapter Foundation
+  {
+    id: "toparch-mep",
+    chapterId: "chapter-foundation",
+    date: "Jan 2018 - Apr 2021",
+    sortDate: "2018-01",
+    company: "Toparch",
+    type: "work",
+    skills: ["MEP Engineering", "Systems Thinking", "Technical Design"],
+    featured: true
+  },
+
+  // Chapter Bet
+  {
+    id: "career-pivot",
+    chapterId: "chapter-bet",
+    date: "2021",
+    sortDate: "2021-04",
+    company: "Self-Directed",
+    type: "learning",
+    skills: ["JavaScript", "React", "Software Architecture"],
+    featured: true
+  },
+  {
+    id: "toeic-first",
+    chapterId: "chapter-bet",
+    date: "Dec 2021",
+    sortDate: "2021-12",
+    company: "CPA (Thailand)",
+    type: "achievement",
+    skills: ["English Proficiency"],
+    featured: false
+  },
+
+  // Chapter Craft
+  {
+    id: "join-maqe",
+    chapterId: "chapter-craft",
+    date: "Apr 2022",
+    sortDate: "2022-04",
+    company: "MAQE Bangkok",
+    type: "milestone",
+    skills: ["Professional Craft"],
+    featured: false
+  },
+  {
+    id: "ap-thai",
+    chapterId: "chapter-craft",
+    date: "May 2022 - Aug 2022",
+    sortDate: "2022-05",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["NuxtJS", "Analytics", "Mobile-First"],
+    featured: true,
+    tech: ["NuxtJS", "Tailwind CSS", "Cypress"]
+  },
+  {
+    id: "peatix-series",
+    chapterId: "chapter-craft",
+    date: "Aug 2022 - Dec 2023",
+    sortDate: "2022-08",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["Product Ownership", "Technical Judgment"],
+    featured: true,
+    tech: ["Vue 2/3", "SCSS", "Jest"]
+  },
+
+  // Chapter Frontier
+  {
+    id: "fedx-guild",
+    chapterId: "chapter-frontier",
+    date: "Jan 2023 - Present",
+    sortDate: "2023-01",
+    company: "MAQE Bangkok",
+    type: "work",
+    skills: ["Leadership", "Mentorship", "Standardization"],
+    featured: true
+  },
+  {
+    id: "token-gating",
+    chapterId: "chapter-frontier",
+    date: "Mar 2023",
+    sortDate: "2023-03",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["Web3", "Blockchain", "Full-stack"],
+    featured: false,
+    tech: ["Vue 3", "NestJS", "Ethers.js"]
+  },
+  {
+    id: "maqe-website-v5",
+    chapterId: "chapter-frontier",
+    date: "Jun 2023 - Sep 2023",
+    sortDate: "2023-06",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["Architecture", "Performance", "End-to-end Ownership"],
+    featured: true,
+    tech: ["Next.js 13", "TypeScript", "Framer Motion"]
+  },
+  {
+    id: "toeic-second",
+    chapterId: "chapter-frontier",
+    date: "Nov 2023",
+    sortDate: "2023-11",
+    company: "CPA (Thailand)",
+    type: "achievement",
+    skills: ["English Proficiency"],
+    featured: false
+  },
+  {
+    id: "online-catalog",
+    chapterId: "chapter-frontier",
+    date: "Oct 2023 - Dec 2023",
+    sortDate: "2023-10",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["GraphQL", "Apollo", "Headless Commerce"],
+    featured: false,
+    tech: ["React", "GraphQL", "Apollo Client"]
+  },
+
+  // Chapter Intelligence
+  {
+    id: "tangier-dao",
+    chapterId: "chapter-intelligence",
+    date: "Jan 2024 - Mar 2024",
+    sortDate: "2024-01",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["Solidity", "Smart Contracts", "Governance"],
+    featured: true,
+    tech: ["Solidity", "Hardhat", "React"]
+  },
+  {
+    id: "ai-event-platform",
+    chapterId: "chapter-intelligence",
+    date: "Apr 2024 - Jul 2024",
+    sortDate: "2024-04",
+    company: "MAQE Bangkok",
+    type: "project",
+    skills: ["Generative AI", "Production AI Integration"],
+    featured: true,
+    tech: ["OpenAI SDK", "Next.js", "AWS"]
+  },
+  {
+    id: "aws-certified",
+    chapterId: "chapter-intelligence",
+    date: "Aug 2024",
+    sortDate: "2024-08",
+    company: "AWS",
+    type: "achievement",
+    skills: ["Cloud Architecture"],
+    featured: false
+  },
+
+  // Chapter Vision
+  {
+    id: "join-teamstack",
+    chapterId: "chapter-vision",
+    date: "Jan 2025",
+    sortDate: "2025-01",
+    company: "TeamStack",
+    type: "milestone",
+    skills: ["Product Focused", "Strategic Collaboration"],
+    featured: false
+  },
+  {
+    id: "the-air-product",
+    chapterId: "chapter-vision",
+    date: "Aug 2025 - Present",
+    sortDate: "2025-08",
+    company: "TeamStack",
+    type: "project",
+    skills: ["AI Product Architecture", "Founder Proximity"],
+    featured: true,
+    tech: ["Next.js", "Python", "LLMs"]
+  },
+  {
+    id: "teamstack-roster",
+    chapterId: "chapter-vision",
+    date: "Feb 2025 - Mar 2025",
+    sortDate: "2025-02",
+    company: "TeamStack",
+    type: "project",
+    skills: ["0→1 Product Delivery", "System Design"],
+    featured: true,
+    tech: ["React", "Node.js", "PostgreSQL"]
+  },
+  {
+    id: "gaia-project",
+    chapterId: "chapter-vision",
+    date: "Active",
+    sortDate: "2025-99",
+    company: "Personal",
+    type: "project",
+    skills: ["Self-Mastery", "Knowledge Systems"],
+    featured: false
+  },
+  {
+    id: "portfolio-refactor",
+    chapterId: "chapter-acceleration",
+    date: "Mar 2026",
+    sortDate: "2026-03",
+    company: "Personal",
+    type: "project",
+    skills: ["Next.js 15", "I18n", "AI Pairing"],
+    featured: false
+  }
+];

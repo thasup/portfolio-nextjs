@@ -1,0 +1,50 @@
+import type { ValueProposition } from '@/types/valueProposition'
+
+export const valuePropositions: ValueProposition[] = [
+  {
+    id: 'production-ai',
+    titleKey: 'propositions.production-ai.title',
+    descriptionKey: 'propositions.production-ai.description',
+    icon: 'Sparkles',
+    proofKey: 'propositions.production-ai.proof',
+    crossRef: 'project:ai-event-platform',
+    signalTag: 'production-ai',
+  },
+  {
+    id: 'product-thinking',
+    titleKey: 'propositions.product-thinking.title',
+    descriptionKey: 'propositions.product-thinking.description',
+    icon: 'Target',
+    proofKey: 'propositions.product-thinking.proof',
+    crossRef: 'timeline:fedx-guild',
+    clientValidation: 'edward-lee',
+  },
+  {
+    id: 'full-stack-delivery',
+    titleKey: 'propositions.full-stack-delivery.title',
+    descriptionKey: 'propositions.full-stack-delivery.description',
+    icon: 'Layers',
+    proofKey: 'propositions.full-stack-delivery.proof',
+    crossRef: 'section:skills',
+    signalTag: 'full-stack-delivery',
+  },
+  {
+    id: 'fast-domain-mastery',
+    titleKey: 'propositions.fast-domain-mastery.title',
+    descriptionKey: 'propositions.fast-domain-mastery.description',
+    icon: 'Zap',
+    proofKey: 'propositions.fast-domain-mastery.proof',
+    crossRef: 'section:timeline',
+    clientValidation: 'meow',
+  },
+  {
+    id: 'founder-trajectory',
+    titleKey: 'propositions.founder-trajectory.title',
+    descriptionKey: 'propositions.founder-trajectory.description',
+    icon: 'Rocket',
+    proofKey: 'propositions.founder-trajectory.proof',
+    crossRef: null,
+    signalTag: 'founder-trajectory',
+    clientValidation: 'andreas-ceo',
+  },
+]
