@@ -2,13 +2,12 @@ import Link from 'next/link'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
-import { featureFlags } from '@/lib/featureFlags'
+import { isNavAnchorEnabled } from '@/lib/featureFlags'
 import { useTranslations } from 'next-intl'
 
 export function Footer() {
   const t = useTranslations('footer')
-  const { showWipSections } = featureFlags
-  const footerNavItems = navigationItems.filter((item) => showWipSections || !item.isWip)
+  const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href))
 
   return (
     <footer className="border-t border-border bg-muted/30">

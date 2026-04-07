@@ -213,7 +213,7 @@ export const capabilities: Capability[] = [
       {
         nameKey: 'tech.subsystems.project_management',
         tools: [
-          { name: 'Jira', primary: true },
+          { name: 'Jira' },
           { name: 'Confluence' },
           { name: 'Notion' },
           { name: 'Airtable' },

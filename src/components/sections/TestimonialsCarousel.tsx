@@ -66,7 +66,7 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                       </div>
                     </div>
                     
-                    <p className="text-lg font-medium leading-relaxed">
+                    <p className="text-lg font-medium leading-relaxed italic">
                       &ldquo;{summaryQuote}&rdquo;
                     </p>
                     

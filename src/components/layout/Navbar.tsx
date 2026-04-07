@@ -12,30 +12,29 @@ import { siteConfig } from "@/data/siteConfig";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { featureFlags } from "@/lib/featureFlags";
+import { isNavAnchorEnabled } from "@/lib/featureFlags";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
-  const { showWipSections } = featureFlags;
 
   const baseItems = useMemo(
     () => [
       { id: "hero", label: t("about"), href: "/#hero" },
       { id: "timeline", label: t("experience"), href: "/#timeline" },
       { id: "projects", label: t("projects"), href: "/#projects" },
-      { id: "skills", label: t("skills"), href: "/#skills", isWip: true },
+      { id: "skills", label: t("skills"), href: "/#skills" },
       { id: "testimonials", label: t("testimonials"), href: "/#testimonials" },
-      { id: "value", label: t("value"), href: "/#value", isWip: true },
-      { id: "contact", label: t("contact"), href: "/#contact", isWip: true }
+      { id: "value", label: t("value"), href: "/#value" },
+      { id: "contact", label: t("contact"), href: "/#contact" }
     ],
     [t]
   );
 
   const navItems = useMemo(
-    () => baseItems.filter((item) => showWipSections || !item.isWip),
-    [baseItems, showWipSections]
+    () => baseItems.filter((item) => isNavAnchorEnabled(item.href)),
+    [baseItems]
   );
 
   const sectionIds = useMemo(

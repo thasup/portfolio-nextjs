@@ -12,7 +12,7 @@ export const projects: Project[] = [
     strategicPriority: 1,
     signals: ['production-ai', 'product-ownership', 'founder-trajectory'],
     proofRefs: ['join-teamstack', 'the-air-product', 'andreas-ceo'],
-    year: '2025',
+    year: '2026',
   },
   {
     slug: 'ai-event-platform',

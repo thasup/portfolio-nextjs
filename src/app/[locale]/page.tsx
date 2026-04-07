@@ -7,7 +7,7 @@ import { Testimonials } from '@/components/sections/Testimonials'
 import { ValueProp } from '@/components/sections/ValueProp'
 import { Contact } from '@/components/sections/Contact'
 import { siteConfig } from '@/data/siteConfig'
-import { featureFlags } from '@/lib/featureFlags'
+import { isSectionEnabled, Section } from '@/lib/featureFlags'
 import { fetchGitHubStats } from '@/lib/github'
 import { Skills } from '@/components/sections/Skills'
 
@@ -40,20 +40,19 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export default async function HomePage() {
-  const { showWipSections } = featureFlags
   const githubUsername = siteConfig.githubUrl.split('/').pop() || 'thasup'
   const githubStats = await fetchGitHubStats(githubUsername)
 
   return (
     <>
-      <HeroWithStats githubStats={githubStats} />
-      <Timeline />
-      <Projects />
-      <TechCapabilities />
-      {showWipSections && <Skills />}
-      <Testimonials />
-      {showWipSections && <ValueProp />}
-      {showWipSections && <Contact />}
+      {isSectionEnabled(Section.HERO) && <HeroWithStats githubStats={githubStats} />}
+      {isSectionEnabled(Section.TIMELINE) && <Timeline />}
+      {isSectionEnabled(Section.PROJECTS) && <Projects />}
+      {isSectionEnabled(Section.TECH_CAPABILITIES) && <TechCapabilities />}
+      {isSectionEnabled(Section.SKILLS) && <Skills />}
+      {isSectionEnabled(Section.TESTIMONIALS) && <Testimonials />}
+      {isSectionEnabled(Section.VALUE_PROP) && <ValueProp />}
+      {isSectionEnabled(Section.CONTACT) && <Contact />}
     </>
   )
 }
