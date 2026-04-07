@@ -7,6 +7,7 @@ const meta: Meta<typeof GlassButton> = {
   component: GlassButton,
   tags: ['autodocs'],
   parameters: {
+    layout: 'centered',
     docs: {
       description: {
         component: 'Interactive glassmorphism button with elevation levels, specular highlights, and liquid distortion effects. Supports hover animations and disabled states.'
@@ -30,9 +31,6 @@ const meta: Meta<typeof GlassButton> = {
     shine: {
       control: 'boolean',
     },
-  },
-  parameters: {
-    layout: 'centered',
   },
 };
 

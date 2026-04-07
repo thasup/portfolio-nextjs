@@ -6,7 +6,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { usePerformanceTier } from '@/hooks/usePerformanceTier';
 import { useSpecularHighlight } from '@/hooks/useSpecularHighlight';
 import { supportsBackdropFilter } from '@/lib/feature-detection';
-import { getDistortionConfig, getFilterId, shouldEnableDistortion } from '@/lib/glass-distortion';
+import { getFilterId, shouldEnableDistortion } from '@/lib/glass-distortion';
 import { SPRING_GENTLE } from '@/lib/springs';
 import { cn } from '@/lib/utils';
 import { DistortionConfig, DistortionIntensity, GlassElevation } from './glass-types';
