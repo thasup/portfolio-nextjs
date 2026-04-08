@@ -14,4 +14,5 @@ export const navigationItems: NavigationItem[] = [
   { label: 'Testimonials', href: '/#testimonials', isAnchor: true },
   { label: 'Value', href: '/#value', isAnchor: true },
   { label: 'Contact', href: '/#contact', isAnchor: true },
+  { label: 'Articles', href: '/articles', isAnchor: false },
 ]

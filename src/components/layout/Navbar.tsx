@@ -27,7 +27,8 @@ export function Navbar() {
       { id: "skills", label: t("skills"), href: "/#skills" },
       { id: "testimonials", label: t("testimonials"), href: "/#testimonials" },
       { id: "value", label: t("value"), href: "/#value" },
-      { id: "contact", label: t("contact"), href: "/#contact" }
+      { id: "contact", label: t("contact"), href: "/#contact" },
+      { id: "articles", label: t("articles"), href: "/articles" }
     ],
     [t]
   );
@@ -54,6 +55,11 @@ export function Navbar() {
   }, []);
 
   const isActive = (href: string) => {
+    // Handle non-anchor links (e.g., /articles)
+    if (!href.includes("#")) {
+      return false; // These are handled by the router's active state
+    }
+    // Handle anchor links (e.g., /#hero)
     if (!activeSection) return false;
     return href.includes(`#${activeSection}`);
   };

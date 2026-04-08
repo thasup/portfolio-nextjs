@@ -28,16 +28,20 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
   }));
 
   return (
-    <div className="min-h-screen py-24 px-4">
+    <div className="min-h-screen py-24 px-4 sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-12 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold">
-            {params.locale === 'th' ? 'บทความ' : 'Articles'}
+        {/* Section Header - Matches site design system */}
+        <div className="mb-16 space-y-4">
+          <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+            {params.locale === 'th' ? 'คลังความรู้' : 'Knowledge Hub'}
+          </span>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            {t('nav.articles')}
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl">
+          <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
             {params.locale === 'th' 
-              ? 'สำรวจบทความที่น่าสนใจเกี่ยวกับประวัติศาสตร์ เทคโนโลยี วัฒนธรรม และวิทยาศาสตร์'
-              : 'Explore fascinating articles about history, technology, culture, and science'}
+              ? 'สำรวจบทความเชิงลึกเกี่ยวกับประวัติศาสตร์ เทคโนโลยี วัฒนธรรม และวิทยาศาสตร์'
+              : 'Deep-dive articles exploring history, technology, culture, and science'}
           </p>
         </div>
 
