@@ -33,6 +33,7 @@ export interface Article {
   subtitle?: string;
   description: string;
   category: ArticleCategory;
+  tags?: string[];
   publishedDate: string;
   readingTime: number;
   heroImage: ArticleImage;

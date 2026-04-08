@@ -4,15 +4,19 @@ import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
 import { isNavAnchorEnabled } from '@/lib/featureFlags'
 import { useTranslations } from 'next-intl'
+import { articles } from '@/data/articles'
 
 export function Footer() {
   const t = useTranslations('footer')
-  const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href))
+  const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href) && item.isAnchor)
+  
+  // Get article slugs for footer
+  const articleSlugs = Object.keys(articles)
 
   return (
     <footer className="border-t border-border bg-muted/30">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div>
             <Link href="/" className="text-lg font-bold">
@@ -37,6 +41,33 @@ export function Footer() {
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Articles */}
+          <div>
+            <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              {t('articles')}
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/articles"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {t('allArticles')}
+                </Link>
+              </li>
+              {articleSlugs.slice(0, 3).map((slug) => (
+                <li key={slug}>
+                  <Link
+                    href={`/articles/${slug}`}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground line-clamp-1"
+                  >
+                    {articles[slug].en.title}
                   </Link>
                 </li>
               ))}

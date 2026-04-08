@@ -125,14 +125,6 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="my-4 h-px bg-border" />
-              {siteConfig.resumeUrl && (
-                <Button variant="outline" className="justify-start" asChild>
-                  <a href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
-                    <FileText className="mr-2 h-4 w-4" />
-                    {t("resume")}
-                  </a>
-                </Button>
-              )}
               <Button className="mt-2" asChild>
                 <Link href="/contact/" onClick={() => setOpen(false)}>
                   {t("hire_me")}
