@@ -112,8 +112,11 @@ async function fetchGraphQL(token: string, query: string, variables: Record<stri
 export async function fetchGitHubStats(username: string): Promise<GitHubStats | null> {
   const token = process.env.GITHUB_TOKEN
 
+  console.log('[GitHub API] Attempting to fetch stats for:', username)
+  console.log('[GitHub API] Token configured:', !!token)
+
   if (!token) {
-    console.warn('GITHUB_TOKEN not configured, skipping GitHub stats fetch')
+    console.warn('[GitHub API] GITHUB_TOKEN not configured, skipping GitHub stats fetch')
     return null
   }
 
@@ -154,12 +157,15 @@ export async function fetchGitHubStats(username: string): Promise<GitHubStats | 
   `
 
   try {
+    console.log('[GitHub API] Making GraphQL request...')
     const json = await fetchGraphQL(token, query, { username }) as GitHubResponse
 
     if (!json.data?.user) {
-      console.error('Invalid GitHub API response structure')
+      console.error('[GitHub API] Invalid response structure:', json)
       return null
     }
+
+    console.log('[GitHub API] ✓ Successfully fetched user data')
 
     const { contributionsCollection, pullRequests, issues, repositoriesContributedTo, repositories } = json.data.user
     const { contributionYears } = contributionsCollection
@@ -192,7 +198,7 @@ export async function fetchGitHubStats(username: string): Promise<GitHubStats | 
       0
     )
 
-    return {
+    const stats = {
       totalContributions,
       totalCommits: contributionsCollection.totalCommitContributions,
       totalPRs: pullRequests.totalCount,
@@ -202,8 +208,11 @@ export async function fetchGitHubStats(username: string): Promise<GitHubStats | 
       currentStreak: streaks.current,
       longestStreak: streaks.longest,
     }
+
+    console.log('[GitHub API] ✓ Stats compiled:', stats)
+    return stats
   } catch (error) {
-    console.error('Failed to fetch GitHub stats:', error)
+    console.error('[GitHub API] ✗ Failed to fetch GitHub stats:', error)
     return null
   }
 }
