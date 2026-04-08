@@ -4,7 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import { sarabun } from '@/lib/fonts'
 import { ThemeProvider } from 'next-themes'
 import Script from 'next/script'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { Navbar } from '@/components/layout/Navbar'
@@ -70,6 +70,8 @@ export default async function RootLayout({
   const { locale } = await params
   const messages = await getMessages()
   const chatbaseEmbedId = process.env.NEXT_PUBLIC_CHATBASE_EMBED_ID
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  const gtmId = process.env.NEXT_PUBLIC_GTM_MEASUREMENT_ID
 
   return (
     <html
@@ -99,9 +101,8 @@ export default async function RootLayout({
             </ModalProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
+        {gaId && <GoogleAnalytics gaId={gaId} />}
+        {gtmId && <GoogleTagManager gtmId={gtmId} />}
         {chatbaseEmbedId && (
           <Script
             id="chatbase-inline-loader"
