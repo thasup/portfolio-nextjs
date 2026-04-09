@@ -5,10 +5,10 @@ import { ArticleCategory } from '@/types/article';
 import { ArticleContent } from '@/components/articles/ArticleContent';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     locale: string;
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -24,7 +24,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
-  const article = getArticle(params.slug, params.locale);
+  const { locale, slug } = await params;
+  const article = getArticle(slug, locale);
   
   if (!article) {
     return {
@@ -35,8 +36,8 @@ export async function generateMetadata({ params }: ArticlePageProps) {
   const keywords = [
     article.category,
     ...article.tags || [],
-    params.locale === 'th' ? 'บทความ' : 'article',
-    params.locale === 'th' ? 'ประวัติศาสตร์' : 'history',
+    locale === 'th' ? 'บทความ' : 'article',
+    locale === 'th' ? 'ประวัติศาสตร์' : 'history',
   ].join(', ');
 
   return {
@@ -66,21 +67,22 @@ export async function generateMetadata({ params }: ArticlePageProps) {
       images: [article.heroImage.src],
     },
     alternates: {
-      canonical: `/articles/${params.slug}`,
+      canonical: `/articles/${slug}`,
       languages: {
-        en: `/en/articles/${params.slug}`,
-        th: `/th/articles/${params.slug}`,
+        en: `/en/articles/${slug}`,
+        th: `/th/articles/${slug}`,
       },
     },
   };
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = getArticle(params.slug, params.locale);
+  const { locale, slug } = await params;
+  const article = getArticle(slug, locale);
 
   if (!article) {
     notFound();
   }
 
-  return <ArticleContent article={article} locale={params.locale} />;
+  return <ArticleContent article={article} locale={locale} />;
 }
