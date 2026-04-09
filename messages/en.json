@@ -555,6 +555,9 @@
       "verify": "Verify Credential"
     }
   },
+  "articles": {
+    "contents": "Contents"
+  },
   "testimonials": {
     "label": "Testimonials",
     "title": "Voices from the Field",

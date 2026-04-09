@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Article, ArticleCategory } from '@/types/article';
 import { cn } from '@/lib/utils';
 import { parseMarkdown, buildHierarchicalToc, type TocItem } from '@/lib/markdownParser';
@@ -21,6 +22,7 @@ function getCategoryColor(category: ArticleCategory): string {
 }
 
 export function ArticleContent({ article, locale }: ArticleContentProps) {
+  const t = useTranslations('articles');
   const [activeSection, setActiveSection] = useState<string>('');
   const [hoveredTimeline, setHoveredTimeline] = useState(false);
   const [hoveredEvent, setHoveredEvent] = useState<number | null>(null);
@@ -329,7 +331,7 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
             <div className="sticky top-36">
               <nav className="bg-card rounded-lg border p-4 sm:p-6 shadow-sm">
                 <h3 className="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-wide">
-                  Contents
+                  {t('contents')}
                 </h3>
                 <ul className="space-y-1 text-sm">
                   {tocItems.map((item) => (

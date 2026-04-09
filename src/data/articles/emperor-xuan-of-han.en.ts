@@ -24,7 +24,15 @@ export const emperorXuanOfHanEn: Article = {
 
 This paranoia culminated in the Witchcraft Scandal of 91 BC, one of history's bloodiest palace purges. Jiang Chong, a cunning official with a personal vendetta against Crown Prince Liu Ju, exploited the emperor's superstitions by fabricating evidence of witchcraft. When wooden dolls were "discovered" in the Crown Prince's palace, Liu Ju was forced into rebellion.
 
-The five-day battle in Chang'an claimed tens of thousands of lives. Crown Prince Liu Ju, his mother Empress Wei, and virtually the entire family were executed or forced to suicide. Among the carnage, one life barely survived: an infant great-grandson named Liu Bingyi.`,
+The five-day battle in Chang'an claimed tens of thousands of lives. Crown Prince Liu Ju, his mother Empress Wei, and virtually the entire family were executed or forced to suicide. Among the carnage, one life barely survived: an infant great-grandson named Liu Bingyi.
+
+**The Infant in the Prison Cell: A Flicker of Light**
+
+Though only an innocent infant, the taint of rebellion charges condemned baby Liu Bingyi to imprisonment. His survival depended on Bing Ji, a low-ranking prison warden who recognized the child's innocence. Bing Ji risked everything, selecting the cleanest cells and hiring female prisoners who had recently given birth as wet nurses.
+
+The greatest crisis came when Emperor Wu, influenced by magicians claiming an "imperial aura" emanated from Chang'an's prisons, ordered all prisoners executed. When the eunuch arrived with the death warrant, Bing Ji made the boldest stand of his life—he barred the prison gates and declared: "Common prisoners cannot be killed at will, let alone the emperor's own great-grandson!" He held out until dawn, when Emperor Wu, coming to his senses, issued a general pardon.
+
+This miraculous escape marked the beginning of an extraordinary destiny. The infant who should have died in the darkest place in the empire would one day illuminate it.`,
       timeline: [
         {
           year: -91,
@@ -41,32 +49,28 @@ The five-day battle in Chang'an claimed tens of thousands of lives. Crown Prince
       ],
     },
     {
-      id: 'infant-in-prison',
-      title: 'The Infant in the Prison Cell',
-      content: `Amid the massacre, baby Liu Bingyi was spared but imprisoned. His survival depended on Bing Ji, a low-ranking prison warden who recognized the child's innocence. Bing Ji risked everything, selecting clean cells and hiring female prisoners as wet nurses.
-
-The greatest crisis came when Emperor Wu, influenced by magicians claiming an "imperial aura" emanated from Chang'an's prisons, ordered all prisoners executed. When the eunuch arrived with the death warrant, Bing Ji made the boldest stand of his life—he barred the prison gates and declared: "Common prisoners cannot be killed at will, let alone the emperor's own great-grandson!" He held out until dawn, when Emperor Wu, coming to his senses, issued a general pardon.
-
-This miraculous escape marked the beginning of an extraordinary destiny. The infant who should have died in the darkest place in the empire would one day illuminate it.`,
-    },
-    {
       id: 'commoner-life',
       title: 'Chapter 1: Growing Up Outside Palace Walls (91-74 BC)',
       content: `After his release, Liu Bingyi was raised by his maternal grandmother's family, the Shi clan—ordinary commoners. Though nominally a prince, his stipend was so meager he lived in dirt-floor houses in Chang'an's narrow alleys.
 
 Zhang He, a eunuch who had served his grandfather, became his guardian, paying for his education out of pocket. This poverty proved transformative. Unlike pampered princes, Liu Bingyi roamed marketplaces, befriended farmers, laborers, and low-ranking officials. This "street university" taught him what no Confucian text could: how corrupt local officials extorted peasants, how the justice system failed the poor, and how small fluctuations in grain prices meant life or death for farming families.
 
-He learned that people didn't need grand ideals—they needed fair governance and full bellies. These years also brought him genuine friendships untainted by political calculation, like Zhang Pengzu, who would later become a trusted general.`,
-    },
-    {
-      id: 'old-sword',
-      title: 'The Old Sword: Love with Xu Pingjun',
-      content: `When Liu Bingyi came of age, Zhang He's brother opposed marrying his niece to this "fallen prince with no future." Instead, Zhang He arranged his marriage to Xu Pingjun, daughter of a minor eunuch official.
+He learned that people didn't need grand ideals—they needed fair governance and full bellies. These years also brought him genuine friendships untainted by political calculation, like Zhang Pengzu, who would later become a trusted general.
+
+**The Old Sword: Love with Xu Pingjun**
+
+When Liu Bingyi came of age, Zhang He's brother opposed marrying his niece to this "fallen prince with no future." Instead, Zhang He arranged his marriage to Xu Pingjun, daughter of a minor eunuch official.
 
 Their wedding was simple, with no grand ceremonies or political alliances. Xu Pingjun married not a prince but a poor young man. She worked tirelessly—washing, weaving, cooking—keeping their household afloat through hardship. Together they welcomed a son (the future Emperor Yuan).
 
 This pure bond, forged in poverty, became the most sacred thing in Liu Bingyi's life. Years later, as emperor, he would defy the all-powerful Huo Guang to restore Xu Pingjun to her rightful place, creating the legendary "Edict Seeking the Old Sword"—one of Chinese history's most romantic gestures.`,
       timeline: [
+        {
+          year: -91,
+          era: 'BC',
+          title: 'Released from Prison',
+          description: 'Raised by the Shi clan as a commoner',
+        },
         {
           year: -74,
           era: 'BC',
@@ -101,20 +105,19 @@ For years, Emperor Xuan played the obedient puppet perfectly, never questioning 
       ],
     },
     {
-      id: 'seeking-old-sword',
-      title: 'The Edict Seeking the Old Sword',
+      id: 'cold-war-palace',
+      title: 'Chapter 3: Cold War in the Palace (74-68 BC)',
       content: `Though Emperor Xuan yielded on governance, one issue was non-negotiable: the position of Empress. Court officials, reading Huo Guang's intentions, prepared to recommend Huo Chengjun, Huo's daughter.
 
 Emperor Xuan made a brilliant political move. Without directly refusing, he issued an edict: "When I was poor, I had an old sword that was always with me. Now I miss that sword dearly. Can any official help me find this old sword?"
 
 This edict created the famous idiom "Deep Love for the Old Sword" (故剑情深). Astute officials understood the "old sword" symbolized Xu Pingjun, his wife who shared his hardships. That an all-powerful emperor remembered his poor wife instead of chasing palace beauties demonstrated extraordinary moral character. Even Huo's faction officials were moved, and they recommended Xu Pingjun as Empress.
 
-Huo Guang couldn't oppose this popular sentiment. It was Emperor Xuan's first quiet, beautiful political victory.`,
-    },
-    {
-      id: 'poison-cup',
-      title: 'Poison in the Medicine Cup',
-      content: `Though Huo Guang yielded, his wife Lady Xian burned with resentment. She couldn't accept her daughter losing to a former commoner. She waited for her chance.
+Huo Guang couldn't oppose this popular sentiment. It was Emperor Xuan's first quiet, beautiful political victory.
+
+**Poison in the Medicine Cup**
+
+Though Huo Guang yielded, his wife Lady Xian burned with resentment. She couldn't accept her daughter losing to a former commoner. She waited for her chance.
 
 In 71 BC, when Empress Xu was pregnant, Lady Xian bribed the royal physician Chunyu Yan to poison her. After giving birth to a princess, Empress Xu drank "medicine" laced with aconite and died in agony, leaving Emperor Xuan heartbroken—his only light in life extinguished forever.
 
@@ -125,6 +128,12 @@ Emperor Xuan wasn't fooled. He knew who the murderers were. But with all militar
 This convinced Huo Guang that Emperor Xuan was weak and dependent. But beneath that yielding facade, the young dragon was sharpening his claws in darkness, remembering every breath of this blood debt—waiting for the day Huo's protector would draw his last breath.`,
       timeline: [
         {
+          year: -74,
+          era: 'BC',
+          title: 'The Edict Seeking the Old Sword',
+          description: 'Successfully maneuvered to make his commoner wife Empress, creating the idiom "Deep Love for the Old Sword"',
+        },
+        {
           year: -71,
           era: 'BC',
           title: 'Murder of Empress Xu',
@@ -134,7 +143,7 @@ This convinced Huo Guang that Emperor Xuan was weak and dependent. But beneath t
           year: -70,
           era: 'BC',
           title: 'Huo Chengjun Made Empress',
-          description: 'Political move to reassure the Huo clan',
+          description: 'Swallowed his blood and appointed Huo Chengjun to lull the Huo clan',
         },
       ],
     },
@@ -155,12 +164,11 @@ Emperor Xuan promoted Huo Yu to "Grand Marshal"—a prestigious title, but strip
 
 He promoted Wei Xiang, an honest official who despised the Huo clan, to Grand Councillor, and decreed all officials could petition the emperor directly—cutting the Huo's chain of command.
 
-By the time the Huo clan realized their networks had been drained, they were already declawed tigers.`,
-    },
-    {
-      id: 'huo-destruction',
-      title: 'The Perfect Net: Foiling the Rebellion',
-      content: `As power slipped away, the Huo clan grew desperate. The final straw broke when Emperor Xuan quietly reopened files on Empress Xu's death and began interrogating palace physicians.
+By the time the Huo clan realized their networks had been drained, they were already declawed tigers.
+
+**The Perfect Net: Foiling the Rebellion**
+
+As power slipped away, the Huo clan grew desperate. The final straw broke when Emperor Xuan quietly reopened files on Empress Xu's death and began interrogating palace physicians.
 
 Lady Xian, terrified, finally confessed to her son and grandnephews that she had indeed murdered Empress Xu. Knowing conviction meant clan extermination, they formed a conspiracy to depose the emperor.
 
