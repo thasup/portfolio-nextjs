@@ -4,9 +4,9 @@ import { articles } from '@/data/articles';
 import { ArticleCategory } from '@/types/article';
 
 interface ArticlesPageProps {
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 }
 
 function getCategoryColor(category: ArticleCategory): string {
@@ -20,11 +20,12 @@ function getCategoryColor(category: ArticleCategory): string {
 }
 
 export default async function ArticlesPage({ params }: ArticlesPageProps) {
+  const { locale } = await params;
   const t = await getTranslations();
   
   const articlesList = Object.entries(articles).map(([slug, localeArticles]) => ({
     slug,
-    article: localeArticles[params.locale] || localeArticles.en,
+    article: localeArticles[locale] || localeArticles.en,
   }));
 
   return (
@@ -33,13 +34,13 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
         {/* Section Header - Matches site design system */}
         <div className="mb-16 space-y-4">
           <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-            {params.locale === 'th' ? 'คลังความรู้' : 'Knowledge Hub'}
+            {locale === 'th' ? 'คลังความรู้' : 'Knowledge Hub'}
           </span>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {t('nav.articles')}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            {params.locale === 'th' 
+            {locale === 'th' 
               ? 'สำรวจบทความเชิงลึกเกี่ยวกับประวัติศาสตร์ เทคโนโลยี วัฒนธรรม และวิทยาศาสตร์'
               : 'Deep-dive articles exploring history, technology, culture, and science'}
           </p>
@@ -49,7 +50,7 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
           {articlesList.map(({ slug, article }) => (
             <Link
               key={slug}
-              href={`/${params.locale}/articles/${slug}`}
+              href={`/${locale}/articles/${slug}`}
               className="group overflow-hidden rounded-lg border bg-card transition-all hover:shadow-lg"
             >
               <div className="aspect-video w-full overflow-hidden">
@@ -80,7 +81,7 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
                 
                 <div className="flex items-center justify-between pt-3 text-xs text-muted-foreground">
                   <time dateTime={article.publishedDate}>
-                    {new Date(article.publishedDate).toLocaleDateString(params.locale, {
+                    {new Date(article.publishedDate).toLocaleDateString(locale, {
                       year: 'numeric',
                       month: 'short',
                       day: 'numeric',
