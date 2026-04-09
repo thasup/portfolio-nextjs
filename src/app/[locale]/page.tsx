@@ -10,8 +10,9 @@ import { siteConfig } from '@/data/siteConfig'
 import { isSectionEnabled, Section } from '@/lib/featureFlags'
 import { fetchGitHubStats } from '@/lib/github'
 import { Skills } from '@/components/sections/Skills'
+import type { PageProps } from '@/types/next'
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: PageProps<{ locale: string }>) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'siteConfig' });
   const isThai = locale === 'th';

@@ -3,13 +3,12 @@ import { getArticle, getAllArticleSlugs } from '@/data/articles';
 import { getTranslations } from 'next-intl/server';
 import { ArticleCategory } from '@/types/article';
 import { ArticleContent } from '@/components/articles/ArticleContent';
+import type { PageProps } from '@/types/next';
 
-interface ArticlePageProps {
-  params: Promise<{
-    locale: string;
-    slug: string;
-  }>;
-}
+type ArticlePageProps = PageProps<{
+  locale: string;
+  slug: string;
+}>;
 
 export async function generateStaticParams() {
   const slugs = getAllArticleSlugs();

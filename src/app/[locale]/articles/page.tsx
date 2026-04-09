@@ -2,12 +2,11 @@ import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { articles } from '@/data/articles';
 import { ArticleCategory } from '@/types/article';
+import type { PageProps } from '@/types/next';
 
-interface ArticlesPageProps {
-  params: Promise<{
-    locale: string;
-  }>;
-}
+type ArticlesPageProps = PageProps<{
+  locale: string;
+}>;
 
 function getCategoryColor(category: ArticleCategory): string {
   const colors = {
