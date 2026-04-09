@@ -1,11 +1,13 @@
 'use client'
 
+import { useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Autoplay, A11y } from 'swiper/modules'
+import type { Swiper as SwiperType } from 'swiper'
+import { Pagination, Autoplay, A11y, Keyboard } from 'swiper/modules'
 import { type Testimonial } from '@/types/testimonial'
 import { Card, CardContent } from '@/components/ui/card'
-import { Quote } from 'lucide-react'
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
 import { useModal } from '@/hooks/useModal'
 
@@ -21,18 +23,44 @@ interface TestimonialCarouselProps {
 export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
   const t = useTranslations('testimonials')
   const { open } = useModal()
+  const swiperRef = useRef<SwiperType | null>(null)
 
   return (
-    <div className="pb-20">
+    <div className="pb-8 sm:pb-12 lg:pb-16 relative px-8 sm:px-12 lg:px-16">
       <Swiper
-        modules={[Pagination, Autoplay, A11y]}
+        modules={[Pagination, Autoplay, A11y, Keyboard]}
+        onSwiper={(swiper) => { swiperRef.current = swiper }}
         spaceBetween={24}
         slidesPerView={1}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 6000, disableOnInteraction: true }}
+        centeredSlides={false}
+        loop={true}
+        speed={800}
+        grabCursor={true}
+        roundLengths={true}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+          dynamicMainBullets: 3,
+        }}
+        watchOverflow={true}
+        keyboard={{
+          enabled: true,
+          onlyInViewport: true,
+        }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        touchEventsTarget="wrapper"
+        threshold={5}
+        resistance={true}
+        resistanceRatio={0.5}
         breakpoints={{
-          768: { slidesPerView: 2, spaceBetween: 20 },
-          1024: { slidesPerView: 2, spaceBetween: 20 },
+          640: { slidesPerView: 1.2, spaceBetween: 16, centeredSlides: true },
+          768: { slidesPerView: 2, spaceBetween: 20, centeredSlides: false },
+          1024: { slidesPerView: 2.2, spaceBetween: 24, centeredSlides: false },
+          1280: { slidesPerView: 2.5, spaceBetween: 28, centeredSlides: false },
         }}
         className="testimonial-swiper w-full pt-0.5"
       >
@@ -91,6 +119,24 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
           )
         })}
       </Swiper>
+
+      {/* Custom Navigation Buttons - Left & Right Side */}
+      <button
+        onClick={() => swiperRef.current?.slidePrev()}
+        className="testimonial-nav-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 -translate-x-3 sm:-translate-x-5 lg:-translate-x-8 items-center justify-center rounded-full bg-background/90 border border-border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-background hover:shadow-xl hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:h-12 lg:w-12"
+        aria-label={t('carousel.prevSlide')}
+        type="button"
+      >
+        <ChevronLeft className="h-5 w-5 text-foreground lg:h-6 lg:w-6" />
+      </button>
+      <button
+        onClick={() => swiperRef.current?.slideNext()}
+        className="testimonial-nav-next absolute right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 translate-x-3 sm:translate-x-5 lg:translate-x-8 items-center justify-center rounded-full bg-background/90 border border-border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-background hover:shadow-xl hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:h-12 lg:w-12"
+        aria-label={t('carousel.nextSlide')}
+        type="button"
+      >
+        <ChevronRight className="h-5 w-5 text-foreground lg:h-6 lg:w-6" />
+      </button>
     </div>
   )
 }

@@ -569,10 +569,14 @@
       "modalTitle": "Testimonial from",
       "notFound": "Testimonial not found"
     },
+    "carousel": {
+      "prevSlide": "Previous testimonial",
+      "nextSlide": "Next testimonial"
+    },
     "entries": {
       "andreas": {
         "authorRole": "Founder and Chief Executive Officer",
-        "relationship": "Direct manager / CEO · 1+ year",
+        "relationship": "Direct manager / CEO · 4+ years",
         "proofThemeLabel": "Business Impact & Value Creation",
         "summaryQuote": "I would rehire him without hesitation.",
         "fullQuote": "I worked with First from April 2022 onward, and for most of that time he was part of a greenfield team delivering work for a Japanese-American technology company across projects spanning Web3, AI, and other emerging areas. \n\nFirst stands out for a combination that is not especially common: he is able to work very independently and deliver consistently, while also looking beyond the task in front of him and pushing for things to be improved. He is creative, systematic, and forward-leaning in the best sense. \n\nHe does not settle for average work, and his instinct is usually to ask how something can be made better, clearer, or more effective. He brought energy and momentum to the team, not in a loud way, but in a way that helped move things forward. I would rehire him without hesitation."
