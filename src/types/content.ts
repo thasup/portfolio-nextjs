@@ -2,7 +2,7 @@ export type SignalId =
   | 'production-ai'
   | 'product-ownership'
   | 'systems-thinking'
-  | 'founder-trajectory'
+  | 'collaborative-growth'
   | 'cross-functional-trust'
   | 'knowledge-sharing'
   | 'full-stack-delivery'

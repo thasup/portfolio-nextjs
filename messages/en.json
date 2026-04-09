@@ -648,34 +648,34 @@
   },
   "value": {
     "label": "Value Proposition",
-    "title": "Why Work With Me",
-    "subtitle": "5 things I bring to every team",
-    "evidence": "Read Evidence",
+    "title": "How I Add Value",
+    "subtitle": "Core principles I bring to every engineering team",
+    "evidence": "View Example",
     "propositions": {
       "production-ai": {
-        "title": "Ships Production AI",
-        "description": "Integrated OpenAI SDK into a live event platform used by real organizers — not a demo, not a side project. I know the difference between AI that works in a notebook and AI that survives production.",
-        "proof": "AI Event Platform + The Air Product at TeamStack"
+        "title": "Pragmatic AI Integration",
+        "description": "I focus on the practical implementation of LLMs into existing systems. Instead of chasing hype, I prioritize user experience, system reliability, and building AI features that solve actual business problems.",
+        "proof": "Developed an Event Creation & Management Platform utilizing OpenAI SDK and generative AI solutions to simplify experiences for organizers and attendees[cite: 68, 140, 141]."
       },
       "product-thinking": {
-        "title": "Thinks Product, Not Tickets",
-        "description": "I host guild sessions, write internal docs, and built a personal second brain to manage my own learning system. Engineers who think about product impact ship features that actually matter to the business.",
-        "proof": "FEDx Guild (434 days) + MAQE Website v5 ownership"
+        "title": "Product-Minded Engineering",
+        "description": "I align technical decisions with business objectives. By maintaining clear internal documentation and actively sharing knowledge, I help ensure the team ships features that deliver measurable impact.",
+        "proof": "Hosted the 4th-gen FeDX guild across 50+ sessions and maintained the company's open-source standard guideline linting packages[cite: 48, 49, 55, 138]."
       },
       "full-stack-delivery": {
-        "title": "Owns the Full Delivery Chain",
-        "description": "From Figma handoff to AWS deployment. No waiting for specialists, no throwing over the fence. From MEP blueprints to Solidity contracts — I've always operated across the full system.",
-        "proof": "7 years across MEP → Frontend → Full-stack → AI"
+        "title": "End-to-End System Ownership",
+        "description": "Leveraging a diverse background across different engineering disciplines, I understand how complex systems intersect. I take responsibility for the full lifecycle of a feature, from initial design handoff to final deployment.",
+        "proof": "Transitioned from a Mechanical Engineer to delivering full-stack solutions using Vue 3, NestJS, Docker, and AWS[cite: 19, 108, 110, 127, 144]."
       },
       "fast-domain-mastery": {
-        "title": "Masters New Domains Under Pressure",
-        "description": "MEP Engineer → self-taught dev → Web3 → AI. Every domain switch delivered production software. I don't spend months studying before contributing — I learn by shipping.",
-        "proof": "Solidity, Web3.js, OpenAI SDK — all shipped in production"
+        "title": "Adaptable Problem Solver",
+        "description": "Technology moves quickly, and I adapt with it. Whether transitioning into modern web frameworks or exploring emerging tech, I focus on strong engineering fundamentals to learn fast and contribute quickly.",
+        "proof": "Self-taught programmer who successfully integrated and shipped production applications utilizing Web3, Solidity, Smart Contracts, and AI technologies[cite: 19, 75, 116, 147]."
       },
-      "founder-trajectory": {
-        "title": "Thinks Like an Owner — Because I'm Becoming One",
-        "description": "Every project, certification, and skill has been deliberate preparation. The Gaia Project is my personal life OS. The Air Product is my first product built with founder proximity. SaaS in Southeast Asia is the destination.",
-        "proof": "TeamStack → The Air Product → 3-Year SaaS Strategy"
+      "collaborative-growth": {
+        "title": "High-Ownership Execution",
+        "description": "I operate with a high degree of autonomy while remaining deeply aligned with team goals. I treat the products I work on with an ownership mindset, ensuring quality, maintainability, and sustainable growth.",
+        "proof": "Optimized corporate website performance, achieving a 41% increase in performance scores and a 29% reduction in loading times[cite: 59]."
       }
     }
   },
@@ -732,7 +732,7 @@
       "production-ai": "Production AI",
       "product-ownership": "Product Ownership",
       "systems-thinking": "Systems Thinking",
-      "founder-trajectory": "Founder Trajectory",
+      "collaborative-growth": "Collaborative Growth",
       "cross-functional-trust": "Cross-Functional Trust",
       "knowledge-sharing": "Knowledge Sharing",
       "full-stack-delivery": "Full-Stack Delivery"

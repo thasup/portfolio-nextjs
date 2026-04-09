@@ -38,13 +38,13 @@ export const valuePropositions: ValueProposition[] = [
     clientValidation: 'meow',
   },
   {
-    id: 'founder-trajectory',
-    titleKey: 'propositions.founder-trajectory.title',
-    descriptionKey: 'propositions.founder-trajectory.description',
+    id: 'collaborative-growth',
+    titleKey: 'propositions.collaborative-growth.title',
+    descriptionKey: 'propositions.collaborative-growth.description',
     icon: 'Rocket',
-    proofKey: 'propositions.founder-trajectory.proof',
+    proofKey: 'propositions.collaborative-growth.proof',
     crossRef: null,
-    signalTag: 'founder-trajectory',
+    signalTag: 'collaborative-growth',
     clientValidation: 'andreas-ceo',
   },
 ]

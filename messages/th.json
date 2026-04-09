@@ -648,34 +648,34 @@
   },
   "value": {
     "label": "คุณค่าที่มอบให้",
-    "title": "ทำไมต้องร่วมงานกับผม",
-    "subtitle": "5 สิ่งที่ผมนำไปให้ทุกทีม",
-    "evidence": "อ่านรายละเอียด",
+    "title": "ความสามารถที่ผมมอบให้",
+    "subtitle": "หลักการหลักที่ผมนำไปสู่ทุกทีมวิศวกรรม",
+    "evidence": "ดูตัวอย่าง",
     "propositions": {
       "production-ai": {
-        "title": "Ship Production AI ได้จริง",
-        "description": "Integrate OpenAI SDK เข้าสู่ event platform จริงที่ใช้โดยผู้จัดงานจริง — ไม่ใช่ demo ไม่ใช่ side project ผมรู้ความแตกต่างระหว่าง AI ที่ทำงานใน notebook และ AI ที่รอดใน production",
-        "proof": "AI Event Platform + The Air Product ที่ TeamStack"
+        "title": "Pragmatic AI Integration",
+        "description": "I focus on the practical implementation of LLMs into existing systems. Instead of chasing hype, I prioritize user experience, system reliability, and building AI features that solve actual business problems.",
+        "proof": "Developed an Event Creation & Management Platform utilizing OpenAI SDK and generative AI solutions to simplify experiences for organizers and attendees[cite: 68, 140, 141]."
       },
       "product-thinking": {
-        "title": "คิดเรื่อง Product ไม่ใช่แค่ Ticket",
-        "description": "ผมจัด guild sessions เขียน internal docs และสร้าง second brain ส่วนตัวเพื่อจัดการระบบการเรียนรู้ของตัวเอง วิศวกรที่คิดถึง product impact จะ ship features ที่มีความหมายต่อธุรกิจจริงๆ",
-        "proof": "FEDx Guild (434 วัน) + MAQE Website v5 ownership"
+        "title": "Product-Minded Engineering",
+        "description": "I align technical decisions with business objectives. By maintaining clear internal documentation and actively sharing knowledge, I help ensure the team ships features that deliver measurable impact.",
+        "proof": "Hosted the 4th-gen FeDX guild across 50+ sessions and maintained the company's open-source standard guideline linting packages[cite: 48, 49, 55, 138]."
       },
       "full-stack-delivery": {
-        "title": "เป็นเจ้าของ Delivery Chain ทั้งหมด",
-        "description": "จาก Figma handoff ถึง AWS deployment ไม่ต้องรอ specialists ไม่โยนข้ามรั้ว จาก MEP blueprints ถึง Solidity contracts — ผมดำเนินงานข้ามระบบทั้งหมดเสมอ",
-        "proof": "7 ปีข้าม MEP → Frontend → Full-stack → AI"
+        "title": "End-to-End System Ownership",
+        "description": "Leveraging a diverse background across different engineering disciplines, I understand how complex systems intersect. I take responsibility for the full lifecycle of a feature, from initial design handoff to final deployment.",
+        "proof": "Transitioned from a Mechanical Engineer to delivering full-stack solutions using Vue 3, NestJS, Docker, and AWS[cite: 19, 108, 110, 127, 144]."
       },
       "fast-domain-mastery": {
-        "title": "เชี่ยวชาญโดเมนใหม่ภายใต้แรงกดดัน",
-        "description": "วิศวกร MEP → นักพัฒนาที่สอนตัวเอง → Web3 → AI การเปลี่ยนโดเมนทุกครั้งส่งมอบซอฟต์แวร์ production ผมไม่ใช้เดือนๆ ในการศึกษาก่อนมีส่วนร่วม — ผมเรียนรู้โดยการ ship",
-        "proof": "Solidity, Web3.js, OpenAI SDK — ทุกอย่าง ship ใน production"
+        "title": "Adaptable Problem Solver",
+        "description": "Technology moves quickly, and I adapt with it. Whether transitioning into modern web frameworks or exploring emerging tech, I focus on strong engineering fundamentals to learn fast and contribute quickly.",
+        "proof": "Self-taught programmer who successfully integrated and shipped production applications utilizing Web3, Solidity, Smart Contracts, and AI technologies[cite: 19, 75, 116, 147]."
       },
-      "founder-trajectory": {
-        "title": "คิดแบบเจ้าของ — เพราะผมกำลังจะเป็น",
-        "description": "ทุก project ใบรับรอง และทักษะเป็นการเตรียมตัวโดยตั้งใจ Gaia Project คือ life OS ส่วนตัว The Air Product คือผลิตภัณฑ์แรกที่สร้างใกล้ชิด founder SaaS ใน Southeast Asia คือจุดหมาย",
-        "proof": "TeamStack → The Air Product → กลยุทธ์ SaaS 3 ปี"
+      "collaborative-growth": {
+        "title": "High-Ownership Execution",
+        "description": "I operate with a high degree of autonomy while remaining deeply aligned with team goals. I treat the products I work on with an ownership mindset, ensuring quality, maintainability, and sustainable growth.",
+        "proof": "Optimized corporate website performance, achieving a 41% increase in performance scores and a 29% reduction in loading times[cite: 59]."
       }
     }
   },
@@ -732,7 +732,7 @@
       "production-ai": "Production AI",
       "product-ownership": "Product Ownership",
       "systems-thinking": "Systems Thinking",
-      "founder-trajectory": "Founder Trajectory",
+      "collaborative-growth": "Collaborative Growth",
       "cross-functional-trust": "Cross-Functional Trust",
       "knowledge-sharing": "Knowledge Sharing",
       "full-stack-delivery": "Full-Stack Delivery"
