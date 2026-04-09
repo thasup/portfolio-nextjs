@@ -8,7 +8,7 @@
  * @example
  * type ArticlePageProps = PageProps<{ slug: string; locale: string }>;
  */
-export type PageProps<T extends Record<string, string> = {}> = {
+export type PageProps<T extends Record<string, string> = Record<string, never>> = {
   params: Promise<T>;
   searchParams?: Promise<Record<string, string | string[]>>;
 };
