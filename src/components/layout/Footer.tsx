@@ -4,14 +4,11 @@ import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
 import { isNavAnchorEnabled } from '@/lib/featureFlags'
 import { useTranslations } from 'next-intl'
-import { articles } from '@/data/articles'
 
 export function Footer() {
   const t = useTranslations('footer')
   const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href) && item.isAnchor)
   
-  // Get article slugs for footer
-  const articleSlugs = Object.keys(articles)
 
   return (
     <footer className="border-t border-border bg-muted/30">
@@ -61,16 +58,6 @@ export function Footer() {
                   {t('allArticles')}
                 </Link>
               </li>
-              {articleSlugs.slice(0, 3).map((slug) => (
-                <li key={slug}>
-                  <Link
-                    href={`/articles/${slug}`}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground line-clamp-1"
-                  >
-                    {articles[slug].en.title}
-                  </Link>
-                </li>
-              ))}
             </ul>
           </div>
 

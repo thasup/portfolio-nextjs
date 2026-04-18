@@ -649,33 +649,33 @@
   "value": {
     "label": "Value Proposition",
     "title": "How I Add Value",
-    "subtitle": "Core principles I bring to every engineering team",
+    "subtitle": "Core principles I bring to every product and team",
     "evidence": "View Example",
     "propositions": {
-      "production-ai": {
-        "title": "Pragmatic AI Integration",
-        "description": "I focus on the practical implementation of LLMs into existing systems. Instead of chasing hype, I prioritize user experience, system reliability, and building AI features that solve actual business problems.",
-        "proof": "Developed an Event Creation & Management Platform utilizing OpenAI SDK and generative AI solutions to simplify experiences for organizers and attendees[cite: 68, 140, 141]."
-      },
       "product-thinking": {
-        "title": "Product-Minded Engineering",
-        "description": "I align technical decisions with business objectives. By maintaining clear internal documentation and actively sharing knowledge, I help ensure the team ships features that deliver measurable impact.",
-        "proof": "Hosted the 4th-gen FeDX guild across 50+ sessions and maintained the company's open-source standard guideline linting packages[cite: 48, 49, 55, 138]."
+        "title": "Customer-Focused Architecture",
+        "description": "I align technical decisions directly with business objectives and user needs. Instead of just writing code, I focus on the end-user experience, ensuring that every shipped feature solves real problems and drives measurable value.",
+        "proof": "Optimized corporate website performance, achieving a 41% increase in performance scores and a 29% reduction in loading times. [cite: 59]"
+      },
+      "production-ai": {
+        "title": "Pragmatic Tech Integration",
+        "description": "I implement emerging technologies like Generative AI and Web3 with a focus on practical utility over hype. I build reliable, production-ready systems that simplify user experiences rather than complicating the tech stack.",
+        "proof": "Developed an Event Creation Platform utilizing the OpenAI SDK to simplify the experience for organizers and attendees. [cite: 68]"
       },
       "full-stack-delivery": {
         "title": "End-to-End System Ownership",
-        "description": "Leveraging a diverse background across different engineering disciplines, I understand how complex systems intersect. I take responsibility for the full lifecycle of a feature, from initial design handoff to final deployment.",
-        "proof": "Transitioned from a Mechanical Engineer to delivering full-stack solutions using Vue 3, NestJS, Docker, and AWS[cite: 19, 108, 110, 127, 144]."
+        "description": "From initial design handoff to cloud deployment, I take full responsibility for the delivery lifecycle. I proactively identify pipeline bottlenecks and optimize infrastructure to accelerate shipping velocity without sacrificing quality.",
+        "proof": "Transitioned from Mechanical Engineering [cite: 86] to delivering full-stack solutions using Vue 3, NestJS, Docker, and AWS. [cite: 71]"
       },
       "fast-domain-mastery": {
-        "title": "Adaptable Problem Solver",
-        "description": "Technology moves quickly, and I adapt with it. Whether transitioning into modern web frameworks or exploring emerging tech, I focus on strong engineering fundamentals to learn fast and contribute quickly.",
-        "proof": "Self-taught programmer who successfully integrated and shipped production applications utilizing Web3, Solidity, Smart Contracts, and AI technologies[cite: 19, 75, 116, 147]."
+        "title": "Relentless Domain Mastery",
+        "description": "My cross-disciplinary engineering foundation allows me to rapidly adapt to new frameworks. I master complex domains under pressure, driving internal innovation and delivering robust solutions independently.",
+        "proof": "Self-taught programmer [cite: 19] who successfully shipped production applications utilizing Web3, Solidity, Smart Contracts, and AI. [cite: 68, 71, 75]"
       },
       "collaborative-growth": {
-        "title": "High-Ownership Execution",
-        "description": "I operate with a high degree of autonomy while remaining deeply aligned with team goals. I treat the products I work on with an ownership mindset, ensuring quality, maintainability, and sustainable growth.",
-        "proof": "Optimized corporate website performance, achieving a 41% increase in performance scores and a 29% reduction in loading times[cite: 59]."
+        "title": "Cultural Force Multiplier",
+        "description": "A great engineer ships code; a technical leader elevates the team. I actively foster a collaborative environment by leading knowledge-sharing guilds, maintaining open-source standards, and building systems that multiply the organization's output.",
+        "proof": "Hosted the FeDX guild across 50+ sessions [cite: 48, 49], initiated 'Remote Roast' to curb burnout [cite: 51], and maintained internal open-source linting standards. [cite: 55]"
       }
     }
   },
