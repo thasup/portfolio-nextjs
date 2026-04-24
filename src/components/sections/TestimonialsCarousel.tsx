@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Swiper as SwiperType } from 'swiper'
 import { Pagination, Autoplay, A11y, Keyboard } from 'swiper/modules'
 import { type Testimonial } from '@/types/testimonial'
-import { Card, CardContent } from '@/components/ui/card'
+
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
 import { useModal } from '@/hooks/useModal'
@@ -72,8 +72,8 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
 
           return (
             <SwiperSlide key={testimonial.id} className="h-auto flex pb-2">
-              <Card
-                className="testimonial-card flex h-full flex-col cursor-pointer border-border bg-background transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+              <div
+                className="testimonial-card card flex h-full flex-col cursor-pointer transition-all duration-300 hover:border-[var(--color-ink-2)] hover:-translate-y-1"
                 onClick={() => open({ type: 'testimonial', id: testimonial.id })}
                 role="button"
                 tabIndex={0}
@@ -85,36 +85,36 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
                 }}
                 aria-label={`${t('card.ariaLabelRead')} ${testimonial.authorName}, ${authorRole}`}
               >
-                <CardContent className="p-8 flex flex-1 flex-col justify-between gap-6 min-h-[280px] md:min-h-[320px]">
+                <div className="p-8 flex flex-1 flex-col justify-between gap-6 min-h-[280px] md:min-h-[320px]">
                   <div className="flex flex-col gap-4">
                     <div className="flex items-start justify-between gap-4">
-                      <Quote className="h-8 w-8 text-primary/20 shrink-0" />
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium uppercase tracking-wider">
+                      <Quote className="h-8 w-8 text-[var(--color-praxis-accent)] opacity-20 shrink-0" />
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-[var(--color-praxis-accent-soft)] text-[var(--color-praxis-accent)] text-xs font-medium uppercase tracking-wider">
                         {proofThemeLabel}
                       </div>
                     </div>
                     
-                    <p className="text-lg font-medium leading-relaxed italic">
+                    <p className="font-display text-lg font-medium leading-relaxed italic text-[var(--color-ink)]">
                       &ldquo;{summaryQuote}&rdquo;
                     </p>
                     
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-[var(--color-ink-3)]">
                       {t('card.tapToRead')}
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-4 pt-4 border-t border-border/50">
-                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary shrink-0">
+                  <div className="flex items-center gap-4 pt-4 border-t border-[var(--color-line-soft)]">
+                    <div className="h-12 w-12 rounded-full bg-[var(--color-paper-2)] border border-[var(--color-line)] flex items-center justify-center font-bold text-[var(--color-ink)] shrink-0">
                       {getInitials(testimonial.authorName)}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="font-semibold truncate">{testimonial.authorName}</div>
-                      <div className="text-sm text-muted-foreground truncate">{authorRole}</div>
-                      <div className="text-xs text-muted-foreground/80 truncate">{relationship}</div>
+                      <div className="font-semibold truncate text-[var(--color-ink)]">{testimonial.authorName}</div>
+                      <div className="text-sm text-[var(--color-ink-2)] truncate">{authorRole}</div>
+                      <div className="text-xs text-[var(--color-ink-3)] truncate">{relationship}</div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </SwiperSlide>
           )
         })}
@@ -123,19 +123,19 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
       {/* Custom Navigation Buttons - Left & Right Side */}
       <button
         onClick={() => swiperRef.current?.slidePrev()}
-        className="testimonial-nav-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 -translate-x-3 sm:-translate-x-5 lg:-translate-x-8 items-center justify-center rounded-full bg-background/90 border border-border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-background hover:shadow-xl hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:h-12 lg:w-12"
+        className="testimonial-nav-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 -translate-x-3 sm:-translate-x-5 lg:-translate-x-8 items-center justify-center rounded-full bg-[var(--color-paper)] border border-[var(--color-line)] shadow-sm transition-all duration-300 hover:scale-110 hover:border-[var(--color-ink-3)] focus-visible:outline-none lg:h-12 lg:w-12"
         aria-label={t('carousel.prevSlide')}
         type="button"
       >
-        <ChevronLeft className="h-5 w-5 text-foreground lg:h-6 lg:w-6" />
+        <ChevronLeft className="h-5 w-5 text-[var(--color-ink)] lg:h-6 lg:w-6" />
       </button>
       <button
         onClick={() => swiperRef.current?.slideNext()}
-        className="testimonial-nav-next absolute right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 translate-x-3 sm:translate-x-5 lg:translate-x-8 items-center justify-center rounded-full bg-background/90 border border-border shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-background hover:shadow-xl hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:h-12 lg:w-12"
+        className="testimonial-nav-next absolute right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 translate-x-3 sm:translate-x-5 lg:translate-x-8 items-center justify-center rounded-full bg-[var(--color-paper)] border border-[var(--color-line)] shadow-sm transition-all duration-300 hover:scale-110 hover:border-[var(--color-ink-3)] focus-visible:outline-none lg:h-12 lg:w-12"
         aria-label={t('carousel.nextSlide')}
         type="button"
       >
-        <ChevronRight className="h-5 w-5 text-foreground lg:h-6 lg:w-6" />
+        <ChevronRight className="h-5 w-5 text-[var(--color-ink)] lg:h-6 lg:w-6" />
       </button>
     </div>
   )

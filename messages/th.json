@@ -11,6 +11,7 @@
     "experience": "ประสบการณ์",
     "testimonials": "คำนิยม",
     "articles": "บทความ",
+    "learn": "Praxis",
     "sr_navigation": "การนำทาง",
     "open_menu": "เปิดเมนู",
     "menu_title": "เมนูการนำทาง"
@@ -357,7 +358,7 @@
       "whatIOwned": "เป็นเจ้าของผลิตภัณฑ์ทั้งหมด ตั้งแต่ architecture การกำหนดฟีเจอร์ ไปจนถึงความพร้อมในการ release"
     },
     "tangier-dao": {
-      "title": "Tangier — วงการให้แบบกระจายศูนย์",
+      "title": "Tangier — องค์กรอัตโนมัติแบบกระจายศูนย์บน Web3",
       "tagline": "การระดมทุนชุมชนแบบ trustless บน Ethereum",
       "problemSummary": "ชุมชนต้องการระบบ governance และการจัดสรรเงินที่โปร่งใสและแก้ไขย้อนหลังไม่ได้",
       "problem": "โจทย์คือการสร้างระบบ governance ที่ชุมชนไว้วางใจได้จริง ไม่ใช่แค่หน้าตาสวย แต่ต้องมี smart contract logic ที่รองรับข้อเสนอ การโหวต และ treasury behavior แบบ on-chain",
@@ -373,10 +374,10 @@
       "whatIOwned": "Solidity contracts, การส่งมอบ frontend ทั้งหมด และสถาปัตยกรรมการเชื่อม Web3"
     },
     "token-gating": {
-      "title": "Token Gating — ควบคุมการเข้าถึงด้วย NFT",
+      "title": "Token Gating — ระบบควบคุมการเข้าถึงอีเว้นท์ด้วย NFT",
       "tagline": "NFT ของคุณคือตั๋ว ตรวจสอบได้บนหลาย chain",
-      "problemSummary": "ลูกค้าต้องการควบคุมการเข้าถึงด้วยการถือครอง NFT โดยไม่ทำให้ผู้ใช้เจอ friction สูงเกินไป",
-      "problem": "การควบคุมการเข้าถึงด้วย NFT ไม่ได้ยากแค่เรื่องการตรวจสอบ token แต่ยากที่การผสาน wallet flow, backend checks และการใช้งานจริงให้ smooth พอสำหรับผู้ใช้",
+      "problemSummary": "ลูกค้าต้องการควบคุมการเข้าถึงอีเว้นท์ด้วยการถือครอง NFT โดยไม่ทำให้ผู้ใช้เจอ friction สูงเกินไป",
+      "problem": "การควบคุมการเข้าถึงอีเว้นท์ด้วย NFT ไม่ได้ยากแค่เรื่องการตรวจสอบ token แต่ยากที่การผสาน wallet flow, backend checks และการใช้งานจริงให้ smooth พอสำหรับผู้ใช้",
       "approach": "ผมสร้างระบบ reusable ที่เชื่อม frontend, API และ Web3 checks เข้าด้วยกัน เพื่อให้การตรวจสอบสิทธิ์ใช้งานทำได้จริงใน production",
       "features": [
         "การตรวจสอบสิทธิ์จากการถือครอง NFT",
@@ -418,7 +419,7 @@
       "whatIOwned": "การส่งมอบ React, GraphQL, Apollo frontend และสถาปัตยกรรม Magento integration"
     },
     "maqe-website": {
-      "title": "MAQE Website v5",
+      "title": "เว็บไซต์ MAQE v5",
       "tagline": "งาน ownership เต็มรูปแบบของ production asset",
       "problemSummary": "เว็บไซต์องค์กรต้องการการดูแลทั้งด้าน architecture, design implementation, performance และ maintenance อย่างต่อเนื่อง",
       "problem": "ความท้าทายของเว็บไซต์องค์กรไม่ได้จบแค่ launch แต่รวมถึงการดูแลสินทรัพย์ production ที่ต้องเชื่อม design quality กับความเสถียรระยะยาว",
@@ -722,8 +723,9 @@
   "footer": {
     "headline": "นักพัฒนาซอฟต์แวร์โดยวิชาชีพ นักเรียนรู้ตลอดชีวิตโดยตัวตน",
     "navigation": "เมนูนำทาง",
+    "resources": "อื่นๆ",
     "articles": "บทความ",
-    "allArticles": "บทความทั้งหมด",
+    "learn": "Praxis",
     "connect": "ติดต่อ",
     "allRightsReserved": "สงวนลิขสิทธิ์."
   },
@@ -735,7 +737,8 @@
       "collaborative-growth": "Collaborative Growth",
       "cross-functional-trust": "Cross-Functional Trust",
       "knowledge-sharing": "Knowledge Sharing",
-      "full-stack-delivery": "Full-Stack Delivery"
+      "full-stack-delivery": "Full-Stack Delivery",
+      "founder-trajectory": "เส้นทางสู่ Founder"
     }
   },
   "site": {
@@ -757,10 +760,150 @@
       "learner": "ผู้เรียนรู้ตลอดชีวิต"
     },
     "trustHighlights": [
-      "AWS Certified Cloud Practitioner · 2025",
+      "AWS Certified Cloud Practitioner",
       "TOEIC 915/990 · ความพร้อมด้านภาษาอังกฤษ",
       "MEP Engineering → Software → AI",
       "กรุงเทพฯ ประเทศไทย · เปิดรับโอกาสระดับนานาชาติ"
     ]
+  },
+  "praxis": {
+    "notInvited": {
+      "heading": "PRAXIS เปิดให้เข้าเฉพาะผู้ที่ได้รับเชิญเท่านั้น",
+      "body": "พื้นที่เรียนรู้เล็ก ๆ ที่ตั้งใจให้ฟีดแบ็กใกล้ชิดและปรับปรุงได้เร็ว ตอนนี้อยู่ในช่วง Phase 1 กับผู้เรียนจำนวนน้อย",
+      "contact": "หากสนใจร่วมรอบถัดไป <link>ส่งข้อความถึงผมได้เลย</link>"
+    },
+    "library": {
+      "welcome": "คลังเรียนรู้ PRAXIS ของคุณ",
+      "greeting": "สวัสดี {name}",
+      "emptyHeading": "ยังไม่มีหัวข้อ",
+      "emptyBody": "พิมพ์หัวข้อที่คุณอยากพัฒนา ผมจะสร้างคอร์สสั้น ๆ ให้คุณเรียนกับ Nori ผู้ช่วยเรียนรู้ของคุณ",
+      "startTopic": "เริ่มหัวข้อใหม่",
+      "topicsHeading": "หัวข้อของคุณ",
+      "statuses": {
+        "pending_guardrail": "กำลังตรวจ",
+        "rejected": "ถูกปฏิเสธ",
+        "outline_ready": "โครงพร้อมแล้ว",
+        "active": "กำลังเรียน",
+        "archived": "เก็บถาวรแล้ว"
+      }
+    },
+    "callback": {
+      "missing_token": {
+        "heading": "ไม่พบโทเคนคำเชิญ",
+        "body": "หน้านี้ต้องการโทเคนจากลิงก์ในอีเมล กรุณาเปิดลิงก์จากอีเมลที่ได้รับเพื่อเข้าสู่ระบบ"
+      },
+      "expired_token": {
+        "heading": "ลิงก์คำเชิญหมดอายุแล้ว",
+        "body": "ลิงก์มีอายุ 15 นาที ติดต่อผมเพื่อขอลิงก์ใหม่"
+      },
+      "invalid_token": {
+        "heading": "ลิงก์คำเชิญไม่ถูกต้อง",
+        "body": "ลิงก์อาจถูกแก้ไขหรือมาจากเว็บไซต์เวอร์ชันเก่า ติดต่อผมเพื่อขอลิงก์ใหม่"
+      },
+      "not_invited": {
+        "heading": "ไม่พบคำเชิญที่ตรงกัน",
+        "body": "ไม่พบคำเชิญที่ใช้งานได้สำหรับอีเมลนี้ โปรดใช้ลิงก์ล่าสุดที่ผมส่งให้"
+      },
+      "revoked": {
+        "heading": "คำเชิญถูกยกเลิก",
+        "body": "คำเชิญนี้ถูกยกเลิกแล้ว หากคิดว่าเป็นความผิดพลาด โปรดติดต่อผม"
+      },
+      "server_error": {
+        "heading": "เกิดข้อผิดพลาด",
+        "body": "ไม่สามารถเข้าสู่ระบบได้ในตอนนี้ กรุณาลองใหม่อีกครั้ง"
+      },
+      "contactCta": "ติดต่อ First"
+    },
+    "newTopic": {
+      "heading": "คุณอยากเรียนรู้เรื่องอะไร?",
+      "hint": "พิมพ์หัวข้ออะไรก็ได้ — ทักษะ สาขา หรือเรื่องที่อยากลองมานาน ผมจะร่างคอร์สสั้น ๆ ให้คุณปรับก่อนยืนยัน",
+      "placeholder": "เช่น การเจรจา อาหารไทยพื้นฐาน UX research…",
+      "characters": "{count} / {max}",
+      "submit": "ร่างโครงคอร์ส",
+      "submitting": "กำลังร่าง…",
+      "suggestions": "หรือเริ่มจาก",
+      "loading": "กำลังร่างโครงคอร์สของคุณ… ใช้เวลาประมาณสิบวินาที",
+      "errorHeading": "เกิดข้อผิดพลาด",
+      "tryAgain": "ลองหัวข้ออื่น"
+    },
+    "outline": {
+      "heading": "โครงคอร์สของคุณ",
+      "hint": "แก้ไขได้ตามต้องการก่อนยืนยัน ยิ่งสั้นยิ่งดี",
+      "cachedBadge": "โครงที่แชร์กัน",
+      "freshBadge": "สร้างให้คุณโดยเฉพาะ",
+      "unitTitleLabel": "ชื่อหน่วยการเรียนรู้",
+      "unitTitlePlaceholder": "ระบุชื่อหน่วยการเรียนรู้...",
+      "unitObjective": "เป้าหมาย",
+      "unitObjectivePlaceholder": "ผู้เรียนจะสามารถทำอะไรได้หลังจากเรียนหน่วยนี้จบ?",
+      "unitSummary": "สรุป",
+      "unitSummaryPlaceholder": "ภาพรวมสั้น ๆ ของเนื้อหาในหน่วยนี้...",
+      "accept": "ยืนยันและเริ่ม",
+      "accepting": "กำลังบันทึก…",
+      "discard": "เริ่มใหม่",
+      "stepperLabel": "ส่วนของโครงคอร์ส",
+      "stepperHeading": "หน่วยการเรียนรู้"
+    },
+    "onboarding": {
+      "eyebrow": "คำถามสั้น ๆ ก่อนเริ่ม",
+      "heading": "เล่าให้ฟังเกี่ยวกับคุณหน่อย",
+      "hint": "คำตอบของคุณจะปรับตัวอย่าง แบบฝึก และบทสนทนาทุกจุด แก้ไขได้ตลอด",
+      "progressLabel": "ตอบแล้ว",
+      "loading": "กำลังร่างคำถามที่เหมาะกับหัวข้อของคุณ…",
+      "saving": "กำลังบันทึก…",
+      "submit": "ไปต่อ",
+      "errorHeading": "เกิดข้อผิดพลาด",
+      "retry": "ลองใหม่"
+    },
+    "topic": {
+      "eyebrow": "หัวข้อ",
+      "progress": "เรียนจบ {completed} จาก {total} หน่วย",
+      "editOnboarding": "แก้ไขคำตอบ",
+      "talkToNori": "คุยกับ Nori",
+      "status": {
+        "pending": "ยังไม่เริ่ม",
+        "generating": "กำลังสร้าง…",
+        "ready": "พร้อมเปิด",
+        "completed": "เรียนจบแล้ว",
+        "failed": "สร้างไม่สำเร็จ"
+      }
+    },
+    "unit": {
+      "generating": "กำลังสร้างเนื้อหาหน่วยเรียนรู้…",
+      "generatingHint": "ใช้เวลาประมาณ 10–20 วินาที",
+      "errorHeading": "เกิดข้อผิดพลาด",
+      "retry": "ลองใหม่",
+      "markComplete": "เรียนจบแล้ว",
+      "markingComplete": "กำลังบันทึก…",
+      "completed": "จบหน่วยนี้แล้ว",
+      "completionPrompt": "อ่านจบแล้ว? ทำเครื่องหมายว่าเรียนจบ",
+      "backToOverview": "กลับไปหน้าหลัก",
+      "regenerate": "สร้างใหม่",
+      "regenerating": "กำลังสร้างใหม่…",
+      "regenPlaceholder": "อยากให้เปลี่ยนอะไร?",
+      "regenSubmit": "ไป",
+      "regenCancel": "ยกเลิก",
+      "regeneratedBadge": "สร้างใหม่แล้ว",
+      "blockKind": {
+        "objectives": "เป้าหมาย",
+        "explainer": "อธิบาย",
+        "example": "ตัวอย่าง",
+        "diagram_note": "บันทึกแผนภาพ",
+        "practice": "แบบฝึก"
+      }
+    },
+    "scope": {
+      "heading": "หัวข้อนี้อยู่นอกขอบเขตของ PRAXIS",
+      "fallback": "ผมช่วยเรื่องส่วนใหญ่ได้ แต่เรื่องนี้ต้องปรึกษาผู้เชี่ยวชาญที่มีคุณสมบัติเหมาะสม",
+      "tryAgain": "ลองหัวข้ออื่น",
+      "category": {
+        "ok": "ผ่าน",
+        "medical": "การแพทย์",
+        "legal": "กฎหมาย",
+        "financial": "การเงิน",
+        "explicit": "เนื้อหาสำหรับผู้ใหญ่",
+        "minors": "เกี่ยวข้องกับเยาวชน",
+        "other": "นอกขอบเขต"
+      }
+    }
   }
 }

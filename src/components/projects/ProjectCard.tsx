@@ -47,8 +47,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         }
       }}
     >
-      <Card className="h-full overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-md dark:hover:shadow-primary/5">
-        <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
+      <div className="card h-full flex flex-col overflow-hidden transition-all duration-300 hover:border-[var(--color-ink-2)]">
+        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-[var(--color-line-soft)] bg-[var(--color-paper-2)]">
           <Image
             src={project.heroImage}
             alt={title}
@@ -59,59 +59,60 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
         
-        <CardHeader className="p-5 pb-0">
+        <div className="p-5 flex-1 flex flex-col">
           <div className="mb-3 flex items-start justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               <DomainBadge domain={project.domain} />
               {signalKeys.map((key) => (
-                <span key={key} className="rounded-full border border-border px-2 py-1 text-[10px] text-muted-foreground">
+                <span key={key} className="rounded-full border border-[var(--color-line)] px-2 py-1 text-[10px] text-[var(--color-ink-3)]">
                   {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {tRoot(key as any)}
                 </span>
               ))}
             </div>
-            <span className="text-xs font-medium text-muted-foreground">{project.year}</span>
+            <span className="text-xs font-medium text-[var(--color-ink-3)]">{project.year}</span>
           </div>
-          <h3 className="text-xl font-bold transition-colors group-hover:text-primary">
+          
+          <h3 className="font-display text-xl font-medium tracking-tight text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-praxis-accent)]">
             {title}
           </h3>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm text-[var(--color-ink-2)]">
             {tagline}
           </p>
-        </CardHeader>
         
-        <CardContent className="space-y-4 p-5 pt-3">
-          <p className="line-clamp-3 text-sm text-muted-foreground">
-            {problemSummary}
-          </p>
-          {whatIOwned && (
-            <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
-              <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                {labelsT('whatIOwned')}
+          <div className="mt-4 space-y-4">
+            <p className="line-clamp-3 text-sm text-[var(--color-ink-3)]">
+              {problemSummary}
+            </p>
+            {whatIOwned && (
+              <div className="card inset p-3">
+                <div className="eyebrow mb-1">
+                  {labelsT('whatIOwned')}
+                </div>
+                <p className="text-sm text-[var(--color-ink-2)]">{whatIOwned}</p>
               </div>
-              <p className="text-sm">{whatIOwned}</p>
-            </div>
-          )}
-        </CardContent>
-        
-        <CardFooter className="flex-col items-start gap-4 p-5 pt-0 mt-auto">
-          <div className="flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, 3).map((tech) => (
-              <TechBadge key={tech} name={tech} size="sm" />
-            ))}
-            {project.techStack.length > 3 && (
-              <span className="text-[10px] text-muted-foreground px-1 py-0.5">
-                +{project.techStack.length - 3} {labelsT('more')}
-              </span>
             )}
           </div>
           
-          <div className="flex items-center text-sm font-medium text-primary mt-2">
-            {labelsT('viewCaseStudy')}
-            <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+          <div className="flex-col items-start gap-4 pt-5 mt-auto">
+            <div className="flex flex-wrap gap-1.5">
+              {project.techStack.slice(0, 3).map((tech) => (
+                <TechBadge key={tech} name={tech} size="sm" />
+              ))}
+              {project.techStack.length > 3 && (
+                <span className="text-[10px] text-[var(--color-ink-3)] px-1 py-0.5">
+                  +{project.techStack.length - 3} {labelsT('more')}
+                </span>
+              )}
+            </div>
+            
+            <div className="flex items-center text-sm font-medium text-[var(--color-praxis-accent)] mt-3">
+              {labelsT('viewCaseStudy')}
+              <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }

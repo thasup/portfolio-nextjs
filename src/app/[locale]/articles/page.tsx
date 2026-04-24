@@ -32,13 +32,13 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
       <div className="mx-auto max-w-6xl">
         {/* Section Header - Matches site design system */}
         <div className="mb-16 space-y-4">
-          <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          <span className="eyebrow text-[var(--color-praxis-accent)]">
             {locale === 'th' ? 'คลังความรู้' : 'Knowledge Hub'}
           </span>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-[var(--color-ink)]">
             {t('nav.articles')}
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
+          <p className="text-xl text-[var(--color-ink-2)] max-w-2xl leading-relaxed">
             {locale === 'th' 
               ? 'สำรวจบทความเชิงลึกเกี่ยวกับประวัติศาสตร์ เทคโนโลยี วัฒนธรรม และวิทยาศาสตร์'
               : 'Deep-dive articles exploring history, technology, culture, and science'}
@@ -50,45 +50,49 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
             <Link
               key={slug}
               href={`/${locale}/articles/${slug}`}
-              className="group overflow-hidden rounded-lg border bg-card transition-all hover:shadow-lg"
+              className="block outline-none"
             >
-              <div className="aspect-video w-full overflow-hidden">
-                <img
-                  src={article.heroImage.src}
-                  alt={article.heroImage.alt}
-                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                />
-              </div>
-              
-              <div className="p-6 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(article.category)}`}>
-                    {article.category}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {article.readingTime} min
-                  </span>
+              <div
+                className="card flex flex-col h-full overflow-hidden transition-all duration-300 hover:border-[var(--color-ink-2)] group"
+              >
+                <div className="aspect-video w-full overflow-hidden border-b border-[var(--color-line-soft)]">
+                  <img
+                    src={article.heroImage.src}
+                    alt={article.heroImage.alt}
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                  />
                 </div>
                 
-                <h2 className="text-xl font-bold line-clamp-2 group-hover:text-primary transition-colors">
-                  {article.title}
-                </h2>
-                
-                <p className="text-sm text-muted-foreground line-clamp-3">
-                  {article.description}
-                </p>
-                
-                <div className="flex items-center justify-between pt-3 text-xs text-muted-foreground">
-                  <time dateTime={article.publishedDate}>
-                    {new Date(article.publishedDate).toLocaleDateString(locale, {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  {article.author && (
-                    <span>{article.author.name}</span>
-                  )}
+                <div className="p-6 space-y-3 flex flex-col flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className={`inline-block px-2 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold ${getCategoryColor(article.category)}`}>
+                      {article.category}
+                    </span>
+                    <span className="text-xs text-[var(--color-ink-3)]">
+                      {article.readingTime} min
+                    </span>
+                  </div>
+                  
+                  <h2 className="font-display text-xl font-medium line-clamp-2 group-hover:text-[var(--color-praxis-accent)] transition-colors text-[var(--color-ink)]">
+                    {article.title}
+                  </h2>
+                  
+                  <p className="text-sm text-[var(--color-ink-2)] line-clamp-3">
+                    {article.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-3 mt-auto text-xs text-[var(--color-ink-3)]">
+                    <time dateTime={article.publishedDate}>
+                      {new Date(article.publishedDate).toLocaleDateString(locale, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </time>
+                    {article.author && (
+                      <span>{article.author.name}</span>
+                    )}
+                  </div>
                 </div>
               </div>
             </Link>

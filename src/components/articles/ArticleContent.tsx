@@ -103,17 +103,17 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
               </p>
             )}
             
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-gray-300">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-[var(--color-ink-2)]">
               {article.author && (
                 <span className="flex items-center gap-2">
                   {article.author.avatar && (
                     <img 
                       src={article.author.avatar} 
                       alt={article.author.name}
-                      className="w-8 h-8 rounded-full"
+                      className="w-8 h-8 rounded-full border border-[var(--color-line-soft)]"
                     />
                   )}
-                  {article.author.name}
+                  <span className="text-[var(--color-ink)]">{article.author.name}</span>
                 </span>
               )}
               <span>•</span>
@@ -208,21 +208,21 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                           onClick={() => scrollToSection(event.sectionId)}
                           className={cn(
                             "w-full text-left pl-16 pr-3 py-3 rounded-lg transition-all",
-                            "hover:bg-muted/50 cursor-pointer group",
-                            isActive && "bg-primary/5"
+                            "hover:bg-[var(--color-paper-2)] cursor-pointer group",
+                            isActive && "bg-[var(--color-praxis-accent-soft)]"
                           )}
                         >
                           <div className="space-y-1.5">
                             {/* Year + Era */}
                             <div className="flex items-baseline gap-2">
                               <span className={cn(
-                                "text-xl font-bold tracking-tight leading-none",
-                                isActive ? "text-primary" : "text-foreground"
+                                "text-xl font-display font-medium tracking-tight leading-none",
+                                isActive ? "text-[var(--color-praxis-accent)]" : "text-[var(--color-ink)]"
                               )}>
                                 {Math.abs(event.year)}
                               </span>
                               {event.era && (
-                                <span className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                                <span className="text-xs text-[var(--color-ink-3)] font-medium uppercase tracking-wide">
                                   {event.era}
                                 </span>
                               )}
@@ -230,8 +230,8 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                             
                             {/* Event Title */}
                             <h4 className={cn(
-                              "text-sm font-semibold leading-snug line-clamp-2",
-                              isActive ? "text-primary" : "text-foreground group-hover:text-primary"
+                              "text-sm font-medium leading-snug line-clamp-2",
+                              isActive ? "text-[var(--color-praxis-accent)]" : "text-[var(--color-ink-2)] group-hover:text-[var(--color-praxis-accent)]"
                             )}>
                               {event.title}
                             </h4>
@@ -247,15 +247,15 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
 
           {/* Main Article Content */}
           <div ref={contentRef} className="flex-1 min-w-0">
-            <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:scroll-mt-24">
+            <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-medium prose-p:text-[var(--color-ink-2)] prose-headings:text-[var(--color-ink)] prose-headings:scroll-mt-24">
               {article.sections.map((section, index) => (
                 <section key={section.id} id={section.id} className="mb-16">
-                  <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-foreground">
+                  <h2 className="text-2xl sm:text-3xl font-display font-medium mb-6 text-[var(--color-ink)]">
                     {section.title}
                   </h2>
                   
                   {/* Render content with markdown parsing */}
-                  <div className="space-y-4 text-foreground/90 leading-relaxed">
+                  <div className="space-y-4 text-[var(--color-ink-2)] leading-relaxed">
                     {section.content.split('\n\n').map((paragraph, pIdx) => {
                       if (paragraph.trim()) {
                         return (
@@ -272,24 +272,24 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
 
                   {/* Mobile Timeline - Inline */}
                   {section.timeline && section.timeline.length > 0 && (
-                    <div className="my-8 lg:my-12 border-l-4 border-primary/30 pl-6 sm:pl-8 space-y-6 sm:space-y-8">
-                      <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-primary">
+                    <div className="my-8 lg:my-12 border-l-2 border-[var(--color-line-soft)] pl-6 sm:pl-8 space-y-6 sm:space-y-8">
+                      <h3 className="text-lg sm:text-xl font-display font-medium mb-4 sm:mb-6 text-[var(--color-ink)]">
                         Timeline
                       </h3>
                       {section.timeline.map((event, idx) => (
                         <div key={idx} className="relative">
-                          <div className="absolute -left-[34px] sm:-left-[42px] w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary border-4 border-background" />
+                          <div className="absolute -left-[32px] sm:-left-[40px] w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[var(--color-paper)] border-2 border-[var(--color-ink-3)]" />
                           <div className="space-y-2">
                             <div className="flex items-baseline gap-2 sm:gap-3">
-                              <time className="text-xl sm:text-2xl font-bold text-primary">
+                              <time className="text-xl sm:text-2xl font-display font-medium text-[var(--color-ink)]">
                                 {Math.abs(event.year)}
                               </time>
                               {event.era && (
-                                <span className="text-xs sm:text-sm text-muted-foreground">{event.era}</span>
+                                <span className="text-xs sm:text-sm text-[var(--color-ink-3)]">{event.era}</span>
                               )}
                             </div>
-                            <h4 className="text-base sm:text-lg font-semibold">{event.title}</h4>
-                            <p className="text-sm sm:text-base text-muted-foreground">{event.description}</p>
+                            <h4 className="text-base sm:text-lg font-medium text-[var(--color-ink)]">{event.title}</h4>
+                            <p className="text-sm sm:text-base text-[var(--color-ink-2)]">{event.description}</p>
                           </div>
                         </div>
                       ))}
@@ -304,11 +304,11 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                           <img
                             src={image.src}
                             alt={image.alt}
-                            className="w-full rounded-lg shadow-lg"
+                            className="w-full border border-[var(--color-line-soft)] bg-[var(--color-paper-2)]"
                             loading="lazy"
                           />
                           {(image.caption || image.credit) && (
-                            <figcaption className="text-sm text-muted-foreground text-center">
+                            <figcaption className="text-sm text-[var(--color-ink-3)] text-center">
                               {image.caption}
                               {image.credit && (
                                 <span className="block mt-1 text-xs">
@@ -329,8 +329,8 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
           {/* Right Table of Contents - Desktop Only - Hierarchical */}
           <aside className="hidden xl:block w-64 shrink-0">
             <div className="sticky top-36">
-              <nav className="bg-card rounded-lg border p-4 sm:p-6 shadow-sm">
-                <h3 className="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-wide">
+              <nav className="card p-4 sm:p-6">
+                <h3 className="eyebrow mb-4 text-[var(--color-ink-3)]">
                   {t('contents')}
                 </h3>
                 <ul className="space-y-1 text-sm">
@@ -342,8 +342,8 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                         className={cn(
                           "text-left w-full transition-colors py-1.5 font-medium",
                           activeSection === item.id
-                            ? "text-primary"
-                            : "text-foreground hover:text-primary"
+                            ? "text-[var(--color-praxis-accent)]"
+                            : "text-[var(--color-ink)] hover:text-[var(--color-praxis-accent)]"
                         )}
                       >
                         {item.title}
@@ -351,7 +351,7 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                       
                       {/* Sub-sections (if any) */}
                       {item.children && item.children.length > 0 && (
-                        <ul className="mt-1 space-y-1 pl-3 border-l-2 border-border/50">
+                        <ul className="mt-1 space-y-1 pl-3 border-l border-[var(--color-line-soft)]">
                           {item.children.map((child) => (
                             <li key={child.id}>
                               <button
@@ -359,8 +359,8 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                                 className={cn(
                                   "text-left w-full transition-colors py-1 text-xs line-clamp-2",
                                   activeSection === child.id
-                                    ? "text-primary"
-                                    : "text-muted-foreground hover:text-primary"
+                                    ? "text-[var(--color-praxis-accent)]"
+                                    : "text-[var(--color-ink-2)] hover:text-[var(--color-praxis-accent)]"
                                 )}
                                 style={{ paddingLeft: `${(child.level - 2) * 0.5}rem` }}
                               >

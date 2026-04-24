@@ -58,7 +58,7 @@ export function TimelineEventCard({
     // Update URL hash
     window.location.hash = `timeline-event-${event.id}`;
   };
-  
+
   const theme = YEAR_THEMES[year];
   const config = CATEGORY_CONFIG[event.type];
   const Icon = config?.icon || Code2;
@@ -97,94 +97,94 @@ export function TimelineEventCard({
           }}
         />
 
-      {/* Category badge */}
-      <div className="flex items-center gap-2 mb-3">
-        <div
-          className="p-1.5 rounded-lg"
-          style={{ backgroundColor: `${theme.accentHex}15` }}
-        >
-          <Icon className="w-4 h-4" style={{ color: theme.accentHex }} />
-        </div>
-        <span
-          className="text-xs font-medium uppercase tracking-wide"
-          style={{ color: theme.accentHex }}
-        >
-          {categoryLabel}
-        </span>
-        <span className="text-xs text-muted-foreground ml-auto">{event.date}</span>
-      </div>
-
-      {/* Title and company */}
-      <h3 className="text-lg font-bold mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground mb-3">{event.company}</p>
-
-      {/* Summary */}
-      <p className="text-sm mb-3 leading-relaxed">{summary}</p>
-
-      {capabilityGained && (
-        <div className="mb-3 text-sm">
-          <span className="font-medium" style={{ color: theme.accentHex }}>
-            {t("labels.capability")}{" "}
+        {/* Category badge */}
+        <div className="flex items-center gap-2 mb-3">
+          <div
+            className="p-1.5 rounded-lg"
+            style={{ backgroundColor: `${theme.accentHex}15` }}
+          >
+            <Icon className="w-4 h-4" style={{ color: theme.accentHex }} />
+          </div>
+          <span
+            className="text-xs font-medium uppercase tracking-wide"
+            style={{ color: theme.accentHex }}
+          >
+            {categoryLabel}
           </span>
-          <span className="text-muted-foreground">{capabilityGained}</span>
+          <span className="text-xs text-muted-foreground ml-auto">{event.date}</span>
         </div>
-      )}
 
-      {/* Impact */}
-      {impact && (
-        <div
-          className="rounded-lg p-3 mb-4 text-sm"
-          style={{ backgroundColor: `${theme.accentHex}08` }}
+        {/* Title and company */}
+        <h3 className="text-lg font-bold mb-1">{title}</h3>
+        <p className="text-sm text-muted-foreground mb-3">{event.company}</p>
+
+        {/* Summary */}
+        <p className="text-sm mb-3 leading-relaxed">{summary}</p>
+
+        {capabilityGained && (
+          <div className="mb-3 text-sm">
+            <span className="font-medium" style={{ color: theme.accentHex }}>
+              {t("labels.capability")}{" "}
+            </span>
+            <span className="text-muted-foreground">{capabilityGained}</span>
+          </div>
+        )}
+
+        {/* Impact */}
+        {impact && (
+          <div
+            className="rounded-lg p-3 mb-4 text-sm"
+            style={{ backgroundColor: `${theme.accentHex}08` }}
+          >
+            <span className="font-medium" style={{ color: theme.accentHex }}>
+              {t("labels.evidence")}{" "}
+            </span>
+            {impact}
+          </div>
+        )}
+
+        {signalKeys.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {signalKeys.map((key) => (
+              <span
+                key={key}
+                className="px-2 py-1 text-[11px] rounded-full border text-muted-foreground"
+                style={{ borderColor: `${theme.accentHex}35` }}
+              >
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {tRoot(key as any)}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Tech badges */}
+        {event.skills.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {displayedSkills.map((skill) => (
+              <span
+                key={skill}
+                className="px-2 py-1 text-xs rounded-md bg-muted/50 text-foreground"
+              >
+                {skill}
+              </span>
+            ))}
+            {remainingCount > 0 && (
+              <span className="px-2 py-1 text-xs rounded-md bg-muted/50 text-muted-foreground">
+                +{remainingCount}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Deep Dive button */}
+        <button
+          onClick={handleDeepDive}
+          className="text-sm font-medium px-3 py-1.5 rounded border transition-colors cursor-pointer hover:opacity-80"
+          style={{ color: theme.accentHex, borderColor: theme.accentHex }}
         >
-          <span className="font-medium" style={{ color: theme.accentHex }}>
-            {t("labels.evidence")}{" "}
-          </span>
-          {impact}
-        </div>
-      )}
-
-      {signalKeys.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {signalKeys.map((key) => (
-            <span
-              key={key}
-              className="px-2 py-1 text-[11px] rounded-full border text-muted-foreground"
-              style={{ borderColor: `${theme.accentHex}35` }}
-            >
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {tRoot(key as any)}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Tech badges */}
-      {event.skills.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {displayedSkills.map((skill) => (
-            <span
-              key={skill}
-              className="px-2 py-1 text-xs rounded-md bg-muted/50 text-foreground"
-            >
-              {skill}
-            </span>
-          ))}
-          {remainingCount > 0 && (
-            <span className="px-2 py-1 text-xs rounded-md bg-muted/50 text-muted-foreground">
-              +{remainingCount}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Deep Dive button */}
-      <button
-        onClick={handleDeepDive}
-        className="text-sm font-medium px-3 py-1.5 rounded border transition-colors cursor-pointer hover:opacity-80"
-        style={{ color: theme.accentHex, borderColor: theme.accentHex }}
-      >
-        {t("deepDive")}
-      </button>
+          {t("deepDive")}
+        </button>
       </GlassCard>
     </motion.div>
   );

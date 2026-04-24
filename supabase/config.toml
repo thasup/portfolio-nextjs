@@ -1,0 +1,46 @@
+# Supabase CLI project-local config.
+# Generated for PRAXIS Phase 1 (see specs/010-praxis-learning-platform).
+#
+# Apply migrations locally:    npx supabase db reset
+# Apply to linked remote:      npx supabase db push
+# Regenerate TS types:         npx supabase gen types typescript --linked > src/lib/praxis/supabase/database.types.ts
+#
+# To link this folder to the remote Supabase project (run once per machine):
+#   npx supabase login
+#   npx supabase link --project-ref <your-project-ref>
+
+project_id = "praxis-portfolio"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/learn/callback"]
+jwt_expiry = 3600
+enable_signup = false
+
+[auth.email]
+enable_signup = false
+double_confirm_changes = true
+enable_confirmations = false
+# Magic links are minted server-side via the admin API inside /learn/callback,
+# using a Resend-owned email flow (see research.md §2). The Supabase built-in
+# SMTP is disabled because FR-003 mandates Resend as the sole email provider.
+
+[storage]
+enabled = false

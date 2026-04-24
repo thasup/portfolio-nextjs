@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl';
 import { LayoutTemplate, Server, Target, Sparkles } from 'lucide-react';
 import { Capability } from '@/types/tech-capabilities';
-import { GlassCard } from '@/components/glass';
 import { useModal } from '@/hooks/useModal';
 import { featureFlags } from '@/lib/featureFlags'
 
@@ -33,11 +32,8 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
   const { open } = useModal();
 
   return (
-    <GlassCard
-      elevation="e2"
-      hover={true}
-      interactive={true}
-      className="group relative flex flex-col overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
+    <div
+      className="card group relative flex flex-col overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
       style={{
         ...cssVars,
         borderColor: capability.emphasized
@@ -79,10 +75,10 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
               <Icon className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold leading-snug tracking-tight text-foreground md:text-xl">
+              <h3 className="text-lg font-display font-medium leading-snug tracking-tight text-[var(--color-ink)] md:text-xl">
                 {t(capability.titleKey)}
               </h3>
-              <p className="mt-0.5 text-[12.5px] italic text-muted-foreground/70">
+              <p className="mt-0.5 text-[12.5px] italic text-[var(--color-ink-3)]">
                 {t(capability.taglineKey)}
               </p>
             </div>
@@ -90,10 +86,10 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
         </header>
 
         {/* Subsystems grid */}
-        <div className="mb-6 grid grid-cols-2 gap-x-6 gap-y-4 border-b border-border/50 pb-6">
+        <div className="mb-6 grid grid-cols-2 gap-x-6 gap-y-4 border-b border-[var(--color-line-soft)] pb-6">
           {capability.subsystems.map((sub) => (
             <div key={sub.nameKey}>
-              <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
+              <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-[var(--color-ink-3)]">
                 {t(sub.nameKey)}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -144,7 +140,7 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
                 {t('tech.outcomeLabel')}
               </span>
             </div>
-            <p className="text-sm leading-relaxed text-foreground/90">
+            <p className="text-sm leading-relaxed text-[var(--color-ink)]">
               {t(capability.outcomeTextKey)}
             </p>
             <button
@@ -153,10 +149,10 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
                 const projectSlug = capability.outcomeProject.toLowerCase().replace(/\s+/g, '-').replace(/\/.*$/, '');
                 open({ type: 'project', id: projectSlug });
               }}
-              className="group/flagship mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/60 transition-colors hover:text-foreground"
+              className="group/flagship mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-[var(--color-ink-2)] transition-colors hover:text-[var(--color-ink)]"
             >
               <span>{t('tech.flagshipLabel')}:</span>
-              <span className="underline decoration-dotted underline-offset-2 group-hover/flagship:decoration-solid">
+              <span className="underline decoration-[var(--color-line)] underline-offset-2 group-hover/flagship:decoration-[var(--color-ink)]">
                 {capability.outcomeProject}
               </span>
               <span className="opacity-0 transition-opacity group-hover/flagship:opacity-100">→</span>
@@ -178,12 +174,12 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
         >
           <blockquote className="flex items-start gap-3">
             <span className="shrink-0 text-base leading-relaxed opacity-90">⚡</span>
-            <p className="text-[13.5px] font-medium italic leading-relaxed text-foreground">
+            <p className="text-[13.5px] font-medium italic leading-relaxed text-[var(--color-ink)]">
               &ldquo;{t(capability.signalKey)}&rdquo;
             </p>
           </blockquote>
         </div>
       </div>
-    </GlassCard>
+    </div>
   );
 }

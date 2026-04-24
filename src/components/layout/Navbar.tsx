@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
-import { GlassPanel } from "@/components/glass";
 import { siteConfig } from "@/data/siteConfig";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
@@ -28,7 +27,8 @@ export function Navbar() {
       { id: "testimonials", label: t("testimonials"), href: "/#testimonials" },
       { id: "value", label: t("value"), href: "/#value" },
       { id: "contact", label: t("contact"), href: "/#contact" },
-      { id: "articles", label: t("articles"), href: "/articles" }
+      { id: "articles", label: t("articles"), href: "/articles" },
+      { id: "learn", label: t("learn"), href: "/learn" }
     ],
     [t]
   );
@@ -70,7 +70,7 @@ export function Navbar() {
         href="/"
         className="text-lg font-bold tracking-tight transition-colors hover:text-primary z-50 relative"
       >
-        {siteConfig.name.split(" ")[0]}
+        Thanachon
         <span className="text-primary">.</span>
       </Link>
 
@@ -138,24 +138,8 @@ export function Navbar() {
   );
 
   return (
-    <nav
-      className="fixed inset-x-0 top-0 z-40"
-      aria-label={t("sr_navigation")}
-    >
-      {scrolled ? (
-        <GlassPanel
-          elevation="e2"
-          className="transition-all duration-300 border-b border-border/50 rounded-none"
-        >
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-            {navContent}
-          </div>
-        </GlassPanel>
-      ) : (
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          {navContent}
-        </div>
-      )}
-    </nav>
+    <header className="hdr flex items-center justify-between px-6 py-4 border-b border-[var(--color-line-soft)] bg-[var(--color-paper)] z-40 fixed top-0 w-full">
+      {navContent}
+    </header>
   );
 }
