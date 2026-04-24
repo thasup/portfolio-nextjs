@@ -775,7 +775,14 @@
       "emptyHeading": "ยังไม่มีหัวข้อ",
       "emptyBody": "พิมพ์หัวข้อที่คุณอยากพัฒนา ผมจะสร้างคอร์สสั้น ๆ ให้คุณเรียนกับ Nori ผู้ช่วยเรียนรู้ของคุณ",
       "startTopic": "เริ่มหัวข้อใหม่",
-      "topicsHeading": "หัวข้อของคุณ"
+      "topicsHeading": "หัวข้อของคุณ",
+      "statuses": {
+        "pending_guardrail": "กำลังตรวจ",
+        "rejected": "ถูกปฏิเสธ",
+        "outline_ready": "โครงพร้อมแล้ว",
+        "active": "กำลังเรียน",
+        "archived": "เก็บถาวรแล้ว"
+      }
     },
     "callback": {
       "missing_token": {
@@ -829,6 +836,28 @@
       "discard": "เริ่มใหม่",
       "stepperLabel": "ส่วนของโครงคอร์ส",
       "stepperHeading": "หน่วยการเรียนรู้"
+    },
+    "onboarding": {
+      "eyebrow": "คำถามสั้น ๆ ก่อนเริ่ม",
+      "heading": "เล่าให้ฟังเกี่ยวกับคุณหน่อย",
+      "hint": "คำตอบของคุณจะปรับตัวอย่าง แบบฝึก และบทสนทนาทุกจุด แก้ไขได้ตลอด",
+      "progressLabel": "ตอบแล้ว",
+      "loading": "กำลังร่างคำถามที่เหมาะกับหัวข้อของคุณ…",
+      "saving": "กำลังบันทึก…",
+      "submit": "ไปต่อ",
+      "errorHeading": "เกิดข้อผิดพลาด",
+      "retry": "ลองใหม่"
+    },
+    "topic": {
+      "eyebrow": "หัวข้อ",
+      "progress": "เรียนจบ {completed} จาก {total} หน่วย",
+      "editOnboarding": "แก้ไขคำตอบ",
+      "talkToNori": "คุยกับ Nori",
+      "status": {
+        "pending": "ยังไม่เริ่ม",
+        "ready": "พร้อมเปิด",
+        "completed": "เรียนจบแล้ว"
+      }
     },
     "scope": {
       "heading": "หัวข้อนี้อยู่นอกขอบเขตของ PRAXIS",

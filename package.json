@@ -9,6 +9,9 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "test": "vitest run --config vitest.unit.config.ts",
+    "test:watch": "vitest --config vitest.unit.config.ts",
+    "test:e2e": "playwright test",
     "praxis:eval": "tsx --env-file=.env.local scripts/praxis-eval.ts",
     "praxis:invite": "tsx --env-file=.env.local scripts/praxis-invite.ts",
     "praxis:secret": "tsx scripts/praxis-secret.ts"
@@ -48,6 +51,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.1",
+    "@playwright/test": "^1.59.1",
     "@storybook/addon-a11y": "^8.6.18",
     "@storybook/addon-essentials": "^8.6.18",
     "@storybook/addon-interactions": "^8.6.18",

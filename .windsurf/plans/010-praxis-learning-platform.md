@@ -63,13 +63,15 @@ This document is the single source of truth for day-to-day progress on PRAXIS. I
 
 ### Week 2 — Topic entry & outline
 
-- [ ] T-023 Anthropic client + ledger
-- [ ] T-024 Topic fingerprint
-- [ ] T-025 Curriculum endpoint
-- [ ] T-026 `TopicEntryCanvas`
-- [ ] T-027 Outline review UX
-- [ ] T-028 Scope guard message
-- [ ] T-029 Library topic list
+- [x] T-023 OpenRouter ledger + pricing + factory (`src/lib/praxis/openrouter/{ledger,pricing,factory}.ts`). `LedgerEndpoint` enum, `assertBudget()`, `BudgetExceededError`.
+- [x] T-024 Topic fingerprint (`src/lib/praxis/cache/topicFingerprint.ts`) — 15 unit tests passing via `npm test`.
+- [x] T-025 Curriculum endpoint (`src/app/api/praxis/curriculum/route.ts` + `src/lib/praxis/curriculum/service.ts`). Scope guardrail + cache-aware outline + accept with material-edit detection.
+- [x] T-026 `TopicEntryCanvas.tsx` with suggestion chips.
+- [x] T-027 `OutlinePreview.tsx` + `OutlineStepper.tsx`; orchestrator `NewTopicFlow.tsx`.
+- [x] T-028 `ScopeRejectionCard.tsx` (category-aware rejection UI).
+- [x] T-029 Library queries wired through `/learn/page.tsx`.
+- [x] T-030 `LibraryHome.tsx` + `TopicCard.tsx` extracted from the page.
+- [ ] T-031 Playwright E2E (deferred; requires live dev server + env)
 - [ ] T-030 Library components
 - [ ] T-031 E2E: topic acceptance
 
@@ -150,6 +152,21 @@ A `PATCH` bump of `.specify/memory/constitution.md` (3.1.0 → 3.1.1) is recomme
 - **Soft-launch cadence**: Day-by-day invitee plan for Week 8 is draft (Jane day 1, two day 3, two day 5–6). Revise based on Jane's observed bug rate.
 
 ## Changelog
+
+### 2026-04-24 (night)
+
+- **Week 2** closed at the code level (T-023 → T-030; T-031 Playwright deferred).
+- New: `src/lib/praxis/openrouter/pricing.ts` — static per-model cents/Mtok table with conservative fallback.
+- New: `src/lib/praxis/openrouter/ledger.ts` — append-only ledger writer + `assertBudget()` with `PRAXIS_MONTHLY_BUDGET_CENTS` guard.
+- New: `src/lib/praxis/openrouter/factory.ts` — memoised `getClient()` + `defaultModel()`.
+- New: `src/lib/praxis/cache/topicFingerprint.ts` — normalise → sort tokens → SHA-1, with 15-case Vitest suite (`npm test` green).
+- New: `src/lib/praxis/curriculum/service.ts` — `runScopeGuardrail()`, `getOrGenerateOutline()` (cache-aware, one-retry on bad JSON), `persistAcceptedOutline()` (material-edit detection via Levenshtein ratio).
+- New: `src/app/api/praxis/curriculum/route.ts` — `POST` with `action: outline | accept`, zod discriminated-union schema, contract-accurate error envelope (400 / 401 / 409 / 502 / 503).
+- New client components: `NewTopicFlow.tsx` (state machine), `TopicEntryCanvas.tsx`, `OutlinePreview.tsx`, `OutlineStepper.tsx`, `ScopeRejectionCard.tsx`, `LibraryHome.tsx`, `TopicCard.tsx`.
+- New page: `/learn/new` at `src/app/[locale]/learn/new/page.tsx`.
+- i18n: `praxis.newTopic`, `praxis.outline`, `praxis.scope`, `praxis.library.statuses` added to en + th.
+- Vitest split into two configs: `vitest.config.ts` (existing Storybook browser suite) and `vitest.unit.config.ts` (PRAXIS node suite); new `npm test` script.
+- Next action: Week 3 adaptive onboarding (T-032 endpoint, T-033 UI, T-034 version bumping).
 
 ### 2026-04-24 (late)
 

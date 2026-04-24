@@ -44,25 +44,25 @@ Tasks are grouped by week and numbered `T-XXX`. Each task has an owner (First un
 
 > **Exit bar**: Learner can type a topic, see the scope guardrail work, see an outline, edit it, and persist an accepted topic.
 
-- [ ] **T-023** — Create `src/lib/praxis/anthropic/{client,stream,ledger}.ts`. _research §1, §9._
-- [ ] **T-024** — Create `src/lib/praxis/cache/topicFingerprint.ts`. Unit-tested against diverse topic strings.
-- [ ] **T-025** — Build `POST /api/praxis/curriculum` (actions `outline` and `accept`) per `contracts/curriculum.generate.md`. _FR-009, FR-010, FR-011._
-- [ ] **T-026** — Build `TopicEntryCanvas.tsx` component: blank-canvas entry + suggestion chips. _FR-007._
-- [ ] **T-027** — Build `OutlinePreview.tsx` + `OutlineStepper.tsx` for the review UX.
-- [ ] **T-028** — Build `ScopeGuardMessage.tsx` for rejection state. _FR-008._
-- [ ] **T-029** — Wire library view to topic list (`praxis_topics` for current learner).
-- [ ] **T-030** — Write `LibraryHome.tsx` with `TopicCard.tsx`.
-- [ ] **T-031** — Playwright E2E: invite → sign-in → type topic → see outline → accept → land on module overview.
+- [x] **T-023** — OpenRouter client (landed in T-007) plus new `src/lib/praxis/openrouter/{pricing,ledger,factory}.ts`. `LedgerEndpoint` enum, `assertBudget()` with `PRAXIS_MONTHLY_BUDGET_CENTS` enforcement. _research §1, §9._
+- [x] **T-024** — `src/lib/praxis/cache/topicFingerprint.ts` with `normaliseTopic`, `fingerprint`, `sameTopic`, `titleFromRawInput`. Covered by 15 Vitest cases in `topicFingerprint.test.ts`.
+- [x] **T-025** — `POST /api/praxis/curriculum` at `src/app/api/praxis/curriculum/route.ts`; business logic in `src/lib/praxis/curriculum/service.ts` (scope guardrail, cache-aware outline w/ one-retry, accept with material-edit detection). Full error envelope per contract. _FR-009, FR-010, FR-011._
+- [x] **T-026** — `src/components/praxis/TopicEntryCanvas.tsx`: blank-canvas textarea, character counter, six default suggestion chips, Cmd/Ctrl+Enter submit. _FR-007._
+- [x] **T-027** — `OutlinePreview.tsx` (editable unit cards) + `OutlineStepper.tsx` (sticky vertical nav) + `NewTopicFlow.tsx` orchestrator at `src/components/praxis/`. Page: `src/app/[locale]/learn/new/page.tsx`.
+- [x] **T-028** — `src/components/praxis/ScopeRejectionCard.tsx` (renamed from `ScopeGuardMessage` for precision). Category-aware icon + explanation + "try again" action. _FR-008._
+- [x] **T-029** — `/learn/page.tsx` queries `praxis_topics` for the current learner (excluding `rejected`), sorted by `last_active_at desc`.
+- [x] **T-030** — Presentational split: `src/components/praxis/LibraryHome.tsx` + `src/components/praxis/TopicCard.tsx` with translated status badges.
+- [ ] **T-031** — Playwright E2E. Deferred to the soft-launch week; requires live dev server + seeded Supabase + Resend sandbox.
 
 ## Week 3 — Adaptive onboarding
 
 > **Exit bar**: Learner completes onboarding for any accepted topic; answers persist; subsequent AI calls receive onboarding context.
 
-- [ ] **T-032** — Build `POST /api/praxis/onboarding` per `contracts/onboarding.generate.md`. _FR-014, FR-015, FR-016._
-- [ ] **T-033** — Build `/learn/[topic]/onboarding/page.tsx` with `AdaptiveQuestion.tsx` + `OnboardingProgress.tsx`.
-- [ ] **T-034** — Implement profile version bumping on edit.
-- [ ] **T-035** — Add "edit onboarding" affordance on module overview.
-- [ ] **T-036** — Playwright E2E: accept outline → answer 4 questions → arrive at module overview with status `active`.
+- [x] **T-032** — Build `POST /api/praxis/onboarding` per `contracts/onboarding.generate.md`. _FR-014, FR-015, FR-016._
+- [x] **T-033** — Build `/learn/[topic]/onboarding/page.tsx` with `AdaptiveQuestion.tsx` + `OnboardingProgress.tsx`.
+- [x] **T-034** — Implement profile version bumping on edit.
+- [x] **T-035** — Add "edit onboarding" affordance on module overview.
+- [~] **T-036** — Playwright E2E scaffolded at `e2e/praxis-onboarding.spec.ts` with stubbed `/api/praxis/onboarding`; gated by `PRAXIS_E2E=1`. Full activation requires middleware test-bypass + seeded learner (follow-up).
 
 ## Week 4 — Unit generation
 

@@ -775,7 +775,14 @@
       "emptyHeading": "No topics yet",
       "emptyBody": "Type any topic you want to get better at. I'll generate a short course you can work through with Nori, your learning mate.",
       "startTopic": "Start a topic",
-      "topicsHeading": "Your topics"
+      "topicsHeading": "Your topics",
+      "statuses": {
+        "pending_guardrail": "Reviewing",
+        "rejected": "Rejected",
+        "outline_ready": "Outline ready",
+        "active": "Active",
+        "archived": "Archived"
+      }
     },
     "callback": {
       "missing_token": {
@@ -829,6 +836,28 @@
       "discard": "Start over",
       "stepperLabel": "Outline sections",
       "stepperHeading": "Units"
+    },
+    "onboarding": {
+      "eyebrow": "A few quick questions",
+      "heading": "Tell me about you",
+      "hint": "Your answers tune every example, practice, and conversation. You can edit them any time.",
+      "progressLabel": "Answered",
+      "loading": "Drafting questions tailored to your topic…",
+      "saving": "Saving…",
+      "submit": "Continue",
+      "errorHeading": "Something went wrong",
+      "retry": "Try again"
+    },
+    "topic": {
+      "eyebrow": "Topic",
+      "progress": "{completed} of {total} units complete",
+      "editOnboarding": "Edit onboarding",
+      "talkToNori": "Talk to Nori",
+      "status": {
+        "pending": "Not started",
+        "ready": "Ready to open",
+        "completed": "Completed"
+      }
     },
     "scope": {
       "heading": "This topic is outside PRAXIS scope",

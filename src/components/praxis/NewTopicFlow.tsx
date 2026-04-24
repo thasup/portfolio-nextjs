@@ -133,7 +133,10 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
         throw new Error(body?.error?.message ?? `HTTP ${res.status}`);
       }
       const data = (await res.json()) as AcceptResponse;
-      router.push(`/learn/${data.topicId}`);
+      // Send first-time learners straight into onboarding. The topic
+      // hub at `/learn/[topicId]` itself redirects here when no
+      // onboarding profile exists, so this is just a UX shortcut.
+      router.push(`/learn/${data.topicId}/onboarding`);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       setErrorMessage(message);
