@@ -28,8 +28,8 @@ Tasks are grouped by week and numbered `T-XXX`. Each task has an owner (First un
 > **Exit bar**: Supabase project provisioned, schema migration applied, invite → magic link → authenticated `/learn` empty state works end-to-end.
 
 - [~] **T-011** — Install dependencies. `@supabase/supabase-js`, `@supabase/ssr`, `tsx`, `zod`, `vitest` installed. Anthropic SDK dropped (replaced by OpenRouter). Pending: `docx`, `exceljs`, `jose`. _research §1, §2._
-- [ ] **T-012** — Provision Supabase project. Record URL and keys in `.env.local.example`. Apply migration `supabase/migrations/20260421_praxis_initial.sql`. _data-model.md._
-- [ ] **T-013** — Generate TypeScript types: `npx supabase gen types typescript > src/lib/praxis/supabase/database.types.ts`.
+- [~] **T-012** — Migration authored at `supabase/migrations/20260421000000_praxis_initial.sql`; `supabase/config.toml` committed. Remote provisioning + `supabase db push` pending. _data-model.md._
+- [~] **T-013** — Hand-typed stub at `src/lib/praxis/supabase/database.types.ts` mirrors the migration and typechecks clean. Replace via `npx supabase gen types typescript --linked > src/lib/praxis/supabase/database.types.ts` once remote is linked.
 - [x] **T-014** — Supabase clients at `src/utils/supabase/{client,server,middleware}.ts` using `@supabase/ssr` cookie-based session pattern. (Admin client deferred until T-017 invite endpoint.)
 - [ ] **T-015** — Create `src/lib/praxis/session/getLearner.ts` and `requireInvite.ts`.
 - [ ] **T-016** — Update `src/middleware.ts` to guard `/learn/*` and `/api/praxis/*` and redirect unauthenticated traffic to `/learn/not-invited`.
