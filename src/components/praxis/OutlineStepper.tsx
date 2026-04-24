@@ -18,40 +18,25 @@ export function OutlineStepper({ units, activeIndex }: OutlineStepperProps) {
   const t = useTranslations('praxis.outline');
 
   return (
-    <nav aria-label={t('stepperLabel')} className="sticky top-24 space-y-2">
-      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+    <nav aria-label={t('stepperLabel')} className="sticky top-24">
+      <div className="eyebrow mb-4">
         {t('stepperHeading')}
-      </p>
-      <ol className="space-y-1">
+      </div>
+      <div className="phases">
         {units.map((u) => {
           const active = activeIndex === u.index;
           return (
-            <li key={u.index}>
-              <a
-                href={`#unit-${u.index}`}
-                className={[
-                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors',
-                  active
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                ].join(' ')}
-              >
-                <span
-                  className={[
-                    'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium',
-                    active
-                      ? 'border-primary bg-primary text-primary-foreground'
-                      : 'border-border',
-                  ].join(' ')}
-                >
-                  {u.index}
-                </span>
-                <span className="truncate">{u.title}</span>
-              </a>
-            </li>
+            <a
+              key={u.index}
+              href={`#unit-${u.index}`}
+              className={`phase ${active ? 'on' : ''}`}
+            >
+              <span className="n">{u.index < 10 ? `0${u.index}` : u.index}</span>
+              <span className="t truncate">{u.title}</span>
+            </a>
           );
         })}
-      </ol>
+      </div>
     </nav>
   );
 }

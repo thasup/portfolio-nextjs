@@ -72,7 +72,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
   const progressPercent = unitList.length > 0 ? Math.round((completed / unitList.length) * 100) : 0;
 
   return (
-    <main id="module-overview" className="mx-auto max-w-3xl px-6 py-12">
+    <main id="module-overview" className="mx-auto max-w-7xl px-6 py-12">
       <header className="mb-10 space-y-4">
         <div className="flex items-center justify-between">
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -113,13 +113,12 @@ export default async function TopicPage({ params }: TopicPageProps) {
                 className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-primary hover:shadow-sm"
               >
                 <span
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-colors ${
-                    isCompleted
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-colors ${isCompleted
                       ? 'bg-green-500/10 text-green-600 dark:text-green-400'
                       : isReady
                         ? 'bg-primary/10 text-primary'
                         : 'border border-border text-muted-foreground'
-                  }`}
+                    }`}
                 >
                   {isCompleted ? '✓' : u.index}
                 </span>
@@ -127,13 +126,12 @@ export default async function TopicPage({ params }: TopicPageProps) {
                   <div className="flex items-center gap-2">
                     <p className="font-medium text-foreground">{u.title}</p>
                     <span
-                      className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
-                        isCompleted
+                      className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${isCompleted
                           ? 'bg-green-500/10 text-green-600 dark:text-green-400'
                           : isReady
                             ? 'bg-primary/10 text-primary'
                             : 'bg-muted text-muted-foreground'
-                      }`}
+                        }`}
                     >
                       {t(`status.${u.status}` as 'status.pending')}
                     </span>

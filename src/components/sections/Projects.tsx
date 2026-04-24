@@ -29,7 +29,7 @@ export function Projects() {
   )
 
   return (
-    <section id="projects" className="section-padding bg-muted/30">
+    <section id="projects" className="section-padding">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           label={t('header.label')}

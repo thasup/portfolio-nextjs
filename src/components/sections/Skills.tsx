@@ -12,7 +12,7 @@ export function Skills() {
   const locale = useLocale()
 
   return (
-    <section className="section-padding">
+    <section id="skills" className="section-padding">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader
           label={t('label')}
@@ -23,39 +23,39 @@ export function Skills() {
         <div className="grid gap-8 md:grid-cols-2">
           {skillClusters.sort((a, b) => a.order - b.order).map((cluster, index) => (
             <ScrollReveal key={cluster.id} delay={index * 0.1}>
-              <Card
+              <div
                 className={cn(
-                  'h-full border transition-colors',
+                  'card h-full flex flex-col',
                   cluster.emphasized
-                    ? 'border-primary/50 shadow-sm shadow-primary/5'
-                    : 'border-border hover:border-border/80'
+                    ? 'border-[var(--color-ink-2)] shadow-sm'
+                    : ''
                 )}
               >
-                <CardHeader>
-                  <CardTitle className="text-xl flex items-center gap-2">
+                <div className="p-6 pb-4">
+                  <h3 className="font-display text-xl flex items-center gap-2 text-[var(--color-ink)] mb-2">
                     {t(cluster.labelKey)}
                     {cluster.emphasized && (
-                      <span className="flex h-2 w-2 rounded-full bg-primary" />
+                      <span className="flex h-2 w-2 rounded-full bg-[var(--color-praxis-accent)]" />
                     )}
-                  </CardTitle>
+                  </h3>
                   {cluster.statusKey && t.has(cluster.statusKey) && (
-                    <div>
-                      <span className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground">
+                    <div className="mb-2">
+                      <span className="rounded-full border border-[var(--color-line)] px-2 py-1 text-[11px] text-[var(--color-ink-3)]">
                         {t(cluster.statusKey)}
                       </span>
                     </div>
                   )}
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-[var(--color-ink-2)]">
                     {t(cluster.descriptionKey)}
                   </p>
-                </CardHeader>
-                <CardContent className="grid gap-5">
+                </div>
+                <div className="p-6 pt-0 grid gap-5 flex-1 content-start">
                   <div className="grid gap-4">
                     {cluster.skills.map((skill) => (
                       <div key={skill.name} className="space-y-1">
                         <SkillBar name={skill.name} level={skill.level} />
                         {skill.tagKey && (
-                          <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider block pl-1">
+                          <span className="text-[10px] text-[var(--color-ink-3)] uppercase tracking-wider block pl-1">
                             {t(skill.tagKey)}
                           </span>
                         )}
@@ -63,20 +63,20 @@ export function Skills() {
                     ))}
                   </div>
                   {cluster.evidenceRefs && cluster.evidenceRefs.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-2">
+                    <div className="flex flex-wrap gap-2 pt-2 mt-auto">
                       {cluster.evidenceRefs.map((ref) => (
                         <Link
                           key={ref}
                           href={`${locale === 'th' ? '/th' : ''}/projects/${ref}`}
-                          className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground hover:text-foreground"
+                          className="rounded-full border border-[var(--color-line)] px-2 py-1 text-[11px] text-[var(--color-ink-3)] hover:text-[var(--color-ink)] transition-colors"
                         >
                           {ref}
                         </Link>
                       ))}
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </ScrollReveal>
           ))}
         </div>

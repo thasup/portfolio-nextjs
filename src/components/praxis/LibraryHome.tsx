@@ -17,47 +17,52 @@ export function LibraryHome({ displayName, topics }: LibraryHomeProps) {
 
   return (
     <>
-      <header className="mb-10 space-y-2">
-        <p className="text-sm text-muted-foreground">{t('welcome')}</p>
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-          {t('greeting', { name: displayName })}
+      <div className="hero">
+        <div className="kicker">
+          <div className="line" />
+          <div className="eyebrow">{t('welcome')}</div>
+        </div>
+        <h1>
+          Good afternoon, <br className="hidden md:block" />
+          <em>{displayName}</em>.
         </h1>
-      </header>
+        <p className="sub">
+          This is your personal learning environment. Every topic here is generated specifically for you, tailored to your pace and goals.
+        </p>
+
+        <div className="teach-box">
+          <div className="prompt">
+            <span className="arrow">→</span>
+            <input type="text" placeholder="I want to learn about..." />
+          </div>
+          <div className="row">
+            <div className="chips">
+              <button className="chip">System Design</button>
+              <button className="chip">Product Strategy</button>
+              <button className="chip">User Research</button>
+            </div>
+            <Link href="/learn/new" className="btn sm">Build syllabus</Link>
+          </div>
+        </div>
+      </div>
 
       {topics.length === 0 ? (
-        <section className="rounded-2xl border border-border bg-card p-8 text-center">
-          <h2 className="text-lg font-medium text-foreground">{t('emptyHeading')}</h2>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
+        <section className="card inset text-center my-12">
+          <h2 className="text-lg font-medium text-[var(--color-ink)]">{t('emptyHeading')}</h2>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-[var(--color-ink-3)]">
             {t('emptyBody')}
           </p>
-          <Link
-            href="/learn/new"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
-          >
-            {t('startTopic')}
-          </Link>
         </section>
       ) : (
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-              {t('topicsHeading')}
-            </h2>
-            <Link
-              href="/learn/new"
-              className="text-sm font-medium text-primary hover:underline"
-            >
-              {t('startTopic')} →
-            </Link>
+        <div className="lib-grid">
+          <div className="lib-section-head">
+            <div className="n">01</div>
+            <div className="eyebrow">{t('topicsHeading')}</div>
           </div>
-          <ul className="space-y-2">
-            {topics.map((topic) => (
-              <li key={topic.id}>
-                <TopicCard topic={topic} />
-              </li>
-            ))}
-          </ul>
-        </section>
+          {topics.map((topic) => (
+            <TopicCard key={topic.id} topic={topic} />
+          ))}
+        </div>
       )}
     </>
   );

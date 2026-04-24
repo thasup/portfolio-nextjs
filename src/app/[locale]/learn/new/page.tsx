@@ -21,7 +21,7 @@ export default async function NewTopicPage({ params }: NewTopicPageProps) {
   const praxisLocale = locale === 'th' ? PraxisLocale.TH : PraxisLocale.EN;
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="mx-auto max-w-7xl px-6 py-12">
       <NewTopicFlow locale={praxisLocale} />
     </main>
   );

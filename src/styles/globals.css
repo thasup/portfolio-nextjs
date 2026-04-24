@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './praxis.css';
 
 @theme {
   --color-primary: oklch(0.55 0.22 264);
@@ -20,6 +21,29 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-sarabun: var(--font-sarabun), 'Sarabun', sans-serif;
+
+  /* Praxis Mapping Light */
+  --color-paper: #f8fafc;
+  --color-paper-2: #f1f5f9;
+  --color-paper-3: #e2e8f0;
+  --color-ink: #0f172a;
+  --color-ink-2: #334155;
+  --color-ink-3: #64748b;
+  --color-ink-4: #94a3b8;
+  --color-line: #cbd5e1;
+  --color-line-soft: #e2e8f0;
+  
+  --color-praxis-accent: var(--color-primary);
+  --color-praxis-accent-soft: color-mix(in oklch, var(--color-primary) 15%, transparent);
+  --color-ai: var(--color-accent);
+  --color-ai-soft: color-mix(in oklch, var(--color-accent) 15%, transparent);
+
+  --font-display: var(--font-fraunces), 'Fraunces', serif;
+  --font-serif: var(--font-instrument-serif), 'Instrument Serif', serif;
+  --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
+
+  --shadow-sketchy: 0 1px 0 rgba(15,23,42,.04), 0 8px 24px -14px rgba(15,23,42,.25);
+  --shadow-sketchy-lg: 0 2px 0 rgba(15,23,42,.05), 0 40px 80px -40px rgba(15,23,42,.35);
 
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -105,6 +129,25 @@
   --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
 
+  /* Praxis Mapping Dark */
+  --color-paper: #020617;
+  --color-paper-2: #0f172a;
+  --color-paper-3: #1e293b;
+  --color-ink: #f8fafc;
+  --color-ink-2: #6799ff;
+  --color-ink-3: #94a3b8;
+  --color-ink-4: #64748b;
+  --color-line: #334155;
+  --color-line-soft: #1e293b;
+
+  --color-praxis-accent: var(--color-primary);
+  --color-praxis-accent-soft: color-mix(in oklch, var(--color-primary) 15%, transparent);
+  --color-ai: var(--color-accent);
+  --color-ai-soft: color-mix(in oklch, var(--color-accent) 15%, transparent);
+
+  --shadow-sketchy: 0 1px 0 rgba(0,0,0,.4), 0 8px 24px -10px rgba(0,0,0,.5);
+  --shadow-sketchy-lg: 0 2px 0 rgba(0,0,0,.5), 0 40px 80px -30px rgba(0,0,0,.7);
+
   --glass-fill-light: color-mix(in oklch, var(--color-background) 60%, transparent);
   --glass-fill-medium: color-mix(in oklch, var(--color-background) 75%, transparent);
   --glass-fill-heavy: color-mix(in oklch, var(--color-background) 85%, transparent);
@@ -179,6 +222,38 @@
 }
 
 @layer utilities {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    font-variation-settings: "opsz" 144, "SOFT" 60;
+  }
+  .serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.01em;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    letter-spacing: 0;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .muted {
+    color: var(--color-ink-3);
+  }
+  .shadow-sketchy {
+    box-shadow: var(--shadow-sketchy);
+  }
+  .shadow-sketchy-lg {
+    box-shadow: var(--shadow-sketchy-lg);
+  }
+
   .text-gradient {
     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     -webkit-background-clip: text;

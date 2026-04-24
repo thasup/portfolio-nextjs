@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { sarabun } from '@/lib/fonts'
+import { sarabun, fraunces, instrumentSerif, inter, jetbrainsMono } from '@/lib/fonts'
 import { ThemeProvider } from 'next-themes'
 import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
@@ -74,17 +72,16 @@ export default async function RootLayout({
   const gtmId = process.env.NEXT_PUBLIC_GTM_MEASUREMENT_ID
 
   return (
-    <html
-      lang={locale}
-      className={`${GeistSans.variable} ${GeistMono.variable} ${sarabun.variable}`}
-      suppressHydrationWarning
-    >
-      <body 
-        className={`min-h-screen bg-background font-sans antialiased ${
-          locale === 'th' ? 'font-sarabun leading-loose' : ''
-        }`}
+      <html
+        lang={locale}
+        className={`${fraunces.variable} ${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${sarabun.variable}`}
+        suppressHydrationWarning
       >
-        <GlassSVGFilters />
+        <body 
+          className={`app antialiased ${
+            locale === 'th' ? 'font-sarabun leading-loose' : ''
+          }`}
+        >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
@@ -95,7 +92,7 @@ export default async function RootLayout({
             <ModalProvider>
               <ScrollProgress />
               <Navbar />
-              <main>{children}</main>
+              <main className="app-inner">{children}</main>
               <Footer />
               <ModalShell />
             </ModalProvider>

@@ -1,25 +1,27 @@
-import { Article, ArticleCategory } from '@/types/article';
+import { Article, ArticleCategory } from "@/types/article";
 
 export const emperorXuanOfHanEn: Article = {
-  slug: 'emperor-xuan-of-han',
-  title: 'Emperor Xuan of Han: From Prison to the Dragon Throne',
-  subtitle: 'The extraordinary journey of Liu Bingyi, who rose from an infant prisoner to become one of China\'s greatest emperors',
-  description: 'The remarkable story of Emperor Xuan of Han (Liu Bingyi), born in prison, raised among commoners, and destined to restore the glory of the Han Dynasty through pragmatic governance and strategic brilliance.',
+  slug: "emperor-xuan-of-han",
+  title: "Emperor Xuan of Han: From Prison to the Dragon Throne",
+  subtitle:
+    "The extraordinary journey of Liu Bingyi, who rose from an infant prisoner to become one of China's greatest emperors",
+  description:
+    "The remarkable story of Emperor Xuan of Han (Liu Bingyi), born in prison, raised among commoners, and destined to restore the glory of the Han Dynasty through pragmatic governance and strategic brilliance.",
   category: ArticleCategory.HISTORY,
-  publishedDate: '2026-04-08',
+  publishedDate: "2026-04-08",
   readingTime: 25,
   heroImage: {
-    src: '/images/articles/emperor-xuan-hero.webp',
-    alt: 'Ancient Chinese imperial palace during Han Dynasty',
-    caption: 'The majesty of Han Dynasty imperial architecture',
+    src: "https://images.unsplash.com/photo-1734260187982-dbfd7bbe5a1c?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    alt: "Ancient Chinese imperial palace during Han Dynasty",
+    caption: "The majesty of Han Dynasty imperial architecture",
   },
   author: {
-    name: 'Historical Archives',
+    name: "Historical Archives",
   },
   sections: [
     {
-      id: 'introduction',
-      title: 'Introduction: The Storm of Blood in Chang\'an',
+      id: "introduction",
+      title: "Introduction: The Storm of Blood in Chang'an",
       content: `The Western Han Dynasty under Emperor Wu (Liu Che) reached its zenith of military power, crushing the Xiongnu nomads and expanding to Central Asia. Yet in his final years (92-89 BC), paranoia consumed the aging emperor. His obsession with immortality and fear of death created a power vacuum, allowing court intrigue to flourish.
 
 This paranoia culminated in the Witchcraft Scandal of 91 BC, one of history's bloodiest palace purges. Jiang Chong, a cunning official with a personal vendetta against Crown Prince Liu Ju, exploited the emperor's superstitions by fabricating evidence of witchcraft. When wooden dolls were "discovered" in the Crown Prince's palace, Liu Ju was forced into rebellion.
@@ -36,21 +38,23 @@ This miraculous escape marked the beginning of an extraordinary destiny. The inf
       timeline: [
         {
           year: -91,
-          era: 'BC',
-          title: 'The Witchcraft Scandal',
-          description: 'Crown Prince Liu Ju forced into rebellion, mass execution of imperial family',
+          era: "BC",
+          title: "The Witchcraft Scandal",
+          description:
+            "Crown Prince Liu Ju forced into rebellion, mass execution of imperial family",
         },
         {
           year: -91,
-          era: 'BC',
-          title: 'Birth in Tragedy',
-          description: 'Liu Bingyi born just before his entire family was destroyed',
+          era: "BC",
+          title: "Birth in Tragedy",
+          description:
+            "Liu Bingyi born just before his entire family was destroyed",
         },
       ],
     },
     {
-      id: 'commoner-life',
-      title: 'Chapter 1: Growing Up Outside Palace Walls (91-74 BC)',
+      id: "commoner-life",
+      title: "Chapter 1: Growing Up Outside Palace Walls (91-74 BC)",
       content: `After his release, Liu Bingyi was raised by his maternal grandmother's family, the Shi clan—ordinary commoners. Though nominally a prince, his stipend was so meager he lived in dirt-floor houses in Chang'an's narrow alleys.
 
 Zhang He, a eunuch who had served his grandfather, became his guardian, paying for his education out of pocket. This poverty proved transformative. Unlike pampered princes, Liu Bingyi roamed marketplaces, befriended farmers, laborers, and low-ranking officials. This "street university" taught him what no Confucian text could: how corrupt local officials extorted peasants, how the justice system failed the poor, and how small fluctuations in grain prices meant life or death for farming families.
@@ -67,21 +71,21 @@ This pure bond, forged in poverty, became the most sacred thing in Liu Bingyi's 
       timeline: [
         {
           year: -91,
-          era: 'BC',
-          title: 'Released from Prison',
-          description: 'Raised by the Shi clan as a commoner',
+          era: "BC",
+          title: "Released from Prison",
+          description: "Raised by the Shi clan as a commoner",
         },
         {
           year: -74,
-          era: 'BC',
-          title: 'Marriage to Xu Pingjun',
-          description: 'Married his commoner wife during his years of poverty',
+          era: "BC",
+          title: "Marriage to Xu Pingjun",
+          description: "Married his commoner wife during his years of poverty",
         },
       ],
     },
     {
-      id: 'puppet-emperor',
-      title: 'Chapter 2: The Puppet on the Throne of Fear (74-68 BC)',
+      id: "puppet-emperor",
+      title: "Chapter 2: The Puppet on the Throne of Fear (74-68 BC)",
       content: `In 74 BC, Emperor Zhao died at 21 without an heir. Real power rested with Huo Guang, regent and brother of the legendary general Huo Qubing. Huo first enthroned Liu He, but after only 27 days, deposed him for "1,127 violations of protocol"—demonstrating Huo's power exceeded the emperor's.
 
 Needing a controllable puppet, Huo Guang selected 18-year-old Liu Bingyi on Bing Ji's recommendation. The poor street youth was cleaned up, dressed in silk, and proclaimed Emperor Xuan within a day.
@@ -92,21 +96,22 @@ For years, Emperor Xuan played the obedient puppet perfectly, never questioning 
       timeline: [
         {
           year: -74,
-          era: 'BC',
-          title: 'Ascension to Throne',
-          description: 'Selected by Huo Guang to become Emperor at age 18',
+          era: "BC",
+          title: "Ascension to Throne",
+          description: "Selected by Huo Guang to become Emperor at age 18",
         },
         {
           year: -74,
-          era: 'BC',
-          title: 'Xu Pingjun Made Empress',
-          description: 'Successfully maneuvered to make his commoner wife Empress',
+          era: "BC",
+          title: "Xu Pingjun Made Empress",
+          description:
+            "Successfully maneuvered to make his commoner wife Empress",
         },
       ],
     },
     {
-      id: 'cold-war-palace',
-      title: 'Chapter 3: Cold War in the Palace (74-68 BC)',
+      id: "cold-war-palace",
+      title: "Chapter 3: Cold War in the Palace (74-68 BC)",
       content: `Though Emperor Xuan yielded on governance, one issue was non-negotiable: the position of Empress. Court officials, reading Huo Guang's intentions, prepared to recommend Huo Chengjun, Huo's daughter.
 
 Emperor Xuan made a brilliant political move. Without directly refusing, he issued an edict: "When I was poor, I had an old sword that was always with me. Now I miss that sword dearly. Can any official help me find this old sword?"
@@ -129,27 +134,30 @@ This convinced Huo Guang that Emperor Xuan was weak and dependent. But beneath t
       timeline: [
         {
           year: -74,
-          era: 'BC',
-          title: 'The Edict Seeking the Old Sword',
-          description: 'Successfully maneuvered to make his commoner wife Empress, creating the idiom "Deep Love for the Old Sword"',
+          era: "BC",
+          title: "The Edict Seeking the Old Sword",
+          description:
+            'Successfully maneuvered to make his commoner wife Empress, creating the idiom "Deep Love for the Old Sword"',
         },
         {
           year: -71,
-          era: 'BC',
-          title: 'Murder of Empress Xu',
-          description: 'Empress Xu Pingjun poisoned by Huo Guang\'s wife',
+          era: "BC",
+          title: "Murder of Empress Xu",
+          description: "Empress Xu Pingjun poisoned by Huo Guang's wife",
         },
         {
           year: -70,
-          era: 'BC',
-          title: 'Huo Chengjun Made Empress',
-          description: 'Swallowed his blood and appointed Huo Chengjun to lull the Huo clan',
+          era: "BC",
+          title: "Huo Chengjun Made Empress",
+          description:
+            "Swallowed his blood and appointed Huo Chengjun to lull the Huo clan",
         },
       ],
     },
     {
-      id: 'purge-of-huo',
-      title: 'Chapter 4: The Purge and Reclamation of Absolute Power (68-66 BC)',
+      id: "purge-of-huo",
+      title:
+        "Chapter 4: The Purge and Reclamation of Absolute Power (68-66 BC)",
       content: `Emperor Xuan's long patience bore fruit in spring 68 BC when Huo Guang fell gravely ill and died. The emperor personally attended his deathbed and grieved heavily at the news.
 
 To avoid clan suspicion, he gave Huo Guang an almost imperial funeral—sandalwood coffin, jade burial suit threaded with gold, and a massive mausoleum. He proclaimed Huo's merits in protecting the throne for decades.
@@ -186,21 +194,22 @@ This purge shook the empire. Co-conspirators, relatives, subordinate officials, 
       timeline: [
         {
           year: -68,
-          era: 'BC',
-          title: 'Death of Huo Guang',
-          description: 'The regent dies, opening path for emperor\'s true rule',
+          era: "BC",
+          title: "Death of Huo Guang",
+          description: "The regent dies, opening path for emperor's true rule",
         },
         {
           year: -66,
-          era: 'BC',
-          title: 'Destruction of Huo Clan',
-          description: 'Huo clan conspiracy discovered and crushed, over 10,000 executed',
+          era: "BC",
+          title: "Destruction of Huo Clan",
+          description:
+            "Huo clan conspiracy discovered and crushed, over 10,000 executed",
         },
       ],
     },
     {
-      id: 'governance',
-      title: 'Chapter 5: Pragmatic Governance and National Restoration',
+      id: "governance",
+      title: "Chapter 5: Pragmatic Governance and National Restoration",
       content: `With absolute power secured, Emperor Xuan didn't use it for pleasure but to completely restructure imperial governance. He wasn't a scholar reading texts in ivory towers—he was a pragmatist who understood reality.
 
 Many officials and intellectuals tried pushing him toward extreme Confucianism (emphasizing only mercy and ritual). He firmly refused. Once, when Crown Prince Liu Shi (obsessed with Confucianism) criticized his harsh laws and urged more leniency, Emperor Xuan angrily declared a statement that became historical legend:
@@ -219,8 +228,8 @@ This was Emperor Xuan's governing philosophy: he believed humans had both good a
 Having been born and survived in prison, Emperor Xuan deeply understood justice system flaws. He banned torture to extract confessions and established mandatory review for all death sentences. He sent secret inspectors to verify local officials judged cases fairly. This attention to justice made commoners feel directly protected by the emperor.`,
     },
     {
-      id: 'foreign-policy',
-      title: 'Chapter 6: Subduing the Xiongnu and Opening the Silk Road',
+      id: "foreign-policy",
+      title: "Chapter 6: Subduing the Xiongnu and Opening the Silk Road",
       content: `For over a century, the Xiongnu nomads of the steppes terrorized the Han Dynasty. Emperor Wu spent enormous resources and hundreds of thousands of soldiers to drive them back. Though victorious in battle, it nearly bankrupted the Han economy, and the Xiongnu kept regrouping.
 
 But Emperor Xuan was the ultimate pragmatist who knew "the best war is one not fought" (from Sun Tzu's Art of War). Assessing that the Xiongnu were weakened by natural disasters and succession crises, he shifted from "military assault" to "intelligence and diplomacy to divide enemies" (Divide and Conquer).
@@ -253,21 +262,23 @@ The wealth flowing through the Silk Road became the lifeblood nourishing the Han
       timeline: [
         {
           year: -60,
-          era: 'BC',
-          title: 'Protectorate of Western Regions',
-          description: 'Established formal control over Xinjiang/Silk Road region',
+          era: "BC",
+          title: "Protectorate of Western Regions",
+          description:
+            "Established formal control over Xinjiang/Silk Road region",
         },
         {
           year: -51,
-          era: 'BC',
-          title: 'Huhanye Chanyu\'s Submission',
-          description: 'Xiongnu leader pledges vassalage to Han without major warfare',
+          era: "BC",
+          title: "Huhanye Chanyu's Submission",
+          description:
+            "Xiongnu leader pledges vassalage to Han without major warfare",
         },
       ],
     },
     {
-      id: 'legacy',
-      title: 'Chapter 7: Legacy and Epilogue',
+      id: "legacy",
+      title: "Chapter 7: Legacy and Epilogue",
       content: `In 51 BC, following the great success of subduing the Xiongnu, Emperor Xuan commissioned portraits of 11 top officials and generals to hang in the **"Qilin Pavilion"** of Weiyang Palace—the highest honor.
 
 This act held profound historical significance, declaring that the empire's greatness wasn't built by the emperor alone but by a strong "management team." Notably:
@@ -303,15 +314,16 @@ Emperor Xuan (Liu Bingyi) wasn't just the emperor who survived the royal prison�
       timeline: [
         {
           year: -51,
-          era: 'BC',
-          title: 'Qilin Pavilion Honors',
-          description: 'Commissioned portraits of 11 greatest officials and generals',
+          era: "BC",
+          title: "Qilin Pavilion Honors",
+          description:
+            "Commissioned portraits of 11 greatest officials and generals",
         },
         {
           year: -49,
-          era: 'BC',
-          title: 'Death of Emperor Xuan',
-          description: 'Died at age 42 after 25 years of transformative rule',
+          era: "BC",
+          title: "Death of Emperor Xuan",
+          description: "Died at age 42 after 25 years of transformative rule",
         },
       ],
     },

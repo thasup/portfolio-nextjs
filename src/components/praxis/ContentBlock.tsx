@@ -119,31 +119,45 @@ export function ContentBlock({
   return (
     <section
       id={`block-${currentId}`}
-      className="group relative rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/30"
+      className={`group relative ${
+        kind === UnitBlockKind.PRACTICE
+          ? 'practice'
+          : kind === UnitBlockKind.DIAGRAM_NOTE || kind === UnitBlockKind.EXAMPLE
+          ? 'callout'
+          : 'mb-8'
+      }`}
     >
-      {/* Kind badge */}
-      <div className="mb-4 flex items-center gap-2">
-        <span className="text-base" aria-hidden="true">
-          {KIND_ICONS[kind]}
-        </span>
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          {KIND_LABELS[kind]}
-        </span>
-        {regeneratedFrom && (
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+      {/* Kind badge (only prominent for certain blocks in Praxis, but we keep it subtle for standard blocks) */}
+      {(kind === UnitBlockKind.PRACTICE || kind === UnitBlockKind.DIAGRAM_NOTE || kind === UnitBlockKind.EXAMPLE) ? (
+        <h4>{KIND_ICONS[kind]} {KIND_LABELS[kind]}</h4>
+      ) : (
+        <div className="mb-2 flex items-center gap-2">
+          <span className="eyebrow opacity-50 group-hover:opacity-100 transition-opacity">
+            {KIND_ICONS[kind]} {KIND_LABELS[kind]}
+          </span>
+          {regeneratedFrom && (
+            <span className="rounded-full bg-[var(--color-praxis-accent-soft)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-praxis-accent)]">
+              Regenerated
+            </span>
+          )}
+        </div>
+      )}
+
+      {regeneratedFrom && (kind === UnitBlockKind.PRACTICE || kind === UnitBlockKind.DIAGRAM_NOTE || kind === UnitBlockKind.EXAMPLE) && (
+        <div className="mb-4">
+          <span className="rounded-full bg-[var(--color-praxis-accent-soft)] px-2 py-0.5 text-[10px] font-medium text-[var(--color-praxis-accent)]">
             Regenerated
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Content */}
       <div
-        className="prose prose-sm max-w-none text-foreground prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-li:text-foreground/90 prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:text-xs prose-pre:bg-muted prose-pre:text-sm"
         dangerouslySetInnerHTML={{ __html: markdownToHtml(currentContent) }}
       />
 
       {/* Regenerate action */}
-      <div className="mt-4 flex justify-end opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="mt-2 flex justify-end opacity-0 transition-opacity group-hover:opacity-100">
         <BlockRegenerateAction
           unitId={unitId}
           blockId={currentId}

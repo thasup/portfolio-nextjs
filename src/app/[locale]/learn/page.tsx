@@ -45,7 +45,7 @@ export default async function LibraryPage() {
   const displayName = session.learner.display_name ?? session.email.split('@')[0];
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="mx-auto max-w-7xl px-6 py-12">
       <LibraryHome displayName={displayName} topics={topics} />
     </main>
   );

@@ -33,15 +33,6 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-[70vh] items-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16"
     >
-      {/* Background pattern */}
-      <div
-        className="absolute inset-0 -z-10 opacity-[0.03] dark:opacity-[0.05]"
-        style={{
-          backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)",
-          backgroundSize: "24px 24px"
-        }}
-      />
-
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         <Wrapper
           {...(!reducedMotion && {
@@ -54,31 +45,31 @@ export function Hero() {
           {/* Text content */}
           <div>
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium">
+              <span className="mb-4 inline-flex items-center gap-2 eyebrow px-3 py-1 bg-[var(--color-paper-2)] border border-[var(--color-line-soft)] rounded-full text-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 {t("availability")}
               </span>
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <p className="text-sm font-medium tracking-[0.18em] text-primary uppercase">
+              <p className="eyebrow text-[var(--color-praxis-accent)]">
                 {t("intro")}
               </p>
-              <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-display font-medium tracking-tight text-[var(--color-ink)]">
                 {t("roleLine")}
               </h1>
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
               <div className="mt-6 max-w-2xl space-y-4">
-                <p className="text-base leading-relaxed text-foreground md:text-xl">
+                <p className="text-base leading-relaxed text-[var(--color-ink-2)] md:text-xl">
                   {t("tagline")}
                 </p>
-                <div className="max-w-xl rounded-2xl border border-border bg-muted/40 px-4 py-4">
-                  <p className="text-sm font-semibold text-foreground md:text-base">
+                <div className="max-w-xl card inset px-5 py-4">
+                  <p className="text-sm font-medium text-[var(--color-ink)] md:text-base">
                     {t("proofHeadline")}
                   </p>
-                  <p className="mt-1 text-sm text-muted-foreground md:text-base">
+                  <p className="mt-1 text-sm text-[var(--color-ink-3)] md:text-base">
                     {t("proofSubheadline")}
                   </p>
                 </div>
@@ -88,22 +79,16 @@ export function Hero() {
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
               <div className="mt-8 flex flex-wrap gap-3">
                 <div className="space-y-2">
-                  <Button size="lg" asChild>
-                    <Link href="/#projects">{t("ctaPrimary")}</Link>
-                  </Button>
-                  <p className="text-xs text-muted-foreground">{t("ctaPrimaryHint")}</p>
+                  <Link href="/#projects" className="btn primary lg">
+                    {t("ctaPrimary")}
+                  </Link>
+                  <p className="text-xs text-[var(--color-ink-4)] mt-2">{t("ctaPrimaryHint")}</p>
                 </div>
-                {/* <div className="space-y-2">
-                  <Button size="lg" variant="outline" asChild>
-                    <Link href="/contact/">{t('ctaSecondary')}</Link>
-                  </Button>
-                  <p className="text-xs text-muted-foreground">{t('ctaSecondaryHint')}</p>
-                </div> */}
               </div>
             </Wrapper>
 
             <Wrapper {...(!reducedMotion && { variants: itemVariants })}>
-              <p className="mt-8 text-sm font-medium text-muted-foreground md:text-base">
+              <p className="mt-8 text-sm font-medium text-[var(--color-ink-3)] md:text-base">
                 {t("directionLine")}
               </p>
             </Wrapper>
@@ -113,7 +98,7 @@ export function Hero() {
                 {[t("trust1"), t("trust2")].map((item) => (
                   <div
                     key={item}
-                    className="rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-muted-foreground"
+                    className="card px-4 py-3 text-sm text-[var(--color-ink-2)]"
                   >
                     {item}
                   </div>
@@ -127,7 +112,7 @@ export function Hero() {
                   href={siteConfig.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
+                  className="rounded-md p-2 text-[var(--color-ink-3)] transition-colors hover:bg-[var(--color-paper-2)] hover:text-[var(--color-ink)]"
                   aria-label="LinkedIn"
                 >
                   <Linkedin className="h-5 w-5" />
@@ -136,14 +121,14 @@ export function Hero() {
                   href={siteConfig.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
+                  className="rounded-md p-2 text-[var(--color-ink-3)] transition-colors hover:bg-[var(--color-paper-2)] hover:text-[var(--color-ink)]"
                   aria-label="GitHub"
                 >
                   <Github className="h-5 w-5" />
                 </a>
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
+                  className="rounded-md p-2 text-[var(--color-ink-3)] transition-colors hover:bg-[var(--color-paper-2)] hover:text-[var(--color-ink)]"
                   aria-label="Email"
                 >
                   <Mail className="h-5 w-5" />
@@ -158,8 +143,8 @@ export function Hero() {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative">
-              <div className="absolute -inset-4 rounded-full bg-linear-to-br from-primary/20 via-accent/20 to-primary/20 blur-2xl" />
-              <div className="relative h-64 w-64 overflow-hidden rounded-full border-4 border-border bg-muted sm:h-80 sm:w-80">
+              <div className="absolute -inset-4 rounded-full bg-linear-to-br from-[var(--color-praxis-accent-soft)] via-[var(--color-ai-soft)] to-[var(--color-praxis-accent-soft)] blur-2xl" />
+              <div className="relative h-64 w-64 overflow-hidden rounded-full border-[3px] border-[var(--color-line)] bg-[var(--color-paper-2)] sm:h-80 sm:w-80">
                 <NextImage
                   src={siteConfig.avatarImage}
                   alt={siteConfig.name}
@@ -178,7 +163,7 @@ export function Hero() {
           <motion.div
             animate={reducedMotion ? {} : { y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-muted-foreground"
+            className="text-[var(--color-ink-4)]"
           >
             <ArrowDown className="h-5 w-5" />
           </motion.div>

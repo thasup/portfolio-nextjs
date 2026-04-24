@@ -51,16 +51,16 @@ export default async function UnitPage({ params }: UnitPageProps) {
   // Parse blocks from JSONB.
   const blocks = Array.isArray(unit.blocks)
     ? (unit.blocks as Array<{
-        id: string;
-        kind: string;
-        content: string;
-        regeneratedFrom: string | null;
-        generatedAt: string;
-      }>)
+      id: string;
+      kind: string;
+      content: string;
+      regeneratedFrom: string | null;
+      generatedAt: string;
+    }>)
     : [];
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="mx-auto max-w-7xl px-6 py-12">
       <UnitRenderer
         unitId={unit.id}
         unitTitle={unit.title}

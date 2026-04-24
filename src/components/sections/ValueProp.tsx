@@ -1,6 +1,5 @@
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ScrollReveal } from '@/components/shared/ScrollReveal'
-import { GlassCard } from '@/components/glass'
 import { valuePropositions } from '@/data/valuePropositions'
 import { Sparkles, Target, Layers, Zap, Rocket, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
@@ -51,44 +50,44 @@ export function ValueProp() {
                     : value.crossRef
               : null
             return (
-              <ScrollReveal 
-                key={value.id} 
+              <ScrollReveal
+                key={value.id}
                 delay={index * 0.1}
                 className={isLastOrphaned ? "md:col-span-2 lg:col-span-1" : ""}
               >
-                <GlassCard elevation="e2" hover className="h-full group">
+                <div className="card h-full group hover:-translate-y-1 hover:border-[var(--color-ink-2)] transition-all duration-300">
                   <div className="p-6 md:p-8 flex flex-col h-full">
-                    <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-praxis-accent-soft)] text-[var(--color-praxis-accent)]">
                       {getIcon(value.icon)}
                     </div>
                     {signalKey && (
                       <div className="mb-3">
-                        <span className="rounded-full border border-border px-2 py-1 text-[11px] text-muted-foreground">
+                        <span className="eyebrow inline-flex rounded-full border border-[var(--color-line-soft)] px-2 py-1 text-[var(--color-ink-3)]">
                           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           {tRoot(signalKey as any)}
                         </span>
                       </div>
                     )}
-                    <h3 className="mb-3 text-xl font-bold">{title}</h3>
-                    <p className="text-muted-foreground leading-relaxed grow">
+                    <h3 className="mb-3 text-xl font-display font-medium text-[var(--color-ink)]">{title}</h3>
+                    <p className="text-[var(--color-ink-2)] leading-relaxed grow">
                       {description}
                     </p>
                     {proof && (
-                      <p className="mt-5 rounded-lg border border-border/60 bg-muted/30 px-3 py-3 text-sm text-muted-foreground">
+                      <p className="mt-5 rounded-lg border border-[var(--color-line-soft)] bg-[var(--color-paper-2)] px-3 py-3 text-sm text-[var(--color-ink-2)]">
                         {proof}
                       </p>
                     )}
                     {href && (
-                      <Link 
+                      <Link
                         href={href}
-                        className="mt-6 flex items-center text-sm font-medium text-primary hover:underline hover:underline-offset-4"
+                        className="mt-6 flex items-center text-sm font-medium text-[var(--color-praxis-accent)] hover:underline hover:underline-offset-4"
                       >
                         {t('evidence')}
                         <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Link>
                     )}
                   </div>
-                </GlassCard>
+                </div>
               </ScrollReveal>
             )
           })}

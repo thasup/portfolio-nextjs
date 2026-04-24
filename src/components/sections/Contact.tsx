@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { contactFormSchema, type ContactFormData } from '@/types/contact'
 import { contactIntents } from '@/data/contactIntents'
 import { SectionHeader } from '@/components/shared/SectionHeader'
-import { GlassCard } from '@/components/glass'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -74,7 +73,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="section-padding bg-muted/30">
+    <section id="contact" className="section-padding">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <SectionHeader
           label={t('label')}
@@ -84,24 +83,23 @@ export function Contact() {
 
         <div className="mx-auto mt-12 w-full max-w-2xl">
           {isSuccess ? (
-            <GlassCard elevation="e3">
+            <div className="card">
               <div className="flex flex-col items-center justify-center p-12 text-center">
-                <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10">
-                  <CheckCircle2 className="h-10 w-10 text-green-500" />
+                <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-ai-soft)]">
+                  <CheckCircle2 className="h-10 w-10 text-[var(--color-ai)]" />
                 </div>
-                <h3 className="mb-2 text-2xl font-bold">{t('successTitle')}</h3>
-                <p className="mb-6 text-muted-foreground">{t('successMessage')}</p>
+                <h3 className="mb-2 text-2xl font-display font-medium">{t('successTitle')}</h3>
+                <p className="mb-6 text-[var(--color-ink-2)]">{t('successMessage')}</p>
                 <Button
-                  className="mt-8"
-                  variant="outline"
+                  className="mt-8 btn outline"
                   onClick={() => setIsSuccess(false)}
                 >
                   {t('successCta')}
                 </Button>
               </div>
-            </GlassCard>
+            </div>
           ) : (
-            <GlassCard elevation="e3">
+            <div className="card">
               <div className="p-6 sm:p-8">
                 {/* Netlify needs this hidden form so it picks up the schema during build */}
                 <form name="contact" data-netlify="true" hidden>
@@ -130,16 +128,16 @@ export function Contact() {
                                   type="button"
                                   onClick={() => field.onChange(intent.key)}
                                   className={cn(
-                                    'flex h-auto w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all hover:bg-muted/50',
+                                    'flex h-auto w-full flex-col items-start gap-2 rounded-lg border p-4 text-left transition-all hover:bg-[var(--color-paper-2)]',
                                     field.value === intent.key
-                                      ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                                      : 'border-border bg-background'
+                                      ? 'border-[var(--color-praxis-accent)] bg-[var(--color-praxis-accent-soft)] ring-1 ring-[var(--color-praxis-accent)]'
+                                      : 'border-[var(--color-line)] bg-[var(--color-paper)]'
                                   )}
                                 >
-                                  <span className="font-semibold text-foreground">
+                                  <span className="font-medium text-[var(--color-ink)]">
                                     {t(intent.labelKey as string)}
                                   </span>
-                                  <span className="text-sm text-muted-foreground">
+                                  <span className="text-sm text-[var(--color-ink-2)]">
                                     {t(intent.previewKey as string)}
                                   </span>
                                 </button>
@@ -209,7 +207,7 @@ export function Contact() {
                       </div>
                     )}
 
-                    <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
+                    <Button type="submit" className="w-full sm:w-auto btn primary" disabled={isSubmitting}>
                       {isSubmitting ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -225,7 +223,7 @@ export function Contact() {
                   </form>
                 </Form>
               </div>
-            </GlassCard>
+            </div>
           )}
         </div>
       </div>

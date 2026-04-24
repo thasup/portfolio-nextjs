@@ -146,18 +146,16 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
 
   if (phase === Phase.ERROR) {
     return (
-      <div className="space-y-6">
-        <section role="alert" className="rounded-2xl border border-destructive/40 bg-destructive/10 p-6">
-          <h2 className="text-lg font-semibold text-foreground">{t('errorHeading')}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">{errorMessage}</p>
-          <button
-            type="button"
-            onClick={resetToEntry}
-            className="mt-4 text-sm font-medium text-primary hover:underline"
-          >
-            {t('tryAgain')}
-          </button>
-        </section>
+      <div className="hero max-w-[820px] mx-auto my-12 text-center">
+        <h2 className="display text-2xl text-[var(--color-destructive)] mb-4">{t('errorHeading')}</h2>
+        <p className="sub">{errorMessage}</p>
+        <button
+          type="button"
+          onClick={resetToEntry}
+          className="btn primary mt-8"
+        >
+          {t('tryAgain')}
+        </button>
       </div>
     );
   }
@@ -174,24 +172,26 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
 
   if (phase === Phase.LOADING) {
     return (
-      <section className="rounded-2xl border border-border bg-card p-8 text-center">
-        <p className="text-sm text-muted-foreground">{t('loading')}</p>
-      </section>
+      <div className="hero max-w-[820px] mx-auto my-24 text-center">
+        <div className="eyebrow animate-pulse">{t('loading')}</div>
+      </div>
     );
   }
 
   if (phase === Phase.REVIEW || phase === Phase.ACCEPTING) {
     return (
-      <div className="grid gap-8 lg:grid-cols-[1fr,220px]">
-        <OutlinePreview
-          units={units}
-          busy={phase === Phase.ACCEPTING}
-          cached={cached}
-          onChange={setUnits}
-          onAccept={acceptOutline}
-          onDiscard={resetToEntry}
-        />
-        <aside className="hidden lg:block">
+      <div className="flex items-start justify-center gap-12 max-w-[1080px] mx-auto">
+        <div className="flex-1 w-full max-w-[820px]">
+          <OutlinePreview
+            units={units}
+            busy={phase === Phase.ACCEPTING}
+            cached={cached}
+            onChange={setUnits}
+            onAccept={acceptOutline}
+            onDiscard={resetToEntry}
+          />
+        </div>
+        <aside className="hidden lg:block w-[200px] shrink-0 pt-[40px]">
           <OutlineStepper units={units} activeIndex={units[0]?.index ?? null} />
         </aside>
       </div>

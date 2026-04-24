@@ -137,104 +137,108 @@ export function UnitRenderer({
   }, []);
 
   return (
-    <div id="unit-renderer" className="space-y-8">
-      {/* Header */}
-      <header className="space-y-2">
-        <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-            {unitIndex}
-          </span>
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+    <div id="unit-renderer" className="unit-shell">
+      <div className="unit-content">
+        {/* Header */}
+        <header>
+          <div className="crumb">
             Unit {unitIndex} · {topicTitle}
-          </p>
-        </div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">{unitTitle}</h1>
-        <p className="text-sm text-muted-foreground">{unitObjective}</p>
-      </header>
+          </div>
+          <h1>{unitTitle}</h1>
+          <p className="lede">{unitObjective}</p>
+        </header>
 
-      {/* Phase: generating */}
-      {phase === Phase.GENERATING && (
-        <div
-          id="unit-generating-indicator"
-          className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card px-6 py-16 text-center"
-        >
-          <div className="h-8 w-8 animate-spin rounded-full border-3 border-primary border-t-transparent" />
-          <p className="text-sm font-medium text-foreground">Generating your unit content…</p>
-          <p className="text-xs text-muted-foreground">This usually takes 10–20 seconds.</p>
-        </div>
-      )}
-
-      {/* Phase: error */}
-      {phase === Phase.ERROR && (
-        <div
-          id="unit-error-card"
-          className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-destructive/30 bg-card px-6 py-12 text-center"
-        >
-          <p className="text-sm font-medium text-foreground">Something went wrong</p>
-          <p className="text-xs text-muted-foreground">{errorMessage}</p>
-          <button
-            id="unit-retry-btn"
-            type="button"
-            onClick={handleRetry}
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+        {/* Phase: generating */}
+        {phase === Phase.GENERATING && (
+          <div
+            id="unit-generating-indicator"
+            className="card flex flex-col items-center justify-center gap-4 text-center my-8 pulse"
           >
-            Try again
-          </button>
-        </div>
-      )}
-
-      {/* Phase: ready / completed — render blocks */}
-      {(phase === Phase.READY || phase === Phase.COMPLETED) && (
-        <>
-          <div className="space-y-4">
-            {blocks.map((block) => (
-              <ContentBlock
-                key={block.id}
-                id={block.id}
-                kind={block.kind}
-                content={block.content}
-                regeneratedFrom={block.regeneratedFrom}
-                unitId={unitId}
-                onRegenerated={handleBlockRegenerated}
-              />
-            ))}
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-ink)] border-t-transparent" />
+            <p className="text-sm font-medium text-[var(--color-ink)]">Generating your unit content…</p>
+            <p className="text-xs text-[var(--color-ink-3)]">This usually takes 10–20 seconds.</p>
           </div>
+        )}
 
-          {/* Completion bar */}
-          <div className="flex items-center justify-between rounded-2xl border border-border bg-card p-5">
-            {phase === Phase.COMPLETED ? (
-              <div className="flex items-center gap-2">
-                <span className="text-lg" aria-hidden="true">
-                  ✅
-                </span>
-                <p className="text-sm font-medium text-foreground">Unit complete</p>
-              </div>
-            ) : (
-              <>
-                <p className="text-sm text-muted-foreground">
-                  Finished reading? Mark this unit as complete.
-                </p>
-                <button
-                  id="mark-complete-btn"
-                  type="button"
-                  onClick={handleMarkComplete}
-                  disabled={isCompleting}
-                  className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-                >
-                  {isCompleting ? 'Saving…' : 'Mark complete'}
-                </button>
-              </>
-            )}
-
-            <a
-              href={`/learn/${topicId}`}
-              className="text-sm font-medium text-primary hover:underline"
+        {/* Phase: error */}
+        {phase === Phase.ERROR && (
+          <div
+            id="unit-error-card"
+            className="card flex flex-col items-center justify-center gap-4 text-center my-8"
+            style={{ borderColor: 'var(--color-destructive)' }}
+          >
+            <p className="text-sm font-medium text-[var(--color-ink)]">Something went wrong</p>
+            <p className="text-xs text-[var(--color-ink-3)]">{errorMessage}</p>
+            <button
+              id="unit-retry-btn"
+              type="button"
+              onClick={handleRetry}
+              className="btn primary mt-2"
             >
-              Back to overview
-            </a>
+              Try again
+            </button>
           </div>
-        </>
-      )}
+        )}
+
+        {/* Phase: ready / completed — render blocks */}
+        {(phase === Phase.READY || phase === Phase.COMPLETED) && (
+          <>
+            <div className="space-y-4">
+              {blocks.map((block) => (
+                <ContentBlock
+                  key={block.id}
+                  id={block.id}
+                  kind={block.kind}
+                  content={block.content}
+                  regeneratedFrom={block.regeneratedFrom}
+                  unitId={unitId}
+                  onRegenerated={handleBlockRegenerated}
+                />
+              ))}
+            </div>
+
+            {/* Completion bar */}
+            <div className="end flex items-center justify-between mt-12 pt-6">
+              {phase === Phase.COMPLETED ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-lg" aria-hidden="true">✅</span>
+                  <p className="text-sm font-medium text-[var(--color-ink)]">Unit complete</p>
+                </div>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <p className="text-sm text-[var(--color-ink-3)]">
+                    Finished reading? Mark this unit as complete.
+                  </p>
+                  <button
+                    id="mark-complete-btn"
+                    type="button"
+                    onClick={handleMarkComplete}
+                    disabled={isCompleting}
+                    className="btn primary"
+                  >
+                    {isCompleting ? 'Saving…' : 'Mark complete'}
+                  </button>
+                </div>
+              )}
+
+              <a
+                href={`/learn/${topicId}`}
+                className="text-sm font-medium text-[var(--color-praxis-accent)] hover:underline"
+              >
+                Back to overview
+              </a>
+            </div>
+          </>
+        )}
+      </div>
+      
+      {/* Right Rail (Mate Placeholder) */}
+      <div className="mate-rail hidden lg:block">
+        <h4 className="eyebrow mb-2">Mate</h4>
+        <div className="ctx">
+          I'm following along with your unit progress. Soon, you'll be able to discuss concepts with me right here.
+        </div>
+      </div>
     </div>
   );
 }

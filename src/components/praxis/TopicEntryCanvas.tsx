@@ -52,18 +52,16 @@ export function TopicEntryCanvas({
   }, [canSubmit, onSubmit, value]);
 
   return (
-    <section className="space-y-5">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-          {t('heading')}
-        </h1>
-        <p id={hintId} className="text-base text-muted-foreground">
-          {t('hint')}
-        </p>
-      </header>
+    <div className="generate">
+      <h2>
+        What do you want to learn <br />
+        <em>today?</em>
+      </h2>
+      <p className="lede" id={hintId}>
+        {t('hint')}
+      </p>
 
       <form
-        className="space-y-3"
         onSubmit={(e) => {
           e.preventDefault();
           submit();
@@ -81,42 +79,38 @@ export function TopicEntryCanvas({
           aria-describedby={hintId}
           disabled={busy}
           placeholder={t('placeholder')}
-          rows={3}
-          className="w-full resize-none rounded-2xl border border-border bg-card px-5 py-4 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-60"
+          className="answer"
         />
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-muted-foreground">
-            {t('characters', { count: value.length, max: MAX_LENGTH })}
-          </span>
-          <button
-            type="submit"
-            disabled={!canSubmit}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {busy ? t('submitting') : t('submit')}
-          </button>
-        </div>
-      </form>
 
-      <div className="space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          {t('suggestions')}
-        </p>
-        <ul className="flex flex-wrap gap-2">
-          {suggestions.map((s) => (
-            <li key={s}>
+        <div className="nav-row">
+          <div className="flex gap-2 flex-wrap max-w-[60%]">
+            {suggestions.slice(0, 3).map((s) => (
               <button
+                key={s}
                 type="button"
                 disabled={busy}
                 onClick={() => setValue(s)}
-                className="rounded-full border border-border bg-card px-3.5 py-1.5 text-sm text-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-50"
+                className="chip"
               >
                 {s}
               </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-[var(--color-ink-3)] hidden sm:inline-block">
+              {t('characters', { count: value.length, max: MAX_LENGTH })}
+            </span>
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              className="btn primary lg"
+            >
+              {busy ? t('submitting') : t('submit')}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

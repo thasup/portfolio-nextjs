@@ -22,15 +22,31 @@ export interface TopicCardProps {
  */
 export function TopicCard({ topic }: TopicCardProps) {
   const t = useTranslations('praxis.library');
+  const formattedDate = new Date(topic.lastActiveAt).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
   return (
     <Link
       href={`/learn/${topic.id}`}
-      className="group flex items-center justify-between rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-primary"
+      className="topic"
     >
-      <span className="font-medium text-foreground group-hover:text-primary">{topic.title}</span>
-      <span className="text-xs uppercase tracking-wider text-muted-foreground">
-        {t(`statuses.${topic.status}` as 'statuses.active')}
-      </span>
+      <div className="corner">{t(`statuses.${topic.status}` as 'statuses.active')}</div>
+      <h3>{topic.title}</h3>
+      <p className="line-clamp-2">{/* Add a brief description if available, otherwise blank */}</p>
+      
+      <div className="meta">
+        <span>Active</span>
+        <div className="dot" />
+        <span>{formattedDate}</span>
+      </div>
+      
+      {/* We can hardcode 0% for now since we don't pass progress yet, but it keeps the visual consistent */}
+      <div className="prog mt-4">
+        <span style={{ width: '0%' }} />
+      </div>
     </Link>
   );
 }

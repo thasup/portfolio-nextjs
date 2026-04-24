@@ -50,71 +50,70 @@ export function OutlinePreview({
   );
 
   return (
-    <section className="space-y-6">
-      <header className="space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+    <div className="outline">
+      <header className="mb-6">
+        <p className="eyebrow mb-2">
           {cached ? t('cachedBadge') : t('freshBadge')}
         </p>
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+        <h2 className="display text-[32px] text-[var(--color-ink)] mb-2">
           {t('heading')}
         </h2>
-        <p className="text-base text-muted-foreground">{t('hint')}</p>
+        <p className="text-[15px] text-[var(--color-ink-2)]">{t('hint')}</p>
       </header>
 
-      <ol className="space-y-4">
+      <div className="space-y-3">
         {units.map((u) => (
-          <li
+          <div
             key={u.index}
             id={`unit-${u.index}`}
-            className="rounded-2xl border border-border bg-card p-5 shadow-sm"
+            className="unit-draft group"
           >
-            <div className="mb-3 flex items-center gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border text-sm font-medium text-muted-foreground">
-                {u.index}
-              </span>
+            <div className="n">{u.index < 10 ? `0${u.index}` : u.index}</div>
+            <div className="flex-1 space-y-3">
               <input
                 type="text"
                 value={u.title}
                 onChange={(e) => update(u.index, { title: e.target.value.slice(0, 120) })}
                 disabled={busy}
                 aria-label={t('unitTitleLabel')}
-                className="w-full bg-transparent text-lg font-medium text-foreground focus:outline-none"
+                className="w-full bg-transparent font-display text-[22px] text-[var(--color-ink)] outline-none border-b border-transparent focus:border-[var(--color-line)] transition-colors placeholder:text-[var(--color-ink-4)]"
+                placeholder="Unit Title"
               />
-            </div>
-            <label className="block space-y-1.5">
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                {t('unitObjective')}
-              </span>
-              <textarea
-                value={u.objective}
-                onChange={(e) => update(u.index, { objective: e.target.value.slice(0, 280) })}
-                disabled={busy}
-                rows={2}
-                className="w-full resize-none rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40"
-              />
-            </label>
-            <label className="mt-3 block space-y-1.5">
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                {t('unitSummary')}
-              </span>
-              <textarea
-                value={u.summary}
-                onChange={(e) => update(u.index, { summary: e.target.value.slice(0, 640) })}
-                disabled={busy}
-                rows={3}
-                className="w-full resize-none rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40"
-              />
-            </label>
-          </li>
-        ))}
-      </ol>
+              
+              <div className="space-y-1">
+                <span className="eyebrow">{t('unitObjective')}</span>
+                <textarea
+                  value={u.objective}
+                  onChange={(e) => update(u.index, { objective: e.target.value.slice(0, 280) })}
+                  disabled={busy}
+                  rows={2}
+                  className="w-full resize-none bg-transparent text-[14px] text-[var(--color-ink-2)] outline-none border border-transparent focus:border-[var(--color-line)] rounded p-1 transition-colors"
+                  placeholder="Objective..."
+                />
+              </div>
 
-      <div className="flex items-center justify-end gap-3 border-t border-border pt-5">
+              <div className="space-y-1">
+                <span className="eyebrow">{t('unitSummary')}</span>
+                <textarea
+                  value={u.summary}
+                  onChange={(e) => update(u.index, { summary: e.target.value.slice(0, 640) })}
+                  disabled={busy}
+                  rows={3}
+                  className="w-full resize-none bg-transparent text-[14px] text-[var(--color-ink-2)] outline-none border border-transparent focus:border-[var(--color-line)] rounded p-1 transition-colors"
+                  placeholder="Summary..."
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="nav-row border-t border-[var(--color-line-soft)] mt-8 pt-6">
         <button
           type="button"
           onClick={onDiscard}
           disabled={busy}
-          className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
+          className="btn ghost"
         >
           {t('discard')}
         </button>
@@ -122,11 +121,11 @@ export function OutlinePreview({
           type="button"
           onClick={onAccept}
           disabled={busy}
-          className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="btn primary"
         >
           {busy ? t('accepting') : t('accept')}
         </button>
       </div>
-    </section>
+    </div>
   );
 }
