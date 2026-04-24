@@ -128,7 +128,7 @@ export const projects: Project[] = [
     ],
     // heroImage: "/images/projects/ap-thai/hero.png",
     heroImage:
-      "https://images.unsplash.com/photo-1758876022295-00ec1f0e39f4?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1690378820474-b468b8ee64d3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     screenshots: [],
     featured: false,
     strategicPriority: 6,

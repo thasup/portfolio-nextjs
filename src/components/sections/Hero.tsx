@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { default as NextImage } from "next/image";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/siteConfig";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useTranslations } from "next-intl";
 import { HeroVisual } from "./HeroVisual";
+import { HeroBackground } from "./HeroBackground";
 
 export function Hero() {
   const reducedMotion = useReducedMotion();
@@ -32,9 +31,10 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[70vh] items-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16"
+      className="relative flex-1 flex w-full min-h-[70vh] items-center overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16"
     >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <HeroBackground />
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 relative z-10">
         <Wrapper
           {...(!reducedMotion && {
             variants: containerVariants,
