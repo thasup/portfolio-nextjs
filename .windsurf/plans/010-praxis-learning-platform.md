@@ -48,18 +48,18 @@ This document is the single source of truth for day-to-day progress on PRAXIS. I
 
 ### Week 1 — Infrastructure
 
-- [~] T-011 Dependencies installed (`@supabase/supabase-js`, `@supabase/ssr` done; `ai`, `@ai-sdk/*`, `docx`, `exceljs`, `jose` pending — Anthropic SDK dropped in favour of OpenRouter)
+- [~] T-011 Dependencies: `@supabase/supabase-js`, `@supabase/ssr`, `jose`, `resend`, `tsx`, `zod`, `vitest` installed; `docx`, `exceljs` deferred to Week 6 template renderers. Anthropic SDK dropped (replaced by OpenRouter).
 - [x] T-012 Migration pushed to remote Supabase (`imrbhronujwhbjcslgym`); `supabase/config.toml` updated to `major_version = 17`
 - [x] T-013 Live-generated types at `src/lib/praxis/supabase/database.types.ts` (UTF-8); alias module at `src/lib/praxis/supabase/tables.ts`
 - [x] T-014 Supabase clients wired (`src/utils/supabase/{client,server,middleware}.ts` for browser/SSR; `src/lib/praxis/supabase/admin.ts` for service-role)
 - [x] T-015 Session helpers: `src/lib/praxis/session/{updateSession,getLearner,requireInvite}.ts`
 - [x] T-016 Middleware auth gate (`src/middleware.ts` composes next-intl + Supabase refresh + redirect or 401 for unauth `/learn/*` and `/api/praxis/*`)
-- [ ] T-017 Invite endpoint
-- [ ] T-018 Callback route
-- [ ] T-019 `/learn/not-invited` page
-- [ ] T-020 Library shell
-- [ ] T-021 `praxis-invite` script
-- [ ] T-022 `messages/en.json` namespace
+- [x] T-017 Invite endpoint (`src/app/api/praxis/invite/route.ts` — admin-token gate, zod body, Resend dispatch, contract-accurate error envelope)
+- [x] T-018 Callback route (`src/app/[locale]/learn/callback/page.tsx` — JWT verify + invite re-check + Supabase `generateLink` → redirect)
+- [x] T-019 `/learn/not-invited` page (`src/app/[locale]/learn/not-invited/page.tsx` — static, honest, no request-access form)
+- [x] T-020 Library shell (`src/app/[locale]/learn/page.tsx` — empty state + topic list, uses `requireLearner()`)
+- [x] T-021 `scripts/praxis-invite.ts` CLI (+ `scripts/praxis-secret.ts` Windows-friendly secret generator)
+- [x] T-022 Praxis namespace added to `messages/en.json` and `messages/th.json`
 
 ### Week 2 — Topic entry & outline
 
@@ -150,6 +150,21 @@ A `PATCH` bump of `.specify/memory/constitution.md` (3.1.0 → 3.1.1) is recomme
 - **Soft-launch cadence**: Day-by-day invitee plan for Week 8 is draft (Jane day 1, two day 3, two day 5–6). Revise based on Jane's observed bug rate.
 
 ## Changelog
+
+### 2026-04-24 (late)
+
+- **Week 1** closed at the code level (T-017 through T-022).
+- New: `src/lib/praxis/invite/token.ts` — `mintInviteToken` / `verifyInviteToken` using `jose` (HS256, 15-min expiry, `PRAXIS_INVITE_SECRET`), with `InviteTokenError` enum + typed error class.
+- New: `src/lib/praxis/email/resend.ts` — `sendInvitationEmail` using the existing `resend` dep; minimal HTML + text bodies; overrideable sender via `PRAXIS_EMAIL_FROM` / `PRAXIS_EMAIL_FROM_NAME`.
+- New: `src/app/api/praxis/invite/route.ts` — `POST` handler strictly following `contracts/auth.invite.md`. Handles fresh invites, resurrects revoked rows, returns 201 with `deliveryStatus`. `PRAXIS_INVITER_USER_ID` now required (seed via Supabase Studio).
+- New: `src/app/[locale]/learn/callback/page.tsx` — server component that does JWT verify → `requireInvite()` → Supabase admin `generateLink({ type: 'magiclink' })` → `redirect()` to the action URL. Localised error screens for six failure kinds.
+- New: `src/app/[locale]/learn/not-invited/page.tsx` and `src/app/[locale]/learn/page.tsx` (library shell).
+- New scripts: `npm run praxis:invite`, `npm run praxis:secret` (Windows-compatible since `openssl` isn't on PowerShell by default).
+- i18n: `praxis.notInvited` + `praxis.library` + `praxis.callback` namespaces added to both `en.json` and `th.json`.
+- Theme fix: initial page drafts used invented `--pf-*` tokens; swapped to the actual Tailwind v4 theme (`text-foreground`, `bg-card`, `text-primary`, etc.) from `src/styles/globals.css`.
+- `typecheck` clean.
+- Week 1 exit bar is achievable now. Manual smoke test required: (a) set `PRAXIS_INVITE_SECRET`, `PRAXIS_ADMIN_TOKEN`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `PRAXIS_INVITER_USER_ID`; (b) `npm run dev`; (c) `npm run praxis:invite -- --email=your@email`; (d) click link, expect `/learn` empty state.
+- Next action: **T-009** (Week 0 eval exit bar) runnable any time with an `OPENROUTER_API_KEY`; Week 2 starts at T-023 (OpenRouter chat client + ledger) and T-024 (blank-canvas entry UI).
 
 ### 2026-04-24 (evening)
 

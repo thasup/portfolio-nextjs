@@ -9,7 +9,9 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "praxis:eval": "tsx --env-file=.env.local scripts/praxis-eval.ts"
+    "praxis:eval": "tsx --env-file=.env.local scripts/praxis-eval.ts",
+    "praxis:invite": "tsx --env-file=.env.local scripts/praxis-invite.ts",
+    "praxis:secret": "tsx scripts/praxis-secret.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -30,6 +32,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.0",
     "geist": "^1.3.1",
+    "jose": "^6.2.2",
     "lucide-react": "^0.469.0",
     "next": "^15.2.4",
     "next-intl": "^4.8.3",

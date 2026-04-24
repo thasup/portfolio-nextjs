@@ -27,18 +27,18 @@ Tasks are grouped by week and numbered `T-XXX`. Each task has an owner (First un
 
 > **Exit bar**: Supabase project provisioned, schema migration applied, invite → magic link → authenticated `/learn` empty state works end-to-end.
 
-- [~] **T-011** — Install dependencies. `@supabase/supabase-js`, `@supabase/ssr`, `tsx`, `zod`, `vitest` installed. Anthropic SDK dropped (replaced by OpenRouter). Pending: `docx`, `exceljs`, `jose`. _research §1, §2._
+- [~] **T-011** — Dependencies: `@supabase/supabase-js`, `@supabase/ssr`, `jose`, `resend`, `tsx`, `zod`, `vitest` installed. `docx`, `exceljs` deferred to Week 6. Anthropic SDK dropped (replaced by OpenRouter). _research §1, §2._
 - [x] **T-012** — Migration pushed to remote Supabase project `imrbhronujwhbjcslgym`. `supabase/config.toml` set to `major_version = 17`. _data-model.md._
 - [x] **T-013** — Types generated at `src/lib/praxis/supabase/database.types.ts` (UTF-8). Row/Insert/Update aliases exported from `src/lib/praxis/supabase/tables.ts`.
 - [x] **T-014** — Supabase clients at `src/utils/supabase/{client,server,middleware}.ts` using `@supabase/ssr` cookie-based session pattern. (Admin client deferred until T-017 invite endpoint.)
 - [x] **T-015** — Session helpers: `src/lib/praxis/session/updateSession.ts` (middleware core), `getLearner.ts` (server-side current learner + `requireLearner`), `requireInvite.ts` (admin-client invite allowlist check with `InviteRejectionError`).
 - [x] **T-016** — `src/middleware.ts` composes next-intl + PRAXIS auth gate; `/learn/*` unauth → redirect to `/learn/not-invited`; `/api/praxis/*` unauth → JSON 401; public paths `/learn/callback`, `/learn/not-invited` bypass. Locale-aware.
-- [ ] **T-017** — Build `POST /api/praxis/invite` per `contracts/auth.invite.md`. _FR-002, FR-003, FR-005._
-- [ ] **T-018** — Build `/learn/callback` route verifying invite JWT, calling Supabase admin `generateLink`, establishing session.
-- [ ] **T-019** — Create `/learn/not-invited` page. _FR-001._
-- [ ] **T-020** — Create `/learn/page.tsx` library shell (empty state only). _FR-006._
-- [ ] **T-021** — Add `scripts/praxis-invite.ts` for local-dev convenience.
-- [ ] **T-022** — Add `messages/en.json` "praxis" namespace.
+- [x] **T-017** — `POST /api/praxis/invite` at `src/app/api/praxis/invite/route.ts`: admin-token auth, zod body (`email` + optional `note`), resurrects revoked rows, mints JWT via `jose`, sends email via Resend, returns contract-compliant 201 / 400 / 401 / 502. _FR-002, FR-003, FR-005._
+- [x] **T-018** — `/learn/callback` server component at `src/app/[locale]/learn/callback/page.tsx`: verifies JWT → re-checks invitation row → calls `auth.admin.generateLink` → redirects to Supabase verify URL. Localised error screens for 6 failure kinds.
+- [x] **T-019** — `/learn/not-invited` page at `src/app/[locale]/learn/not-invited/page.tsx`. Static, no request-access form, link to `/contact`. _FR-001._
+- [x] **T-020** — `/learn` library shell at `src/app/[locale]/learn/page.tsx`: `requireLearner()` guard, empty state with `Start a topic` CTA, topic list for returning learners. _FR-006._
+- [x] **T-021** — `scripts/praxis-invite.ts` dev CLI (`npm run praxis:invite -- --email=<addr>`) plus bonus `scripts/praxis-secret.ts` for Windows-friendly secret generation (`npm run praxis:secret`).
+- [x] **T-022** — `praxis.notInvited`, `praxis.library`, `praxis.callback` namespaces added to `messages/en.json` and `messages/th.json`.
 
 ## Week 2 — Topic entry and outline
 
