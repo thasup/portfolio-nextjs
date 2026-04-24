@@ -35,8 +35,8 @@ export default async function OnboardingPage({ params }: OnboardingPageProps) {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-12">
+    <div className="mx-auto max-w-2xl">
       <OnboardingFlow topicId={topic.id} />
-    </main>
+    </div>
   );
 }

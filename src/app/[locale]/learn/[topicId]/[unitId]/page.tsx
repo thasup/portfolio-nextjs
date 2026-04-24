@@ -60,17 +60,15 @@ export default async function UnitPage({ params }: UnitPageProps) {
     : [];
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12">
-      <UnitRenderer
-        unitId={unit.id}
-        unitTitle={unit.title}
-        unitObjective={unit.objective}
-        unitIndex={unit.index}
-        initialStatus={unit.status}
-        initialBlocks={blocks as Parameters<typeof UnitRenderer>[0]['initialBlocks']}
-        topicId={topicId}
-        topicTitle={topic.title}
-      />
-    </main>
+    <UnitRenderer
+      unitId={unit.id}
+      unitTitle={unit.title}
+      unitObjective={unit.objective}
+      unitIndex={unit.index}
+      initialStatus={unit.status}
+      initialBlocks={blocks as Parameters<typeof UnitRenderer>[0]['initialBlocks']}
+      topicId={topicId}
+      topicTitle={topic.title}
+    />
   );
 }

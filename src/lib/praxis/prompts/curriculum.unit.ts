@@ -24,7 +24,7 @@ import {
   UnitBlockKind,
 } from '@/lib/praxis/prompts/types';
 
-export const VERSION = 'curriculum.unit@1' as const;
+export const VERSION = 'curriculum.unit@2' as const;
 
 export interface CurriculumUnitInput {
   locale: PraxisLocale;
@@ -44,7 +44,7 @@ export interface UnitJson {
 }
 
 const MAX_TOPIC_CHARS = 240;
-const MAX_SUMMARY_CHARS = 320;
+const MAX_SUMMARY_CHARS = 400;
 
 function renderOutline(outline: ReadonlyArray<OutlineUnit>, activeIdx: number): string {
   return outline
@@ -63,17 +63,61 @@ export function build(input: CurriculumUnitInput): string {
     'Write like a senior practitioner explaining to a thoughtful peer — concrete, specific, no filler.',
     '',
     '## Block kinds (emit in this order, exactly once each)',
-    `1. ${UnitBlockKind.OBJECTIVES}: 3–5 bullet points, each a single sentence beginning with a verb. Markdown bullets.`,
-    `2. ${UnitBlockKind.EXPLAINER}: 180–320 words of prose. No bullets. No subheadings. Paragraphs only.`,
-    `3. ${UnitBlockKind.EXAMPLE}: One realistic example in 80–160 words, narrated in past tense.`,
-    `4. ${UnitBlockKind.DIAGRAM_NOTE}: A short text description of a diagram that would help (≤ 60 words). No ASCII art. Do not emit an image URL.`,
-    `5. ${UnitBlockKind.PRACTICE}: One practice activity the learner can do in ≤ 30 minutes. If the learner block names a product or goal, reference it once here by paraphrase.`,
     '',
-    '## Rules',
-    '- Do NOT personalise the explainer or example. They are cached and shared across learners.',
-    '- Do NOT repeat content that belongs in later units of the outline.',
-    '- Do NOT fabricate statistics, studies, or quotes.',
-    '- Never address the reader as "you" more than twice per block.',
+    `### 1. ${UnitBlockKind.OBJECTIVES}`,
+    '- 3–5 learning objectives as markdown bullet points',
+    '- Each begins with an action verb ("Define", "Compare", "Apply", "Analyze")',
+    '- Specific and measurable outcomes the learner will achieve',
+    '',
+    `### 2. ${UnitBlockKind.EXPLAINER}`,
+    '- **Length**: 600–1200 words of comprehensive educational content',
+    '- **Structure**: Use proper markdown hierarchy:',
+    '  - H2 (##) for major sections',
+    '  - H3 (###) for subsections',
+    '  - H4 (####) for specific concepts',
+    '- **Content requirements**:',
+    '  - Begin with a brief overview/context paragraph',
+    '  - Explain core concepts with clear definitions',
+    '  - Include "Why this matters" section explaining practical importance',
+    '  - Use bullet points for lists, numbered steps for processes',
+    '  - Include comparison tables where applicable (markdown table syntax)',
+    '  - Bold key terms on first mention',
+    '  - Use blockquotes for important insights or warnings',
+    '- **Tone**: Professional yet accessible — explain like an expert mentor, not an academic textbook',
+    '',
+    `### 3. ${UnitBlockKind.EXAMPLE}`,
+    '- **Length**: 200–400 words',
+    '- A detailed, realistic scenario demonstrating the concepts',
+    '- Structure: Situation → Challenge → Approach → Outcome',
+    '- Narrated in past tense, third person',
+    '- Include specific details (names, numbers, context) to make it concrete',
+    '- Use markdown: bold for key decisions, bullet points for steps taken',
+    '',
+    `### 4. ${UnitBlockKind.DIAGRAM_NOTE}`,
+    '- A clear text description of a diagram that would illustrate the concept',
+    '- 80–120 words describing what the diagram would show',
+    '- Describe the structure: axes, nodes, flows, relationships',
+    '- No ASCII art. Do not emit an image URL.',
+    '',
+    `### 5. ${UnitBlockKind.PRACTICE}`,
+    '- **Length**: 250–500 words',
+    '- One comprehensive practice activity the learner can do in 30–60 minutes',
+    '- Structure with markdown:',
+    '  - **Objective**: What the learner will achieve',
+    '  - **Setup**: Required materials/context',
+    '  - **Steps**: Numbered list of actions',
+    '  - **Success Criteria**: How to know they did it right',
+    '  - **Reflection Questions**: 2–3 prompts for deeper thinking',
+    '- If the learner block names a product or goal, reference it naturally in the activity',
+    '',
+    '## Quality Standards',
+    '- Content must be comprehensive enough for a beginner to understand without external resources',
+    '- Every concept introduced must be explained; never assume prior knowledge',
+    '- Use concrete examples over abstract descriptions',
+    '- Avoid filler phrases: "It\'s important to note that", "As we all know", "In today\'s world"',
+    '- Do NOT personalise the explainer or example (they are cached and shared across learners)',
+    '- Do NOT repeat content that belongs in later units of the outline',
+    '- Do NOT fabricate statistics, studies, or quotes',
     '- Every block content is a single markdown string — no nested arrays.',
     '',
     '## Output schema',

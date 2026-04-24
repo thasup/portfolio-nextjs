@@ -10,6 +10,7 @@
  */
 import { useState, useRef, useCallback } from 'react';
 import type { UnitBlockKind } from '@/lib/praxis/prompts/types';
+import { showApiError } from '@/lib/praxis/toast';
 
 export interface BlockRegenerateActionProps {
   unitId: string;
@@ -23,7 +24,6 @@ export interface BlockRegenerateActionProps {
     content: string;
     regeneratedFrom: string;
   }) => void;
-  onError: (message: string) => void;
 }
 
 export function BlockRegenerateAction({
@@ -33,7 +33,6 @@ export function BlockRegenerateAction({
   isRegenerating,
   onStartRegenerate,
   onRegenerated,
-  onError,
 }: BlockRegenerateActionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [instruction, setInstruction] = useState('');
@@ -68,7 +67,9 @@ export function BlockRegenerateAction({
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data?.error?.message ?? `Request failed (${res.status})`);
+        const error = new Error(data?.error?.message ?? `Request failed (${res.status})`);
+        (error as { code?: string }).code = data?.error?.code;
+        throw error;
       }
 
       const data = await res.json();
@@ -82,9 +83,11 @@ export function BlockRegenerateAction({
       setIsExpanded(false);
       setInstruction('');
     } catch (err) {
-      onError(err instanceof Error ? err.message : 'Regeneration failed');
+      showApiError(err, {
+        description: 'Block regeneration failed. You can try again.',
+      });
     }
-  }, [unitId, blockId, blockKind, instruction, onStartRegenerate, onRegenerated, onError]);
+  }, [unitId, blockId, blockKind, instruction, onStartRegenerate, onRegenerated]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {

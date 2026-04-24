@@ -26,7 +26,12 @@ import {
   ResponseFormat,
   extractJson,
 } from '@/lib/praxis/openrouter/client';
-import { getClient, defaultModel } from '@/lib/praxis/openrouter/factory';
+import {
+  getClient,
+  createModelResolver,
+  ModelTask,
+} from '@/lib/praxis/openrouter/factory';
+import type { ModelPreferences } from '@/lib/praxis/openrouter/factory';
 import {
   LedgerEndpoint,
   assertBudget,
@@ -51,6 +56,7 @@ export interface GenerateQuestionsInput {
   topic: string;
   locale: PraxisLocale;
   outline: ReadonlyArray<OutlineUnit>;
+  preferences?: ModelPreferences | null;
 }
 
 export async function generateQuestions(
@@ -58,7 +64,7 @@ export async function generateQuestions(
 ): Promise<OnboardingQuestion[]> {
   await assertBudget();
   const client = getClient();
-  const model = defaultModel();
+  const model = createModelResolver(input.preferences)(ModelTask.ONBOARDING);
   const prompt = onboardingMeta.build({
     topic: input.topic,
     locale: input.locale,

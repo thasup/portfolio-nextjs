@@ -64,6 +64,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return errorResponse(401, 'NOT_AUTHENTICATED', 'Sign-in required');
   }
 
+  // ---- permission check ------------------------------------------------
+  if (!session.learner.can_generate_topics) {
+    return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Topic generation is not enabled for your account. Contact admin for access.');
+  }
+
   // ---- parse -----------------------------------------------------------
   let body: z.infer<typeof BodySchema>;
   try {
@@ -74,8 +79,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    if (body.action === 'outline') return await handleOutline(body);
-    return await handleAccept(body, session.userId);
+    const preferences = session.learner.model_preferences;
+    if (body.action === 'outline') return await handleOutline(body, preferences);
+    return await handleAccept(body, session.userId, preferences);
   } catch (err) {
     if (err instanceof BudgetExceededError) {
       return errorResponse(503, 'BUDGET_EXCEEDED', err.message);
@@ -86,11 +92,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function handleOutline(body: z.infer<typeof OutlineBodySchema>) {
+async function handleOutline(
+  body: z.infer<typeof OutlineBodySchema>,
+  preferences: unknown,
+) {
   const topicFingerprint = fingerprint(body.rawInput);
 
   // 1. Guardrail.
-  const guard = await runScopeGuardrail({ rawInput: body.rawInput, locale: body.locale });
+  const guard = await runScopeGuardrail({
+    rawInput: body.rawInput,
+    locale: body.locale,
+    preferences: preferences as { guardrail?: string } | null,
+  });
   if (!guard.admitted) {
     return NextResponse.json(
       { admitted: false, category: guard.category, explanation: guard.explanation },
@@ -103,6 +116,7 @@ async function handleOutline(body: z.infer<typeof OutlineBodySchema>) {
     rawInput: body.rawInput,
     fingerprint: topicFingerprint,
     locale: body.locale,
+    preferences: preferences as { curriculum?: string } | null,
   });
 
   return NextResponse.json(
@@ -124,7 +138,11 @@ async function handleOutline(body: z.infer<typeof OutlineBodySchema>) {
   );
 }
 
-async function handleAccept(body: z.infer<typeof AcceptBodySchema>, learnerId: string) {
+async function handleAccept(
+  body: z.infer<typeof AcceptBodySchema>,
+  learnerId: string,
+  preferences: unknown,
+) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
@@ -148,6 +166,7 @@ async function handleAccept(body: z.infer<typeof AcceptBodySchema>, learnerId: s
     rawInput: body.rawInput,
     fingerprint: body.fingerprint,
     locale: body.locale,
+    preferences: preferences as { curriculum?: string } | null,
   });
 
   // Reconcile with edits.

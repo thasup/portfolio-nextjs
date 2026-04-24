@@ -1,17 +1,11 @@
 'use client';
 
 /**
- * Editable outline review.
+ * Editable outline review — redesigned with proper form styling.
  *
- * Each unit is a card with inline-editable `title`, `objective`, and
- * `summary` fields. No rich-text — plain textareas. The Accept button
- * is owned by the parent; this component only reports edits via
- * `onChange`.
- *
- * Design note: the initial outline arrives from the cache-aware
- * endpoint and should NOT mutate the shared cache unless the learner
- * accepts with materially different content. That heuristic lives in
- * `src/lib/praxis/curriculum/service.ts#outlineEditedMaterially`.
+ * Each unit is a clearly defined card with visible input fields for
+ * `title`, `objective`, and `summary`. Clean visual hierarchy with
+ * proper labels, subtle borders, and elegant typography.
  */
 import { useCallback } from 'react';
 import { useTranslations } from 'next-intl';
@@ -50,65 +44,82 @@ export function OutlinePreview({
   );
 
   return (
-    <div className="outline">
-      <header className="mb-6">
-        <p className="eyebrow mb-2">
+    <div className="outline-v2">
+      {/* Header */}
+      <header className="outline-header">
+        <div className="outline-badge">
           {cached ? t('cachedBadge') : t('freshBadge')}
-        </p>
-        <h2 className="display text-[32px] text-[var(--color-ink)] mb-2">
-          {t('heading')}
-        </h2>
-        <p className="text-[15px] text-[var(--color-ink-2)]">{t('hint')}</p>
+        </div>
+        <h2 className="outline-title">{t('heading')}</h2>
+        <p className="outline-subtitle">{t('hint')}</p>
       </header>
 
-      <div className="space-y-3">
+      {/* Units */}
+      <div className="outline-units">
         {units.map((u) => (
-          <div
+          <article
             key={u.index}
             id={`unit-${u.index}`}
-            className="unit-draft group"
+            className="outline-unit-card"
           >
-            <div className="n">{u.index < 10 ? `0${u.index}` : u.index}</div>
-            <div className="flex-1 space-y-3">
-              <input
-                type="text"
-                value={u.title}
-                onChange={(e) => update(u.index, { title: e.target.value.slice(0, 120) })}
-                disabled={busy}
-                aria-label={t('unitTitleLabel')}
-                className="w-full bg-transparent font-display text-[22px] text-[var(--color-ink)] outline-none border-b border-transparent focus:border-[var(--color-line)] transition-colors placeholder:text-[var(--color-ink-4)]"
-                placeholder="Unit Title"
-              />
-              
-              <div className="space-y-1">
-                <span className="eyebrow">{t('unitObjective')}</span>
-                <textarea
-                  value={u.objective}
-                  onChange={(e) => update(u.index, { objective: e.target.value.slice(0, 280) })}
+            {/* Unit Header with Number */}
+            <div className="outline-unit-header">
+              <span className="outline-unit-number">
+                {u.index < 10 ? `0${u.index}` : u.index}
+              </span>
+              <div className="outline-unit-field outline-unit-field--title">
+                <label htmlFor={`unit-${u.index}-title`} className="outline-field-label">
+                  {t('unitTitleLabel')}
+                </label>
+                <input
+                  id={`unit-${u.index}-title`}
+                  type="text"
+                  value={u.title}
+                  onChange={(e) => update(u.index, { title: e.target.value.slice(0, 120) })}
                   disabled={busy}
-                  rows={2}
-                  className="w-full resize-none bg-transparent text-[14px] text-[var(--color-ink-2)] outline-none border border-transparent focus:border-[var(--color-line)] rounded p-1 transition-colors"
-                  placeholder="Objective..."
-                />
-              </div>
-
-              <div className="space-y-1">
-                <span className="eyebrow">{t('unitSummary')}</span>
-                <textarea
-                  value={u.summary}
-                  onChange={(e) => update(u.index, { summary: e.target.value.slice(0, 640) })}
-                  disabled={busy}
-                  rows={3}
-                  className="w-full resize-none bg-transparent text-[14px] text-[var(--color-ink-2)] outline-none border border-transparent focus:border-[var(--color-line)] rounded p-1 transition-colors"
-                  placeholder="Summary..."
+                  className="outline-input outline-input--title"
+                  placeholder={t('unitTitlePlaceholder')}
                 />
               </div>
             </div>
-          </div>
+
+            {/* Objective Field */}
+            <div className="outline-unit-field">
+              <label htmlFor={`unit-${u.index}-objective`} className="outline-field-label">
+                {t('unitObjective')}
+              </label>
+              <textarea
+                id={`unit-${u.index}-objective`}
+                value={u.objective}
+                onChange={(e) => update(u.index, { objective: e.target.value.slice(0, 280) })}
+                disabled={busy}
+                rows={2}
+                className="outline-textarea"
+                placeholder={t('unitObjectivePlaceholder')}
+              />
+            </div>
+
+            {/* Summary Field */}
+            <div className="outline-unit-field">
+              <label htmlFor={`unit-${u.index}-summary`} className="outline-field-label">
+                {t('unitSummary')}
+              </label>
+              <textarea
+                id={`unit-${u.index}-summary`}
+                value={u.summary}
+                onChange={(e) => update(u.index, { summary: e.target.value.slice(0, 640) })}
+                disabled={busy}
+                rows={3}
+                className="outline-textarea"
+                placeholder={t('unitSummaryPlaceholder')}
+              />
+            </div>
+          </article>
         ))}
       </div>
 
-      <div className="nav-row border-t border-[var(--color-line-soft)] mt-8 pt-6">
+      {/* Actions */}
+      <footer className="outline-actions">
         <button
           type="button"
           onClick={onDiscard}
@@ -125,7 +136,7 @@ export function OutlinePreview({
         >
           {busy ? t('accepting') : t('accept')}
         </button>
-      </div>
+      </footer>
     </div>
   );
 }

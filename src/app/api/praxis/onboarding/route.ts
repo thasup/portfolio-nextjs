@@ -58,8 +58,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
+    const preferences = session.learner.model_preferences;
     if (body.action === 'generate_questions') {
-      return await handleGenerate(body, session.userId);
+      // Guard: only learners with can_generate_topics can generate questions
+      if (!session.learner.can_generate_topics) {
+        return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Question generation is not enabled for your account. Contact admin for access.');
+      }
+      return await handleGenerate(body, session.userId, preferences);
     }
     return await handleSave(body, session.userId);
   } catch (err) {
@@ -75,6 +80,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 async function handleGenerate(
   body: z.infer<typeof GenerateBodySchema>,
   learnerId: string,
+  preferences: unknown,
 ) {
   const context = await loadTopicContext(body.topicId, learnerId);
   if (!context) {
@@ -85,6 +91,7 @@ async function handleGenerate(
     topic: context.title,
     locale: context.locale,
     outline: context.outline,
+    preferences: preferences as { onboarding?: string } | null,
   });
 
   return NextResponse.json({ questions }, { status: 200 });

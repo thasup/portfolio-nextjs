@@ -26,7 +26,12 @@ import {
   ResponseFormat,
   extractJson,
 } from '@/lib/praxis/openrouter/client';
-import { getClient, defaultModel } from '@/lib/praxis/openrouter/factory';
+import {
+  getClient,
+  createModelResolver,
+  ModelTask,
+} from '@/lib/praxis/openrouter/factory';
+import type { ModelPreferences } from '@/lib/praxis/openrouter/factory';
 import {
   LedgerEndpoint,
   assertBudget,
@@ -51,10 +56,11 @@ export interface ScopeGuardrailResult {
 export async function runScopeGuardrail(opts: {
   rawInput: string;
   locale: PraxisLocale;
+  preferences?: ModelPreferences | null;
 }): Promise<ScopeGuardrailResult> {
   await assertBudget();
   const client = getClient();
-  const model = defaultModel();
+  const model = createModelResolver(opts.preferences)(ModelTask.GUARDRAIL);
   const prompt = scopeGuardrail.build({ topic: opts.rawInput, locale: opts.locale });
 
   const res = await client.chat({
@@ -108,9 +114,10 @@ async function generateOutlineOnce(opts: {
   rawInput: string;
   locale: PraxisLocale;
   strict?: boolean;
+  preferences?: ModelPreferences | null;
 }): Promise<{ units: OutlineUnit[] } | null> {
   const client = getClient();
-  const model = defaultModel();
+  const model = createModelResolver(opts.preferences)(ModelTask.CURRICULUM);
   const basePrompt = curriculumOutline.build({ topic: opts.rawInput, locale: opts.locale });
   const prompt = opts.strict ? basePrompt + JSON_RETRY_SUFFIX : basePrompt;
 
@@ -145,6 +152,7 @@ export async function getOrGenerateOutline(opts: {
   rawInput: string;
   fingerprint: string;
   locale: PraxisLocale;
+  preferences?: ModelPreferences | null;
 }): Promise<OutlineResult> {
   const admin = createAdminClient();
   const modelVersion = PROMPT_VERSIONS.curriculumOutline;
@@ -189,9 +197,9 @@ export async function getOrGenerateOutline(opts: {
 
   // 2. Cache miss — generate with one retry.
   await assertBudget();
-  let generated = await generateOutlineOnce({ rawInput: opts.rawInput, locale: opts.locale });
+  let generated = await generateOutlineOnce({ rawInput: opts.rawInput, locale: opts.locale, preferences: opts.preferences });
   if (!generated) {
-    generated = await generateOutlineOnce({ rawInput: opts.rawInput, locale: opts.locale, strict: true });
+    generated = await generateOutlineOnce({ rawInput: opts.rawInput, locale: opts.locale, strict: true, preferences: opts.preferences });
   }
   if (!generated) {
     throw new Error('outline generation failed — invalid JSON after retry');

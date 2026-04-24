@@ -6,6 +6,44 @@
  */
 import 'server-only';
 import { OpenRouterClient } from '@/lib/praxis/openrouter/client';
+import {
+  defaultModel,
+  getUniversalModel,
+  ModelTask,
+  getModel,
+  getGuardrailModel,
+  getCurriculumModel,
+  getUnitModel,
+  getOnboardingModel,
+  getJudgeModel,
+  createModelResolver,
+  AVAILABLE_MODELS,
+  DEFAULT_MODEL,
+} from '@/lib/praxis/openrouter/models';
+
+// Re-export model getters for convenience.
+export {
+  defaultModel,
+  getUniversalModel,
+  ModelTask,
+  getModel,
+  getGuardrailModel,
+  getCurriculumModel,
+  getUnitModel,
+  getOnboardingModel,
+  getJudgeModel,
+  // Runtime preference support
+  createModelResolver,
+  AVAILABLE_MODELS,
+  DEFAULT_MODEL,
+};
+
+// Re-export types
+export type {
+  ModelPreferences,
+  AvailableModelSlug,
+  ModelSlug,
+} from '@/lib/praxis/openrouter/models';
 
 let cached: OpenRouterClient | null = null;
 
@@ -21,9 +59,4 @@ export function getClient(): OpenRouterClient {
     title: 'PRAXIS',
   });
   return cached;
-}
-
-/** Resolves the default generation model, overridable per call. */
-export function defaultModel(): string {
-  return process.env.PRAXIS_GENERATION_MODEL ?? 'anthropic/claude-sonnet-4';
 }

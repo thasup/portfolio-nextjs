@@ -70,7 +70,7 @@ export function Navbar() {
         href="/"
         className="text-lg font-bold tracking-tight transition-colors hover:text-primary z-50 relative"
       >
-        NEXUS
+        Thanachon
         <span className="text-primary">.</span>
       </Link>
 

@@ -12,6 +12,7 @@ import { ModalProvider } from '@/components/modal/ModalContext'
 import { ModalShell } from '@/components/modal/ModalShell'
 import { GlassSVGFilters } from '@/components/glass/GlassSVGFilters'
 import { siteConfig } from '@/data/siteConfig'
+import { Toaster } from 'sonner'
 import '@/styles/globals.css'
 
 export async function generateMetadata({
@@ -95,6 +96,18 @@ export default async function RootLayout({
               <main className="app-inner">{children}</main>
               <Footer />
               <ModalShell />
+              <Toaster
+                position="top-center"
+                richColors
+                closeButton
+                toastOptions={{
+                  style: {
+                    background: 'var(--color-canvas)',
+                    border: '1px solid var(--color-border)',
+                    color: 'var(--color-ink)',
+                  },
+                }}
+              />
             </ModalProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

@@ -14,10 +14,14 @@
  *
  * Required env (read from `.env.local` via `tsx --env-file`):
  *   - OPENROUTER_API_KEY
- * Optional env:
- *   - PRAXIS_EVAL_MODEL       (default: anthropic/claude-sonnet-4)
- *   - PRAXIS_EVAL_JUDGE_MODEL (default: same as PRAXIS_EVAL_MODEL)
+ * Optional env (centralized model config):
+ *   - PRAXIS_LLM_MODEL        (default: anthropic/claude-sonnet-4)
+ *   - PRAXIS_LLM_JUDGE_MODEL  (default: same as PRAXIS_LLM_MODEL)
  *   - NEXT_PUBLIC_SITE_URL    (forwarded as HTTP-Referer)
+ *
+ * Legacy env (deprecated but still supported):
+ *   - PRAXIS_EVAL_MODEL       → maps to PRAXIS_LLM_MODEL
+ *   - PRAXIS_EVAL_JUDGE_MODEL → maps to PRAXIS_LLM_JUDGE_MODEL
  */
 import path from 'node:path';
 import {
@@ -29,6 +33,11 @@ import {
   PromptModuleKey,
 } from '@/lib/praxis/prompts';
 import { OpenRouterClient } from '@/lib/praxis/openrouter/client';
+import {
+  getUniversalModel,
+  getJudgeModel,
+  resetModelCache,
+} from '@/lib/praxis/openrouter/models';
 import { EvalResult, EvalRun } from '@/lib/praxis/eval/types';
 import {
   RunnerContext,
@@ -47,10 +56,12 @@ interface CliArgs {
   outputDir: string;
 }
 
-const DEFAULT_MODEL = 'anthropic/claude-sonnet-4';
 const DEFAULT_OUTPUT_DIR = '.windsurf/docs/praxis-eval';
 
 function parseArgs(argv: string[]): CliArgs {
+  // Reset model cache to ensure fresh env reads (eval runs as CLI, not long-lived server)
+  resetModelCache();
+
   const args: Partial<CliArgs> = {};
   for (const raw of argv) {
     const m = raw.match(/^--([^=]+)=(.+)$/);
@@ -61,8 +72,11 @@ function parseArgs(argv: string[]): CliArgs {
     if (key === 'judge') args.judge = value;
     if (key === 'out') args.outputDir = value;
   }
-  const envModel = process.env.PRAXIS_EVAL_MODEL ?? DEFAULT_MODEL;
-  const envJudge = process.env.PRAXIS_EVAL_JUDGE_MODEL ?? envModel;
+
+  // Use centralized model configuration
+  const envModel = getUniversalModel();
+  const envJudge = getJudgeModel();
+
   return {
     module: args.module ?? 'all',
     model: args.model ?? envModel,

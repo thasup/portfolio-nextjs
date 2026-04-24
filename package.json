@@ -44,6 +44,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.71.2",
     "resend": "^6.4.2",
+    "sonner": "^2.0.7",
     "swiper": "^11.2.10",
     "tailwind-merge": "^2.6.0",
     "tsx": "^4.21.0",

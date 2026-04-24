@@ -17,7 +17,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="text-lg font-bold text-[var(--color-ink)]">
-              NEXUS
+              Thanachon
               <span className="text-[var(--color-praxis-accent)]">.</span>
             </Link>
             <p className="mt-2 text-sm text-[var(--color-ink-3)]">

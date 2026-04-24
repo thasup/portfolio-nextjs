@@ -19,6 +19,7 @@ import { OutlinePreview, type OutlineUnitDraft } from '@/components/praxis/Outli
 import { OutlineStepper } from '@/components/praxis/OutlineStepper';
 import { ScopeRejectionCard } from '@/components/praxis/ScopeRejectionCard';
 import { ScopeCategory, PraxisLocale } from '@/lib/praxis/prompts/types';
+import { showApiError, showLoading, updateToastToSuccess, updateToastToError, dismissToast } from '@/lib/praxis/toast';
 
 enum Phase {
   ENTRY = 'entry',
@@ -26,7 +27,6 @@ enum Phase {
   REVIEW = 'review',
   ACCEPTING = 'accepting',
   REJECTED = 'rejected',
-  ERROR = 'error',
 }
 
 interface OutlineResponse {
@@ -64,31 +64,45 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
   const [cached, setCached] = useState(false);
   const [units, setUnits] = useState<OutlineUnitDraft[]>([]);
   const [rejection, setRejection] = useState<{ category: ScopeCategory; explanation: string } | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loadingToastId, setLoadingToastId] = useState<string | number | null>(null);
 
   const resetToEntry = useCallback(() => {
     setPhase(Phase.ENTRY);
     setRejection(null);
-    setErrorMessage(null);
-  }, []);
+    if (loadingToastId) {
+      dismissToast(loadingToastId);
+      setLoadingToastId(null);
+    }
+  }, [loadingToastId]);
 
   const requestOutline = useCallback(
     async (input: string) => {
       setRawInput(input);
       setPhase(Phase.LOADING);
-      setErrorMessage(null);
+
+      const toastId = showLoading('Generating outline...', {
+        description: 'This usually takes 10–20 seconds.',
+      });
+      setLoadingToastId(toastId);
+
       try {
         const res = await fetch('/api/praxis/curriculum', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'outline', rawInput: input, locale }),
         });
+
         if (!res.ok) {
-          const body = (await res.json().catch(() => null)) as { error?: { message?: string } } | null;
-          throw new Error(body?.error?.message ?? `HTTP ${res.status}`);
+          const body = (await res.json().catch(() => null)) as { error?: { code?: string; message?: string } } | null;
+          const error = new Error(body?.error?.message ?? `HTTP ${res.status}`);
+          (error as { code?: string }).code = body?.error?.code;
+          throw error;
         }
+
         const data = (await res.json()) as OutlineResponse;
         if (!data.admitted) {
+          dismissToast(toastId);
+          setLoadingToastId(null);
           setRejection({
             category: data.category ?? ScopeCategory.OTHER,
             explanation: data.explanation ?? '',
@@ -99,14 +113,20 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
         if (!data.outline || !data.topic) {
           throw new Error('Malformed response from /api/praxis/curriculum');
         }
+
         setFingerprint(data.topic.fingerprint);
         setCached(data.outline.cached);
         setUnits(data.outline.units);
+        updateToastToSuccess(toastId, 'Outline ready!', {
+          description: data.outline.cached ? 'Loaded from cache.' : 'Generated fresh.',
+        });
+        setLoadingToastId(null);
         setPhase(Phase.REVIEW);
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Unknown error';
-        setErrorMessage(message);
-        setPhase(Phase.ERROR);
+        updateToastToError(toastId, 'Failed to generate outline');
+        setLoadingToastId(null);
+        showApiError(err, { onRetry: () => void requestOutline(input) });
+        setPhase(Phase.ENTRY);
       }
     },
     [locale],
@@ -115,7 +135,10 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
   const acceptOutline = useCallback(async () => {
     if (!fingerprint) return;
     setPhase(Phase.ACCEPTING);
-    setErrorMessage(null);
+
+    const toastId = showLoading('Creating your topic...');
+    setLoadingToastId(toastId);
+
     try {
       const res = await fetch('/api/praxis/curriculum', {
         method: 'POST',
@@ -128,37 +151,29 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
           editedUnits: units,
         }),
       });
+
       if (!res.ok) {
-        const body = (await res.json().catch(() => null)) as { error?: { message?: string } } | null;
-        throw new Error(body?.error?.message ?? `HTTP ${res.status}`);
+        const body = (await res.json().catch(() => null)) as { error?: { code?: string; message?: string } } | null;
+        const error = new Error(body?.error?.message ?? `HTTP ${res.status}`);
+        (error as { code?: string }).code = body?.error?.code;
+        throw error;
       }
+
       const data = (await res.json()) as AcceptResponse;
+      updateToastToSuccess(toastId, 'Topic created!');
+      setLoadingToastId(null);
       // Send first-time learners straight into onboarding. The topic
       // hub at `/learn/[topicId]` itself redirects here when no
       // onboarding profile exists, so this is just a UX shortcut.
       router.push(`/learn/${data.topicId}/onboarding`);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      setErrorMessage(message);
-      setPhase(Phase.ERROR);
+      updateToastToError(toastId, 'Failed to create topic');
+      setLoadingToastId(null);
+      showApiError(err, { onRetry: acceptOutline });
+      setPhase(Phase.REVIEW);
     }
   }, [fingerprint, locale, rawInput, router, units]);
 
-  if (phase === Phase.ERROR) {
-    return (
-      <div className="hero max-w-[820px] mx-auto my-12 text-center">
-        <h2 className="display text-2xl text-[var(--color-destructive)] mb-4">{t('errorHeading')}</h2>
-        <p className="sub">{errorMessage}</p>
-        <button
-          type="button"
-          onClick={resetToEntry}
-          className="btn primary mt-8"
-        >
-          {t('tryAgain')}
-        </button>
-      </div>
-    );
-  }
 
   if (phase === Phase.REJECTED && rejection) {
     return (

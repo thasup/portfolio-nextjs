@@ -165,7 +165,6 @@ export function ContentBlock({
           isRegenerating={isRegenerating}
           onStartRegenerate={() => setIsRegenerating(true)}
           onRegenerated={handleRegenerated}
-          onError={() => setIsRegenerating(false)}
         />
       </div>
     </section>

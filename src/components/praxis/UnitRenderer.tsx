@@ -10,9 +10,10 @@
  *   3. Render the block list via `ContentBlock` once ready.
  *   4. Show a "Mark complete" button + progress.
  */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { ContentBlock, type ContentBlockProps } from '@/components/praxis/ContentBlock';
 import type { UnitBlockKind } from '@/lib/praxis/prompts/types';
+import { showApiError } from '@/lib/praxis/toast';
 
 interface UnitBlock {
   id: string;
@@ -38,7 +39,6 @@ enum Phase {
   GENERATING = 'generating',
   READY = 'ready',
   COMPLETED = 'completed',
-  ERROR = 'error',
 }
 
 export function UnitRenderer({
@@ -57,14 +57,25 @@ export function UnitRenderer({
     return Phase.LOADING;
   });
   const [blocks, setBlocks] = useState<UnitBlock[]>(initialBlocks);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isCompleting, setIsCompleting] = useState(false);
+  const [generationAttempt, setGenerationAttempt] = useState(0);
+  // Tracks whether we've already kicked off generation for this unit.
+  // A ref (not state) so it survives re-renders without retriggering the effect.
+  const generationStartedRef = useRef(false);
+  // Tracks unmount — kept across effect reruns so async responses aren't dropped
+  // when the internal `setPhase(GENERATING)` causes a re-render.
+  const unmountedRef = useRef(false);
 
-  // Auto-generate if unit isn't ready yet.
+  // Auto-generate if unit isn't ready yet. Depends ONLY on `unitId` so a
+  // `setPhase(GENERATING)` call inside the effect doesn't re-trigger it
+  // (which previously cancelled the in-flight fetch and stranded the UI
+  // at the loading indicator forever).
   useEffect(() => {
-    if (phase !== Phase.LOADING) return;
+    unmountedRef.current = false;
 
-    let cancelled = false;
+    if (phase !== Phase.LOADING) return;
+    if (generationStartedRef.current) return;
+    generationStartedRef.current = true;
 
     async function generate() {
       setPhase(Phase.GENERATING);
@@ -78,29 +89,35 @@ export function UnitRenderer({
 
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
-          throw new Error(data?.error?.message ?? `Generation failed (${res.status})`);
+          const error = new Error(data?.error?.message ?? `Generation failed (${res.status})`);
+          (error as { code?: string }).code = data?.error?.code;
+          throw error;
         }
 
         const data = await res.json();
-        if (!cancelled) {
-          // Filter to latest version of each block kind (skip old regenerated ones).
-          const latestBlocks = getLatestBlocks(data.unit.blocks ?? []);
-          setBlocks(latestBlocks);
-          setPhase(data.unit.status === 'completed' ? Phase.COMPLETED : Phase.READY);
-        }
+        if (unmountedRef.current) return;
+        const latestBlocks = getLatestBlocks(data.unit.blocks ?? []);
+        setBlocks(latestBlocks);
+        setPhase(data.unit.status === 'completed' ? Phase.COMPLETED : Phase.READY);
       } catch (err) {
-        if (!cancelled) {
-          setErrorMessage(err instanceof Error ? err.message : 'Something went wrong');
-          setPhase(Phase.ERROR);
-        }
+        if (unmountedRef.current) return;
+        // Show toast instead of inline error card
+        showApiError(err, {
+          onRetry: () => {
+            setGenerationAttempt((prev) => prev + 1);
+          },
+        });
+        // Return to loading state so user can retry
+        setPhase(Phase.LOADING);
       }
     }
 
     generate();
     return () => {
-      cancelled = true;
+      unmountedRef.current = true;
     };
-  }, [phase, unitId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unitId, generationAttempt]);
 
   const handleBlockRegenerated = useCallback(
     (newBlock: { id: string; kind: UnitBlockKind; content: string; regeneratedFrom: string }) => {
@@ -121,18 +138,22 @@ export function UnitRenderer({
         body: JSON.stringify({ action: 'complete', unitId }),
       });
       if (!res.ok) {
-        throw new Error('Failed to mark complete');
+        const data = await res.json().catch(() => ({}));
+        const error = new Error(data?.error?.message ?? 'Failed to mark complete');
+        (error as { code?: string }).code = data?.error?.code;
+        throw error;
       }
       setPhase(Phase.COMPLETED);
-    } catch {
-      // Don't block the UI on failure.
+    } catch (err) {
+      // Show toast for completion errors but don't block UI
+      showApiError(err, { description: 'Your progress is still saved locally.' });
     } finally {
       setIsCompleting(false);
     }
   }, [unitId]);
 
   const handleRetry = useCallback(() => {
-    setErrorMessage(null);
+    setGenerationAttempt((prev) => prev + 1);
     setPhase(Phase.LOADING);
   }, []);
 
@@ -160,15 +181,15 @@ export function UnitRenderer({
           </div>
         )}
 
-        {/* Phase: error */}
-        {phase === Phase.ERROR && (
+        {/* Phase: loading - shows loading state while auto-retrying after error */}
+        {phase === Phase.LOADING && (
           <div
-            id="unit-error-card"
+            id="unit-loading-indicator"
             className="card flex flex-col items-center justify-center gap-4 text-center my-8"
-            style={{ borderColor: 'var(--color-destructive)' }}
           >
-            <p className="text-sm font-medium text-[var(--color-ink)]">Something went wrong</p>
-            <p className="text-xs text-[var(--color-ink-3)]">{errorMessage}</p>
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-ink)] border-t-transparent" />
+            <p className="text-sm font-medium text-[var(--color-ink)]">Preparing unit content…</p>
+            <p className="text-xs text-[var(--color-ink-3)]">If this takes too long, check your connection.</p>
             <button
               id="unit-retry-btn"
               type="button"

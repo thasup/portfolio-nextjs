@@ -4,7 +4,7 @@ export const siteConfig = {
   email: "thanachonfirst@hotmail.com",
   linkedinUrl: "https://linkedin.com/in/thasup",
   githubUrl: "https://github.com/thasup",
-  avatarImage: "/images/profile/avatar.jpeg",
+  avatarImage: "/images/profile/avatar-animated.gif",
   resumeUrl: "/resume.pdf",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://thanachon.me",
   stats: {

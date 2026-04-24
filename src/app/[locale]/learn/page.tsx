@@ -43,10 +43,13 @@ export default async function LibraryPage() {
   const session = await requireLearner();
   const topics = await loadTopics(session.userId);
   const displayName = session.learner.display_name ?? session.email.split('@')[0];
+  const canGenerateTopics = session.learner.can_generate_topics;
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12">
-      <LibraryHome displayName={displayName} topics={topics} />
-    </main>
+    <LibraryHome
+      displayName={displayName}
+      topics={topics}
+      canGenerateTopics={canGenerateTopics}
+    />
   );
 }

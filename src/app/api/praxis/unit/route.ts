@@ -77,6 +77,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     switch (body.action) {
       case 'generate': {
+        // Guard: only learners with can_generate_topics can generate unit content
+        if (!session.learner.can_generate_topics) {
+          return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Content generation is not enabled for your account. Contact admin for access.');
+        }
         const result = await generateUnit({
           unitId: body.unitId,
           learnerId: session.userId,
@@ -93,6 +97,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
 
       case 'regenerate_block': {
+        // Guard: only learners with can_generate_topics can regenerate blocks
+        if (!session.learner.can_generate_topics) {
+          return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Content generation is not enabled for your account. Contact admin for access.');
+        }
         const result = await regenerateBlock({
           unitId: body.unitId,
           blockId: body.blockId,

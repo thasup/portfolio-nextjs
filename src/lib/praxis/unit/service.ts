@@ -27,7 +27,11 @@ import {
   ResponseFormat,
   extractJson,
 } from '@/lib/praxis/openrouter/client';
-import { getClient, defaultModel } from '@/lib/praxis/openrouter/factory';
+import {
+  getClient,
+  getUnitModel,
+  getUniversalModel,
+} from '@/lib/praxis/openrouter/factory';
 import {
   LedgerEndpoint,
   assertBudget,
@@ -321,14 +325,14 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
       });
 
       const client = getClient();
-      const model = defaultModel();
+      const model = getUnitModel();
 
       const res = await client.chat({
         model,
         messages: [{ role: ChatRole.USER, content: prompt }],
         responseFormat: ResponseFormat.JSON_OBJECT,
         temperature: 0.4,
-        maxTokens: 2048,
+        maxTokens: 4096,
       });
 
       await recordLedgerEntry({
@@ -348,7 +352,7 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
           ],
           responseFormat: ResponseFormat.JSON_OBJECT,
           temperature: 0.3,
-          maxTokens: 2048,
+          maxTokens: 4096,
         });
 
         await recordLedgerEntry({
@@ -469,7 +473,7 @@ export async function regenerateBlock(
   });
 
   const client = getClient();
-  const model = defaultModel();
+  const model = getUniversalModel();
 
   const res = await client.chat({
     model,

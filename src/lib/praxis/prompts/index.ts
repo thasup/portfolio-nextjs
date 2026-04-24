@@ -28,7 +28,7 @@ export const PROMPT_VERSIONS = {
   nori: 'nori.persona@1',
   scopeGuardrail: 'scope.guardrail@1',
   curriculumOutline: 'curriculum.outline@1',
-  curriculumUnit: 'curriculum.unit@1',
+  curriculumUnit: 'curriculum.unit@2',
   onboardingMeta: 'onboarding.meta@1',
   templateGenerator: 'template.generator@1',
 } as const;

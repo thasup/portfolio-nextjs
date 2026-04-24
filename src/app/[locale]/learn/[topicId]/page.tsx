@@ -70,89 +70,92 @@ export default async function TopicPage({ params }: TopicPageProps) {
   const unitList = (units ?? []) as TopicUnit[];
   const completed = unitList.filter((u) => u.status === 'completed').length;
   const progressPercent = unitList.length > 0 ? Math.round((completed / unitList.length) * 100) : 0;
+  const firstReadyIndex = unitList.findIndex((u) => u.status !== 'completed');
 
   return (
-    <main id="module-overview" className="mx-auto max-w-7xl px-6 py-12">
-      <header className="mb-10 space-y-4">
-        <div className="flex items-center justify-between">
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            {t('eyebrow')}
-          </p>
-          <Link
-            id="edit-onboarding-link"
-            href={`/learn/${topicId}/onboarding`}
-            className="text-xs font-medium text-primary hover:underline"
-          >
-            {t('editOnboarding')}
-          </Link>
-        </div>
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{topic.title}</h1>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span>{t('progress', { completed, total: unitList.length })}</span>
-            <span className="font-medium text-foreground">{progressPercent}%</span>
+    <section id="module-overview" className="reveal">
+      <div className="mod-head">
+        <div>
+          <div className="eyebrow">{t('eyebrow')}</div>
+          <h1>
+            <em>{topic.title}</em>
+          </h1>
+          <div className="mt-5 max-w-[360px]">
+            <div className="prog accent">
+              <span style={{ width: `${progressPercent}%` }} />
+            </div>
+            <div className="mt-2 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-ink-3)]">
+              <span>{t('progress', { completed, total: unitList.length })}</span>
+              <span>{progressPercent}%</span>
+            </div>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full rounded-full bg-primary transition-all duration-500"
-              style={{ width: `${progressPercent}%` }}
-            />
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Link
+              id="talk-to-nori-btn"
+              href={`/learn/${topicId}/mate`}
+              className="btn ai"
+            >
+              {t('talkToNori')}
+            </Link>
+            <Link
+              id="edit-onboarding-link"
+              href={`/learn/${topicId}/onboarding`}
+              className="btn ghost"
+            >
+              {t('editOnboarding')}
+            </Link>
           </div>
         </div>
-      </header>
+      </div>
 
-      <ol id="unit-list" className="space-y-3">
-        {unitList.map((u) => {
+      <ol id="unit-list" className="unit-list">
+        {unitList.map((u, i) => {
           const isCompleted = u.status === 'completed';
-          const isReady = u.status === 'ready';
+          const isReady = u.status === 'ready' || u.status === 'pending';
+          const isCurrent = i === firstReadyIndex;
+          const locked = !isCompleted && !isReady;
+          const cls = [
+            'unit-row',
+            isCompleted ? 'done' : '',
+            isCurrent && !isCompleted ? 'current' : '',
+            locked ? 'locked' : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+          const content = (
+            <>
+              <div className="num">{String(u.index).padStart(2, '0')}</div>
+              <div>
+                <h3>{u.title}</h3>
+                <p>{u.objective}</p>
+              </div>
+              <div className="text-right">
+                <div className="state">
+                  {t(`status.${u.status}` as 'status.pending')}
+                </div>
+                {!locked && <div className="chev mt-1.5">→</div>}
+              </div>
+            </>
+          );
           return (
             <li key={u.id}>
-              <Link
-                id={`unit-card-${u.id}`}
-                href={`/learn/${topicId}/${u.id}`}
-                className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-primary hover:shadow-sm"
-              >
-                <span
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-colors ${isCompleted
-                      ? 'bg-green-500/10 text-green-600 dark:text-green-400'
-                      : isReady
-                        ? 'bg-primary/10 text-primary'
-                        : 'border border-border text-muted-foreground'
-                    }`}
-                >
-                  {isCompleted ? '✓' : u.index}
-                </span>
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium text-foreground">{u.title}</p>
-                    <span
-                      className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${isCompleted
-                          ? 'bg-green-500/10 text-green-600 dark:text-green-400'
-                          : isReady
-                            ? 'bg-primary/10 text-primary'
-                            : 'bg-muted text-muted-foreground'
-                        }`}
-                    >
-                      {t(`status.${u.status}` as 'status.pending')}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{u.objective}</p>
+              {locked ? (
+                <div id={`unit-card-${u.id}`} className={cls}>
+                  {content}
                 </div>
-              </Link>
+              ) : (
+                <Link
+                  id={`unit-card-${u.id}`}
+                  href={`/learn/${topicId}/${u.id}`}
+                  className={cls}
+                >
+                  {content}
+                </Link>
+              )}
             </li>
           );
         })}
       </ol>
-
-      <div className="mt-10 border-t border-border pt-6">
-        <Link
-          id="talk-to-nori-btn"
-          href={`/learn/${topicId}/mate`}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
-        >
-          {t('talkToNori')}
-        </Link>
-      </div>
-    </main>
+    </section>
   );
 }

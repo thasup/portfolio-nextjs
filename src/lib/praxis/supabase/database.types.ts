@@ -128,28 +128,34 @@ export type Database = {
       }
       praxis_learners: {
         Row: {
+          can_generate_topics: boolean
           created_at: string
           default_locale: string
           display_name: string | null
           email: string
           id: string
           last_active_at: string
+          model_preferences: Json | null
         }
         Insert: {
+          can_generate_topics?: boolean
           created_at?: string
           default_locale?: string
           display_name?: string | null
           email: string
           id: string
           last_active_at?: string
+          model_preferences?: Json | null
         }
         Update: {
+          can_generate_topics?: boolean
           created_at?: string
           default_locale?: string
           display_name?: string | null
           email?: string
           id?: string
           last_active_at?: string
+          model_preferences?: Json | null
         }
         Relationships: []
       }
