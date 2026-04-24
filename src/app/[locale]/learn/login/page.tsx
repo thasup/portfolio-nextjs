@@ -7,6 +7,7 @@
  * On sign-in success Supabase calls `/auth/callback`, which provisions
  * the learner row and redirects to `/learn`.
  */
+import Link from 'next/link';
 import { createClient } from '@/utils/supabase/client';
 
 /**
@@ -109,9 +110,9 @@ export default function LearnLoginPage() {
 
         <p className="text-xs text-muted-foreground">
           PRAXIS is a personal learning tool.{' '}
-          <a href="/contact" className="underline underline-offset-4 hover:text-foreground">
+          <Link href="/contact" className="underline underline-offset-4 hover:text-foreground">
             Get in touch
-          </a>{' '}
+          </Link>{' '}
           if you&apos;d like access.
         </p>
       </div>

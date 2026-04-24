@@ -257,7 +257,7 @@ export function UnitRenderer({
       <div className="mate-rail hidden lg:block">
         <h4 className="eyebrow mb-2">Mate</h4>
         <div className="ctx">
-          I'm following along with your unit progress. Soon, you'll be able to discuss concepts with me right here.
+          I&apos;m following along with your unit progress. Soon, you&apos;ll be able to discuss concepts with me right here.
         </div>
       </div>
     </div>
