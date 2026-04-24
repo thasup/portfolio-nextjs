@@ -28,11 +28,11 @@ Tasks are grouped by week and numbered `T-XXX`. Each task has an owner (First un
 > **Exit bar**: Supabase project provisioned, schema migration applied, invite → magic link → authenticated `/learn` empty state works end-to-end.
 
 - [~] **T-011** — Install dependencies. `@supabase/supabase-js`, `@supabase/ssr`, `tsx`, `zod`, `vitest` installed. Anthropic SDK dropped (replaced by OpenRouter). Pending: `docx`, `exceljs`, `jose`. _research §1, §2._
-- [~] **T-012** — Migration authored at `supabase/migrations/20260421000000_praxis_initial.sql`; `supabase/config.toml` committed. Remote provisioning + `supabase db push` pending. _data-model.md._
-- [~] **T-013** — Hand-typed stub at `src/lib/praxis/supabase/database.types.ts` mirrors the migration and typechecks clean. Replace via `npx supabase gen types typescript --linked > src/lib/praxis/supabase/database.types.ts` once remote is linked.
+- [x] **T-012** — Migration pushed to remote Supabase project `imrbhronujwhbjcslgym`. `supabase/config.toml` set to `major_version = 17`. _data-model.md._
+- [x] **T-013** — Types generated at `src/lib/praxis/supabase/database.types.ts` (UTF-8). Row/Insert/Update aliases exported from `src/lib/praxis/supabase/tables.ts`.
 - [x] **T-014** — Supabase clients at `src/utils/supabase/{client,server,middleware}.ts` using `@supabase/ssr` cookie-based session pattern. (Admin client deferred until T-017 invite endpoint.)
-- [ ] **T-015** — Create `src/lib/praxis/session/getLearner.ts` and `requireInvite.ts`.
-- [ ] **T-016** — Update `src/middleware.ts` to guard `/learn/*` and `/api/praxis/*` and redirect unauthenticated traffic to `/learn/not-invited`.
+- [x] **T-015** — Session helpers: `src/lib/praxis/session/updateSession.ts` (middleware core), `getLearner.ts` (server-side current learner + `requireLearner`), `requireInvite.ts` (admin-client invite allowlist check with `InviteRejectionError`).
+- [x] **T-016** — `src/middleware.ts` composes next-intl + PRAXIS auth gate; `/learn/*` unauth → redirect to `/learn/not-invited`; `/api/praxis/*` unauth → JSON 401; public paths `/learn/callback`, `/learn/not-invited` bypass. Locale-aware.
 - [ ] **T-017** — Build `POST /api/praxis/invite` per `contracts/auth.invite.md`. _FR-002, FR-003, FR-005._
 - [ ] **T-018** — Build `/learn/callback` route verifying invite JWT, calling Supabase admin `generateLink`, establishing session.
 - [ ] **T-019** — Create `/learn/not-invited` page. _FR-001._

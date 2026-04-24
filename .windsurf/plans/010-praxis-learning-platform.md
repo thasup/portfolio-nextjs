@@ -41,19 +41,19 @@ This document is the single source of truth for day-to-day progress on PRAXIS. I
 - [x] T-004 Curriculum unit prompt
 - [x] T-005 Onboarding meta prompt
 - [x] T-006 Template generator prompt
-- [ ] T-007 Eval harness
-- [ ] T-008 Adversarial probe set (fixtures landed with T-002; eval run pending)
-- [ ] T-009 Week 0 exit bar met
+- [x] T-007 Eval harness (`scripts/praxis-eval.ts` + `src/lib/praxis/eval/*` + OpenRouter client; run via `npm run praxis:eval`)
+- [x] T-008 Adversarial probe set (5 refuse + 4 admit fixtures in `scope.guardrail.ts`; binary runner enforces pass rate ≥ 1.0)
+- [ ] T-009 Week 0 exit bar met (awaiting first live run with `OPENROUTER_API_KEY`)
 - [x] T-010 Prompt VERSION constants locked (see `src/lib/praxis/prompts/index.ts`)
 
 ### Week 1 — Infrastructure
 
 - [~] T-011 Dependencies installed (`@supabase/supabase-js`, `@supabase/ssr` done; `ai`, `@ai-sdk/*`, `docx`, `exceljs`, `jose` pending — Anthropic SDK dropped in favour of OpenRouter)
-- [ ] T-012 Supabase provisioned + migration applied
-- [ ] T-013 TS types generated
-- [x] T-014 Supabase clients wired (`src/utils/supabase/{client,server,middleware}.ts`)
-- [ ] T-015 Session helpers
-- [ ] T-016 Middleware auth gate
+- [x] T-012 Migration pushed to remote Supabase (`imrbhronujwhbjcslgym`); `supabase/config.toml` updated to `major_version = 17`
+- [x] T-013 Live-generated types at `src/lib/praxis/supabase/database.types.ts` (UTF-8); alias module at `src/lib/praxis/supabase/tables.ts`
+- [x] T-014 Supabase clients wired (`src/utils/supabase/{client,server,middleware}.ts` for browser/SSR; `src/lib/praxis/supabase/admin.ts` for service-role)
+- [x] T-015 Session helpers: `src/lib/praxis/session/{updateSession,getLearner,requireInvite}.ts`
+- [x] T-016 Middleware auth gate (`src/middleware.ts` composes next-intl + Supabase refresh + redirect or 401 for unauth `/learn/*` and `/api/praxis/*`)
 - [ ] T-017 Invite endpoint
 - [ ] T-018 Callback route
 - [ ] T-019 `/learn/not-invited` page
@@ -150,6 +150,41 @@ A `PATCH` bump of `.specify/memory/constitution.md` (3.1.0 → 3.1.1) is recomme
 - **Soft-launch cadence**: Day-by-day invitee plan for Week 8 is draft (Jane day 1, two day 3, two day 5–6). Revise based on Jane's observed bug rate.
 
 ## Changelog
+
+### 2026-04-24 (evening)
+
+- **Week 1** auth gate landed end-to-end (T-012 → T-016).
+- Supabase remote (`imrbhronujwhbjcslgym`) linked, migration pushed cleanly, types regenerated with UTF-8 redirect (`Out-File -Encoding utf8`) after PowerShell's default UTF-16 corrupted the first run.
+- `supabase/config.toml` bumped to `major_version = 17` to match remote.
+- New: `src/lib/praxis/supabase/tables.ts` — Row/Insert/Update aliases over the generated `Database` so callers avoid deep index chains.
+- New: `src/lib/praxis/session/updateSession.ts` — Supabase session refresh + unauth branch (redirect for pages, JSON 401 for `/api/praxis/*`). Locale-aware.
+- New: `src/lib/praxis/session/getLearner.ts` — `getLearner()` + `requireLearner()` for server components and route handlers.
+- New: `src/lib/praxis/session/requireInvite.ts` — `InviteRejectionError` + reason enum for the upcoming `/learn/callback` handshake.
+- Updated: `src/middleware.ts` — composes next-intl with the PRAXIS auth gate; matcher widened to include `/api/praxis/*`; cookie-merge helper carries refreshed tokens across intl rewrites.
+- Updated: `.env.local.example` gains `PRAXIS_ADMIN_TOKEN` (per `contracts/auth.invite.md`).
+- `typecheck` clean across workspace.
+- Next action: T-017 (`POST /api/praxis/invite`), T-018 (`/learn/callback`), T-019 (`/learn/not-invited`), T-020 (`/learn` library shell). All four are independent and can land in any order.
+
+### 2026-04-24 (afternoon)
+
+- **Week 1** schema landed at the file level (T-012 authored, T-013 stubbed, T-014 admin client added).
+- New: `supabase/migrations/20260421000000_praxis_initial.sql` with full DDL + RLS policies for every learner-scoped table + service-role-only caches/ledger + immutable-message grants.
+- New: `supabase/config.toml` with `enable_signup = false` and Supabase email disabled (FR-003: Resend-only).
+- New: `src/lib/praxis/supabase/admin.ts` — memoised service-role client typed with `Database`.
+- New: `src/lib/praxis/supabase/database.types.ts` — stub hand-typed to match the migration; will be replaced by `supabase gen types typescript --linked` (T-013) once the remote project is provisioned.
+- `typecheck` clean across the entire workspace.
+- Next action: provision the remote Supabase project, `supabase link --project-ref <ref>`, `supabase db push`, then regenerate types.
+
+### 2026-04-24 (morning)
+
+- **Week 0** eval harness landed (T-007, T-008).
+- New: `src/lib/praxis/openrouter/client.ts` (provider-agnostic REST wrapper with retry + JSON extraction), `src/lib/praxis/eval/{types,judge,runners,report}.ts`, `scripts/praxis-eval.ts`.
+- Rubric criteria split into outline (4) and unit (5) per `research.md` §5. Scope is binary (fixture name prefix encodes expected verdict). Onboarding + template use heuristic checks (count, role/goal keywords, personalisation reference count, XLSX table presence).
+- Harness writes timestamped CSV + Markdown reports to `.windsurf/docs/praxis-eval/<ts>.{csv,md}` and exits non-zero on any failure so it can gate CI later.
+- New npm script: `npm run praxis:eval -- [--module=<name>] [--model=<slug>] [--judge=<slug>]`.
+- `.env.local.example` updated with `OPENROUTER_API_KEY`, `PRAXIS_EVAL_MODEL`, and placeholders for Supabase service role + invite secret.
+- Blocked on: first live run requires `OPENROUTER_API_KEY` in `.env.local`. Once run, iterate T-009 until exit bar met.
+- Next action: Provision OpenRouter key, run `npm run praxis:eval`, iterate prompts until exit bar (outline ≥ 2.5, unit ≥ 2.3, scope pass=1.0) clears.
 
 ### 2026-04-19
 
