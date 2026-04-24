@@ -69,15 +69,17 @@ export default async function TopicPage({ params }: TopicPageProps) {
 
   const unitList = (units ?? []) as TopicUnit[];
   const completed = unitList.filter((u) => u.status === 'completed').length;
+  const progressPercent = unitList.length > 0 ? Math.round((completed / unitList.length) * 100) : 0;
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
-      <header className="mb-10 space-y-3">
+    <main id="module-overview" className="mx-auto max-w-3xl px-6 py-12">
+      <header className="mb-10 space-y-4">
         <div className="flex items-center justify-between">
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
             {t('eyebrow')}
           </p>
           <Link
+            id="edit-onboarding-link"
             href={`/learn/${topicId}/onboarding`}
             className="text-xs font-medium text-primary hover:underline"
           >
@@ -85,35 +87,68 @@ export default async function TopicPage({ params }: TopicPageProps) {
           </Link>
         </div>
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">{topic.title}</h1>
-        <p className="text-sm text-muted-foreground">
-          {t('progress', { completed, total: unitList.length })}
-        </p>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-sm text-muted-foreground">
+            <span>{t('progress', { completed, total: unitList.length })}</span>
+            <span className="font-medium text-foreground">{progressPercent}%</span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-full rounded-full bg-primary transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+        </div>
       </header>
 
-      <ol className="space-y-2">
-        {unitList.map((u) => (
-          <li key={u.id}>
-            <Link
-              href={`/learn/${topicId}/${u.id}`}
-              className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary"
-            >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-sm font-medium text-muted-foreground">
-                {u.index}
-              </span>
-              <div className="space-y-1">
-                <p className="font-medium text-foreground">{u.title}</p>
-                <p className="text-sm text-muted-foreground">{u.objective}</p>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                  {t(`status.${u.status}` as 'status.pending')}
-                </p>
-              </div>
-            </Link>
-          </li>
-        ))}
+      <ol id="unit-list" className="space-y-3">
+        {unitList.map((u) => {
+          const isCompleted = u.status === 'completed';
+          const isReady = u.status === 'ready';
+          return (
+            <li key={u.id}>
+              <Link
+                id={`unit-card-${u.id}`}
+                href={`/learn/${topicId}/${u.id}`}
+                className="flex items-start gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-primary hover:shadow-sm"
+              >
+                <span
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-colors ${
+                    isCompleted
+                      ? 'bg-green-500/10 text-green-600 dark:text-green-400'
+                      : isReady
+                        ? 'bg-primary/10 text-primary'
+                        : 'border border-border text-muted-foreground'
+                  }`}
+                >
+                  {isCompleted ? '✓' : u.index}
+                </span>
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <p className="font-medium text-foreground">{u.title}</p>
+                    <span
+                      className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                        isCompleted
+                          ? 'bg-green-500/10 text-green-600 dark:text-green-400'
+                          : isReady
+                            ? 'bg-primary/10 text-primary'
+                            : 'bg-muted text-muted-foreground'
+                      }`}
+                    >
+                      {t(`status.${u.status}` as 'status.pending')}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{u.objective}</p>
+                </div>
+              </Link>
+            </li>
+          );
+        })}
       </ol>
 
       <div className="mt-10 border-t border-border pt-6">
         <Link
+          id="talk-to-nori-btn"
           href={`/learn/${topicId}/mate`}
           className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
         >

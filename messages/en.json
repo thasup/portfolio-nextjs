@@ -855,8 +855,34 @@
       "talkToNori": "Talk to Nori",
       "status": {
         "pending": "Not started",
+        "generating": "Generating…",
         "ready": "Ready to open",
-        "completed": "Completed"
+        "completed": "Completed",
+        "failed": "Generation failed"
+      }
+    },
+    "unit": {
+      "generating": "Generating your unit content…",
+      "generatingHint": "This usually takes 10–20 seconds.",
+      "errorHeading": "Something went wrong",
+      "retry": "Try again",
+      "markComplete": "Mark complete",
+      "markingComplete": "Saving…",
+      "completed": "Unit complete",
+      "completionPrompt": "Finished reading? Mark this unit as complete.",
+      "backToOverview": "Back to overview",
+      "regenerate": "Regenerate",
+      "regenerating": "Regenerating…",
+      "regenPlaceholder": "What should change?",
+      "regenSubmit": "Go",
+      "regenCancel": "Cancel",
+      "regeneratedBadge": "Regenerated",
+      "blockKind": {
+        "objectives": "Objectives",
+        "explainer": "Explainer",
+        "example": "Example",
+        "diagram_note": "Diagram Note",
+        "practice": "Practice"
       }
     },
     "scope": {

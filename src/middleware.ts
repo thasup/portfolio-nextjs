@@ -29,6 +29,17 @@ function isApiPath(pathname: string): boolean {
 }
 
 /**
+ * Paths that must bypass BOTH the auth gate AND next-intl locale
+ * rewriting. The `/auth/callback` route handler lives at
+ * `app/auth/callback/route.ts` (outside `[locale]`), so next-intl
+ * must never touch it — otherwise it rewrites to `/en/auth/callback`
+ * which doesn't exist and yields a 404.
+ */
+function isAuthApiPath(pathname: string): boolean {
+  return pathname.startsWith('/auth/');
+}
+
+/**
  * Copies refreshed Supabase auth cookies from the session response onto
  * the downstream (next-intl) response, so a single round-trip both
  * rewrites URLs for i18n and persists the refreshed auth token.
@@ -42,6 +53,12 @@ function mergeCookies(from: NextResponse, to: NextResponse): NextResponse {
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
+
+  // 0. Auth callback routes live outside [locale] — never touch them.
+  //    /auth/callback is the Supabase OAuth code-exchange handler.
+  if (isAuthApiPath(pathname)) {
+    return NextResponse.next({ request });
+  }
 
   // 1. API routes never go through next-intl. Only /api/praxis/* needs
   //    the auth gate; any other /api/* path short-circuits.

@@ -9,9 +9,9 @@
  *      actually performs the refresh — do NOT interleave other logic
  *      between `createServerClient` and `getUser()`.
  *   2. Redirect unauthenticated traffic on protected paths to
- *      `/learn/not-invited`, preserving locale prefix when present.
- *   3. Leave public PRAXIS paths untouched (`/learn/callback`,
- *      `/learn/not-invited`) so the invite → magic-link loop can close.
+ *      `/learn/login`, preserving locale prefix when present.
+ *   3. Leave public PRAXIS paths untouched (`/learn/login`)
+ *      so the Google OAuth sign-in page is reachable without a session.
  *
  * This helper does NOT call next-intl. Path-rewriting happens in the
  * outer `middleware.ts` after this returns.
@@ -21,10 +21,10 @@ import { NextResponse, type NextRequest } from 'next/server';
 import type { Database } from '@/lib/praxis/supabase/database.types';
 
 /** Paths under `/learn/*` that bypass the auth gate. */
-const PRAXIS_PUBLIC_PATHS: ReadonlyArray<string> = ['/learn/callback', '/learn/not-invited'];
+const PRAXIS_PUBLIC_PATHS: ReadonlyArray<string> = ['/learn/login'];
 
 /** Redirect target for unauthenticated traffic on protected PRAXIS paths. */
-const NOT_INVITED_PATH = '/learn/not-invited';
+const NOT_INVITED_PATH = '/learn/login';
 
 /**
  * Locale-aware path helpers. The site uses next-intl with locale prefix

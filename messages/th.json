@@ -855,8 +855,34 @@
       "talkToNori": "คุยกับ Nori",
       "status": {
         "pending": "ยังไม่เริ่ม",
+        "generating": "กำลังสร้าง…",
         "ready": "พร้อมเปิด",
-        "completed": "เรียนจบแล้ว"
+        "completed": "เรียนจบแล้ว",
+        "failed": "สร้างไม่สำเร็จ"
+      }
+    },
+    "unit": {
+      "generating": "กำลังสร้างเนื้อหาหน่วยเรียนรู้…",
+      "generatingHint": "ใช้เวลาประมาณ 10–20 วินาที",
+      "errorHeading": "เกิดข้อผิดพลาด",
+      "retry": "ลองใหม่",
+      "markComplete": "เรียนจบแล้ว",
+      "markingComplete": "กำลังบันทึก…",
+      "completed": "จบหน่วยนี้แล้ว",
+      "completionPrompt": "อ่านจบแล้ว? ทำเครื่องหมายว่าเรียนจบ",
+      "backToOverview": "กลับไปหน้าหลัก",
+      "regenerate": "สร้างใหม่",
+      "regenerating": "กำลังสร้างใหม่…",
+      "regenPlaceholder": "อยากให้เปลี่ยนอะไร?",
+      "regenSubmit": "ไป",
+      "regenCancel": "ยกเลิก",
+      "regeneratedBadge": "สร้างใหม่แล้ว",
+      "blockKind": {
+        "objectives": "เป้าหมาย",
+        "explainer": "อธิบาย",
+        "example": "ตัวอย่าง",
+        "diagram_note": "บันทึกแผนภาพ",
+        "practice": "แบบฝึก"
       }
     },
     "scope": {
