@@ -6,6 +6,7 @@ export type SignalId =
   | 'cross-functional-trust'
   | 'knowledge-sharing'
   | 'full-stack-delivery'
+  | 'founder-trajectory'
 
 export interface NarrativeClaim {
   id: string

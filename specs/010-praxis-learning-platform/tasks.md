@@ -1,6 +1,6 @@
 # Tasks: PRAXIS Phase 1
 
-**Feature**: 005-praxis-learning-platform  
+**Feature**: 010-praxis-learning-platform  
 **Date**: 2026-04-18  
 **Horizon**: 10 weeks from start of Week 0
 
@@ -12,25 +12,25 @@ Tasks are grouped by week and numbered `T-XXX`. Each task has an owner (First un
 
 > **Exit bar**: Outline prompt ≥ 2.5/3 rubric, unit prompt ≥ 2.3/3, scope guardrail zero false negatives on adversarial probes. No component code written until this bar is met. See `research.md` §5.
 
-- [ ] **T-001** — Draft `src/lib/praxis/prompts/nori.persona.ts`. Identity, tone, behavioral rules, scope refusals. ≤ 800 static tokens. _NFR-007, NFR-008._
-- [ ] **T-002** — Draft `src/lib/praxis/prompts/scope.guardrail.ts`. Classifier returning `{ admitted, category, explanation }`.
-- [ ] **T-003** — Draft `src/lib/praxis/prompts/curriculum.outline.ts`. Returns JSON `{ units: [...] }` with strict schema in the prompt.
-- [ ] **T-004** — Draft `src/lib/praxis/prompts/curriculum.unit.ts`. Returns JSON `{ blocks: [...] }`.
-- [ ] **T-005** — Draft `src/lib/praxis/prompts/onboarding.meta.ts`. Returns JSON `{ questions: [...] }`.
-- [ ] **T-006** — Draft `src/lib/praxis/prompts/template.generator.ts`. Returns JSON conforming to `TemplateSpec`.
-- [ ] **T-007** — Build `scripts/praxis-eval.ts`. Runs all six prompts against ten seed topics × three personas. Outputs CSV and summary to `.windsurf/docs/praxis-eval/<date>.md`.
-- [ ] **T-008** — Probe set: five adversarial topics (medical, legal, financial, explicit, minors). Scope guardrail must reject all five with zero false negatives.
+- [x] **T-001** — Draft `src/lib/praxis/prompts/nori.persona.ts`. Identity, tone, behavioral rules, scope refusals. ≤ 800 static tokens. _NFR-007, NFR-008._
+- [x] **T-002** — Draft `src/lib/praxis/prompts/scope.guardrail.ts`. Classifier returning `{ admitted, category, explanation }`.
+- [x] **T-003** — Draft `src/lib/praxis/prompts/curriculum.outline.ts`. Returns JSON `{ units: [...] }` with strict schema in the prompt.
+- [x] **T-004** — Draft `src/lib/praxis/prompts/curriculum.unit.ts`. Returns JSON `{ blocks: [...] }`.
+- [x] **T-005** — Draft `src/lib/praxis/prompts/onboarding.meta.ts`. Returns JSON `{ questions: [...] }`.
+- [x] **T-006** — Draft `src/lib/praxis/prompts/template.generator.ts`. Returns JSON conforming to `TemplateSpec`.
+- [x] **T-007** — Build `scripts/praxis-eval.ts`. Runs all six prompts against ten seed topics × three personas. Outputs CSV and summary to `.windsurf/docs/praxis-eval/<date>.md`.
+- [x] **T-008** — Probe set: five adversarial topics (medical, legal, financial, explicit, minors). Scope guardrail must reject all five with zero false negatives.
 - [ ] **T-009** — Iterate prompts until Week 0 exit bar is met. Log rubric score history in the living plan.
-- [ ] **T-010** — Record a chosen model version identifier in each prompt module (`VERSION = 'curriculum.outline@1'`). Commit fixtures.
+- [x] **T-010** — Record a chosen model version identifier in each prompt module (`VERSION = 'curriculum.outline@1'`). Commit fixtures.
 
 ## Week 1 — Infrastructure
 
 > **Exit bar**: Supabase project provisioned, schema migration applied, invite → magic link → authenticated `/learn` empty state works end-to-end.
 
-- [ ] **T-011** — Install dependencies: `@supabase/supabase-js`, `@supabase/ssr`, `@anthropic-ai/sdk`, `ai`, `@ai-sdk/anthropic`, `docx`, `exceljs`, `jose` (for JWT). _research §1, §2._
+- [~] **T-011** — Install dependencies. `@supabase/supabase-js`, `@supabase/ssr`, `tsx`, `zod`, `vitest` installed. Anthropic SDK dropped (replaced by OpenRouter). Pending: `docx`, `exceljs`, `jose`. _research §1, §2._
 - [ ] **T-012** — Provision Supabase project. Record URL and keys in `.env.local.example`. Apply migration `supabase/migrations/20260421_praxis_initial.sql`. _data-model.md._
 - [ ] **T-013** — Generate TypeScript types: `npx supabase gen types typescript > src/lib/praxis/supabase/database.types.ts`.
-- [ ] **T-014** — Create `src/lib/praxis/supabase/` clients: `client.ts`, `server.ts`, `admin.ts`. Use `@supabase/ssr` cookie-based session pattern.
+- [x] **T-014** — Supabase clients at `src/utils/supabase/{client,server,middleware}.ts` using `@supabase/ssr` cookie-based session pattern. (Admin client deferred until T-017 invite endpoint.)
 - [ ] **T-015** — Create `src/lib/praxis/session/getLearner.ts` and `requireInvite.ts`.
 - [ ] **T-016** — Update `src/middleware.ts` to guard `/learn/*` and `/api/praxis/*` and redirect unauthenticated traffic to `/learn/not-invited`.
 - [ ] **T-017** — Build `POST /api/praxis/invite` per `contracts/auth.invite.md`. _FR-002, FR-003, FR-005._
