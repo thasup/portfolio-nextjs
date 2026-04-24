@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/siteConfig";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useTranslations } from "next-intl";
+import { HeroVisual } from "./HeroVisual";
 
 export function Hero() {
   const reducedMotion = useReducedMotion();
@@ -137,24 +138,12 @@ export function Hero() {
             </Wrapper>
           </div>
 
-          {/* Avatar */}
+          {/* Avatar / Visual */}
           <Wrapper
             {...(!reducedMotion && { variants: itemVariants })}
             className="flex justify-center lg:justify-end"
           >
-            <div className="relative">
-              <div className="absolute -inset-4 rounded-full bg-linear-to-br from-[var(--color-praxis-accent-soft)] via-[var(--color-ai-soft)] to-[var(--color-praxis-accent-soft)] blur-2xl" />
-              <div className="relative h-64 w-64 overflow-hidden rounded-full border-[3px] border-[var(--color-line)] bg-[var(--color-paper-2)] sm:h-80 sm:w-80">
-                <NextImage
-                  src={siteConfig.avatarImage}
-                  alt={siteConfig.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 256px, 320px"
-                  priority
-                />
-              </div>
-            </div>
+            <HeroVisual />
           </Wrapper>
         </Wrapper>
 
