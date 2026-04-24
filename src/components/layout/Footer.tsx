@@ -17,7 +17,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="text-lg font-bold text-[var(--color-ink)]">
-              {siteConfig.name.split(' ')[0]}
+              NEXUS
               <span className="text-[var(--color-praxis-accent)]">.</span>
             </Link>
             <p className="mt-2 text-sm text-[var(--color-ink-3)]">
@@ -47,7 +47,7 @@ export function Footer() {
           {/* Articles */}
           <div>
             <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
-              {t('articles')}
+              {t('resources')}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -55,7 +55,15 @@ export function Footer() {
                   href="/articles"
                   className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
                 >
-                  {t('allArticles')}
+                  {t('articles')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/learn"
+                  className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                >
+                  {t('learn')}
                 </Link>
               </li>
             </ul>

@@ -11,6 +11,7 @@
     "experience": "ประสบการณ์",
     "testimonials": "คำนิยม",
     "articles": "บทความ",
+    "learn": "Praxis",
     "sr_navigation": "การนำทาง",
     "open_menu": "เปิดเมนู",
     "menu_title": "เมนูการนำทาง"
@@ -357,7 +358,7 @@
       "whatIOwned": "เป็นเจ้าของผลิตภัณฑ์ทั้งหมด ตั้งแต่ architecture การกำหนดฟีเจอร์ ไปจนถึงความพร้อมในการ release"
     },
     "tangier-dao": {
-      "title": "Tangier — วงการให้แบบกระจายศูนย์",
+      "title": "Tangier — องค์กรอัตโนมัติแบบกระจายศูนย์บน Web3",
       "tagline": "การระดมทุนชุมชนแบบ trustless บน Ethereum",
       "problemSummary": "ชุมชนต้องการระบบ governance และการจัดสรรเงินที่โปร่งใสและแก้ไขย้อนหลังไม่ได้",
       "problem": "โจทย์คือการสร้างระบบ governance ที่ชุมชนไว้วางใจได้จริง ไม่ใช่แค่หน้าตาสวย แต่ต้องมี smart contract logic ที่รองรับข้อเสนอ การโหวต และ treasury behavior แบบ on-chain",
@@ -373,10 +374,10 @@
       "whatIOwned": "Solidity contracts, การส่งมอบ frontend ทั้งหมด และสถาปัตยกรรมการเชื่อม Web3"
     },
     "token-gating": {
-      "title": "Token Gating — ควบคุมการเข้าถึงด้วย NFT",
+      "title": "Token Gating — ระบบควบคุมการเข้าถึงอีเว้นท์ด้วย NFT",
       "tagline": "NFT ของคุณคือตั๋ว ตรวจสอบได้บนหลาย chain",
-      "problemSummary": "ลูกค้าต้องการควบคุมการเข้าถึงด้วยการถือครอง NFT โดยไม่ทำให้ผู้ใช้เจอ friction สูงเกินไป",
-      "problem": "การควบคุมการเข้าถึงด้วย NFT ไม่ได้ยากแค่เรื่องการตรวจสอบ token แต่ยากที่การผสาน wallet flow, backend checks และการใช้งานจริงให้ smooth พอสำหรับผู้ใช้",
+      "problemSummary": "ลูกค้าต้องการควบคุมการเข้าถึงอีเว้นท์ด้วยการถือครอง NFT โดยไม่ทำให้ผู้ใช้เจอ friction สูงเกินไป",
+      "problem": "การควบคุมการเข้าถึงอีเว้นท์ด้วย NFT ไม่ได้ยากแค่เรื่องการตรวจสอบ token แต่ยากที่การผสาน wallet flow, backend checks และการใช้งานจริงให้ smooth พอสำหรับผู้ใช้",
       "approach": "ผมสร้างระบบ reusable ที่เชื่อม frontend, API และ Web3 checks เข้าด้วยกัน เพื่อให้การตรวจสอบสิทธิ์ใช้งานทำได้จริงใน production",
       "features": [
         "การตรวจสอบสิทธิ์จากการถือครอง NFT",
@@ -418,7 +419,7 @@
       "whatIOwned": "การส่งมอบ React, GraphQL, Apollo frontend และสถาปัตยกรรม Magento integration"
     },
     "maqe-website": {
-      "title": "MAQE Website v5",
+      "title": "เว็บไซต์ MAQE v5",
       "tagline": "งาน ownership เต็มรูปแบบของ production asset",
       "problemSummary": "เว็บไซต์องค์กรต้องการการดูแลทั้งด้าน architecture, design implementation, performance และ maintenance อย่างต่อเนื่อง",
       "problem": "ความท้าทายของเว็บไซต์องค์กรไม่ได้จบแค่ launch แต่รวมถึงการดูแลสินทรัพย์ production ที่ต้องเชื่อม design quality กับความเสถียรระยะยาว",
@@ -722,8 +723,9 @@
   "footer": {
     "headline": "นักพัฒนาซอฟต์แวร์โดยวิชาชีพ นักเรียนรู้ตลอดชีวิตโดยตัวตน",
     "navigation": "เมนูนำทาง",
+    "resources": "อื่นๆ",
     "articles": "บทความ",
-    "allArticles": "บทความทั้งหมด",
+    "learn": "Praxis",
     "connect": "ติดต่อ",
     "allRightsReserved": "สงวนลิขสิทธิ์."
   },

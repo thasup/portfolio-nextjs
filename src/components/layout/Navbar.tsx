@@ -27,7 +27,8 @@ export function Navbar() {
       { id: "testimonials", label: t("testimonials"), href: "/#testimonials" },
       { id: "value", label: t("value"), href: "/#value" },
       { id: "contact", label: t("contact"), href: "/#contact" },
-      { id: "articles", label: t("articles"), href: "/articles" }
+      { id: "articles", label: t("articles"), href: "/articles" },
+      { id: "learn", label: t("learn"), href: "/learn" }
     ],
     [t]
   );
@@ -69,7 +70,7 @@ export function Navbar() {
         href="/"
         className="text-lg font-bold tracking-tight transition-colors hover:text-primary z-50 relative"
       >
-        {siteConfig.name.split(" ")[0]}
+        NEXUS
         <span className="text-primary">.</span>
       </Link>
 

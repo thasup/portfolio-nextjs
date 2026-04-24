@@ -11,6 +11,7 @@
     "experience": "Experience",
     "testimonials": "Testimonials",
     "articles": "Articles",
+    "learn": "Praxis",
     "sr_navigation": "Navigation",
     "open_menu": "Open menu",
     "menu_title": "Navigation Menu"
@@ -722,8 +723,9 @@
   "footer": {
     "headline": "Software Engineer by Profession, Lifelong Learner at Heart",
     "navigation": "Navigation",
+    "resources": "Resources",
     "articles": "Articles",
-    "allArticles": "All Articles",
+    "learn": "Praxis",
     "connect": "Connect",
     "allRightsReserved": "All rights reserved."
   },

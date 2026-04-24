@@ -11,6 +11,14 @@ const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', 'swiper'],
   },
