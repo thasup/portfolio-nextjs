@@ -1,0 +1,496 @@
+// =============================================================================
+// Nexus monorepo — Prisma schema
+// =============================================================================
+// Source of truth for the unified Postgres schema shared by:
+//   - Praxis (the LLM-powered learning platform under /learn/*)
+//   - MarketOS (the internal-market prototype under /prototypes/market-os)
+//
+// The Praxis tables (`praxis_*`) were originally authored as raw SQL in
+// `supabase/migrations/`. They are mirrored here as Prisma models so that
+//   (a) MarketOS code can join across praxis_* if needed
+//   (b) future Praxis runtime code can opt into Prisma
+//   (c) all schema changes flow through `prisma migrate` going forward.
+//
+// Naming conventions:
+//   - Prisma model names: singular PascalCase (e.g. `Learner`, `Mission`).
+//   - PG table names: plural snake_case (`praxis_learners`, `marketos_missions`)
+//     mapped via `@@map`.
+//   - Field names: camelCase in client, snake_case in DB via `@map`.
+//   - Status / role columns: `text` + check constraint at the SQL level.
+//     We use `String` here to mirror the praxis pattern (no native PG enums)
+//     so adding a value later doesn't require an `ALTER TYPE` deploy dance.
+//
+// Auth identity (`auth.users`) lives in Supabase's `auth` schema and is
+// owned by the platform — we do NOT model it here. Foreign keys to it are
+// expressed as `String @db.Uuid` columns with a relation declared at the
+// SQL level (the migration includes `references auth.users(id) on delete
+// cascade`).
+// =============================================================================
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// =============================================================================
+// PRAXIS — mirrored from supabase/migrations/20260421000000_praxis_initial.sql
+//   + 20260424000000_add_learner_generation_flag.sql
+//   + 20260424000000_add_model_preferences.sql
+//   + 20260424000001_fix_learner_flag_trigger.sql
+// =============================================================================
+
+model Learner {
+  /// FK to auth.users(id), enforced at SQL level.
+  id                String   @id @db.Uuid
+  email             String   @unique
+  displayName       String?  @map("display_name")
+  /// 'en' | 'th' (check constraint in SQL).
+  defaultLocale     String   @default("en") @map("default_locale")
+  canGenerateTopics Boolean  @default(false) @map("can_generate_topics")
+  /// JSONB object: { guardrail?, curriculum?, unit?, onboarding?, judge? }
+  modelPreferences  Json?    @map("model_preferences")
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz
+  lastActiveAt      DateTime @default(now()) @map("last_active_at") @db.Timestamptz
+
+  topics        PraxisTopic[]
+  conversations PraxisConversation[]
+  onboardings   PraxisOnboarding[]
+  templates     PraxisTemplate[]
+
+  @@map("praxis_learners")
+}
+
+model PraxisInvitation {
+  id        String    @id @default(uuid()) @db.Uuid
+  email     String    @unique
+  /// FK to auth.users(id) (the inviter).
+  invitedBy String    @map("invited_by") @db.Uuid
+  invitedAt DateTime  @default(now()) @map("invited_at") @db.Timestamptz
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz
+  note      String?
+
+  @@index([email], name: "praxis_invitations_email_idx")
+  @@map("praxis_invitations")
+}
+
+model PraxisCurriculumCache {
+  id           String   @id @default(uuid()) @db.Uuid
+  fingerprint  String
+  locale       String   @default("en")
+  units        Json
+  modelVersion String   @map("model_version")
+  hitCount     Int      @default(0) @map("hit_count")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  topics PraxisTopic[]
+
+  @@unique([fingerprint, locale, modelVersion])
+  @@map("praxis_curriculum_cache")
+}
+
+model PraxisUnitCache {
+  id           String   @id @default(uuid()) @db.Uuid
+  fingerprint  String
+  locale       String   @default("en")
+  unitIndex    Int      @map("unit_index")
+  blocks       Json
+  modelVersion String   @map("model_version")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  units PraxisUnit[]
+
+  @@unique([fingerprint, locale, unitIndex, modelVersion])
+  @@map("praxis_unit_cache")
+}
+
+model PraxisTopic {
+  id           String   @id @default(uuid()) @db.Uuid
+  learnerId    String   @map("learner_id") @db.Uuid
+  title        String
+  rawInput     String   @map("raw_input")
+  fingerprint  String
+  locale       String   @default("en")
+  /// pending_guardrail | rejected | outline_ready | active | archived
+  status       String   @default("pending_guardrail")
+  curriculumId String?  @map("curriculum_id") @db.Uuid
+  lastActiveAt DateTime @default(now()) @map("last_active_at") @db.Timestamptz
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  learner       Learner                @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  curriculum    PraxisCurriculumCache? @relation(fields: [curriculumId], references: [id])
+  units         PraxisUnit[]
+  conversations PraxisConversation[]
+  onboardings   PraxisOnboarding[]
+  templates     PraxisTemplate[]
+
+  @@index([learnerId, lastActiveAt(sort: Desc)], name: "praxis_topics_learner_active_idx")
+  @@index([fingerprint, locale], name: "praxis_topics_fingerprint_idx")
+  @@map("praxis_topics")
+}
+
+model PraxisUnit {
+  id          String    @id @default(uuid()) @db.Uuid
+  topicId     String    @map("topic_id") @db.Uuid
+  index       Int
+  title       String
+  objective   String
+  /// pending | ready | completed
+  status      String    @default("pending")
+  blocks      Json      @default("[]")
+  cacheId     String?   @map("cache_id") @db.Uuid
+  completedAt DateTime? @map("completed_at") @db.Timestamptz
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  topic         PraxisTopic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  cache         PraxisUnitCache?     @relation(fields: [cacheId], references: [id])
+  conversations PraxisConversation[]
+  templates     PraxisTemplate[]
+
+  @@unique([topicId, index])
+  @@map("praxis_units")
+}
+
+model PraxisConversation {
+  id            String    @id @default(uuid()) @db.Uuid
+  learnerId     String    @map("learner_id") @db.Uuid
+  topicId       String    @map("topic_id") @db.Uuid
+  unitId        String?   @map("unit_id") @db.Uuid
+  /// unit | mate (check + invariant: unit_id non-null iff surface = 'unit')
+  surface       String
+  summary       String?
+  lastMessageAt DateTime? @map("last_message_at") @db.Timestamptz
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  learner  Learner         @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  topic    PraxisTopic     @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  unit     PraxisUnit?     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  messages PraxisMessage[]
+
+  @@index([learnerId, lastMessageAt(sort: Desc)], name: "praxis_conversations_learner_recent_idx")
+  @@index([topicId], name: "praxis_conversations_topic_idx")
+  @@map("praxis_conversations")
+}
+
+model PraxisMessage {
+  id               String   @id @default(uuid()) @db.Uuid
+  conversationId   String   @map("conversation_id") @db.Uuid
+  /// user | assistant
+  role             String
+  content          String
+  tokenCountInput  Int?     @map("token_count_input")
+  tokenCountOutput Int?     @map("token_count_output")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  conversation PraxisConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt], name: "praxis_messages_conversation_idx")
+  @@map("praxis_messages")
+}
+
+model PraxisOnboarding {
+  id        String   @id @default(uuid()) @db.Uuid
+  learnerId String   @map("learner_id") @db.Uuid
+  topicId   String   @map("topic_id") @db.Uuid
+  version   Int      @default(1)
+  answers   Json
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  learner Learner     @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  topic   PraxisTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([learnerId, topicId, version])
+  @@map("praxis_onboarding")
+}
+
+model PraxisTemplate {
+  id             String   @id @default(uuid()) @db.Uuid
+  learnerId      String   @map("learner_id") @db.Uuid
+  topicId        String   @map("topic_id") @db.Uuid
+  unitId         String?  @map("unit_id") @db.Uuid
+  /// docx | xlsx | pdf
+  kind           String
+  title          String
+  specJson       Json     @map("spec_json")
+  regenerateNote String?  @map("regenerate_note")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  learner Learner     @relation(fields: [learnerId], references: [id], onDelete: Cascade)
+  topic   PraxisTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  unit    PraxisUnit? @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  @@index([learnerId, createdAt(sort: Desc)], name: "praxis_templates_learner_idx")
+  @@map("praxis_templates")
+}
+
+model PraxisSpendLedger {
+  id             String   @id @default(uuid()) @db.Uuid
+  timestamp      DateTime @default(now()) @db.Timestamptz
+  /// chat | curriculum | unit | onboarding | template | guardrail
+  endpoint       String
+  inputTokens    Int      @map("input_tokens")
+  outputTokens   Int      @map("output_tokens")
+  estimatedCents Int      @map("estimated_cents")
+  model          String
+
+  @@index([timestamp(sort: Desc)], name: "praxis_spend_ledger_timestamp_idx")
+  @@map("praxis_spend_ledger")
+}
+
+// =============================================================================
+// MARKETOS — authored from .windsurf/contexts/marketos-data-flow.md §3
+// =============================================================================
+
+model MarketosOrg {
+  id         String    @id @default(uuid()) @db.Uuid
+  slug       String    @unique
+  name       String
+  /// ISO-4217. MVP-locked to 'USD'; checked at SQL level.
+  currency   String    @default("USD")
+  /// FK to auth.users(id) (the org creator). Nullable for the seed.
+  createdBy  String?   @map("created_by") @db.Uuid
+  archivedAt DateTime? @map("archived_at") @db.Timestamptz
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  members        MarketosMember[]
+  invitations    MarketosInvitation[]
+  settings       MarketosOrgSettings?
+  revenuePeriods MarketosRevenuePeriod[]
+  missions       MarketosMission[]
+  payouts        MarketosPayout[]
+  notifications  MarketosNotification[]
+
+  @@map("marketos_orgs")
+}
+
+model MarketosMember {
+  id            String    @id @default(uuid()) @db.Uuid
+  orgId         String    @map("org_id") @db.Uuid
+  /// FK to auth.users(id).
+  userId        String    @map("user_id") @db.Uuid
+  /// owner | admin | member (check at SQL level).
+  role          String
+  displayName   String    @map("display_name")
+  title         String?
+  bio           String?
+  skills        String[]  @default([])
+  baseCompCents BigInt    @default(0) @map("base_comp_cents")
+  joinedAt      DateTime  @default(now()) @map("joined_at") @db.Timestamptz
+  removedAt     DateTime? @map("removed_at") @db.Timestamptz
+
+  org             MarketosOrg            @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  postedMissions  MarketosMission[]      @relation("MissionPoster")
+  bids            MarketosBid[]
+  decidedBids     MarketosBid[]          @relation("BidDecider")
+  payouts         MarketosPayout[]       @relation("PayoutRecipient")
+  reviewsGiven    MarketosReview[]       @relation("ReviewReviewer")
+  reviewsReceived MarketosReview[]       @relation("ReviewReviewee")
+  notifications   MarketosNotification[]
+
+  @@unique([orgId, userId])
+  @@index([orgId, removedAt])
+  @@map("marketos_members")
+}
+
+model MarketosInvitation {
+  id         String    @id @default(uuid()) @db.Uuid
+  orgId      String    @map("org_id") @db.Uuid
+  email      String
+  /// FK to auth.users(id) (the inviter).
+  invitedBy  String    @map("invited_by") @db.Uuid
+  /// admin | member (check at SQL level).
+  role       String
+  invitedAt  DateTime  @default(now()) @map("invited_at") @db.Timestamptz
+  acceptedAt DateTime? @map("accepted_at") @db.Timestamptz
+  revokedAt  DateTime? @map("revoked_at") @db.Timestamptz
+  note       String?
+
+  org MarketosOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, email])
+  @@map("marketos_invitations")
+}
+
+model MarketosOrgSettings {
+  orgId           String   @id @map("org_id") @db.Uuid
+  /// 0–100; check constraint.
+  payrollRatioPct Int      @map("payroll_ratio_pct")
+  /// 0–100; check constraint.
+  baseSplitPct    Int      @map("base_split_pct")
+  /// month | quarter | half (check).
+  period          String
+  /// orange | blue | green (check). Cosmetic.
+  accent          String   @default("orange")
+  darkMode        Boolean  @default(false) @map("dark_mode")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+  /// FK to auth.users(id).
+  updatedBy       String?  @map("updated_by") @db.Uuid
+
+  org MarketosOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@map("marketos_org_settings")
+}
+
+model MarketosRevenuePeriod {
+  id              String    @id @default(uuid()) @db.Uuid
+  orgId           String    @map("org_id") @db.Uuid
+  /// month | quarter | half — denormalised to preserve historical accuracy.
+  period          String
+  /// Human label like "Q3 2025" — used directly in UI.
+  periodLabel     String    @map("period_label")
+  periodStart     DateTime  @map("period_start") @db.Date
+  periodEnd       DateTime  @map("period_end") @db.Date
+  revenueCents    BigInt    @map("revenue_cents")
+  /// Snapshot of org settings at close time.
+  payrollRatioPct Int       @map("payroll_ratio_pct")
+  /// Snapshot of org settings at close time.
+  baseSplitPct    Int       @map("base_split_pct")
+  /// Exactly one row per org has this true (partial unique index in SQL).
+  isCurrent       Boolean   @default(false) @map("is_current")
+  closedAt        DateTime? @map("closed_at") @db.Timestamptz
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  org     MarketosOrg      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  payouts MarketosPayout[]
+
+  @@unique([orgId, periodLabel])
+  @@index([orgId, periodStart(sort: Desc)])
+  @@map("marketos_revenue_periods")
+}
+
+model MarketosMission {
+  id            String    @id @default(uuid()) @db.Uuid
+  orgId         String    @map("org_id") @db.Uuid
+  posterId      String    @map("poster_id") @db.Uuid
+  title         String
+  slug          String
+  description   String
+  /// Design | Engineering | Research | Marketing | HR | Operations (check).
+  category      String
+  /// Array of strings, length 1–10.
+  deliverables  Json
+  budgetCents   BigInt    @map("budget_cents")
+  deadline      DateTime  @db.Date
+  /// open | active | delivered | completed | cancelled (check).
+  status        String    @default("open")
+  /// Set when a bid is accepted. Nullable while open.
+  acceptedBidId String?   @unique @map("accepted_bid_id") @db.Uuid
+  deliveredAt   DateTime? @map("delivered_at") @db.Timestamptz
+  completedAt   DateTime? @map("completed_at") @db.Timestamptz
+  cancelledAt   DateTime? @map("cancelled_at") @db.Timestamptz
+  archivedAt    DateTime? @map("archived_at") @db.Timestamptz
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+
+  org         MarketosOrg      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  poster      MarketosMember   @relation("MissionPoster", fields: [posterId], references: [id], onDelete: Cascade)
+  acceptedBid MarketosBid?     @relation("MissionAcceptedBid", fields: [acceptedBidId], references: [id], onDelete: SetNull)
+  bids        MarketosBid[]    @relation("MissionBids")
+  payouts     MarketosPayout[]
+  reviews     MarketosReview[]
+
+  @@unique([orgId, slug])
+  @@index([orgId, status, createdAt(sort: Desc)])
+  @@index([posterId])
+  @@map("marketos_missions")
+}
+
+model MarketosBid {
+  id          String    @id @default(uuid()) @db.Uuid
+  missionId   String    @map("mission_id") @db.Uuid
+  bidderId    String    @map("bidder_id") @db.Uuid
+  amountCents BigInt    @map("amount_cents")
+  proposal    String
+  /// pending | shortlisted | accepted | declined | withdrawn (check).
+  status      String    @default("pending")
+  submittedAt DateTime  @default(now()) @map("submitted_at") @db.Timestamptz
+  decidedAt   DateTime? @map("decided_at") @db.Timestamptz
+  decidedBy   String?   @map("decided_by") @db.Uuid
+
+  mission     MarketosMission  @relation("MissionBids", fields: [missionId], references: [id], onDelete: Cascade)
+  bidder      MarketosMember   @relation(fields: [bidderId], references: [id], onDelete: Cascade)
+  decider     MarketosMember?  @relation("BidDecider", fields: [decidedBy], references: [id], onDelete: SetNull)
+  acceptedFor MarketosMission? @relation("MissionAcceptedBid")
+  payout      MarketosPayout?
+
+  @@unique([missionId, bidderId])
+  @@index([bidderId, submittedAt(sort: Desc)])
+  @@map("marketos_bids")
+}
+
+model MarketosPayout {
+  id                String    @id @default(uuid()) @db.Uuid
+  /// 1:1 with the accepted bid.
+  bidId             String    @unique @map("bid_id") @db.Uuid
+  /// Denormalised for fast queries.
+  missionId         String    @map("mission_id") @db.Uuid
+  /// Denormalised.
+  orgId             String    @map("org_id") @db.Uuid
+  recipientMemberId String    @map("recipient_member_id") @db.Uuid
+  amountCents       BigInt    @map("amount_cents")
+  /// The period this payout debits.
+  revenuePeriodId   String    @map("revenue_period_id") @db.Uuid
+  scheduledFor      DateTime  @map("scheduled_for") @db.Date
+  /// scheduled | released | voided (check).
+  status            String    @default("scheduled")
+  releasedAt        DateTime? @map("released_at") @db.Timestamptz
+  voidedAt          DateTime? @map("voided_at") @db.Timestamptz
+
+  bid           MarketosBid           @relation(fields: [bidId], references: [id], onDelete: Cascade)
+  mission       MarketosMission       @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  org           MarketosOrg           @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  recipient     MarketosMember        @relation("PayoutRecipient", fields: [recipientMemberId], references: [id], onDelete: Cascade)
+  revenuePeriod MarketosRevenuePeriod @relation(fields: [revenuePeriodId], references: [id])
+
+  @@index([orgId, scheduledFor])
+  @@index([recipientMemberId, status])
+  @@map("marketos_payouts")
+}
+
+model MarketosReview {
+  id         String   @id @default(uuid()) @db.Uuid
+  missionId  String   @map("mission_id") @db.Uuid
+  reviewerId String   @map("reviewer_id") @db.Uuid
+  revieweeId String   @map("reviewee_id") @db.Uuid
+  /// poster_to_contributor | contributor_to_poster (check).
+  direction  String
+  /// 1–5.
+  rating     Int
+  feedback   String?
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  mission  MarketosMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  reviewer MarketosMember  @relation("ReviewReviewer", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewee MarketosMember  @relation("ReviewReviewee", fields: [revieweeId], references: [id], onDelete: Cascade)
+
+  @@unique([missionId, direction])
+  @@index([revieweeId, createdAt(sort: Desc)])
+  @@map("marketos_reviews")
+}
+
+model MarketosNotification {
+  id        String    @id @default(uuid()) @db.Uuid
+  orgId     String    @map("org_id") @db.Uuid
+  memberId  String    @map("member_id") @db.Uuid
+  /// One of the strings in the spec §3.10 enum-by-text list.
+  type      String
+  title     String
+  body      String
+  link      String?
+  payload   Json?
+  readAt    DateTime? @map("read_at") @db.Timestamptz
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  org    MarketosOrg    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  member MarketosMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId, readAt, createdAt(sort: Desc)])
+  @@map("marketos_notifications")
+}
