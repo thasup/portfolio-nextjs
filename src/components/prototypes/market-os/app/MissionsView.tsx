@@ -6,10 +6,10 @@ import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
 import { CatChip, StatusChip } from '@/components/prototypes/market-os/primitives/Chips';
 import {
   type Category,
-  type Mission,
+  type MissionDTO,
   type MissionStatus,
-} from '@/lib/prototypes/market-os/types';
-import { fmtBudget, fmtDate } from '@/lib/prototypes/market-os/format';
+} from '@/lib/marketos/types';
+import { fmtBudget, fmtDate, fmtPostedAgo } from '@/lib/marketos/format';
 
 const AC = {
   dark: '#1e3a2f',
@@ -20,12 +20,12 @@ const AC = {
 
 type StatusFilter = 'all' | MissionStatus;
 
-export function MissionsView({ missions }: { missions: Mission[] }) {
+export function MissionsView({ missions }: { missions: MissionDTO[] }) {
   const [filter, setFilter] = useState<StatusFilter>('all');
   const [catFilter, setCatFilter] = useState<'All' | Category>('All');
   const [search, setSearch] = useState('');
 
-  const statusFilters: StatusFilter[] = ['all', 'open', 'active', 'completed'];
+  const statusFilters: StatusFilter[] = ['all', 'open', 'active', 'delivered', 'completed'];
   const catFilters: Array<'All' | Category> = [
     'All',
     'Design',
@@ -40,7 +40,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
     () =>
       missions.filter((m) => {
         if (filter !== 'all' && m.status !== filter) return false;
-        if (catFilter !== 'All' && m.cat !== catFilter) return false;
+        if (catFilter !== 'All' && m.category !== catFilter) return false;
         if (search && !m.title.toLowerCase().includes(search.toLowerCase())) return false;
         return true;
       }),
@@ -48,7 +48,9 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
   );
 
   const openCount = missions.filter((m) => m.status === 'open').length;
-  const activeCount = missions.filter((m) => m.status === 'active').length;
+  const activeCount = missions.filter(
+    (m) => m.status === 'active' || m.status === 'delivered',
+  ).length;
 
   return (
     <AppPage>
@@ -148,7 +150,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
         {filtered.map((m) => (
           <Link
             key={m.id}
-            href={`/prototypes/market-os/app/missions/${m.id}`}
+            href={`/prototypes/market-os/app/missions/${m.slug}`}
             className="a-mission-card"
           >
             <div
@@ -160,7 +162,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
               }}
             >
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <CatChip cat={m.cat} />
+                <CatChip cat={m.category} />
                 <StatusChip status={m.status} />
               </div>
               <span
@@ -170,7 +172,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
                   color: AC.muted,
                 }}
               >
-                {m.posted}
+                {fmtPostedAgo(m.postedAt)}
               </span>
             </div>
             <h3
@@ -199,7 +201,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
                 overflow: 'hidden',
               }}
             >
-              {m.desc}
+              {m.description}
             </p>
             <div
               style={{
@@ -231,7 +233,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
                       letterSpacing: '-0.02em',
                     }}
                   >
-                    {fmtBudget(m.budget)}
+                    {fmtBudget(m.budgetUsd)}
                   </div>
                 </div>
                 <div>
@@ -273,7 +275,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
                     fontFamily: 'var(--font-dm-sans), sans-serif',
                   }}
                 >
-                  {m.bids}
+                  {m.bidCount}
                 </div>
                 <span
                   style={{
@@ -282,7 +284,7 @@ export function MissionsView({ missions }: { missions: Mission[] }) {
                     color: AC.muted,
                   }}
                 >
-                  bid{m.bids !== 1 ? 's' : ''}
+                  bid{m.bidCount !== 1 ? 's' : ''}
                 </span>
                 <div
                   style={{

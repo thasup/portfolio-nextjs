@@ -1,14 +1,19 @@
 import Link from 'next/link';
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
 import { CatChip, StatusChip } from '@/components/prototypes/market-os/primitives/Chips';
+import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
+import { getCurrentPool } from '@/lib/marketos/queries/pool';
 import {
-  CURRENT_USER,
-  MISSIONS,
-  POOL,
-  getMyBids,
-  getMission,
-} from '@/lib/prototypes/market-os/data';
-import { fmtBudget } from '@/lib/prototypes/market-os/format';
+  countActiveMissions,
+  countActiveMissionCategories,
+  listMissions,
+} from '@/lib/marketos/queries/missions';
+import { listMyBids, getBidRate } from '@/lib/marketos/queries/bids';
+import { getMemberWithStats } from '@/lib/marketos/queries/members';
+import { getCurrentMember } from '@/lib/marketos/auth';
+import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { fmtBudget, fmtPostedAgo } from '@/lib/marketos/format';
+import type { BidStatus } from '@/lib/marketos/types';
 
 const AC = {
   cream: '#f9f7f6',
@@ -20,35 +25,81 @@ const AC = {
   border: 'rgba(30,58,47,0.1)',
 };
 
-export default function DashboardPage() {
-  const stats = [
+/**
+ * Dashboard — spec §8.2 binding catalog.
+ *
+ * Anonymous visitors see org-wide stats (active missions, pool
+ * remaining, recent missions); the personal stats (My Bid Rate,
+ * Reputation Score, My Active Bids) hide cleanly when there's no
+ * resolved member.
+ */
+export default async function DashboardPage() {
+  const org = await getOrgBySlug(DEMO_ORG_SLUG);
+  if (!org) {
+    return (
+      <AppPage>
+        <EmptyShell title="Demo org not seeded" />
+      </AppPage>
+    );
+  }
+
+  const member = await getCurrentMember(org.slug);
+
+  const [
+    pool,
+    activeMissions,
+    activeCategories,
+    recentMissions,
+    memberStats,
+    myBids,
+    bidRate,
+  ] = await Promise.all([
+    getCurrentPool(org.id),
+    countActiveMissions(org.id),
+    countActiveMissionCategories(org.id),
+    listMissions(org.id, { limit: 4 }),
+    member ? getMemberWithStats(member.id) : Promise.resolve(null),
+    member ? listMyBids(member.id) : Promise.resolve([]),
+    member ? getBidRate(member.id) : Promise.resolve(null),
+  ]);
+
+  const myActiveBids = myBids
+    .filter((b) =>
+      (['pending', 'shortlisted', 'accepted'] as BidStatus[]).includes(b.status),
+    )
+    .slice(0, 3);
+
+  // Stat cards. Personal stats are conditionally included.
+  const stats: Array<{ label: string; value: string; sub: string; color: string }> = [
     {
       label: 'Active Missions',
-      value: String(MISSIONS.filter((m) => m.status === 'active').length),
-      sub: 'across 3 categories',
+      value: String(activeMissions),
+      sub: `across ${activeCategories} categor${activeCategories === 1 ? 'y' : 'ies'}`,
       color: AC.orange,
     },
     {
       label: 'Pool Remaining',
-      value: '$' + Math.round(POOL.unallocated / 1000) + 'k',
-      sub: 'unallocated this quarter',
+      value: pool ? '$' + Math.round(pool.unallocatedUsd / 1000) + 'k' : '—',
+      sub: pool ? `unallocated this ${pool.periodLabel}` : 'no current period',
       color: AC.blue,
     },
-    {
+  ];
+  if (member) {
+    stats.push({
       label: 'My Bid Rate',
-      value: '92%',
+      value: bidRate == null ? '—' : `${bidRate}%`,
       sub: 'acceptance over 90 days',
       color: '#a5d6a7',
-    },
-    {
+    });
+    stats.push({
       label: 'Reputation Score',
-      value: String(CURRENT_USER.reputation),
-      sub: 'top 12% of contributors',
+      value: memberStats ? String(memberStats.reputation) : '0',
+      sub: memberStats?.tier ? `tier · ${memberStats.tier}` : 'tier · —',
       color: AC.peach,
-    },
-  ];
-  const recentMissions = MISSIONS.slice(0, 4);
-  const myBids = getMyBids().slice(0, 3);
+    });
+  }
+
+  const greetingName = member?.displayName.split(' ')[0] ?? 'there';
 
   return (
     <AppPage>
@@ -63,7 +114,7 @@ export default function DashboardPage() {
             letterSpacing: '-0.03em',
           }}
         >
-          Good morning, {CURRENT_USER.name.split(' ')[0]} 👋
+          Good morning, {greetingName} 👋
         </h1>
         <p
           style={{
@@ -73,7 +124,8 @@ export default function DashboardPage() {
             margin: 0,
           }}
         >
-          {POOL.period} · {new Date().toLocaleDateString('en-US', {
+          {pool?.periodLabel ?? '—'} ·{' '}
+          {new Date().toLocaleDateString('en-US', {
             weekday: 'long',
             month: 'long',
             day: 'numeric',
@@ -84,7 +136,7 @@ export default function DashboardPage() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4,1fr)',
+          gridTemplateColumns: `repeat(${stats.length},1fr)`,
           gap: 16,
           marginBottom: 32,
         }}
@@ -185,13 +237,15 @@ export default function DashboardPage() {
               boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
             }}
           >
+            {recentMissions.length === 0 && <EmptyRow text="No missions yet." />}
             {recentMissions.map((m, i) => (
               <Link
                 key={m.id}
-                href={`/prototypes/market-os/app/missions/${m.id}`}
+                href={`/prototypes/market-os/app/missions/${m.slug}`}
                 className="a-row"
                 style={{
-                  borderBottom: i < recentMissions.length - 1 ? `1px solid ${AC.border}` : 'none',
+                  borderBottom:
+                    i < recentMissions.length - 1 ? `1px solid ${AC.border}` : 'none',
                 }}
               >
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -209,7 +263,7 @@ export default function DashboardPage() {
                     {m.title}
                   </div>
                   <div style={{ display: 'flex', gap: 8, marginTop: 4, alignItems: 'center' }}>
-                    <CatChip cat={m.cat} />
+                    <CatChip cat={m.category} />
                     <span
                       style={{
                         fontSize: 12,
@@ -217,7 +271,7 @@ export default function DashboardPage() {
                         fontFamily: 'var(--font-dm-sans), sans-serif',
                       }}
                     >
-                      {m.posted}
+                      {fmtPostedAgo(m.postedAt)}
                     </span>
                   </div>
                 </div>
@@ -230,7 +284,7 @@ export default function DashboardPage() {
                       color: AC.dark,
                     }}
                   >
-                    {fmtBudget(m.budget)}
+                    {fmtBudget(m.budgetUsd)}
                   </div>
                   <StatusChip status={m.status} />
                 </div>
@@ -241,43 +295,32 @@ export default function DashboardPage() {
 
         {/* Right column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div>
-            <h2
-              style={{
-                fontFamily: 'var(--font-bricolage), sans-serif',
-                fontWeight: 700,
-                fontSize: 17,
-                color: AC.dark,
-                margin: '0 0 14px',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              My Active Bids
-            </h2>
-            <div
-              style={{
-                background: 'white',
-                borderRadius: 16,
-                overflow: 'hidden',
-                boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
-              }}
-            >
-              {myBids.length === 0 && (
-                <div
-                  style={{
-                    padding: 24,
-                    fontFamily: 'var(--font-dm-sans), sans-serif',
-                    fontSize: 13,
-                    color: AC.muted,
-                    textAlign: 'center',
-                  }}
-                >
-                  You haven&apos;t bid on anything yet.
-                </div>
-              )}
-              {myBids.map((b, i) => {
-                const m = getMission(b.missionId);
-                return (
+          {member && (
+            <div>
+              <h2
+                style={{
+                  fontFamily: 'var(--font-bricolage), sans-serif',
+                  fontWeight: 700,
+                  fontSize: 17,
+                  color: AC.dark,
+                  margin: '0 0 14px',
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                My Active Bids
+              </h2>
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: 16,
+                  overflow: 'hidden',
+                  boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
+                }}
+              >
+                {myActiveBids.length === 0 && (
+                  <EmptyRow text="You haven&apos;t bid on anything yet." />
+                )}
+                {myActiveBids.map((b, i) => (
                   <div
                     key={b.id}
                     style={{
@@ -286,7 +329,7 @@ export default function DashboardPage() {
                       justifyContent: 'space-between',
                       padding: '14px 18px',
                       borderBottom:
-                        i < myBids.length - 1 ? `1px solid ${AC.border}` : 'none',
+                        i < myActiveBids.length - 1 ? `1px solid ${AC.border}` : 'none',
                     }}
                   >
                     <div>
@@ -298,7 +341,7 @@ export default function DashboardPage() {
                           color: AC.dark,
                         }}
                       >
-                        {m?.title ?? 'Mission'}
+                        Mission #{b.missionId.slice(0, 6)}
                       </div>
                       <div
                         style={{
@@ -308,7 +351,7 @@ export default function DashboardPage() {
                           marginTop: 2,
                         }}
                       >
-                        Submitted {b.daysAgo}d ago
+                        Submitted {fmtPostedAgo(b.submittedAt)}
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
@@ -320,7 +363,7 @@ export default function DashboardPage() {
                           color: AC.dark,
                         }}
                       >
-                        {fmtBudget(b.amount)}
+                        {fmtBudget(b.amountUsd)}
                       </div>
                       <span
                         style={{
@@ -340,113 +383,144 @@ export default function DashboardPage() {
                       </span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div
-            style={{
-              background: 'white',
-              borderRadius: 16,
-              padding: '22px 24px',
-              boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
-            }}
-          >
-            <h3
-              style={{
-                fontFamily: 'var(--font-bricolage), sans-serif',
-                fontWeight: 700,
-                fontSize: 15,
-                color: AC.dark,
-                margin: '0 0 16px',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Revenue Pool — {POOL.period}
-            </h3>
-            {(
-              [
-                ['Missions', POOL.missions, AC.orange],
-                ['Base Comp', POOL.base, 'rgba(185,217,224,0.8)'],
-                ['Unallocated', POOL.unallocated, 'rgba(200,230,201,0.8)'],
-              ] as const
-            ).map(([label, val, color]) => (
-              <div key={label} style={{ marginBottom: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-dm-sans), sans-serif',
-                      fontSize: 13,
-                      color: 'rgba(30,58,47,0.7)',
-                    }}
-                  >
-                    {label}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-dm-sans), sans-serif',
-                      fontWeight: 600,
-                      fontSize: 13,
-                      color: AC.dark,
-                    }}
-                  >
-                    {fmtBudget(val)}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    height: 6,
-                    background: 'rgba(30,58,47,0.06)',
-                    borderRadius: 3,
-                    overflow: 'hidden',
-                  }}
-                >
-                  <div
-                    style={{
-                      height: '100%',
-                      width: `${Math.round((val / POOL.total) * 100)}%`,
-                      background: color,
-                      borderRadius: 3,
-                    }}
-                  />
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
+          )}
+
+          {pool && (
             <div
               style={{
-                marginTop: 14,
-                paddingTop: 12,
-                borderTop: `1px solid ${AC.border}`,
-                display: 'flex',
-                justifyContent: 'space-between',
+                background: 'white',
+                borderRadius: 16,
+                padding: '22px 24px',
+                boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
               }}
             >
-              <span
-                style={{
-                  fontFamily: 'var(--font-dm-sans), sans-serif',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: AC.dark,
-                }}
-              >
-                Total Pool
-              </span>
-              <span
+              <h3
                 style={{
                   fontFamily: 'var(--font-bricolage), sans-serif',
-                  fontSize: 16,
-                  fontWeight: 800,
+                  fontWeight: 700,
+                  fontSize: 15,
                   color: AC.dark,
+                  margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
-                {fmtBudget(POOL.total)}
-              </span>
+                Revenue Pool — {pool.periodLabel}
+              </h3>
+              {(
+                [
+                  ['Missions', pool.missionsLockedUsd, AC.orange],
+                  ['Base Comp', pool.baseUsd, 'rgba(185,217,224,0.8)'],
+                  ['Unallocated', pool.unallocatedUsd, 'rgba(200,230,201,0.8)'],
+                ] as const
+              ).map(([label, val, color]) => (
+                <div key={label} style={{ marginBottom: 10 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-dm-sans), sans-serif',
+                        fontSize: 13,
+                        color: 'rgba(30,58,47,0.7)',
+                      }}
+                    >
+                      {label}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-dm-sans), sans-serif',
+                        fontWeight: 600,
+                        fontSize: 13,
+                        color: AC.dark,
+                      }}
+                    >
+                      {fmtBudget(val)}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      height: 6,
+                      background: 'rgba(30,58,47,0.06)',
+                      borderRadius: 3,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        height: '100%',
+                        width: `${pool.totalUsd > 0 ? Math.round((val / pool.totalUsd) * 100) : 0}%`,
+                        background: color,
+                        borderRadius: 3,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+              <div
+                style={{
+                  marginTop: 14,
+                  paddingTop: 12,
+                  borderTop: `1px solid ${AC.border}`,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--font-dm-sans), sans-serif',
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: AC.dark,
+                  }}
+                >
+                  Total Pool
+                </span>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-bricolage), sans-serif',
+                    fontSize: 16,
+                    fontWeight: 800,
+                    color: AC.dark,
+                  }}
+                >
+                  {fmtBudget(pool.totalUsd)}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </AppPage>
   );
 }
 
+function EmptyRow({ text }: { text: string }) {
+  return (
+    <div
+      style={{
+        padding: 24,
+        fontFamily: 'var(--font-dm-sans), sans-serif',
+        fontSize: 13,
+        color: AC.muted,
+        textAlign: 'center',
+      }}
+      dangerouslySetInnerHTML={{ __html: text }}
+    />
+  );
+}
+
+function EmptyShell({ title }: { title: string }) {
+  return (
+    <div
+      style={{
+        padding: 48,
+        textAlign: 'center',
+        fontFamily: 'var(--font-dm-sans), sans-serif',
+        color: AC.muted,
+      }}
+    >
+      {title}
+    </div>
+  );
+}

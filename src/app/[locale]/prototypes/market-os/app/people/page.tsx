@@ -1,7 +1,9 @@
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
 import { CatChip, TierChip } from '@/components/prototypes/market-os/primitives/Chips';
-import { PEOPLE } from '@/lib/prototypes/market-os/data';
-import { fmtBudget } from '@/lib/prototypes/market-os/format';
+import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
+import { listLeaderboard } from '@/lib/marketos/queries/members';
+import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { fmtBudget } from '@/lib/marketos/format';
 
 const AC = {
   cream: '#f9f7f6',
@@ -11,8 +13,22 @@ const AC = {
   border: 'rgba(30,58,47,0.1)',
 };
 
-export default function PeoplePage() {
-  const sorted = [...PEOPLE].sort((a, b) => b.reputation - a.reputation);
+/**
+ * People — spec §8.8. Top-3 cards plus a leaderboard table, sorted by
+ * reputation (desc). Reputation is computed by `marketos_member_stats`.
+ */
+export default async function PeoplePage() {
+  const org = await getOrgBySlug(DEMO_ORG_SLUG);
+  if (!org)
+    return (
+      <AppPage>
+        <p style={{ color: AC.muted, fontFamily: 'var(--font-dm-sans), sans-serif' }}>
+          Demo org not seeded.
+        </p>
+      </AppPage>
+    );
+
+  const sorted = await listLeaderboard(org.id, { limit: 50 });
   const top = sorted.slice(0, 3);
   const rest = sorted.slice(3);
 
@@ -83,10 +99,7 @@ export default function PeoplePage() {
                 marginBottom: 14,
               }}
             >
-              {p.name
-                .split(' ')
-                .map((n) => n[0])
-                .join('')}
+              {initials(p.displayName)}
             </div>
             <div
               style={{
@@ -97,7 +110,7 @@ export default function PeoplePage() {
                 letterSpacing: '-0.02em',
               }}
             >
-              {p.name}
+              {p.displayName}
             </div>
             <div
               style={{
@@ -107,11 +120,11 @@ export default function PeoplePage() {
                 margin: '2px 0 12px',
               }}
             >
-              {p.role}
+              {p.title ?? p.role}
             </div>
             <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
               <TierChip tier={p.tier} />
-              <CatChip cat={p.specialty} />
+              {p.specialty && <CatChip cat={p.specialty} />}
             </div>
             <div
               style={{
@@ -123,9 +136,9 @@ export default function PeoplePage() {
               }}
             >
               <Stat label="Reputation" value={p.reputation} />
-              <Stat label="On-time" value={`${p.onTime}%`} />
+              <Stat label="On-time" value={p.onTimePct == null ? '—' : `${p.onTimePct}%`} />
               <Stat label="Completed" value={p.completed} />
-              <Stat label="Earned" value={fmtBudget(p.totalEarned)} />
+              <Stat label="Earned" value={fmtBudget(p.totalEarnedUsd)} />
             </div>
           </div>
         ))}
@@ -189,10 +202,7 @@ export default function PeoplePage() {
                   color: AC.dark,
                 }}
               >
-                {p.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')}
+                {initials(p.displayName)}
               </div>
               <div>
                 <div
@@ -203,7 +213,7 @@ export default function PeoplePage() {
                     color: AC.dark,
                   }}
                 >
-                  {p.name}
+                  {p.displayName}
                 </div>
                 <div
                   style={{
@@ -212,11 +222,11 @@ export default function PeoplePage() {
                     color: AC.muted,
                   }}
                 >
-                  {p.role}
+                  {p.title ?? p.role}
                 </div>
               </div>
             </div>
-            <CatChip cat={p.specialty} />
+            {p.specialty ? <CatChip cat={p.specialty} /> : <span style={{ color: AC.muted, fontSize: 12 }}>—</span>}
             <div
               style={{
                 textAlign: 'right',
@@ -236,7 +246,7 @@ export default function PeoplePage() {
                 color: AC.dark,
               }}
             >
-              {p.onTime}%
+              {p.onTimePct == null ? '—' : `${p.onTimePct}%`}
             </div>
             <div
               style={{
@@ -246,13 +256,22 @@ export default function PeoplePage() {
                 color: AC.dark,
               }}
             >
-              {fmtBudget(p.totalEarned)}
+              {fmtBudget(p.totalEarnedUsd)}
             </div>
           </div>
         ))}
       </div>
     </AppPage>
   );
+}
+
+function initials(name: string): string {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
 }
 
 function Stat({ label, value }: { label: string; value: string | number }) {

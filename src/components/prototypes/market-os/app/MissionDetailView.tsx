@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
 import { CatChip, StatusChip } from '@/components/prototypes/market-os/primitives/Chips';
-import { type Bid, type Mission } from '@/lib/prototypes/market-os/types';
-import { fmtBudget, fmtDate } from '@/lib/prototypes/market-os/format';
+import { type BidDTO, type MissionDTO } from '@/lib/marketos/types';
+import { fmtBudget, fmtDate, fmtPostedAgo } from '@/lib/marketos/format';
 
 const AC = {
   cream: '#f9f7f6',
@@ -19,8 +19,8 @@ export function MissionDetailView({
   mission,
   existingBids,
 }: {
-  mission: Mission;
-  existingBids: Bid[];
+  mission: MissionDTO;
+  existingBids: BidDTO[];
 }) {
   const [bid, setBid] = useState('');
   const [proposal, setProposal] = useState('');
@@ -43,7 +43,7 @@ export function MissionDetailView({
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 28, marginTop: 20 }}>
         <div>
           <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
-            <CatChip cat={mission.cat} />
+            <CatChip cat={mission.category} />
             <StatusChip status={mission.status} />
           </div>
           <h1
@@ -67,8 +67,8 @@ export function MissionDetailView({
               margin: '0 0 4px',
             }}
           >
-            Posted by <strong style={{ color: AC.dark }}>{mission.poster}</strong> ·{' '}
-            {mission.posted}
+            Posted by <strong style={{ color: AC.dark }}>{mission.posterName}</strong> ·{' '}
+            {fmtPostedAgo(mission.postedAt)}
           </p>
 
           <div
@@ -101,7 +101,7 @@ export function MissionDetailView({
                 margin: 0,
               }}
             >
-              {mission.desc}
+              {mission.description}
             </p>
           </div>
 
@@ -217,7 +217,7 @@ export function MissionDetailView({
                           color: AC.dark,
                         }}
                       >
-                        {b.bidderName[0]}
+                        {b.bidderName[0]?.toUpperCase() ?? '?'}
                       </div>
                       <div>
                         <div
@@ -237,8 +237,9 @@ export function MissionDetailView({
                             fontFamily: 'var(--font-dm-sans), sans-serif',
                           }}
                         >
-                          Reputation: <strong style={{ color: AC.dark }}>{b.reputation}</strong>{' '}
-                          · {b.daysAgo}d ago
+                          Reputation:{' '}
+                          <strong style={{ color: AC.dark }}>{b.bidderReputation}</strong> ·{' '}
+                          {fmtPostedAgo(b.submittedAt)}
                         </div>
                       </div>
                     </div>
@@ -250,7 +251,7 @@ export function MissionDetailView({
                         color: AC.dark,
                       }}
                     >
-                      {fmtBudget(b.amount)}
+                      {fmtBudget(b.amountUsd)}
                     </div>
                   </div>
                 ))}
@@ -303,7 +304,7 @@ export function MissionDetailView({
                     letterSpacing: '-0.03em',
                   }}
                 >
-                  {fmtBudget(mission.budget)}
+                  {fmtBudget(mission.budgetUsd)}
                 </div>
               </div>
               <div>

@@ -1,7 +1,12 @@
 import Link from 'next/link';
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { getMyBids, getMission } from '@/lib/prototypes/market-os/data';
-import { fmtBudget, fmtDate } from '@/lib/prototypes/market-os/format';
+import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
+import { listMyBids } from '@/lib/marketos/queries/bids';
+import { listMissions } from '@/lib/marketos/queries/missions';
+import { getCurrentMember } from '@/lib/marketos/auth';
+import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { fmtBudget, fmtDate, fmtPostedAgo } from '@/lib/marketos/format';
+import type { MissionDTO } from '@/lib/marketos/types';
 
 const AC = {
   dark: '#1e3a2f',
@@ -17,8 +22,25 @@ const STATUS_BG: Record<string, string> = {
   withdrawn: 'rgba(30,58,47,0.08)',
 };
 
-export default function MyBidsPage() {
-  const bids = getMyBids();
+/**
+ * "My Bids" — spec §8.6.
+ *
+ * Anonymous visitors get a "sign in to see your bids" empty state.
+ * Members see their bid list, joined to mission for budget/deadline.
+ */
+export default async function MyBidsPage() {
+  const org = await getOrgBySlug(DEMO_ORG_SLUG);
+  if (!org) return <AppPage>{anonShell('Demo org not seeded.')}</AppPage>;
+
+  const member = await getCurrentMember(org.slug);
+  if (!member) return <AppPage>{anonShell('Sign in to see your bids.')}</AppPage>;
+
+  const [bids, missions] = await Promise.all([
+    listMyBids(member.id),
+    listMissions(org.id, { limit: 200 }),
+  ]);
+  const missionById = new Map<string, MissionDTO>(missions.map((m) => [m.id, m]));
+
   return (
     <AppPage>
       <h1
@@ -75,12 +97,12 @@ export default function MyBidsPage() {
       )}
 
       {bids.map((b) => {
-        const m = getMission(b.missionId);
+        const m = missionById.get(b.missionId);
         if (!m) return null;
         return (
           <Link
             key={b.id}
-            href={`/prototypes/market-os/app/missions/${m.id}`}
+            href={`/prototypes/market-os/app/missions/${m.slug}`}
             style={{
               background: 'white',
               borderRadius: 16,
@@ -124,9 +146,9 @@ export default function MyBidsPage() {
             <div style={{ display: 'flex', gap: 28, marginTop: 14 }}>
               {(
                 [
-                  ['Your bid', fmtBudget(b.amount)],
-                  ['Mission budget', fmtBudget(m.budget)],
-                  ['Submitted', `${b.daysAgo}d ago`],
+                  ['Your bid', fmtBudget(b.amountUsd)],
+                  ['Mission budget', fmtBudget(m.budgetUsd)],
+                  ['Submitted', fmtPostedAgo(b.submittedAt)],
                   ['Deadline', fmtDate(m.deadline)],
                 ] as const
               ).map(([l, v]) => (
@@ -172,5 +194,24 @@ export default function MyBidsPage() {
         );
       })}
     </AppPage>
+  );
+}
+
+function anonShell(message: string) {
+  return (
+    <div
+      style={{
+        background: 'white',
+        borderRadius: 16,
+        padding: 60,
+        textAlign: 'center',
+        boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
+        fontFamily: 'var(--font-dm-sans), sans-serif',
+        color: AC.muted,
+        fontSize: 14,
+      }}
+    >
+      {message}
+    </div>
   );
 }

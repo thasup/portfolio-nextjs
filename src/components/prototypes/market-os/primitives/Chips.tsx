@@ -9,7 +9,7 @@
  *
  * Category colours follow the same low-saturation tile scheme.
  */
-import { type Category, type MissionStatus } from '@/lib/prototypes/market-os/types';
+import { type Category, type MissionStatus } from '@/lib/marketos/types';
 
 const STATUS: Record<
   MissionStatus,
@@ -17,8 +17,9 @@ const STATUS: Record<
 > = {
   open: { bg: '#b9d9e0', label: 'Open' },
   active: { bg: '#f6d9a3', label: 'Active' },
+  delivered: { bg: '#d1c4e9', label: 'Delivered' },
   completed: { bg: '#c8e6c9', label: 'Completed' },
-  draft: { bg: 'rgba(30,58,47,0.08)', label: 'Draft' },
+  cancelled: { bg: 'rgba(30,58,47,0.08)', label: 'Cancelled' },
 };
 
 export function StatusChip({ status }: { status: MissionStatus }) {
@@ -70,27 +71,30 @@ export function CatChip({ cat }: { cat: Category }) {
 }
 
 const TIER_COLOR: Record<string, string> = {
-  Bronze: 'rgba(180,123,69,0.18)',
-  Silver: 'rgba(122,127,121,0.18)',
-  Gold: 'rgba(242,168,75,0.2)',
-  Platinum: 'rgba(73,184,218,0.22)',
+  bronze: 'rgba(180,123,69,0.18)',
+  silver: 'rgba(122,127,121,0.18)',
+  gold: 'rgba(242,168,75,0.2)',
+  platinum: 'rgba(73,184,218,0.22)',
+  diamond: 'rgba(170,200,255,0.32)',
 };
 
 export function TierChip({ tier }: { tier: string }) {
+  const key = tier.toLowerCase();
+  const label = tier.charAt(0).toUpperCase() + tier.slice(1).toLowerCase();
   return (
     <span
       style={{
         display: 'inline-block',
         padding: '2px 10px',
         borderRadius: 10,
-        background: TIER_COLOR[tier] ?? 'rgba(30,58,47,0.06)',
+        background: TIER_COLOR[key] ?? 'rgba(30,58,47,0.06)',
         fontSize: 12,
         fontWeight: 700,
         color: '#1e3a2f',
         fontFamily: 'var(--font-dm-sans), sans-serif',
       }}
     >
-      {tier}
+      {label}
     </span>
   );
 }

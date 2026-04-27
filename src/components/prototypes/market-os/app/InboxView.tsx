@@ -3,8 +3,11 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { type Notification, NotificationType } from '@/lib/prototypes/market-os/types';
-import { fmtRelative } from '@/lib/prototypes/market-os/format';
+import {
+  type NotificationDTO,
+  type NotificationType,
+} from '@/lib/marketos/types';
+import { fmtRelative } from '@/lib/marketos/format';
 
 const AC = {
   dark: '#1e3a2f',
@@ -19,12 +22,15 @@ const TYPE_DOT: Record<NotificationType, string> = {
   bid_declined: '#c4554d',
   bid_shortlisted: '#b9d9e0',
   mission_posted: '#f6d9a3',
+  mission_delivered: '#d1c4e9',
   mission_completed: '#a5d6a7',
+  mission_cancelled: 'rgba(30,58,47,0.18)',
   reputation_up: '#f2a84b',
-  pool_update: '#b9d9e0',
+  pool_period_closed: '#b9d9e0',
+  payout_released: '#a5d6a7',
 };
 
-export function InboxView({ initial }: { initial: Notification[] }) {
+export function InboxView({ initial }: { initial: NotificationDTO[] }) {
   const [items, setItems] = useState(initial);
   const [tab, setTab] = useState<'all' | 'unread'>('all');
 
@@ -174,7 +180,7 @@ export function InboxView({ initial }: { initial: Notification[] }) {
                       flexShrink: 0,
                     }}
                   >
-                    {fmtRelative(n.ts)}
+                    {fmtRelative(n.createdAt)}
                   </span>
                 </div>
                 <p

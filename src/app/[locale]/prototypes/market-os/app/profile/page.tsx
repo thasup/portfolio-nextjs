@@ -1,7 +1,13 @@
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
 import { CatChip, TierChip } from '@/components/prototypes/market-os/primitives/Chips';
-import { CURRENT_USER, MISSION_HISTORY } from '@/lib/prototypes/market-os/data';
-import { fmtBudget } from '@/lib/prototypes/market-os/format';
+import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
+import {
+  getMemberMissionHistory,
+  getMemberWithStats,
+} from '@/lib/marketos/queries/members';
+import { getCurrentMember } from '@/lib/marketos/auth';
+import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { fmtBudget, fmtDateLong } from '@/lib/marketos/format';
 
 const AC = {
   cream: '#f9f7f6',
@@ -11,8 +17,30 @@ const AC = {
   border: 'rgba(30,58,47,0.1)',
 };
 
-export default function ProfilePage() {
-  const u = CURRENT_USER;
+/**
+ * Profile — spec §8.7. Shows the *current viewer's* profile. Anonymous
+ * visitors get a "sign in to see your profile" empty state — a future
+ * `/app/people/[memberId]` route will reuse the same view for other
+ * members.
+ */
+export default async function ProfilePage() {
+  const org = await getOrgBySlug(DEMO_ORG_SLUG);
+  if (!org) return <AppPage>{empty('Demo org not seeded.')}</AppPage>;
+
+  const member = await getCurrentMember(org.slug);
+  if (!member) return <AppPage>{empty('Sign in to see your profile.')}</AppPage>;
+
+  const [stats, history] = await Promise.all([
+    getMemberWithStats(member.id),
+    getMemberMissionHistory(member.id, { limit: 20 }),
+  ]);
+  if (!stats) return <AppPage>{empty('No profile stats found.')}</AppPage>;
+
+  const initials = stats.displayName
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2);
 
   return (
     <AppPage>
@@ -44,10 +72,7 @@ export default function ProfilePage() {
             color: 'white',
           }}
         >
-          {u.name
-            .split(' ')
-            .map((n) => n[0])
-            .join('')}
+          {initials.toUpperCase()}
         </div>
         <div>
           <h1
@@ -60,7 +85,7 @@ export default function ProfilePage() {
               letterSpacing: '-0.03em',
             }}
           >
-            {u.name}
+            {stats.displayName}
           </h1>
           <p
             style={{
@@ -70,10 +95,10 @@ export default function ProfilePage() {
               margin: '0 0 12px',
             }}
           >
-            {u.role}
+            {stats.title ?? stats.role}
           </p>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {u.skills.map((s) => (
+            {stats.skills.map((s) => (
               <span
                 key={s}
                 style={{
@@ -91,7 +116,14 @@ export default function ProfilePage() {
             ))}
           </div>
         </div>
-        <div style={{ textAlign: 'center', padding: '16px 32px', background: AC.cream, borderRadius: 16 }}>
+        <div
+          style={{
+            textAlign: 'center',
+            padding: '16px 32px',
+            background: AC.cream,
+            borderRadius: 16,
+          }}
+        >
           <div
             style={{
               fontFamily: 'var(--font-bricolage), sans-serif',
@@ -102,7 +134,7 @@ export default function ProfilePage() {
               lineHeight: 1,
             }}
           >
-            {u.reputation}
+            {stats.reputation}
           </div>
           <div
             style={{
@@ -115,7 +147,7 @@ export default function ProfilePage() {
             Reputation
           </div>
           <div style={{ marginTop: 6 }}>
-            <TierChip tier={u.tier} />
+            <TierChip tier={stats.tier} />
           </div>
         </div>
       </div>
@@ -130,10 +162,22 @@ export default function ProfilePage() {
       >
         {(
           [
-            ['Missions Completed', String(u.completed), 'total deliveries'],
-            ['On-time Rate', `${u.onTime}%`, 'of missions on schedule'],
-            ['Peer Rating', `${u.rating}/5`, `average across ${u.completed} reviews`],
-            ['Total Earned', `$${u.totalEarned.toLocaleString()}`, 'across all missions'],
+            ['Missions Completed', String(stats.completed), 'total deliveries'],
+            [
+              'On-time Rate',
+              stats.onTimePct == null ? '—' : `${stats.onTimePct}%`,
+              'of missions on schedule',
+            ],
+            [
+              'Peer Rating',
+              stats.avgRating == null ? '—' : `${stats.avgRating.toFixed(1)}/5`,
+              `average across ${stats.reviewCount} review${stats.reviewCount === 1 ? '' : 's'}`,
+            ],
+            [
+              'Total Earned',
+              `$${stats.totalEarnedUsd.toLocaleString()}`,
+              'across all missions',
+            ],
           ] as const
         ).map(([label, val, sub]) => (
           <div key={label} className="a-stat-card">
@@ -196,16 +240,28 @@ export default function ProfilePage() {
             Mission History
           </h2>
         </div>
-        {MISSION_HISTORY.map((h, i) => (
+        {history.length === 0 && (
           <div
-            key={i}
+            style={{
+              padding: 32,
+              textAlign: 'center',
+              fontFamily: 'var(--font-dm-sans), sans-serif',
+              color: AC.muted,
+              fontSize: 13,
+            }}
+          >
+            No completed missions yet.
+          </div>
+        )}
+        {history.map((h, i) => (
+          <div
+            key={h.missionId}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 16,
               padding: '16px 28px',
-              borderBottom:
-                i < MISSION_HISTORY.length - 1 ? `1px solid ${AC.border}` : 'none',
+              borderBottom: i < history.length - 1 ? `1px solid ${AC.border}` : 'none',
             }}
           >
             <div style={{ flex: 1 }}>
@@ -220,7 +276,7 @@ export default function ProfilePage() {
                 {h.title}
               </div>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 4 }}>
-                <CatChip cat={h.cat} />
+                <CatChip cat={h.category} />
                 <span
                   style={{
                     fontSize: 12,
@@ -228,7 +284,7 @@ export default function ProfilePage() {
                     fontFamily: 'var(--font-dm-sans), sans-serif',
                   }}
                 >
-                  {h.completed}
+                  {fmtDateLong(h.completedAt)}
                 </span>
               </div>
             </div>
@@ -241,21 +297,42 @@ export default function ProfilePage() {
                   color: AC.dark,
                 }}
               >
-                {fmtBudget(h.earned)}
+                {fmtBudget(h.earnedUsd)}
               </div>
-              <div
-                style={{
-                  fontSize: 12,
-                  color: AC.muted,
-                  fontFamily: 'var(--font-dm-sans), sans-serif',
-                }}
-              >
-                ★ {h.rating}
-              </div>
+              {h.rating != null && (
+                <div
+                  style={{
+                    fontSize: 12,
+                    color: AC.muted,
+                    fontFamily: 'var(--font-dm-sans), sans-serif',
+                  }}
+                >
+                  ★ {h.rating.toFixed(1)}
+                </div>
+              )}
             </div>
           </div>
         ))}
       </div>
     </AppPage>
+  );
+}
+
+function empty(message: string) {
+  return (
+    <div
+      style={{
+        background: 'white',
+        borderRadius: 16,
+        padding: 60,
+        textAlign: 'center',
+        boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
+        fontFamily: 'var(--font-dm-sans), sans-serif',
+        color: AC.muted,
+        fontSize: 14,
+      }}
+    >
+      {message}
+    </div>
   );
 }

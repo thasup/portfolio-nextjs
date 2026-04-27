@@ -2,8 +2,28 @@
 
 import { useEffect, useState } from 'react';
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { ORG_SETTINGS_DEFAULT } from '@/lib/prototypes/market-os/data';
-import type { OrgSettings } from '@/lib/prototypes/market-os/types';
+import type { OrgAccent, OrgPeriod } from '@/lib/marketos/types';
+
+/**
+ * Local form state. Tracks both the server-side `OrgSettingsDTO`
+ * fields and any UI-only fallbacks for anonymous viewers (where the
+ * server defaults are still authoritative for display).
+ */
+interface SettingsForm {
+  ratio: number;
+  baseSplit: number;
+  period: OrgPeriod;
+  accent: OrgAccent;
+  dark: boolean;
+}
+
+interface SettingsViewProps {
+  orgName: string;
+  memberCount: number;
+  initial: SettingsForm;
+  /** Approximate revenue (USD) used to render the live preview card. */
+  revenueUsd: number;
+}
 
 const AC = {
   cream: '#f9f7f6',
@@ -18,19 +38,30 @@ const STORAGE_KEY = 'marketos:settings';
 /**
  * Org-level settings + tweaks.
  *
- * The original mockup exposed dark/accent/font-scale through a "Tweaks"
- * panel hosted by the bundler. Here we promote those into a real
- * settings screen alongside the proper org levers (payroll ratio, base
- * split, period). Persistence is `localStorage`-only.
+ * Hydrates from the server-side `OrgSettingsDTO`. Anonymous visitors
+ * still get a working preview because the server hands down whatever
+ * is currently stored on the org. Local edits are kept in component
+ * state until Phase 3 wires up the `updateOrgSettings` server action
+ * — we also persist visual tweaks (dark/accent) to `localStorage` so
+ * unauthenticated viewers can still customise their preview without
+ * rewriting the org row.
  */
-export function SettingsView() {
-  const [settings, setSettings] = useState<OrgSettings>(ORG_SETTINGS_DEFAULT);
+export function SettingsView({
+  orgName,
+  memberCount,
+  initial,
+  revenueUsd,
+}: SettingsViewProps) {
+  const [settings, setSettings] = useState<SettingsForm>(initial);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setSettings({ ...ORG_SETTINGS_DEFAULT, ...JSON.parse(raw) });
+      if (raw) {
+        const parsed = JSON.parse(raw) as Partial<SettingsForm>;
+        setSettings((prev) => ({ ...prev, ...parsed }));
+      }
     } catch {
       /* ignore */
     }
@@ -52,11 +83,11 @@ export function SettingsView() {
     }
   }, [settings, loaded]);
 
-  const update = <K extends keyof OrgSettings>(key: K, value: OrgSettings[K]) =>
+  const update = <K extends keyof SettingsForm>(key: K, value: SettingsForm[K]) =>
     setSettings((prev) => ({ ...prev, [key]: value }));
 
   const missionPct = 100 - settings.baseSplit;
-  const poolEstimate = Math.round((settings.ratio / 100) * 600_000); // mock $600k revenue
+  const poolEstimate = Math.round((settings.ratio / 100) * revenueUsd);
   const missionsBudget = Math.round((poolEstimate * missionPct) / 100);
   const baseBudget = poolEstimate - missionsBudget;
 
@@ -84,7 +115,7 @@ export function SettingsView() {
         }}
       >
         Org-level levers that shape how the market behaves. Visual tweaks persist locally; the
-        org levers in this prototype don&apos;t feed real data — they update the preview only.
+        org levers update the preview only until Phase 3 wires up the save action.
       </p>
 
       {/* Org levers */}
@@ -97,7 +128,7 @@ export function SettingsView() {
               color: AC.dark,
             }}
           >
-            {settings.name} · {settings.memberCount} members
+            {orgName} · {memberCount} member{memberCount === 1 ? '' : 's'}
           </span>
         </Row>
         <Row
@@ -142,7 +173,7 @@ export function SettingsView() {
               { value: 'quarter', label: 'Quarter' },
               { value: 'half', label: 'Half-year' },
             ]}
-            onChange={(v) => update('period', v as OrgSettings['period'])}
+            onChange={(v) => update('period', v as OrgPeriod)}
           />
         </Row>
 
@@ -177,7 +208,7 @@ export function SettingsView() {
               { value: 'blue', label: 'Blue' },
               { value: 'green', label: 'Green' },
             ]}
-            onChange={(v) => update('accent', v as OrgSettings['accent'])}
+            onChange={(v) => update('accent', v as OrgAccent)}
           />
         </Row>
       </Card>

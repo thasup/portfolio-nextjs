@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { Category } from '@/lib/prototypes/market-os/types';
-import { fmtBudget } from '@/lib/prototypes/market-os/format';
+import { Category } from '@/lib/marketos/types';
+import { fmtBudget } from '@/lib/marketos/format';
 
 const AC = {
   cream: '#f9f7f6',

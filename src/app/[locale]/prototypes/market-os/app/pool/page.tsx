@@ -1,6 +1,12 @@
 import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { POOL } from '@/lib/prototypes/market-os/data';
-import { fmtBudget, fmtDate } from '@/lib/prototypes/market-os/format';
+import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
+import {
+  getCurrentPool,
+  getPoolHistory,
+  getUpcomingPayouts,
+} from '@/lib/marketos/queries/pool';
+import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { fmtBudget, fmtDate } from '@/lib/marketos/format';
 
 const AC = {
   cream: '#f9f7f6',
@@ -12,12 +18,59 @@ const AC = {
   border: 'rgba(30,58,47,0.1)',
 };
 
-export default function PoolPage() {
-  // Approximate this period's "company revenue" from pool/ratio for
-  // illustrative purposes only. ratio is a percent, so revenue =
-  // total / (ratio / 100).
-  const revenue = Math.round(POOL.total / (POOL.ratio / 100));
-  const maxHistory = Math.max(...POOL.history.map((h) => h.total));
+/**
+ * Pool — spec §8.9. Three sections:
+ * 1. Revenue → Pool waterfall (current period only).
+ * 2. Pool growth bar chart over all closed periods + current.
+ * 3. Upcoming payouts table (scheduled, asc by date).
+ */
+export default async function PoolPage() {
+  const org = await getOrgBySlug(DEMO_ORG_SLUG);
+  if (!org)
+    return (
+      <AppPage>
+        <p style={{ color: AC.muted, fontFamily: 'var(--font-dm-sans), sans-serif' }}>
+          Demo org not seeded.
+        </p>
+      </AppPage>
+    );
+
+  const [pool, history, payouts] = await Promise.all([
+    getCurrentPool(org.id),
+    getPoolHistory(org.id),
+    getUpcomingPayouts(org.id),
+  ]);
+
+  if (!pool) {
+    return (
+      <AppPage>
+        <h1
+          style={{
+            fontFamily: 'var(--font-bricolage), sans-serif',
+            fontWeight: 800,
+            fontSize: 28,
+            color: AC.dark,
+            margin: '0 0 12px',
+            letterSpacing: '-0.03em',
+          }}
+        >
+          Revenue Pool
+        </h1>
+        <p
+          style={{
+            fontFamily: 'var(--font-dm-sans), sans-serif',
+            color: AC.muted,
+            fontSize: 14,
+          }}
+        >
+          No current revenue period configured.
+        </p>
+      </AppPage>
+    );
+  }
+
+  const revenue = pool.revenueUsd;
+  const maxHistory = Math.max(...history.map((h) => h.totalUsd), 1);
 
   return (
     <AppPage>
@@ -46,14 +99,7 @@ export default function PoolPage() {
         comp, and a small unallocated buffer. If revenue stalls, so does the pool.
       </p>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 16,
-          marginBottom: 28,
-        }}
-      >
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 28 }}>
         {/* Waterfall */}
         <div className="a-stat-card" style={{ padding: 28 }}>
           <h2
@@ -66,15 +112,15 @@ export default function PoolPage() {
               letterSpacing: '-0.02em',
             }}
           >
-            Revenue → Pool ({POOL.period})
+            Revenue → Pool ({pool.periodLabel})
           </h2>
           {(
             [
               ['Company revenue', revenue, 'rgba(30,58,47,0.18)'],
-              [`Pool (${POOL.ratio}% of revenue)`, POOL.total, AC.orange],
-              ['Missions', POOL.missions, AC.peach],
-              ['Base comp', POOL.base, AC.blue],
-              ['Unallocated', POOL.unallocated, '#c8e6c9'],
+              [`Pool (${pool.ratio}% of revenue)`, pool.totalUsd, AC.orange],
+              ['Missions', pool.missionsLockedUsd, AC.peach],
+              ['Base comp', pool.baseUsd, AC.blue],
+              ['Unallocated', pool.unallocatedUsd, '#c8e6c9'],
             ] as const
           ).map(([label, val, color]) => (
             <div key={label} style={{ marginBottom: 14 }}>
@@ -101,7 +147,7 @@ export default function PoolPage() {
                 <div
                   style={{
                     height: '100%',
-                    width: `${(val / revenue) * 100}%`,
+                    width: `${revenue > 0 ? (val / revenue) * 100 : 0}%`,
                     background: color,
                     borderRadius: 4,
                   }}
@@ -135,12 +181,11 @@ export default function PoolPage() {
               padding: '0 4px',
             }}
           >
-            {POOL.history.map((h) => {
-              const pct = (h.total / maxHistory) * 100;
-              const isCurrent = h.period === POOL.period;
+            {history.map((h) => {
+              const pct = (h.totalUsd / maxHistory) * 100;
               return (
                 <div
-                  key={h.period}
+                  key={h.periodLabel}
                   style={{
                     flex: 1,
                     display: 'flex',
@@ -153,17 +198,17 @@ export default function PoolPage() {
                     style={{
                       fontFamily: 'var(--font-dm-sans), sans-serif',
                       fontSize: 11,
-                      color: isCurrent ? AC.dark : AC.muted,
-                      fontWeight: isCurrent ? 700 : 500,
+                      color: h.isCurrent ? AC.dark : AC.muted,
+                      fontWeight: h.isCurrent ? 700 : 500,
                     }}
                   >
-                    ${Math.round(h.total / 1000)}k
+                    ${Math.round(h.totalUsd / 1000)}k
                   </div>
                   <div
                     style={{
                       width: '100%',
                       height: `${pct}%`,
-                      background: isCurrent
+                      background: h.isCurrent
                         ? `linear-gradient(180deg, ${AC.orange}, #e89a35)`
                         : 'rgba(30,58,47,0.18)',
                       borderRadius: '6px 6px 0 0',
@@ -177,7 +222,7 @@ export default function PoolPage() {
                       color: AC.muted,
                     }}
                   >
-                    {h.period.replace(' ', '\n')}
+                    {h.periodLabel.replace(' ', '\n')}
                   </div>
                 </div>
               );
@@ -222,20 +267,33 @@ export default function PoolPage() {
               color: AC.muted,
             }}
           >
-            {POOL.payouts.length} scheduled · total{' '}
-            {fmtBudget(POOL.payouts.reduce((s, p) => s + p.amount, 0))}
+            {payouts.length} scheduled · total{' '}
+            {fmtBudget(payouts.reduce((s, p) => s + p.amountUsd, 0))}
           </span>
         </div>
-        {POOL.payouts.map((p, i) => (
+        {payouts.length === 0 && (
           <div
-            key={i}
+            style={{
+              padding: 32,
+              textAlign: 'center',
+              fontFamily: 'var(--font-dm-sans), sans-serif',
+              color: AC.muted,
+              fontSize: 13,
+            }}
+          >
+            No payouts scheduled.
+          </div>
+        )}
+        {payouts.map((p, i) => (
+          <div
+            key={p.payoutId}
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr 130px 110px',
               gap: 16,
               alignItems: 'center',
               padding: '14px 28px',
-              borderBottom: i < POOL.payouts.length - 1 ? `1px solid ${AC.border}` : 'none',
+              borderBottom: i < payouts.length - 1 ? `1px solid ${AC.border}` : 'none',
             }}
           >
             <div
@@ -246,7 +304,7 @@ export default function PoolPage() {
                 color: AC.dark,
               }}
             >
-              {p.person}
+              {p.recipientName}
             </div>
             <div
               style={{
@@ -255,7 +313,7 @@ export default function PoolPage() {
                 color: 'rgba(30,58,47,0.62)',
               }}
             >
-              {p.mission}
+              {p.missionTitle}
             </div>
             <div
               style={{
@@ -265,7 +323,7 @@ export default function PoolPage() {
                 color: AC.muted,
               }}
             >
-              {fmtDate(p.releaseDate)}
+              {fmtDate(p.scheduledFor)}
             </div>
             <div
               style={{
@@ -276,7 +334,7 @@ export default function PoolPage() {
                 color: AC.dark,
               }}
             >
-              {fmtBudget(p.amount)}
+              {fmtBudget(p.amountUsd)}
             </div>
           </div>
         ))}
