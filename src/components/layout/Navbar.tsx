@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, FileText } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,16 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
+  const pathname = usePathname() ?? "";
+
+  // Standalone prototype surfaces (e.g. /prototypes/market-os) own their
+  // own chrome — suppress the Nexus global navbar there. Computed before
+  // any other hooks below; the actual early-return happens after all
+  // hooks so the hook order stays stable across renders.
+  const isStandalone =
+    pathname.startsWith("/prototypes") ||
+    pathname.startsWith("/en/prototypes") ||
+    pathname.startsWith("/th/prototypes");
 
   const baseItems = useMemo(
     () => [
@@ -27,8 +38,8 @@ export function Navbar() {
       { id: "testimonials", label: t("testimonials"), href: "/#testimonials" },
       { id: "value", label: t("value"), href: "/#value" },
       { id: "contact", label: t("contact"), href: "/#contact" },
-      { id: "articles", label: t("articles"), href: "/articles" },
-      { id: "learn", label: t("learn"), href: "/learn" }
+      // { id: "articles", label: t("articles"), href: "/articles" },
+      // { id: "learn", label: t("learn"), href: "/learn" }
     ],
     [t]
   );
@@ -53,6 +64,8 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (isStandalone) return null;
 
   const isActive = (href: string) => {
     // Handle non-anchor links (e.g., /articles)

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './praxis.css';
+@import './palettes/marketos.css';
 
 @theme {
   --color-primary: oklch(0.55 0.22 264);

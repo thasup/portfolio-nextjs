@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
@@ -7,7 +10,15 @@ import { useTranslations } from 'next-intl'
 
 export function Footer() {
   const t = useTranslations('footer')
+  const pathname = usePathname() ?? ''
   const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href) && item.isAnchor)
+
+  // Standalone prototype surfaces own their own footer.
+  const isStandalone =
+    pathname.startsWith('/prototypes') ||
+    pathname.startsWith('/en/prototypes') ||
+    pathname.startsWith('/th/prototypes')
+  if (isStandalone) return null
 
 
   return (

@@ -1,0 +1,372 @@
+/*
+ * MarketOS prototype palette + scoped utility classes.
+ *
+ * Tokens are intentionally scoped under `[data-marketos]` so they
+ * never leak into the rest of the Nexus portfolio. Apply the
+ * attribute on the prototype's outer wrapper (see
+ * `src/app/[locale]/prototypes/market-os/layout.tsx`).
+ *
+ * Source palette is the Air design system referenced in
+ * `.windsurf/contents/market_os/uploads/Air Design System.txt`.
+ */
+
+[data-marketos] {
+  --mk-cream: #f9f7f6;
+  --mk-cream-soft: #fdfbfa;
+  --mk-dark: #1e3a2f;
+  --mk-dark-soft: #274839;
+  --mk-orange: #f2a84b;
+  --mk-orange-strong: #e89a35;
+  --mk-blue: #b9d9e0;
+  --mk-peach: #f6d9a3;
+  --mk-muted: #7a7f79;
+  --mk-border: rgba(30, 58, 47, 0.1);
+  --mk-shadow: 0 30px 60px -30px rgba(30, 58, 47, 0.25);
+  --mk-glow: 0 10px 24px -12px rgba(242, 168, 75, 0.55);
+
+  background: var(--mk-cream);
+  color: var(--mk-dark);
+  font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-marketos][data-mk-dark='1'] {
+  --mk-cream: #141612;
+  --mk-cream-soft: #1f221e;
+  --mk-dark: #ece9e3;
+  --mk-dark-soft: #b9b4a8;
+  --mk-border: rgba(236, 233, 227, 0.1);
+  --mk-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.4);
+}
+
+[data-marketos][data-mk-accent='blue'] {
+  --mk-orange: #49b8da;
+  --mk-orange-strong: #3a9db8;
+}
+
+[data-marketos][data-mk-accent='green'] {
+  --mk-orange: #4caf72;
+  --mk-orange-strong: #3a8f5a;
+}
+
+/* Reset within scope so the prototype controls its own typography. */
+[data-marketos] *,
+[data-marketos] *::before,
+[data-marketos] *::after {
+  box-sizing: border-box;
+}
+[data-marketos] h1,
+[data-marketos] h2,
+[data-marketos] h3,
+[data-marketos] h4,
+[data-marketos] h5,
+[data-marketos] h6,
+[data-marketos] p {
+  margin: 0;
+}
+
+[data-marketos] {
+  scroll-behavior: smooth;
+}
+
+/* ─── Landing-scoped utilities (.l-*) ─────────────────────────── */
+[data-marketos] .l-btn-primary {
+  background: var(--mk-orange);
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--mk-glow);
+  transition: background 0.15s, transform 0.12s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-marketos] .l-btn-primary:hover {
+  background: var(--mk-orange-strong);
+  transform: translateY(-1px);
+}
+[data-marketos] .l-btn-primary:active { transform: translateY(0); }
+
+[data-marketos] .l-btn-ghost {
+  background: transparent;
+  color: var(--mk-dark);
+  border: 1.5px solid rgba(30, 58, 47, 0.18);
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+[data-marketos] .l-btn-ghost:hover {
+  background: rgba(30, 58, 47, 0.05);
+  border-color: rgba(30, 58, 47, 0.3);
+}
+
+[data-marketos] .l-nav-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: rgba(30, 58, 47, 0.65);
+  cursor: pointer;
+  transition: color 0.15s;
+  text-decoration: none;
+}
+[data-marketos] .l-nav-link:hover { color: var(--mk-dark); }
+
+[data-marketos] .l-feature-card {
+  background: white;
+  border-radius: 20px;
+  padding: 36px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 1px 4px rgba(30, 58, 47, 0.07);
+}
+[data-marketos] .l-feature-card:hover {
+  box-shadow: 0 20px 40px -15px rgba(30, 58, 47, 0.14);
+  transform: translateY(-2px);
+}
+
+[data-marketos] .l-loop-step { transition: transform 0.2s; }
+[data-marketos] .l-loop-step:hover { transform: translateY(-4px); }
+[data-marketos] .l-tcard { transition: transform 0.2s; }
+[data-marketos] .l-tcard:hover { transform: translateY(-3px); }
+
+[data-marketos] .l-mockup {
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+[data-marketos] .l-mockup:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 60px 100px -20px rgba(30, 58, 47, 0.3),
+    0 0 0 1px rgba(30, 58, 47, 0.08) !important;
+}
+
+[data-marketos] .l-mission-row {
+  background: white;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 3px rgba(30, 58, 47, 0.06);
+  transition: background 0.15s;
+}
+[data-marketos] .l-mission-row:hover { background: #fdfbfa; }
+
+/* Dark-mode landing overrides */
+[data-marketos][data-mk-dark='1'] .l-feature-card { background: #1f221e; }
+[data-marketos][data-mk-dark='1'] .l-btn-ghost {
+  color: #ece9e3;
+  border-color: rgba(236, 233, 227, 0.2);
+}
+[data-marketos][data-mk-dark='1'] .l-btn-ghost:hover { background: rgba(236, 233, 227, 0.06); }
+[data-marketos][data-mk-dark='1'] .l-nav-link { color: rgba(236, 233, 227, 0.55); }
+[data-marketos][data-mk-dark='1'] .l-nav-link:hover { color: #ece9e3; }
+
+/* ─── App-scoped utilities (.a-*) ─────────────────────────────── */
+[data-marketos] .a-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(249, 247, 246, 0.58);
+  text-decoration: none;
+}
+[data-marketos] .a-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(249, 247, 246, 0.9);
+}
+[data-marketos] .a-sidebar-item.active {
+  background: rgba(242, 168, 75, 0.18);
+  color: var(--mk-orange);
+  font-weight: 600;
+}
+
+[data-marketos] .a-stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(30, 58, 47, 0.07);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+[data-marketos] .a-stat-card:hover {
+  box-shadow: 0 8px 24px -8px rgba(30, 58, 47, 0.14);
+  transform: translateY(-1px);
+}
+
+[data-marketos] .a-mission-card {
+  background: white;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 4px rgba(30, 58, 47, 0.06);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+[data-marketos] .a-mission-card:hover {
+  box-shadow: 0 12px 30px -10px rgba(30, 58, 47, 0.15);
+  transform: translateY(-2px);
+}
+
+[data-marketos] .a-input {
+  width: 100%;
+  height: 42px;
+  border: 1.5px solid rgba(30, 58, 47, 0.14);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--mk-dark);
+  background: white;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+[data-marketos] .a-input:focus {
+  border-color: var(--mk-orange);
+  box-shadow: 0 0 0 3px rgba(242, 168, 75, 0.14);
+}
+
+[data-marketos] .a-textarea {
+  width: 100%;
+  border: 1.5px solid rgba(30, 58, 47, 0.14);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--mk-dark);
+  background: white;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  line-height: 1.55;
+}
+[data-marketos] .a-textarea:focus {
+  border-color: var(--mk-orange);
+  box-shadow: 0 0 0 3px rgba(242, 168, 75, 0.14);
+}
+
+[data-marketos] .a-pill-filter {
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  border: 1.5px solid transparent;
+  user-select: none;
+}
+[data-marketos] .a-pill-filter.active {
+  background: var(--mk-dark);
+  color: white;
+}
+[data-marketos] .a-pill-filter:not(.active) {
+  background: rgba(30, 58, 47, 0.06);
+  color: var(--mk-muted);
+}
+[data-marketos] .a-pill-filter:not(.active):hover {
+  background: rgba(30, 58, 47, 0.1);
+  color: var(--mk-dark);
+}
+
+[data-marketos] .a-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+}
+[data-marketos] .a-btn:active { transform: translateY(0) !important; }
+[data-marketos] .a-btn-primary {
+  background: var(--mk-orange);
+  color: white;
+  box-shadow: 0 8px 20px -8px rgba(242, 168, 75, 0.5);
+}
+[data-marketos] .a-btn-primary:hover {
+  background: var(--mk-orange-strong);
+  transform: translateY(-1px);
+}
+[data-marketos] .a-btn-ghost {
+  background: transparent;
+  color: var(--mk-dark);
+  border: 1.5px solid rgba(30, 58, 47, 0.18);
+}
+[data-marketos] .a-btn-ghost:hover { background: rgba(30, 58, 47, 0.05); }
+
+[data-marketos] .a-search {
+  height: 40px;
+  border: 1.5px solid rgba(30, 58, 47, 0.12);
+  border-radius: 10px;
+  padding: 0 14px 0 38px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--mk-dark);
+  background: white;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+[data-marketos] .a-search:focus {
+  border-color: var(--mk-orange);
+  box-shadow: 0 0 0 3px rgba(242, 168, 75, 0.12);
+}
+
+[data-marketos] .a-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  transition: background 0.15s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+[data-marketos] .a-row:hover { background: rgba(30, 58, 47, 0.04); }
+
+[data-marketos] .a-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(30, 58, 47, 0.55);
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.15s;
+  background: transparent;
+  border: none;
+  text-decoration: none;
+}
+[data-marketos] .a-back-btn:hover { color: var(--mk-dark); }
+
+/* Dark-mode app overrides */
+[data-marketos][data-mk-dark='1'] .a-stat-card,
+[data-marketos][data-mk-dark='1'] .a-mission-card { background: #1f221e; }
+[data-marketos][data-mk-dark='1'] .a-input,
+[data-marketos][data-mk-dark='1'] .a-textarea,
+[data-marketos][data-mk-dark='1'] .a-search {
+  background: #1f221e;
+  color: #ece9e3;
+  border-color: rgba(236, 233, 227, 0.12);
+}
