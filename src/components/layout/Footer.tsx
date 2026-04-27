@@ -77,6 +77,14 @@ export function Footer() {
                   {t('learn')}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/prototypes"
+                  className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                >
+                  {t('prototypes')}
+                </Link>
+              </li>
             </ul>
           </div>
 

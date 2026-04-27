@@ -720,12 +720,32 @@
       }
     }
   },
+  "prototypes": {
+    "metadata": {
+      "title": "Prototypes | Thanachon",
+      "description": "Experimental prototypes and proof-of-concept builds. A playground for testing new ideas and technologies."
+    },
+    "label": "Prototypes",
+    "title": "Experimental Builds",
+    "subtitle": "A collection of proof-of-concept projects, experimental features, and playground builds for testing new ideas and technologies.",
+    "empty": {
+      "title": "Coming Soon",
+      "description": "New prototypes are being developed. Check back later for updates."
+    },
+    "items": {
+      "market-os": {
+        "title": "MarketOS",
+        "description": "AI-powered go-to-market operating system for modern revenue teams. Features voice-first AI, territory planning, and comp simulations."
+      }
+    }
+  },
   "footer": {
     "headline": "Software Engineer by Profession, Lifelong Learner at Heart",
     "navigation": "Navigation",
     "resources": "Resources",
     "articles": "Articles",
     "learn": "Praxis",
+    "prototypes": "Prototypes",
     "connect": "Connect",
     "allRightsReserved": "All rights reserved."
   },
