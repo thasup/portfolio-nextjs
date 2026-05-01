@@ -2,9 +2,10 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { Article, ArticleCategory } from '@/types/article';
 import { cn } from '@/lib/utils';
-import { parseMarkdown, buildHierarchicalToc, type TocItem } from '@/lib/markdownParser';
+import { parseMarkdown, buildHierarchicalToc } from '@/lib/markdownParser';
 
 interface ArticleContentProps {
   article: Article;
@@ -25,7 +26,6 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
   const t = useTranslations('articles');
   const [activeSection, setActiveSection] = useState<string>('');
   const [hoveredTimeline, setHoveredTimeline] = useState(false);
-  const [hoveredEvent, setHoveredEvent] = useState<number | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
 
@@ -81,9 +81,15 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
       {/* Hero Section */}
       <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${article.heroImage.src})` }}
+          className="absolute inset-0"
         >
+          <Image
+            src={article.heroImage.src}
+            alt={article.heroImage.alt}
+            fill
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-background" />
         </div>
         
@@ -107,9 +113,11 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
               {article.author && (
                 <span className="flex items-center gap-2">
                   {article.author.avatar && (
-                    <img 
+                    <Image 
                       src={article.author.avatar} 
                       alt={article.author.name}
+                      width={32}
+                      height={32}
                       className="w-8 h-8 rounded-full border border-[var(--color-line-soft)]"
                     />
                   )}
@@ -118,7 +126,7 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
               )}
               <span>•</span>
               <time dateTime={article.publishedDate}>
-                {new Date(article.publishedDate).toLocaleDateString(locale, {
+                {new Date(article.publishedDate).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-GB', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -248,7 +256,7 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
           {/* Main Article Content */}
           <div ref={contentRef} className="flex-1 min-w-0">
             <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-medium prose-p:text-[var(--color-ink-2)] prose-headings:text-[var(--color-ink)] prose-headings:scroll-mt-24">
-              {article.sections.map((section, index) => (
+              {article.sections.map((section) => (
                 <section key={section.id} id={section.id} className="mb-16">
                   <h2 className="text-2xl sm:text-3xl font-display font-medium mb-6 text-[var(--color-ink)]">
                     {section.title}
@@ -301,12 +309,15 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                     <div className="my-8 lg:my-12 grid gap-6 sm:gap-8">
                       {section.images.map((image, idx) => (
                         <figure key={idx} className="space-y-3">
-                          <img
-                            src={image.src}
-                            alt={image.alt}
-                            className="w-full border border-[var(--color-line-soft)] bg-[var(--color-paper-2)]"
-                            loading="lazy"
-                          />
+                          <div className="relative aspect-video w-full overflow-hidden border border-[var(--color-line-soft)] bg-[var(--color-paper-2)]">
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              className="object-cover"
+                              loading="lazy"
+                            />
+                          </div>
                           {(image.caption || image.credit) && (
                             <figcaption className="text-sm text-[var(--color-ink-3)] text-center">
                               {image.caption}

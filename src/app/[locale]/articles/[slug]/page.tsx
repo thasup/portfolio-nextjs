@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation';
 import { getArticle, getAllArticleSlugs } from '@/data/articles';
-import { getTranslations } from 'next-intl/server';
-import { ArticleCategory } from '@/types/article';
 import { ArticleContent } from '@/components/articles/ArticleContent';
 import type { PageProps } from '@/types/next';
 
