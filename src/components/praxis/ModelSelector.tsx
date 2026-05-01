@@ -137,7 +137,7 @@ export function ModelSelector({ onSave, onClose }: ModelSelectorProps) {
       )}
 
       <div className="space-y-4">
-        {tasks.map(({ task, current, available }) => {
+        {tasks.map(({ task, available }) => {
           const selectedValue = preferences[task] ?? 'default';
           const isDefault = selectedValue === 'default' || !preferences[task];
 

@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { type Project } from '@/types/project'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { TechBadge } from '@/components/shared/TechBadge'
 import { DomainBadge } from '@/components/shared/DomainBadge'
 import { ArrowRight } from 'lucide-react'

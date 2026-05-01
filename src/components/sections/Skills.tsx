@@ -3,7 +3,6 @@ import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ScrollReveal } from '@/components/shared/ScrollReveal'
 import { SkillBar } from '@/components/shared/SkillBar'
 import { skillClusters } from '@/data/skills'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

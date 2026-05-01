@@ -11,7 +11,7 @@
  *   4. Show a "Mark complete" button + progress.
  */
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ContentBlock, type ContentBlockProps } from '@/components/praxis/ContentBlock';
+import { ContentBlock } from '@/components/praxis/ContentBlock';
 import type { UnitBlockKind } from '@/lib/praxis/prompts/types';
 import { showApiError } from '@/lib/praxis/toast';
 

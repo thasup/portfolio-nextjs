@@ -44,7 +44,7 @@ import type {
   PraxisLocale,
   UnitBlockKind,
 } from '@/lib/praxis/prompts/types';
-import { JSON_ONLY_DIRECTIVE, clamp, renderLearner } from '@/lib/praxis/prompts/_shared';
+import { JSON_ONLY_DIRECTIVE, clamp } from '@/lib/praxis/prompts/_shared';
 
 // ---- types -----------------------------------------------------------------
 

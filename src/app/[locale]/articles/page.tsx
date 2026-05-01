@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
+import Image from 'next/image';
 import { articles } from '@/data/articles';
 import { ArticleCategory } from '@/types/article';
 import type { PageProps } from '@/types/next';
@@ -56,9 +57,11 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
                 className="card flex flex-col h-full overflow-hidden transition-all duration-300 hover:border-[var(--color-ink-2)] group"
               >
                 <div className="aspect-video w-full overflow-hidden border-b border-[var(--color-line-soft)]">
-                  <img
+                  <Image
                     src={article.heroImage.src}
                     alt={article.heroImage.alt}
+                    width={800}
+                    height={450}
                     className="h-full w-full object-cover transition-transform group-hover:scale-105"
                   />
                 </div>
@@ -83,7 +86,7 @@ export default async function ArticlesPage({ params }: ArticlesPageProps) {
                   
                   <div className="flex items-center justify-between pt-3 mt-auto text-xs text-[var(--color-ink-3)]">
                     <time dateTime={article.publishedDate}>
-                      {new Date(article.publishedDate).toLocaleDateString(locale, {
+                      {new Date(article.publishedDate).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-GB', {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',

@@ -3,12 +3,6 @@
  * Handles: **bold**, *italic*, [links](url), and paragraph breaks
  */
 
-interface ParsedContent {
-  type: 'paragraph' | 'heading';
-  content: React.ReactNode;
-  level?: number;
-}
-
 export function parseMarkdown(text: string): string {
   if (!text) return '';
   

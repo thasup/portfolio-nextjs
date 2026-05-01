@@ -27,7 +27,7 @@ import {
   titleFromRawInput,
 } from "@/lib/praxis/cache/topicFingerprint";
 import { BudgetExceededError } from "@/lib/praxis/openrouter/ledger";
-import { PraxisLocale, ScopeCategory } from "@/lib/praxis/prompts/types";
+import { PraxisLocale } from "@/lib/praxis/prompts/types";
 
 export const runtime = "nodejs";
 
