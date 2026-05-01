@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './praxis.css';
+@import './palettes/marketos.css';
 
 @theme {
   --color-primary: oklch(0.55 0.22 264);
@@ -12,6 +13,8 @@
   --color-muted-foreground: #64748b;
   --color-card: #ffffff;
   --color-card-foreground: #0f172a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f172a;
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
   --color-ring: oklch(0.55 0.22 264);
@@ -123,6 +126,8 @@
   --color-muted-foreground: #94a3b8;
   --color-card: #0f172a;
   --color-card-foreground: #f8fafc;
+  --color-popover: #0f172a;
+  --color-popover-foreground: #f8fafc;
   --color-border: #1e293b;
   --color-input: #1e293b;
   --color-ring: oklch(0.7 0.17 264);

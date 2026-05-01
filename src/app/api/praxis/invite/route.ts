@@ -132,7 +132,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // ---- 4. Mint JWT + send email -----------------------------------------
   const token = await mintInviteToken({ email: payload.email, invitationId });
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const actionUrl = `${siteUrl.replace(/\/$/, '')}/learn/callback?token=${encodeURIComponent(token)}`;
+  const actionUrl = `${siteUrl.replace(/\/$/, '')}/prototypes/praxis/callback?token=${encodeURIComponent(token)}`;
 
   const delivery = await sendInvitationEmail({
     to: payload.email,
@@ -157,3 +157,4 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     { status: 201 },
   );
 }
+

@@ -10,28 +10,31 @@
  *   3. Dispatch to the service.
  *   4. Format responses per contract.
  */
-import { NextResponse, type NextRequest } from 'next/server';
-import { z } from 'zod';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
-import { getLearner } from '@/lib/praxis/session/getLearner';
+import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { getUser } from "@/lib/nexus/session/getUser";
 import {
   OutlineUnit,
   getOrGenerateOutline,
   outlineEditedMaterially,
   persistAcceptedOutline,
   runScopeGuardrail,
-} from '@/lib/praxis/curriculum/service';
-import { fingerprint, titleFromRawInput } from '@/lib/praxis/cache/topicFingerprint';
-import { BudgetExceededError } from '@/lib/praxis/openrouter/ledger';
-import { PraxisLocale, ScopeCategory } from '@/lib/praxis/prompts/types';
+} from "@/lib/praxis/curriculum/service";
+import {
+  fingerprint,
+  titleFromRawInput,
+} from "@/lib/praxis/cache/topicFingerprint";
+import { BudgetExceededError } from "@/lib/praxis/openrouter/ledger";
+import { PraxisLocale, ScopeCategory } from "@/lib/praxis/prompts/types";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 const LocaleSchema = z.nativeEnum(PraxisLocale);
 
 const OutlineBodySchema = z.object({
-  action: z.literal('outline'),
+  action: z.literal("outline"),
   rawInput: z.string().trim().min(3).max(240),
   locale: LocaleSchema.default(PraxisLocale.EN),
 });
@@ -44,14 +47,17 @@ const AcceptUnitSchema = z.object({
 });
 
 const AcceptBodySchema = z.object({
-  action: z.literal('accept'),
+  action: z.literal("accept"),
   fingerprint: z.string().regex(/^sha1-[a-f0-9]{40}$/),
   locale: LocaleSchema.default(PraxisLocale.EN),
   rawInput: z.string().trim().min(3).max(240),
   editedUnits: z.array(AcceptUnitSchema).min(3).max(7).optional(),
 });
 
-const BodySchema = z.discriminatedUnion('action', [OutlineBodySchema, AcceptBodySchema]);
+const BodySchema = z.discriminatedUnion("action", [
+  OutlineBodySchema,
+  AcceptBodySchema,
+]);
 
 function errorResponse(status: number, code: string, message: string) {
   return NextResponse.json({ error: { code, message } }, { status });
@@ -59,14 +65,9 @@ function errorResponse(status: number, code: string, message: string) {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   // ---- auth ------------------------------------------------------------
-  const session = await getLearner();
+  const session = await getUser();
   if (!session) {
-    return errorResponse(401, 'NOT_AUTHENTICATED', 'Sign-in required');
-  }
-
-  // ---- permission check ------------------------------------------------
-  if (!session.learner.can_generate_topics) {
-    return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Topic generation is not enabled for your account. Contact admin for access.');
+    return errorResponse(401, "NOT_AUTHENTICATED", "Sign-in required");
   }
 
   // ---- parse -----------------------------------------------------------
@@ -74,21 +75,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     body = BodySchema.parse(await request.json());
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Invalid body';
-    return errorResponse(400, 'INVALID_BODY', message);
+    const message = err instanceof Error ? err.message : "Invalid body";
+    return errorResponse(400, "INVALID_BODY", message);
   }
 
   try {
-    const preferences = session.learner.model_preferences;
-    if (body.action === 'outline') return await handleOutline(body, preferences);
+    const preferences = session.user.model_preferences;
+    if (body.action === "outline")
+      return await handleOutline(body, preferences);
     return await handleAccept(body, session.userId, preferences);
   } catch (err) {
     if (err instanceof BudgetExceededError) {
-      return errorResponse(503, 'BUDGET_EXCEEDED', err.message);
+      return errorResponse(503, "BUDGET_EXCEEDED", err.message);
     }
-    const message = err instanceof Error ? err.message : 'Upstream failure';
-    console.error('[praxis/curriculum] unhandled', err);
-    return errorResponse(502, 'UPSTREAM_FAILED', message);
+    const message = err instanceof Error ? err.message : "Upstream failure";
+    console.error("[praxis/curriculum] unhandled", err);
+    return errorResponse(502, "UPSTREAM_FAILED", message);
   }
 }
 
@@ -106,7 +108,11 @@ async function handleOutline(
   });
   if (!guard.admitted) {
     return NextResponse.json(
-      { admitted: false, category: guard.category, explanation: guard.explanation },
+      {
+        admitted: false,
+        category: guard.category,
+        explanation: guard.explanation,
+      },
       { status: 200 },
     );
   }
@@ -148,17 +154,21 @@ async function handleAccept(
 
   // Dup check: a learner accepting the same topic twice should get 409.
   const { data: existing, error: existErr } = await supabase
-    .from('praxis_topics')
-    .select('id')
-    .eq('learner_id', learnerId)
-    .eq('fingerprint', body.fingerprint)
-    .in('status', ['outline_ready', 'active'])
+    .from("praxis_topics")
+    .select("id")
+    .eq("user_id", learnerId)
+    .eq("fingerprint", body.fingerprint)
+    .in("status", ["outline_ready", "active"])
     .maybeSingle();
   if (existErr) {
-    return errorResponse(502, 'UPSTREAM_FAILED', existErr.message);
+    return errorResponse(502, "UPSTREAM_FAILED", existErr.message);
   }
   if (existing) {
-    return errorResponse(409, 'TOPIC_EXISTS', 'You already accepted this topic');
+    return errorResponse(
+      409,
+      "TOPIC_EXISTS",
+      "You already accepted this topic",
+    );
   }
 
   // Re-resolve the cached outline.
@@ -201,3 +211,5 @@ async function handleAccept(
     { status: 201 },
   );
 }
+
+

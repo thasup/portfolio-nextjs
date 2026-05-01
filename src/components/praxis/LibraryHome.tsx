@@ -14,7 +14,7 @@ export interface LibraryHomeProps {
 
 /**
  * Library landing layout. Pure presentational; the page at
- * `/learn/page.tsx` fetches data via `requireLearner()` + Supabase and
+ * `/prototypes/praxis/page.tsx` fetches data via `requireLearner()` + Supabase and
  * hands it down.
  */
 export function LibraryHome({ displayName, topics, canGenerateTopics }: LibraryHomeProps) {
@@ -48,7 +48,7 @@ export function LibraryHome({ displayName, topics, canGenerateTopics }: LibraryH
                 <button className="chip">Product Strategy</button>
                 <button className="chip">User Research</button>
               </div>
-              <Link href="/learn/new" className="btn sm">Build syllabus</Link>
+              <Link href="/prototypes/praxis/new" className="btn sm">Build syllabus</Link>
             </div>
           </div>
         )}
@@ -96,3 +96,4 @@ export function LibraryHome({ displayName, topics, canGenerateTopics }: LibraryH
     </>
   );
 }
+

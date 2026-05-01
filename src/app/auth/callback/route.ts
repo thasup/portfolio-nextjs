@@ -4,8 +4,8 @@
  * Supabase redirects here after the user approves Google OAuth.
  * Responsibilities:
  *   1. Exchange the `code` query param for a session (sets auth cookies).
- *   2. Upsert a `praxis_learners` row for first-time sign-ins.
- *   3. Redirect to `/learn` on success, `/learn/login?error=…` on failure.
+ *   2. Upsert a `nexus_users` row for first-time sign-ins.
+ *   3. Redirect to `/prototypes` on success, or a prototype-specific path.
  *
  * This route is intentionally public — the middleware must not gate it.
  */
@@ -17,10 +17,10 @@ import type { Database } from '@/lib/praxis/supabase/database.types';
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams, origin } = request.nextUrl;
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/learn';
+  const next = searchParams.get('next') ?? '/prototypes';
 
   if (!code) {
-    return NextResponse.redirect(`${origin}/learn/login?error=missing_code`);
+    return NextResponse.redirect(`${origin}/prototypes?error=missing_code`);
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   if (!supabaseUrl || !supabaseKey) {
     console.error('[auth/callback] Supabase env vars missing');
-    return NextResponse.redirect(`${origin}/learn/login?error=server_error`);
+    return NextResponse.redirect(`${origin}/prototypes?error=server_error`);
   }
 
   let response = NextResponse.next({ request });
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   if (exchangeError) {
     console.error('[auth/callback] exchangeCodeForSession failed', exchangeError);
-    return NextResponse.redirect(`${origin}/learn/login?error=auth_error`);
+    return NextResponse.redirect(`${origin}/prototypes?error=auth_error`);
   }
 
   // Fetch the user that was just authenticated.
@@ -61,10 +61,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   } = await supabase.auth.getUser();
 
   if (!user || !user.email) {
-    return NextResponse.redirect(`${origin}/learn/login?error=no_user`);
+    return NextResponse.redirect(`${origin}/prototypes?error=no_user`);
   }
 
-  // Provision a praxis_learners row if this is the first sign-in.
+  // Provision a nexus_users row if this is the first sign-in.
   try {
     const admin = createAdminClient();
     const displayName =
@@ -72,12 +72,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       user.user_metadata?.name ??
       user.email.split('@')[0];
 
-    await admin.from('praxis_learners').upsert(
+    await admin.from('nexus_users').upsert(
       {
         id: user.id,
         email: user.email,
         display_name: displayName,
         default_locale: 'en',
+        role: 'MEMBER',
       },
       {
         onConflict: 'id',
@@ -86,8 +87,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     );
   } catch (err) {
     // Non-fatal: learner row creation failing shouldn't block sign-in.
-    // getLearner() will return null → requireLearner() will throw next render.
-    console.error('[auth/callback] praxis_learners upsert failed', err);
+    // getUser() will return null → requireUser() will throw next render.
+    console.error('[auth/callback] nexus_users upsert failed', err);
   }
 
   const redirectUrl = new URL(next, origin);

@@ -130,7 +130,7 @@ export async function saveAnswers(input: SaveAnswersInput): Promise<SaveAnswersR
   const { data: latest, error: latestErr } = await supabase
     .from('praxis_onboarding')
     .select('version')
-    .eq('learner_id', learnerId)
+    .eq('user_id', learnerId)
     .eq('topic_id', topicId)
     .order('version', { ascending: false })
     .limit(1)
@@ -144,7 +144,7 @@ export async function saveAnswers(input: SaveAnswersInput): Promise<SaveAnswersR
   const { data: inserted, error: insertErr } = await supabase
     .from('praxis_onboarding')
     .insert({
-      learner_id: learnerId,
+      user_id: learnerId,
       topic_id: topicId,
       version: nextVersion,
       answers: answers as unknown as Database['public']['Tables']['praxis_onboarding']['Insert']['answers'],
@@ -163,7 +163,7 @@ export async function saveAnswers(input: SaveAnswersInput): Promise<SaveAnswersR
     .from('praxis_topics')
     .update({ status: 'active', last_active_at: new Date().toISOString() })
     .eq('id', topicId)
-    .eq('learner_id', learnerId)
+    .eq('user_id', learnerId)
     .in('status', ['outline_ready', 'active'])
     .then(({ error }) => {
       if (error) console.error('[praxis/onboarding] topic status bump failed', error);
@@ -190,12 +190,12 @@ export async function loadTopicContext(topicId: string, learnerId: string): Prom
   const admin = createAdminClient();
   const { data: topic, error: topicErr } = await admin
     .from('praxis_topics')
-    .select('id, title, locale, learner_id, curriculum_id')
+    .select('id, title, locale, user_id, curriculum_id')
     .eq('id', topicId)
     .maybeSingle();
 
   if (topicErr || !topic) return null;
-  if (topic.learner_id !== learnerId) return null;
+  if (topic.user_id !== learnerId) return null;
   if (!topic.curriculum_id) return null;
 
   const { data: cache, error: cacheErr } = await admin
@@ -216,3 +216,4 @@ export async function loadTopicContext(topicId: string, learnerId: string): Prom
     outline: rawUnits.map((u) => ({ title: u.title, objective: u.objective, summary: u.summary })),
   };
 }
+

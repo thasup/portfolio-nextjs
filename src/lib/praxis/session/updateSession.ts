@@ -20,11 +20,11 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import type { Database } from '@/lib/praxis/supabase/database.types';
 
-/** Paths under `/learn/*` that bypass the auth gate. */
-const PRAXIS_PUBLIC_PATHS: ReadonlyArray<string> = ['/learn/login'];
+/** Paths under `/prototypes/praxis/*` that bypass the auth gate. */
+const PRAXIS_PUBLIC_PATHS: ReadonlyArray<string> = [];
 
-/** Redirect target for unauthenticated traffic on protected PRAXIS paths. */
-const NOT_INVITED_PATH = '/learn/login';
+/** Redirect target for unauthenticated traffic on protected paths. */
+const NOT_INVITED_PATH = '/prototypes';
 
 /**
  * Locale-aware path helpers. The site uses next-intl with locale prefix
@@ -79,7 +79,7 @@ export async function updateSession(request: NextRequest): Promise<UpdateSession
   } = await supabase.auth.getUser();
 
   const { locale, rest } = stripLocalePrefix(request.nextUrl.pathname);
-  const isPraxisPath = rest.startsWith('/learn') || rest.startsWith('/api/praxis');
+  const isPraxisPath = rest.startsWith('/prototypes/praxis') || rest.startsWith('/api/praxis');
   const isPublicPath = PRAXIS_PUBLIC_PATHS.some(
     (p) => rest === p || rest.startsWith(`${p}/`),
   );

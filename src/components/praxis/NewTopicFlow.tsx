@@ -163,9 +163,9 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
       updateToastToSuccess(toastId, 'Topic created!');
       setLoadingToastId(null);
       // Send first-time learners straight into onboarding. The topic
-      // hub at `/learn/[topicId]` itself redirects here when no
+      // hub at `/prototypes/praxis/[topicId]` itself redirects here when no
       // onboarding profile exists, so this is just a UX shortcut.
-      router.push(`/learn/${data.topicId}/onboarding`);
+      router.push(`/prototypes/praxis/${data.topicId}/onboarding`);
     } catch (err) {
       updateToastToError(toastId, 'Failed to create topic');
       setLoadingToastId(null);
@@ -215,3 +215,4 @@ export function NewTopicFlow({ locale }: NewTopicFlowProps) {
 
   return <TopicEntryCanvas initialValue={rawInput} onSubmit={requestOutline} />;
 }
+

@@ -4,7 +4,7 @@
  * Orchestrator for the per-topic onboarding flow.
  *
  * Phases:
- *   GENERATING → ANSWERING → SAVING → redirect to /learn/[topic]
+ *   GENERATING → ANSWERING → SAVING → redirect to /prototypes/praxis/[topic]
  *   any → ERROR (dismissible, retries from GENERATING)
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -116,7 +116,7 @@ export function OnboardingFlow({ topicId }: OnboardingFlowProps) {
       }
       updateToastToSuccess(toastId, 'Answers saved!');
       toastIdRef.current = null;
-      router.push(`/learn/${topicId}`);
+      router.push(`/prototypes/praxis/${topicId}`);
     } catch (err) {
       updateToastToError(toastId, 'Failed to save answers');
       toastIdRef.current = null;
@@ -198,3 +198,4 @@ export function OnboardingFlow({ topicId }: OnboardingFlowProps) {
     </div>
   );
 }
+
