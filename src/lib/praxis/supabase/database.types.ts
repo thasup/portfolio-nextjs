@@ -136,7 +136,7 @@ export type Database = {
           email: string;
           id: string;
           last_active_at: string;
-          
+          model_preferences: Json | null;
           role: string;
         };
         Insert: {
@@ -148,7 +148,7 @@ export type Database = {
           email: string;
           id: string;
           last_active_at?: string;
-          
+          model_preferences?: Json | null;
           role?: string;
         };
         Update: {
@@ -160,7 +160,7 @@ export type Database = {
           email?: string;
           id?: string;
           last_active_at?: string;
-          
+          model_preferences?: Json | null;
           role?: string;
         };
         Relationships: [];

@@ -40,7 +40,7 @@ export function Navbar() {
   , [activePrototypeId]);
 
   // Global control: Hide navbar if prototype explicitly requests it
-  if (protoConfig?.hideGlobalNav) return null;
+  const hideNav = !!protoConfig?.hideGlobalNav;
 
   const baseItems = useMemo(
     () => [
@@ -177,6 +177,8 @@ export function Navbar() {
       </div>
     </>
   );
+
+  if (hideNav) return null;
 
   return (
     <header 

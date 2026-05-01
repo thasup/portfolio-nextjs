@@ -17,11 +17,20 @@ model User {
   /// 'en' | 'th' (check constraint in SQL).
   defaultLocale     String   @default("en") @map("default_locale")
   canGenerateTopics Boolean  @default(false) @map("can_generate_topics")
+  canSeePrototypes  Boolean  @default(false) @map("can_see_prototypes")
   /// JSONB object: { guardrail?, curriculum?, unit?, onboarding?, judge? }
   modelPreferences  Json?    @map("model_preferences")
   createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   lastActiveAt      DateTime @default(now()) @map("last_active_at") @db.Timestamptz(6)
   role              Role?    @default(MEMBER)
+
+  topics        PraxisTopic[]
+  invitations   PraxisInvitation[] @relation("Inviter")
+  onboarding    PraxisOnboarding[]
+  templates     PraxisTemplate[]
+  conversations PraxisConversation[]
+  orgsCreated   MarketosOrg[]      @relation("OrgCreator")
+  marketosMembers MarketosMember[]
 
   @@map("nexus_users")
 }
@@ -34,6 +43,8 @@ model PraxisInvitation {
   invitedAt DateTime  @default(now()) @map("invited_at") @db.Timestamptz(6)
   revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
   note      String?
+
+  inviter User @relation("Inviter", fields: [invitedBy], references: [id])
 
   @@map("praxis_invitations")
 }
@@ -77,6 +88,12 @@ model PraxisTopic {
   lastActiveAt DateTime @default(now()) @map("last_active_at") @db.Timestamptz(6)
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  user          User                 @relation(fields: [userId], references: [id])
+  units         PraxisUnit[]
+  conversations PraxisConversation[]
+  onboarding    PraxisOnboarding[]
+  templates     PraxisTemplate[]
+
   @@index([fingerprint, locale], map: "praxis_topics_fingerprint_idx")
   @@index([userId, lastActiveAt(sort: Desc)], map: "praxis_topics_learner_active_idx")
   @@map("praxis_topics")
@@ -96,6 +113,10 @@ model PraxisUnit {
   createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  topic         PraxisTopic          @relation(fields: [topicId], references: [id])
+  conversations PraxisConversation[]
+  templates     PraxisTemplate[]
+
   @@unique([topicId, index])
   @@map("praxis_units")
 }
@@ -110,6 +131,11 @@ model PraxisConversation {
   summary       String?
   lastMessageAt DateTime? @map("last_message_at") @db.Timestamptz(6)
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user     User            @relation(fields: [userId], references: [id])
+  topic    PraxisTopic     @relation(fields: [topicId], references: [id])
+  unit     PraxisUnit?     @relation(fields: [unitId], references: [id])
+  messages PraxisMessage[]
 
   @@index([userId, lastMessageAt(sort: Desc)], map: "praxis_conversations_learner_recent_idx")
   @@index([topicId], map: "praxis_conversations_topic_idx")
@@ -126,6 +152,8 @@ model PraxisMessage {
   tokenCountOutput Int?     @map("token_count_output")
   createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  conversation PraxisConversation @relation(fields: [conversationId], references: [id])
+
   @@index([conversationId, createdAt], map: "praxis_messages_conversation_idx")
   @@map("praxis_messages")
 }
@@ -138,6 +166,9 @@ model PraxisOnboarding {
   answers   Json
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user  User        @relation(fields: [userId], references: [id])
+  topic PraxisTopic @relation(fields: [topicId], references: [id])
 
   @@unique([userId, topicId, version], map: "praxis_onboarding_learner_id_topic_id_version_key")
   @@map("praxis_onboarding")
@@ -154,6 +185,10 @@ model PraxisTemplate {
   specJson       Json     @map("spec_json")
   regenerateNote String?  @map("regenerate_note")
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user  User        @relation(fields: [userId], references: [id])
+  topic PraxisTopic @relation(fields: [topicId], references: [id])
+  unit  PraxisUnit? @relation(fields: [unitId], references: [id])
 
   @@index([userId, createdAt(sort: Desc)], map: "praxis_templates_learner_idx")
   @@map("praxis_templates")
@@ -184,6 +219,15 @@ model MarketosOrg {
   archivedAt DateTime? @map("archived_at") @db.Timestamptz(6)
   createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  creator        User?                 @relation("OrgCreator", fields: [createdBy], references: [id])
+  members        MarketosMember[]
+  invitations    MarketosInvitation[]
+  settings       MarketosOrgSettings?
+  revenuePeriods MarketosRevenuePeriod[]
+  missions       MarketosMission[]
+  payouts        MarketosPayout[]
+  notifications  MarketosNotification[]
+
   @@map("marketos_orgs")
 }
 
@@ -201,6 +245,16 @@ model MarketosMember {
   baseCompCents BigInt    @default(0) @map("base_comp_cents")
   joinedAt      DateTime  @default(now()) @map("joined_at") @db.Timestamptz(6)
   removedAt     DateTime? @map("removed_at") @db.Timestamptz(6)
+
+  org             MarketosOrg            @relation(fields: [orgId], references: [id])
+  user            User                   @relation(fields: [userId], references: [id])
+  payouts         MarketosPayout[]       @relation("PayoutRecipient")
+  postedMissions  MarketosMission[]      @relation("MissionPoster")
+  bids            MarketosBid[]
+  decidedBids     MarketosBid[]          @relation("BidDecider")
+  reviewsGiven    MarketosReview[]       @relation("ReviewReviewer")
+  reviewsReceived MarketosReview[]       @relation("ReviewReviewee")
+  notifications   MarketosNotification[]
 
   @@unique([orgId, userId])
   @@index([orgId, removedAt], map: "marketos_members_org_active_idx")
@@ -220,6 +274,8 @@ model MarketosInvitation {
   revokedAt  DateTime? @map("revoked_at") @db.Timestamptz(6)
   note       String?
 
+  org MarketosOrg @relation(fields: [orgId], references: [id])
+
   @@unique([orgId, email])
   @@map("marketos_invitations")
 }
@@ -238,6 +294,8 @@ model MarketosOrgSettings {
   updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   /// FK to auth.users(id).
   updatedBy       String?  @map("updated_by") @db.Uuid
+
+  org MarketosOrg @relation(fields: [orgId], references: [id])
 
   @@map("marketos_org_settings")
 }
@@ -261,6 +319,9 @@ model MarketosRevenuePeriod {
   closedAt        DateTime? @map("closed_at") @db.Timestamptz(6)
   createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  org     MarketosOrg      @relation(fields: [orgId], references: [id])
+  payouts MarketosPayout[]
+
   @@unique([orgId, periodLabel])
   @@index([orgId, periodStart(sort: Desc)], map: "marketos_revenue_periods_history_idx")
   @@map("marketos_revenue_periods")
@@ -282,13 +343,20 @@ model MarketosMission {
   /// open | active | delivered | completed | cancelled (check).
   status        String    @default("open")
   /// Set when a bid is accepted. Nullable while open.
-  acceptedBidId String?   @map("accepted_bid_id") @db.Uuid
+  acceptedBidId String?   @unique @map("accepted_bid_id") @db.Uuid
   deliveredAt   DateTime? @map("delivered_at") @db.Timestamptz(6)
   completedAt   DateTime? @map("completed_at") @db.Timestamptz(6)
   cancelledAt   DateTime? @map("cancelled_at") @db.Timestamptz(6)
   archivedAt    DateTime? @map("archived_at") @db.Timestamptz(6)
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  org         MarketosOrg      @relation(fields: [orgId], references: [id])
+  poster      MarketosMember   @relation("MissionPoster", fields: [posterId], references: [id])
+  acceptedBid MarketosBid?     @relation("AcceptedBid", fields: [acceptedBidId], references: [id])
+  bids        MarketosBid[]
+  payouts     MarketosPayout[]
+  reviews     MarketosReview[]
 
   @@unique([orgId, slug])
   @@index([orgId, status, createdAt(sort: Desc)], map: "marketos_missions_board_idx")
@@ -307,6 +375,12 @@ model MarketosBid {
   submittedAt DateTime  @default(now()) @map("submitted_at") @db.Timestamptz(6)
   decidedAt   DateTime? @map("decided_at") @db.Timestamptz(6)
   decidedBy   String?   @map("decided_by") @db.Uuid
+
+  mission     MarketosMission @relation(fields: [missionId], references: [id])
+  bidder      MarketosMember  @relation(fields: [bidderId], references: [id])
+  decider     MarketosMember? @relation("BidDecider", fields: [decidedBy], references: [id])
+  acceptedFor MarketosMission? @relation("AcceptedBid")
+  payout      MarketosPayout?
 
   @@unique([missionId, bidderId])
   @@index([bidderId, submittedAt(sort: Desc)], map: "marketos_bids_my_idx")
@@ -331,6 +405,12 @@ model MarketosPayout {
   releasedAt        DateTime? @map("released_at") @db.Timestamptz(6)
   voidedAt          DateTime? @map("voided_at") @db.Timestamptz(6)
 
+  bid           MarketosBid           @relation(fields: [bidId], references: [id])
+  mission       MarketosMission       @relation(fields: [missionId], references: [id])
+  org           MarketosOrg           @relation(fields: [orgId], references: [id])
+  recipient     MarketosMember        @relation("PayoutRecipient", fields: [recipientMemberId], references: [id])
+  revenuePeriod MarketosRevenuePeriod @relation(fields: [revenuePeriodId], references: [id])
+
   @@index([orgId, scheduledFor], map: "marketos_payouts_org_due_idx")
   @@index([recipientMemberId, status], map: "marketos_payouts_recipient_status_idx")
   @@map("marketos_payouts")
@@ -347,6 +427,10 @@ model MarketosReview {
   rating     Int
   feedback   String?
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  mission  MarketosMission @relation(fields: [missionId], references: [id])
+  reviewer MarketosMember  @relation("ReviewReviewer", fields: [reviewerId], references: [id])
+  reviewee MarketosMember  @relation("ReviewReviewee", fields: [revieweeId], references: [id])
 
   @@unique([missionId, direction])
   @@index([revieweeId, createdAt(sort: Desc)], map: "marketos_reviews_reviewee_idx")
@@ -365,6 +449,9 @@ model MarketosNotification {
   payload   Json?
   readAt    DateTime? @map("read_at") @db.Timestamptz(6)
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  org    MarketosOrg    @relation(fields: [orgId], references: [id])
+  member MarketosMember @relation(fields: [memberId], references: [id])
 
   @@index([memberId, readAt, createdAt(sort: Desc)], map: "marketos_notifications_inbox_idx")
   @@map("marketos_notifications")
