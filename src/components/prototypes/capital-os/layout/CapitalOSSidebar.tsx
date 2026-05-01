@@ -57,6 +57,12 @@ const NAV_PRIMARY: NavItem[] = [
     href: "goals",
     icon: Target,
   },
+  {
+    id: "nav-intelligence",
+    title: "Intelligence",
+    href: "intelligence",
+    icon: Brain,
+  },
 ];
 
 const NAV_SECONDARY: NavItem[] = [
@@ -65,24 +71,14 @@ const NAV_SECONDARY: NavItem[] = [
     title: "Transactions",
     href: "transactions",
     icon: Receipt,
-    disabled: true,
-    badge: "Soon",
-  },
-  {
-    id: "nav-intelligence",
-    title: "Intelligence",
-    href: "intelligence",
-    icon: Brain,
-    disabled: true,
-    badge: "Soon",
+    badge: "Phase 4",
   },
   {
     id: "nav-settings",
     title: "Settings",
     href: "settings",
     icon: Settings,
-    disabled: true,
-    badge: "Soon",
+    badge: "Phase 4",
   },
 ];
 
@@ -192,19 +188,32 @@ export function CapitalOSSidebar() {
               className="mb-2 block px-2 text-[11px] font-semibold uppercase tracking-wider"
               style={{ color: "var(--cos-text-3)" }}
             >
-              Coming Soon
+              Advanced
             </span>
           )}
           <ul className="space-y-1">
             {NAV_SECONDARY.map((item) => (
               <li key={item.id}>
-                <div
+                <Link
                   id={item.id}
+                  href={`${basePath}/${item.href}`}
                   className={`
-                    flex items-center gap-3 rounded-lg px-3 py-2 text-sm
-                    ${item.disabled ? "cursor-not-allowed opacity-40" : ""}
+                    flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium
+                    transition-colors duration-150
+                    ${
+                      isActive(item.href)
+                        ? ""
+                        : "hover:bg-[var(--cos-surface-2)]"
+                    }
                   `}
-                  style={{ color: "var(--cos-text-3)" }}
+                  style={{
+                    background: isActive(item.href)
+                      ? "var(--cos-accent-muted)"
+                      : undefined,
+                    color: isActive(item.href)
+                      ? "var(--cos-accent)"
+                      : "var(--cos-text-2)",
+                  }}
                 >
                   <item.icon className="h-4 w-4 shrink-0" />
                   {!collapsed && (
@@ -223,7 +232,7 @@ export function CapitalOSSidebar() {
                       )}
                     </>
                   )}
-                </div>
+                </Link>
               </li>
             ))}
           </ul>

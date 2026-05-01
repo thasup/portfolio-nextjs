@@ -14,6 +14,11 @@ export const prototypeConfigs: Record<string, PrototypeConfig> = {
     hideGlobalNav: true,
     hideGlobalFooter: true,
   },
+  "capital-os": {
+    id: "capital-os",
+    hideGlobalNav: true,
+    hideGlobalFooter: true,
+  },
   // Add other prototypes here as needed
 };
 

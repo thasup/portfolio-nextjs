@@ -5,35 +5,27 @@
  * types used across the CapitalOS prototype.
  */
 
-// ── Enums (mirrored from Prisma schema) ─────────────────────────
-// These will be replaced by Prisma re-exports once the schema migration lands.
-// For now, define them locally so the UI can ship immediately.
+// ── Enums (re-exported from Prisma schema) ──────────────────────
+import {
+  CapitalAssetType as _CapitalAssetType,
+  CapitalGoalPriority as _CapitalGoalPriority,
+  CapitalAccountSource as _CapitalAccountSource,
+} from "@prisma/client";
 
-export enum CapitalAssetType {
-  LIQUID = "LIQUID",
-  SEMI_LIQUID = "SEMI_LIQUID",
-  INVESTMENT = "INVESTMENT",
-  FIXED_ASSET = "FIXED_ASSET",
-  GOAL_FUND = "GOAL_FUND",
-}
+export const CapitalAssetType = _CapitalAssetType;
+export type CapitalAssetType = _CapitalAssetType;
 
-export enum CapitalGoalPriority {
-  CRITICAL = "CRITICAL",
-  HIGH = "HIGH",
-  MEDIUM = "MEDIUM",
-  LOW = "LOW",
-}
+export const CapitalGoalPriority = _CapitalGoalPriority;
+export type CapitalGoalPriority = _CapitalGoalPriority;
 
+export const CapitalAccountSource = _CapitalAccountSource;
+export type CapitalAccountSource = _CapitalAccountSource;
+
+// ScenarioMode is projection-only — not persisted in the database.
 export enum CapitalScenarioMode {
   CONSERVATIVE = "CONSERVATIVE",
   BASE = "BASE",
   OPTIMISTIC = "OPTIMISTIC",
-}
-
-export enum CapitalAccountSource {
-  MANUAL = "MANUAL",
-  YNAB = "YNAB",
-  AIRTABLE = "AIRTABLE",
 }
 
 // ── Record types ────────────────────────────────────────────────

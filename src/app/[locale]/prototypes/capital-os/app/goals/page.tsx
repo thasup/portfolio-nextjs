@@ -9,14 +9,14 @@ import { fmtCurrency, fmtDate } from "@/lib/capital-os/format";
 export default function GoalsPage() {
   const toTHB = (v: number) => v / 100;
 
-  const priorityColor: Record<CapitalGoalPriority, string> = {
+  const priorityColor: Record<string, string> = {
     [CapitalGoalPriority.CRITICAL]: "#ef4444",
     [CapitalGoalPriority.HIGH]: "#f97316",
     [CapitalGoalPriority.MEDIUM]: "#3b82f6",
     [CapitalGoalPriority.LOW]: "#64748b",
   };
 
-  const priorityBg: Record<CapitalGoalPriority, string> = {
+  const priorityBg: Record<string, string> = {
     [CapitalGoalPriority.CRITICAL]: "rgba(239, 68, 68, 0.12)",
     [CapitalGoalPriority.HIGH]: "rgba(249, 115, 22, 0.12)",
     [CapitalGoalPriority.MEDIUM]: "rgba(59, 130, 246, 0.12)",

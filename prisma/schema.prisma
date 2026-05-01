@@ -31,6 +31,10 @@ model User {
   conversations PraxisConversation[]
   orgsCreated   MarketosOrg[]      @relation("OrgCreator")
   marketosMembers MarketosMember[]
+  capitalAccounts    CapitalAccount[]
+  capitalLiabilities CapitalLiability[]
+  capitalGoals       CapitalGoal[]
+  capitalSnapshots   CapitalSnapshot[]
 
   @@map("nexus_users")
 }
@@ -461,4 +465,108 @@ enum Role {
   ADMIN
   MEMBER
   GUEST
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CapitalOS — Personal Financial Intelligence
+// ═══════════════════════════════════════════════════════════════════
+
+enum CapitalAssetType {
+  LIQUID
+  SEMI_LIQUID
+  INVESTMENT
+  FIXED_ASSET
+  GOAL_FUND
+}
+
+enum CapitalGoalPriority {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum CapitalAccountSource {
+  MANUAL
+  YNAB
+  AIRTABLE
+}
+
+model CapitalAccount {
+  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String               @map("user_id") @db.Uuid
+  name       String
+  /// Stored in satangs (1/100 THB).
+  balance    BigInt               @default(0)
+  type       CapitalAssetType
+  source     CapitalAccountSource @default(MANUAL)
+  externalId String?              @map("external_id")
+  icon       String?
+  color      String?
+  archivedAt DateTime?            @map("archived_at") @db.Timestamptz(6)
+  createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, externalId])
+  @@index([userId, archivedAt])
+  @@map("capital_accounts")
+}
+
+model CapitalLiability {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  name       String
+  /// Stored in satangs (negative value).
+  balance    BigInt    @default(0)
+  apr        Decimal?  @db.Decimal(5, 2)
+  icon       String?
+  color      String?
+  archivedAt DateTime? @map("archived_at") @db.Timestamptz(6)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, archivedAt])
+  @@map("capital_liabilities")
+}
+
+model CapitalGoal {
+  id         String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String              @map("user_id") @db.Uuid
+  name       String
+  /// Current amount in satangs.
+  current    BigInt              @default(0)
+  /// Target amount in satangs.
+  target     BigInt
+  deadline   DateTime?           @db.Date
+  priority   CapitalGoalPriority
+  vehicle    String?
+  archivedAt DateTime?           @map("archived_at") @db.Timestamptz(6)
+  createdAt  DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, archivedAt])
+  @@map("capital_goals")
+}
+
+model CapitalSnapshot {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  date        DateTime @db.Date
+  netWorth    BigInt   @map("net_worth")
+  liquid      BigInt
+  invested    BigInt
+  liabilities BigInt
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+  @@index([userId, date(sort: Desc)])
+  @@map("capital_snapshots")
 }
