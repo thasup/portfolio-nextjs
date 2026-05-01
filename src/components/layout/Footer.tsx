@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Github, Linkedin, Mail } from 'lucide-react'
@@ -7,13 +8,31 @@ import { siteConfig } from '@/data/siteConfig'
 import { navigationItems } from '@/data/navigation'
 import { isNavAnchorEnabled } from '@/lib/featureFlags'
 import { useTranslations } from 'next-intl'
+import { getPrototypeConfig } from '@/data/prototypes'
 
 export function Footer() {
   const t = useTranslations('footer')
   const pathname = usePathname() ?? ''
   const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href) && item.isAnchor)
 
-  const isLandingPage = pathname === '/' || pathname === '/en' || pathname === '/th' || pathname === '/en/' || pathname === '/th/';
+  const { isLandingPage, activePrototypeId } = useMemo(() => {
+    const normalized = pathname.replace(/^\/(en|th)/, "") || "/";
+    const isLanding = normalized === "/";
+    const segments = normalized.split("/").filter(Boolean);
+    const protoId = segments[0] === "prototypes" && segments.length > 1 ? segments[1] : null;
+    
+    return { 
+      isLandingPage: isLanding, 
+      activePrototypeId: protoId 
+    };
+  }, [pathname]);
+
+  const protoConfig = useMemo(() => 
+    activePrototypeId ? getPrototypeConfig(activePrototypeId) : null
+  , [activePrototypeId]);
+
+  // Global control: Hide footer if prototype explicitly requests it
+  if (protoConfig?.hideGlobalFooter) return null;
 
   return (
     <footer className="border-t border-[var(--color-line-soft)] bg-[var(--color-paper)]">

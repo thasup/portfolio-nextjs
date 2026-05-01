@@ -28,7 +28,9 @@ export default async function PrototypesPage({
   const t = await getTranslations({ locale, namespace: "prototypes" });
 
   const session = await getUser();
-  const canSeeSensitive = session?.user?.can_see_prototypes ?? false;
+  const canSeeSensitive =
+    (session?.user?.can_see_prototypes ?? false) ||
+    session?.user?.role === "ADMIN";
 
   const prototypes = [
     {

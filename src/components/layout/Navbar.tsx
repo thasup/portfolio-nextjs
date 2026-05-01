@@ -14,6 +14,7 @@ import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { isNavAnchorEnabled } from "@/lib/featureFlags";
+import { getPrototypeConfig } from "@/data/prototypes";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,11 +22,25 @@ export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname() ?? "";
 
-  // Determine mode: Landing vs Nexus
-  const isLandingPage = useMemo(() => {
+  // Determine mode: Landing vs Nexus vs Prototype Project
+  const { isLandingPage, activePrototypeId } = useMemo(() => {
     const normalized = pathname.replace(/^\/(en|th)/, "") || "/";
-    return normalized === "/";
+    const isLanding = normalized === "/";
+    const segments = normalized.split("/").filter(Boolean);
+    const protoId = segments[0] === "prototypes" && segments.length > 1 ? segments[1] : null;
+    
+    return { 
+      isLandingPage: isLanding, 
+      activePrototypeId: protoId 
+    };
   }, [pathname]);
+
+  const protoConfig = useMemo(() => 
+    activePrototypeId ? getPrototypeConfig(activePrototypeId) : null
+  , [activePrototypeId]);
+
+  // Global control: Hide navbar if prototype explicitly requests it
+  if (protoConfig?.hideGlobalNav) return null;
 
   const baseItems = useMemo(
     () => [

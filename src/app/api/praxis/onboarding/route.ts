@@ -7,7 +7,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import { getUser } from "@/lib/praxis/session/getUser";
+import { getUser } from "@/lib/nexus/session/getUser";
 import {
   generateQuestions,
   loadTopicContext,
