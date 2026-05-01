@@ -10,8 +10,9 @@
     "hire_me": "ร่วมงานกัน",
     "experience": "ประสบการณ์",
     "testimonials": "คำนิยม",
+    "home": "หน้าแรก",
     "articles": "บทความ",
-    "learn": "Praxis",
+    "prototypes": "ต้นแบบ",
     "sr_navigation": "การนำทาง",
     "open_menu": "เปิดเมนู",
     "menu_title": "เมนูการนำทาง"
@@ -736,7 +737,18 @@
       "market-os": {
         "title": "MarketOS",
         "description": "ระบบปฏิบัติการ Go-to-Market ที่ขับเคลื่อนด้วย AI สำหรับทีม Revenue ยุคใหม่ มาพร้อมกับ AI แบบ Voice-first, การวางแผน Territory และการจำลอง Comp"
+      },
+      "praxis": {
+        "title": "Praxis",
+        "description": "แพลตฟอร์มการเรียนรู้ที่ขับเคลื่อนด้วย AI ซึ่งจัดโครงสร้างหลักสูตรตามเป้าหมายของคุณ มาพร้อมกับเส้นทางการเรียนรู้ส่วนบุคคลและการประเมินแบบโต้ตอบ"
       }
+    },
+    "auth": {
+      "restrictedTitle": "จำเป็นต้องยืนยันตัวตน",
+      "restrictedDescription": "บางต้นแบบมีข้อมูลที่ละเอียดอ่อน โปรดลงชื่อเข้าใช้ด้วยบัญชี Google ของคุณเพื่อตรวจสอบสิทธิ์การเข้าถึง",
+      "signIn": "ลงชื่อเข้าใช้ด้วย Google",
+      "accessDeniedTitle": "การเข้าถึงถูกจำกัด",
+      "accessDeniedDescription": "คุณลงชื่อเข้าใช้ด้วย {email} แล้ว แต่คุณไม่ได้รับอนุญาตให้ดูต้นแบบที่มีข้อมูลละเอียดอ่อน"
     }
   },
   "footer": {
@@ -744,9 +756,9 @@
     "navigation": "เมนูนำทาง",
     "resources": "อื่นๆ",
     "articles": "บทความ",
-    "learn": "Praxis",
     "prototypes": "ต้นแบบ",
     "connect": "ติดต่อ",
+    "home": "หน้าแรก",
     "allRightsReserved": "สงวนลิขสิทธิ์."
   },
   "common": {

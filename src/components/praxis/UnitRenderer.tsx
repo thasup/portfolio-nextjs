@@ -243,7 +243,7 @@ export function UnitRenderer({
               )}
 
               <a
-                href={`/learn/${topicId}`}
+                href={`/prototypes/praxis/${topicId}`}
                 className="text-sm font-medium text-[var(--color-praxis-accent)] hover:underline"
               >
                 Back to overview
@@ -281,3 +281,4 @@ function getLatestBlocks(blocks: UnitBlock[]): UnitBlock[] {
   // Return only blocks that haven't been superseded.
   return blocks.filter((b) => !superseded.has(b.id));
 }
+

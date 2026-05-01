@@ -42,7 +42,7 @@ export async function GET(): Promise<NextResponse<GetResponse | { error: string 
 
   // Fetch learner preferences
   const { data: learner, error: learnerErr } = await supabase
-    .from('praxis_learners')
+    .from('nexus_users')
     .select('model_preferences')
     .eq('id', user.id)
     .maybeSingle();
@@ -107,7 +107,7 @@ export async function POST(
 
   // Update preferences
   const { error: updateErr } = await supabase
-    .from('praxis_learners')
+    .from('nexus_users')
     .update({ model_preferences: prefs })
     .eq('id', user.id);
 
@@ -118,3 +118,4 @@ export async function POST(
 
   return NextResponse.json({ success: true });
 }
+

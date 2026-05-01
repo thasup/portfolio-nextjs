@@ -30,7 +30,7 @@ export function TopicCard({ topic }: TopicCardProps) {
 
   return (
     <Link
-      href={`/learn/${topic.id}`}
+      href={`/prototypes/praxis/${topic.id}`}
       className="topic"
     >
       <div className="corner">{t(`statuses.${topic.status}` as 'statuses.active')}</div>
@@ -50,3 +50,4 @@ export function TopicCard({ topic }: TopicCardProps) {
     </Link>
   );
 }
+

@@ -21,7 +21,7 @@ function stripLocale(pathname: string): string {
 
 function isPraxisPath(pathname: string): boolean {
   const rest = stripLocale(pathname);
-  return rest.startsWith('/learn') || rest.startsWith('/api/praxis');
+  return rest.startsWith('/prototypes/praxis') || rest.startsWith('/api/praxis');
 }
 
 function isApiPath(pathname: string): boolean {

@@ -10,8 +10,9 @@
     "hire_me": "Hire Me",
     "experience": "Experience",
     "testimonials": "Testimonials",
+    "home": "Home",
     "articles": "Articles",
-    "learn": "Praxis",
+    "prototypes": "Prototypes",
     "sr_navigation": "Navigation",
     "open_menu": "Open menu",
     "menu_title": "Navigation Menu"
@@ -736,7 +737,18 @@
       "market-os": {
         "title": "MarketOS",
         "description": "AI-powered go-to-market operating system for modern revenue teams. Features voice-first AI, territory planning, and comp simulations."
+      },
+      "praxis": {
+        "title": "Praxis",
+        "description": "AI-powered learning platform that structures curriculum around your goals. Features personalized learning paths and interactive assessments."
       }
+    },
+    "auth": {
+      "restrictedTitle": "Authentication Required",
+      "restrictedDescription": "Some prototypes contain sensitive data. Please sign in with your Google account to verify access.",
+      "signIn": "Sign in with Google",
+      "accessDeniedTitle": "Restricted Access",
+      "accessDeniedDescription": "You are signed in as {email}, but you don't have permission to view sensitive prototypes."
     }
   },
   "footer": {
@@ -744,9 +756,9 @@
     "navigation": "Navigation",
     "resources": "Resources",
     "articles": "Articles",
-    "learn": "Praxis",
     "prototypes": "Prototypes",
     "connect": "Connect",
+    "home": "Home",
     "allRightsReserved": "All rights reserved."
   },
   "common": {

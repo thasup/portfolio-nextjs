@@ -7,13 +7,13 @@
  *   - Block rendering with inline regeneration
  *   - Mark-complete flow
  *
- * The middleware guarantees an authenticated session. `requireLearner()`
+ * The middleware guarantees an authenticated session. `requireUser()`
  * is safe to call here.
  */
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
-import { requireLearner } from '@/lib/praxis/session/getLearner';
+import { requireUser } from '@/lib/nexus/session/getUser';
 import { UnitRenderer } from '@/components/praxis/UnitRenderer';
 
 export const dynamic = 'force-dynamic';
@@ -23,7 +23,7 @@ interface UnitPageProps {
 }
 
 export default async function UnitPage({ params }: UnitPageProps) {
-  const session = await requireLearner();
+  const session = await requireUser();
   const { topicId, unitId } = await params;
 
   const cookieStore = await cookies();
@@ -38,14 +38,14 @@ export default async function UnitPage({ params }: UnitPageProps) {
       .maybeSingle(),
     supabase
       .from('praxis_topics')
-      .select('id, title, learner_id')
+      .select('id, title, user_id')
       .eq('id', topicId)
       .maybeSingle(),
   ]);
 
   // 404 if unit/topic missing or not owned by current user.
   if (!unit || !topic) notFound();
-  if (topic.learner_id !== session.userId) notFound();
+  if (topic.user_id !== session.userId) notFound();
   if (unit.topic_id !== topicId) notFound();
 
   // Parse blocks from JSONB.
@@ -72,3 +72,5 @@ export default async function UnitPage({ params }: UnitPageProps) {
     />
   );
 }
+
+

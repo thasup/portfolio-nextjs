@@ -14,7 +14,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
-import { getLearner } from '@/lib/praxis/session/getLearner';
+import { getUser } from '@/lib/nexus/session/getUser';
 import { BudgetExceededError } from '@/lib/praxis/openrouter/ledger';
 import {
   BlockNotFoundError,
@@ -57,7 +57,7 @@ function errorResponse(status: number, code: string, message: string) {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   // ---- auth ---------------------------------------------------------------
-  const session = await getLearner();
+  const session = await getUser();
   if (!session) {
     return errorResponse(401, 'NOT_AUTHENTICATED', 'Sign-in required');
   }
@@ -77,10 +77,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     switch (body.action) {
       case 'generate': {
-        // Guard: only learners with can_generate_topics can generate unit content
-        if (!session.learner.can_generate_topics) {
-          return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Content generation is not enabled for your account. Contact admin for access.');
-        }
+
         const result = await generateUnit({
           unitId: body.unitId,
           learnerId: session.userId,
@@ -97,10 +94,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
 
       case 'regenerate_block': {
-        // Guard: only learners with can_generate_topics can regenerate blocks
-        if (!session.learner.can_generate_topics) {
-          return errorResponse(403, 'GENERATION_NOT_ALLOWED', 'Content generation is not enabled for your account. Contact admin for access.');
-        }
+
         const result = await regenerateBlock({
           unitId: body.unitId,
           blockId: body.blockId,
@@ -144,3 +138,4 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return errorResponse(502, 'UPSTREAM_FAILED', message);
   }
 }
+

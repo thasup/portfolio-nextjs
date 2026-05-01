@@ -14,7 +14,7 @@
 import { cookies } from 'next/headers';
 import { LibraryHome } from '@/components/praxis/LibraryHome';
 import type { TopicCardData } from '@/components/praxis/TopicCard';
-import { requireLearner } from '@/lib/praxis/session/getLearner';
+import { requireUser } from '@/lib/nexus/session/getUser';
 import { createClient } from '@/utils/supabase/server';
 
 export const dynamic = 'force-dynamic';
@@ -25,7 +25,7 @@ async function loadTopics(learnerId: string): Promise<TopicCardData[]> {
   const { data, error } = await supabase
     .from('praxis_topics')
     .select('id,title,status,last_active_at')
-    .eq('learner_id', learnerId)
+    .eq('user_id', learnerId)
     .neq('status', 'rejected')
     .order('last_active_at', { ascending: false })
     .limit(50);
@@ -40,16 +40,15 @@ async function loadTopics(learnerId: string): Promise<TopicCardData[]> {
 }
 
 export default async function LibraryPage() {
-  const session = await requireLearner();
+  const session = await requireUser();
   const topics = await loadTopics(session.userId);
-  const displayName = session.learner.display_name ?? session.email.split('@')[0];
-  const canGenerateTopics = session.learner.can_generate_topics;
-
+  const displayName = session.user.display_name ?? session.email.split('@')[0];
   return (
     <LibraryHome
       displayName={displayName}
       topics={topics}
-      canGenerateTopics={canGenerateTopics}
+      canGenerateTopics={true}
     />
   );
 }
+

@@ -13,13 +13,7 @@ export function Footer() {
   const pathname = usePathname() ?? ''
   const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href) && item.isAnchor)
 
-  // Standalone prototype surfaces own their own footer.
-  const isStandalone =
-    pathname.startsWith('/prototypes') ||
-    pathname.startsWith('/en/prototypes') ||
-    pathname.startsWith('/th/prototypes')
-  if (isStandalone) return null
-
+  const isLandingPage = pathname === '/' || pathname === '/en' || pathname === '/th' || pathname === '/en/' || pathname === '/th/';
 
   return (
     <footer className="border-t border-[var(--color-line-soft)] bg-[var(--color-paper)]">
@@ -27,9 +21,16 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/" className="text-lg font-bold text-[var(--color-ink)]">
-              Thanachon
-              <span className="text-[var(--color-praxis-accent)]">.</span>
+            <Link href="/" className="text-lg font-bold text-[var(--color-ink)] flex items-center gap-2">
+              <span>
+                Thanachon
+                <span className="text-[var(--color-praxis-accent)]">.</span>
+              </span>
+              {!isLandingPage && (
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20">
+                  Nexus
+                </span>
+              )}
             </Link>
             <p className="mt-2 text-sm text-[var(--color-ink-3)]">
               {t('headline')}
@@ -39,54 +40,68 @@ export function Footer() {
           {/* Navigation */}
           <div>
             <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
-              {t('navigation')}
+              {isLandingPage ? t('navigation') : 'Nexus'}
             </h3>
             <ul className="space-y-2">
-              {footerNavItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {isLandingPage ? (
+                footerNavItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li>
+                    <Link href="/" className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]">
+                      {t('home')}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/prototypes" className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]">
+                      {t('prototypes')}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/articles" className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]">
+                      {t('articles')}
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
-          {/* Articles */}
-          <div>
-            <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
-              {t('resources')}
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/articles"
-                  className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
-                >
-                  {t('articles')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/learn"
-                  className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
-                >
-                  {t('learn')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/prototypes"
-                  className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
-                >
-                  {t('prototypes')}
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Resources */}
+          {isLandingPage ? (
+            <div>
+              <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
+                {t('resources')}
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/articles"
+                    className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                  >
+                    {t('articles')}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/prototypes"
+                    className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                  >
+                    {t('prototypes')}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          ) : <div />}
 
           {/* Social */}
           <div>

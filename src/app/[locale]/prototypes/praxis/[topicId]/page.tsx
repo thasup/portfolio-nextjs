@@ -16,7 +16,7 @@ import { cookies } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
-import { requireLearner } from '@/lib/praxis/session/getLearner';
+import { requireUser } from '@/lib/nexus/session/getUser';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,7 +33,7 @@ interface TopicUnit {
 }
 
 export default async function TopicPage({ params }: TopicPageProps) {
-  const session = await requireLearner();
+  const session = await requireUser();
   const { topicId } = await params;
   const t = await getTranslations('praxis.topic');
 
@@ -43,7 +43,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
   const [{ data: topic }, { data: units }, { data: onboarding }] = await Promise.all([
     supabase
       .from('praxis_topics')
-      .select('id, title, status, learner_id')
+      .select('id, title, status, user_id')
       .eq('id', topicId)
       .maybeSingle(),
     supabase
@@ -55,12 +55,12 @@ export default async function TopicPage({ params }: TopicPageProps) {
       .from('praxis_onboarding')
       .select('id')
       .eq('topic_id', topicId)
-      .eq('learner_id', session.userId)
+      .eq('user_id', session.userId)
       .limit(1)
       .maybeSingle(),
   ]);
 
-  if (!topic || topic.learner_id !== session.userId) notFound();
+  if (!topic || topic.user_id !== session.userId) notFound();
 
   // First-time hub visit without onboarding → send to onboarding.
   if (!onboarding) {
@@ -159,3 +159,5 @@ export default async function TopicPage({ params }: TopicPageProps) {
     </section>
   );
 }
+
+

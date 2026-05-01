@@ -8,15 +8,15 @@
  * rather than
  *
  *     import type { Database } from '@/lib/praxis/supabase/database.types';
- *     type LearnerRow = Database['public']['Tables']['praxis_learners']['Row'];
+ *     type LearnerRow = Database['public']['Tables']['nexus_users']['Row'];
  */
 import type { Database } from '@/lib/praxis/supabase/database.types';
 
 type T = Database['public']['Tables'];
 
-export type LearnerRow = T['praxis_learners']['Row'];
-export type LearnerInsert = T['praxis_learners']['Insert'];
-export type LearnerUpdate = T['praxis_learners']['Update'];
+export type UserRow = T['nexus_users']['Row'];
+export type UserInsert = T['nexus_users']['Insert'];
+export type UserUpdate = T['nexus_users']['Update'];
 
 export type InvitationRow = T['praxis_invitations']['Row'];
 export type InvitationInsert = T['praxis_invitations']['Insert'];
@@ -51,3 +51,4 @@ export type UnitCacheRow = T['praxis_unit_cache']['Row'];
 export type UnitCacheInsert = T['praxis_unit_cache']['Insert'];
 
 export type SpendLedgerInsert = T['praxis_spend_ledger']['Insert'];
+

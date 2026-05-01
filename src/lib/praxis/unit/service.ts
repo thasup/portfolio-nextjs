@@ -138,11 +138,11 @@ async function loadUnitContext(
 
   const { data: topic, error: topicErr } = await supabase
     .from('praxis_topics')
-    .select('id, title, fingerprint, locale, raw_input, curriculum_id, learner_id')
+    .select('id, title, fingerprint, locale, raw_input, curriculum_id, user_id')
     .eq('id', unit.topic_id)
     .maybeSingle();
 
-  if (topicErr || !topic || topic.learner_id !== learnerId) return null;
+  if (topicErr || !topic || topic.user_id !== learnerId) return null;
 
   // Load outline from curriculum cache.
   let outline: OutlineUnit[] = [];
@@ -165,7 +165,7 @@ async function loadUnitContext(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { learner_id: _ownerId, ...topicWithoutOwner } = topic;
+  const { user_id: _ownerId, ...topicWithoutOwner } = topic;
   return { unit, topic: topicWithoutOwner, outline };
 }
 
@@ -182,7 +182,7 @@ async function loadLearnerContext(
   const { data: onboarding } = await supabase
     .from('praxis_onboarding')
     .select('answers')
-    .eq('learner_id', learnerId)
+    .eq('user_id', learnerId)
     .eq('topic_id', topicId)
     .order('version', { ascending: false })
     .limit(1)
@@ -297,7 +297,7 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
 
       // Load learner context for the practice block.
       const { data: learnerRow } = await supabase
-        .from('praxis_learners')
+        .from('nexus_users')
         .select('display_name')
         .eq('id', learnerId)
         .maybeSingle();
@@ -574,3 +574,4 @@ export async function markUnitComplete(
     })
     .eq('id', unitId);
 }
+

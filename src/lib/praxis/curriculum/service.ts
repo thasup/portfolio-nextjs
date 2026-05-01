@@ -337,7 +337,7 @@ export async function persistAcceptedOutline(
   const { data: topic, error: topicErr } = await supabase
     .from('praxis_topics')
     .insert({
-      learner_id: learnerId,
+      user_id: learnerId,
       title,
       raw_input: rawInput,
       fingerprint,
@@ -376,3 +376,4 @@ export async function persistAcceptedOutline(
       .map((u) => ({ id: u.id, index: u.index, title: u.title, status: u.status })),
   };
 }
+

@@ -10,7 +10,7 @@ import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import { OnboardingFlow } from '@/components/praxis/OnboardingFlow';
-import { requireLearner } from '@/lib/praxis/session/getLearner';
+import { requireUser } from '@/lib/nexus/session/getUser';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,18 +19,18 @@ interface OnboardingPageProps {
 }
 
 export default async function OnboardingPage({ params }: OnboardingPageProps) {
-  const session = await requireLearner();
+  const session = await requireUser();
   const { topicId } = await params;
 
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
   const { data: topic } = await supabase
     .from('praxis_topics')
-    .select('id, title, learner_id, status')
+    .select('id, title, user_id, status')
     .eq('id', topicId)
     .maybeSingle();
 
-  if (!topic || topic.learner_id !== session.userId) {
+  if (!topic || topic.user_id !== session.userId) {
     notFound();
   }
 
@@ -40,3 +40,5 @@ export default async function OnboardingPage({ params }: OnboardingPageProps) {
     </div>
   );
 }
+
+

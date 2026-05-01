@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
+import { NavbarAuthProfile } from "@/components/layout/NavbarAuthProfile";
 import { siteConfig } from "@/data/siteConfig";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
@@ -20,14 +21,11 @@ export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname() ?? "";
 
-  // Standalone prototype surfaces (e.g. /prototypes/market-os) own their
-  // own chrome — suppress the Nexus global navbar there. Computed before
-  // any other hooks below; the actual early-return happens after all
-  // hooks so the hook order stays stable across renders.
-  const isStandalone =
-    pathname.startsWith("/prototypes") ||
-    pathname.startsWith("/en/prototypes") ||
-    pathname.startsWith("/th/prototypes");
+  // Determine mode: Landing vs Nexus
+  const isLandingPage = useMemo(() => {
+    const normalized = pathname.replace(/^\/(en|th)/, "") || "/";
+    return normalized === "/";
+  }, [pathname]);
 
   const baseItems = useMemo(
     () => [
@@ -38,8 +36,15 @@ export function Navbar() {
       { id: "testimonials", label: t("testimonials"), href: "/#testimonials" },
       { id: "value", label: t("value"), href: "/#value" },
       { id: "contact", label: t("contact"), href: "/#contact" },
-      // { id: "articles", label: t("articles"), href: "/articles" },
-      // { id: "learn", label: t("learn"), href: "/learn" }
+    ],
+    [t]
+  );
+
+  const nexusItems = useMemo(
+    () => [
+      { id: "home", label: t("home"), href: "/" },
+      { id: "prototypes", label: t("prototypes"), href: "/prototypes" },
+      { id: "articles", label: t("articles"), href: "/articles" },
     ],
     [t]
   );
@@ -48,6 +53,8 @@ export function Navbar() {
     () => baseItems.filter((item) => isNavAnchorEnabled(item.href)),
     [baseItems]
   );
+
+  const displayItems = isLandingPage ? navItems : nexusItems;
 
   const sectionIds = useMemo(
     () =>
@@ -65,31 +72,35 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (isStandalone) return null;
-
   const isActive = (href: string) => {
-    // Handle non-anchor links (e.g., /articles)
-    if (!href.includes("#")) {
-      return false; // These are handled by the router's active state
+    if (href.includes("#")) {
+      if (!activeSection) return false;
+      return href.includes(`#${activeSection}`);
     }
-    // Handle anchor links (e.g., /#hero)
-    if (!activeSection) return false;
-    return href.includes(`#${activeSection}`);
+    const normalizedPath = pathname.replace(/^\/(en|th)/, "") || "/";
+    return normalizedPath === href;
   };
 
   const navContent = (
     <>
-      <Link
-        href="/"
-        className="text-lg font-bold tracking-tight transition-colors hover:text-primary z-50 relative"
-      >
-        Thanachon
-        <span className="text-primary">.</span>
-      </Link>
+      <div className="flex items-center gap-2 z-50 relative">
+        <Link
+          href="/"
+          className="text-lg font-bold tracking-tight transition-colors hover:text-primary"
+        >
+          Thanachon
+          <span className="text-primary">.</span>
+        </Link>
+        {!isLandingPage && (
+          <div className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20">
+            Nexus
+          </div>
+        )}
+      </div>
 
       {/* Desktop Nav */}
       <div className="hidden items-center gap-1 md:flex absolute left-1/2 -translate-x-1/2">
-        {navItems.map((item) => (
+        {displayItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
@@ -107,12 +118,14 @@ export function Navbar() {
       <div className="hidden items-center gap-2 md:flex">
         <ThemeToggle />
         <LanguageToggle />
+        <NavbarAuthProfile />
       </div>
 
       {/* Mobile Menu */}
       <div className="flex items-center gap-2 md:hidden">
         <LanguageToggle />
         <ThemeToggle />
+        <NavbarAuthProfile />
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="h-9 w-9" aria-label={t("open_menu")}>
@@ -122,7 +135,7 @@ export function Navbar() {
           <SheetContent side="right" className="w-72">
             <SheetTitle className="sr-only">{t("menu_title")}</SheetTitle>
             <div className="mt-8 flex flex-col gap-1">
-              {navItems.map((item) => (
+              {displayItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -151,7 +164,12 @@ export function Navbar() {
   );
 
   return (
-    <header className="hdr flex items-center justify-between px-6 py-4 border-b border-[var(--color-line-soft)] bg-[var(--color-paper)] z-40 fixed top-0 w-full">
+    <header 
+      className={cn(
+        "hdr flex items-center justify-between px-6 py-4 border-b border-[var(--color-line-soft)] bg-[var(--color-paper)] z-40 fixed top-0 w-full transition-all duration-300",
+        scrolled ? "py-3 shadow-sm" : "py-4"
+      )}
+    >
       {navContent}
     </header>
   );
