@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, FileText } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { NavbarAuthProfile } from "@/components/layout/NavbarAuthProfile";
-import { siteConfig } from "@/data/siteConfig";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -86,6 +85,9 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Global control: Hide navbar if prototype explicitly requests it
+  if (protoConfig?.hideGlobalNav) return null;
 
   const isActive = (href: string) => {
     if (href.includes("#")) {
@@ -191,3 +193,4 @@ export function Navbar() {
     </header>
   );
 }
+
