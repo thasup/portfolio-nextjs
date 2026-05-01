@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { Analytics } from '@vercel/analytics/next';
 import { sarabun, fraunces, instrumentSerif, inter, jetbrainsMono } from '@/lib/fonts'
 import { ThemeProvider } from 'next-themes'
 import Script from 'next/script'
@@ -73,16 +74,15 @@ export default async function RootLayout({
   const gtmId = process.env.NEXT_PUBLIC_GTM_MEASUREMENT_ID
 
   return (
-      <html
-        lang={locale}
-        className={`${fraunces.variable} ${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${sarabun.variable}`}
-        suppressHydrationWarning
-      >
-        <body 
-          className={`app antialiased ${
-            locale === 'th' ? 'font-sarabun leading-loose' : ''
+    <html
+      lang={locale}
+      className={`${fraunces.variable} ${instrumentSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${sarabun.variable}`}
+      suppressHydrationWarning
+    >
+      <body
+        className={`app antialiased ${locale === 'th' ? 'font-sarabun leading-loose' : ''
           }`}
-        >
+      >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
@@ -108,6 +108,7 @@ export default async function RootLayout({
                   },
                 }}
               />
+              <Analytics />
             </ModalProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
