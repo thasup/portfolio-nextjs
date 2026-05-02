@@ -22,6 +22,8 @@ import {
   ChevronLeft,
   ChevronRight,
   HardDrive,
+  ArrowRightLeft,
+  Scale,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -75,6 +77,20 @@ const NAV_SECONDARY: NavItem[] = [
     href: "transactions",
     icon: Receipt,
     badge: "Phase 4",
+  },
+  {
+    id: "nav-mapping",
+    title: "Mapping",
+    href: "mapping",
+    icon: ArrowRightLeft,
+    badge: "v4",
+  },
+  {
+    id: "nav-reconciliation",
+    title: "Reconcile",
+    href: "reconciliation",
+    icon: Scale,
+    badge: "v4",
   },
   {
     id: "nav-snapshots",

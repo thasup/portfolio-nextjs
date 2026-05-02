@@ -1,18 +1,23 @@
 "use client";
 
 /**
- * Snapshots Page - Display Airtable snapshots grouped by sync run.
+ * Snapshots Page - Display Airtable snapshots and SA portfolio snapshots.
  *
- * Shows raw Airtable data captured during sync operations.
+ * Shows both:
+ * 1. Raw Airtable data captured during sync operations
+ * 2. SA (Snowball Analytics) portfolio snapshots entered via wizard
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
+import { SnapshotWizard } from "@/components/prototypes/capital-os/SnapshotWizard";
 import {
   useAirtableSnapshots,
   type SyncRunInfo,
   type AirtableSnapshot,
 } from "@/lib/capital-os/hooks/useAirtableSnapshots";
+import type { CapitalSACategory, CapitalSAAsset } from "@/lib/capital-os/types";
+import { CapitalPortfolioType } from "@/lib/capital-os/types";
 import Link from "next/link";
 import {
   Database,
@@ -25,6 +30,9 @@ import {
   Table2,
   FileJson,
   ExternalLink,
+  Plus,
+  TrendingUp,
+  Calendar,
 } from "lucide-react";
 import type { CapitalAirtableEntityType } from "@prisma/client";
 
@@ -223,14 +231,178 @@ function SnapshotRow({ snapshot }: { snapshot: AirtableSnapshot }) {
   );
 }
 
+// Default SA category structure for new users
+const DEFAULT_CATEGORIES: { strategic: CapitalSACategory[]; tactical: CapitalSACategory[] } = {
+  strategic: [
+    {
+      id: "bonds",
+      userId: "",
+      portfolioType: CapitalPortfolioType.STRATEGIC,
+      name: "Bonds",
+      targetPct: 29.41,
+      sortOrder: 0,
+      createdAt: "",
+      updatedAt: "",
+      assets: [
+        { id: "", categoryId: "bonds", ticker: "KXF", name: "GB Thai ESG Fund", valueThb: null, shares: null, targetPct: 100, sortOrder: 0, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "bonds", ticker: "PVF", name: "PVF/BCAP Fund", valueThb: null, shares: null, targetPct: null, sortOrder: 1, createdAt: "", updatedAt: "" },
+      ],
+    },
+    {
+      id: "real_assets",
+      userId: "",
+      portfolioType: CapitalPortfolioType.STRATEGIC,
+      name: "Real Assets",
+      targetPct: 29.41,
+      sortOrder: 1,
+      createdAt: "",
+      updatedAt: "",
+      assets: [
+        { id: "", categoryId: "real_assets", ticker: "GC", name: "GC Gold", valueThb: null, shares: null, targetPct: 80, sortOrder: 0, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "real_assets", ticker: "VCI", name: "VICI Properties", valueThb: null, shares: null, targetPct: 20, sortOrder: 1, createdAt: "", updatedAt: "" },
+      ],
+    },
+    {
+      id: "cash_strat",
+      userId: "",
+      portfolioType: CapitalPortfolioType.STRATEGIC,
+      name: "Cash",
+      targetPct: 23.54,
+      sortOrder: 2,
+      createdAt: "",
+      updatedAt: "",
+      assets: [
+        { id: "", categoryId: "cash_strat", ticker: "THB", name: "THB Thai Baht", valueThb: null, shares: null, targetPct: 50, sortOrder: 0, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "cash_strat", ticker: "USD", name: "USD US Dollar", valueThb: null, shares: null, targetPct: 50, sortOrder: 1, createdAt: "", updatedAt: "" },
+      ],
+    },
+  ],
+  tactical: [
+    {
+      id: "us_equity",
+      userId: "",
+      portfolioType: CapitalPortfolioType.TACTICAL,
+      name: "US Equity",
+      targetPct: 42.86,
+      sortOrder: 0,
+      createdAt: "",
+      updatedAt: "",
+      assets: [
+        { id: "", categoryId: "us_equity", ticker: "VUAA", name: "Vanguard S&P 500", valueThb: null, shares: null, targetPct: 66.67, sortOrder: 0, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "us_equity", ticker: "FTECH", name: "Fidelity Global Tech", valueThb: null, shares: null, targetPct: 33.33, sortOrder: 1, createdAt: "", updatedAt: "" },
+      ],
+    },
+    {
+      id: "tech",
+      userId: "",
+      portfolioType: CapitalPortfolioType.TACTICAL,
+      name: "Information Technology",
+      targetPct: 24.49,
+      sortOrder: 1,
+      createdAt: "",
+      updatedAt: "",
+      assets: [
+        { id: "", categoryId: "tech", ticker: "AAPL", name: "Apple Inc", valueThb: null, shares: null, targetPct: 23.53, sortOrder: 0, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "tech", ticker: "GOOGL", name: "Alphabet Inc", valueThb: null, shares: null, targetPct: 23.53, sortOrder: 1, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "tech", ticker: "MSFT", name: "Microsoft", valueThb: null, shares: null, targetPct: 23.53, sortOrder: 2, createdAt: "", updatedAt: "" },
+        { id: "", categoryId: "tech", ticker: "TSM", name: "Taiwan Semi", valueThb: null, shares: null, targetPct: 17.65, sortOrder: 3, createdAt: "", updatedAt: "" },
+      ],
+    },
+  ],
+};
+
+function SASnapshotCard({ 
+  date, 
+  total, 
+  fxRate 
+}: { 
+  date: string; 
+  total: number; 
+  fxRate?: number;
+}) {
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "THB",
+      minimumFractionDigits: 0,
+    }).format(amount / 100); // Convert satangs to THB
+  };
+
+  return (
+    <div 
+      className="rounded-xl border overflow-hidden"
+      style={{
+        background: "var(--cos-surface)",
+        borderColor: "var(--cos-border-subtle)",
+      }}
+    >
+      <div className="flex items-center gap-4 p-4">
+        <div 
+          className="flex h-10 w-10 items-center justify-center rounded-full"
+          style={{ background: "var(--intent-accent-muted)" }}
+        >
+          <TrendingUp className="h-5 w-5" style={{ color: "var(--intent-accent)" }} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="font-medium">SA Portfolio Snapshot</span>
+            <span
+              className="text-xs px-2 py-0.5 rounded-full"
+              style={{ background: "var(--cos-surface-2)", color: "var(--intent-accent)" }}
+            >
+              Manual Entry
+            </span>
+          </div>
+          <div
+            className="flex items-center gap-4 mt-1 text-sm"
+            style={{ color: "var(--cos-text-2)" }}
+          >
+            <span className="flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5" />
+              {new Date(date).toLocaleDateString()}
+            </span>
+            {fxRate && (
+              <span className="font-mono">1 USD = {fxRate} THB</span>
+            )}
+          </div>
+        </div>
+        <div className="text-right shrink-0">
+          <div className="font-mono font-bold text-lg" style={{ color: "var(--intent-accent)" }}>
+            {formatCurrency(total)}
+          </div>
+          <div className="text-xs" style={{ color: "var(--cos-text-3)" }}>
+            Total Value
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function SnapshotsPage() {
   const { syncRuns, loading, error, refetch } = useAirtableSnapshots({ limit: 50 });
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const [saCategories, setSACategories] = useState(DEFAULT_CATEGORIES);
+
+  // Fetch SA categories on mount
+  useEffect(() => {
+    fetch("/api/capital-os/sa-categories")
+      .then(res => res.json())
+      .then(data => {
+        if (data.strategic?.length > 0 || data.tactical?.length > 0) {
+          setSACategories(data);
+        }
+      })
+      .catch(() => {
+        // Use default categories if fetch fails
+      });
+  }, []);
 
   return (
     <div className="flex flex-col h-full">
       <CapitalOSHeader
-        title="Airtable Snapshots"
-        subtitle="View raw data captured from Airtable sync operations"
+        title="Portfolio Snapshots"
+        subtitle="SA and Airtable snapshots for net worth reconciliation"
       />
 
       <div className="flex-1 p-6 overflow-y-auto">
@@ -243,19 +415,33 @@ export default function SnapshotsPage() {
             </span>
           </div>
 
-          <button
-            onClick={refetch}
-            disabled={loading}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-[var(--cos-surface-2)] disabled:opacity-50"
-            style={{
-              background: "var(--cos-surface)",
-              border: "1px solid var(--cos-border-subtle)",
-              color: "var(--cos-text)",
-            }}
-          >
-            <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-            Refresh
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsWizardOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors hover:opacity-90"
+              style={{
+                background: "var(--intent-accent)",
+                color: "white",
+              }}
+            >
+              <Plus className="h-4 w-4" />
+              New SA Snapshot
+            </button>
+
+            <button
+              onClick={refetch}
+              disabled={loading}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-[var(--cos-surface-2)] disabled:opacity-50"
+              style={{
+                background: "var(--cos-surface)",
+                border: "1px solid var(--cos-border-subtle)",
+                color: "var(--cos-text)",
+              }}
+            >
+              <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+              Refresh
+            </button>
+          </div>
         </div>
 
         {/* Error State */}
@@ -313,12 +499,55 @@ export default function SnapshotsPage() {
           </div>
         )}
 
-        {/* Sync Runs List */}
-        <div className="space-y-4">
-          {syncRuns.map((run) => (
-            <SyncRunCard key={run.syncRunId} run={run} />
-          ))}
+        {/* SA Snapshots Section */}
+        <div className="mb-8">
+          <h3 className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: "var(--cos-text-2)" }}>
+            SA Portfolio Snapshots
+          </h3>
+          <div className="space-y-3">
+            {/* Demo snapshot card */}
+            <SASnapshotCard
+              date={new Date().toISOString()}
+              total={61052400} // ฿610,524 in satangs
+              fxRate={33.47}
+            />
+            <div
+              className="rounded-xl border border-dashed p-6 text-center"
+              style={{
+                background: "var(--cos-surface)",
+                borderColor: "var(--cos-border-subtle)",
+              }}
+            >
+              <TrendingUp className="h-8 w-8 mx-auto mb-3" style={{ color: "var(--cos-text-3)" }} />
+              <p className="text-sm" style={{ color: "var(--cos-text-2)" }}>
+                No additional SA snapshots yet. Use the wizard to capture your portfolio values.
+              </p>
+            </div>
+          </div>
         </div>
+
+        {/* Airtable Snapshots Section */}
+        <div>
+          <h3 className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: "var(--cos-text-2)" }}>
+            Airtable Sync History
+          </h3>
+          <div className="space-y-4">
+            {syncRuns.map((run) => (
+              <SyncRunCard key={run.syncRunId} run={run} />
+            ))}
+          </div>
+        </div>
+
+        {/* Snapshot Wizard Modal */}
+        <SnapshotWizard
+          isOpen={isWizardOpen}
+          onClose={() => setIsWizardOpen(false)}
+          onComplete={() => {
+            setIsWizardOpen(false);
+            // Could refetch SA snapshot history here
+          }}
+          categories={saCategories}
+        />
       </div>
     </div>
   );

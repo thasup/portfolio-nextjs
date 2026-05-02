@@ -10,6 +10,9 @@ import {
   CapitalAssetType as _CapitalAssetType,
   CapitalGoalPriority as _CapitalGoalPriority,
   CapitalAccountSource as _CapitalAccountSource,
+  CapitalMappingRole as _CapitalMappingRole,
+  CapitalPortfolioType as _CapitalPortfolioType,
+  CapitalInsightSeverity as _CapitalInsightSeverity,
 } from "@prisma/client";
 
 export const CapitalAssetType = _CapitalAssetType;
@@ -20,6 +23,16 @@ export type CapitalGoalPriority = _CapitalGoalPriority;
 
 export const CapitalAccountSource = _CapitalAccountSource;
 export type CapitalAccountSource = _CapitalAccountSource;
+
+// CapitalOS v4 Dual-Source Enums
+export const CapitalMappingRole = _CapitalMappingRole;
+export type CapitalMappingRole = _CapitalMappingRole;
+
+export const CapitalPortfolioType = _CapitalPortfolioType;
+export type CapitalPortfolioType = _CapitalPortfolioType;
+
+export const CapitalInsightSeverity = _CapitalInsightSeverity;
+export type CapitalInsightSeverity = _CapitalInsightSeverity;
 
 // ScenarioMode is projection-only — not persisted in the database.
 export enum CapitalScenarioMode {
@@ -132,4 +145,68 @@ export interface DashboardMetric {
   icon: string;
   color: string;
   trend: "up" | "down" | "neutral";
+}
+
+// ── SA Portfolio types (CapitalOS v4) ─────────────────────────
+
+export interface CapitalSACategory {
+  id: string;
+  userId: string;
+  portfolioType: CapitalPortfolioType;
+  name: string;
+  targetPct: number | null;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+  assets?: CapitalSAAsset[];
+}
+
+export interface CapitalSAAsset {
+  id: string;
+  categoryId: string;
+  ticker: string;
+  name: string;
+  valueThb: number | null;
+  shares: number | null;
+  targetPct: number | null;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CapitalMappingConfig {
+  id: string;
+  userId: string;
+  ynabAccId: string;
+  saCategory: string | null;
+  role: CapitalMappingRole;
+  note: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ── Reconciliation types ───────────────────────────────────────
+
+export interface ReconciliationRow {
+  category: string;
+  portfolioType: CapitalPortfolioType;
+  saValue: number;    // Live value from SA snapshot (satangs)
+  ynabValue: number;  // Sum of mapped YNAB accounts (satangs)
+  gap: number;        // ynabValue - saValue
+  mappedAccounts: string[]; // YNAB account names
+}
+
+// ── Agent Insight types ────────────────────────────────────────
+
+export type AgentInsightAgent = "Analyst" | "Advisor" | "Accountant" | "Strategist";
+
+export interface AgentInsight {
+  id: string;
+  agent: AgentInsightAgent;
+  icon: string;  // emoji
+  severity: CapitalInsightSeverity;
+  title: string;
+  body: string;
+  action?: string;
+  actionHref?: string;
 }

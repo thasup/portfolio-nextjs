@@ -31,17 +31,19 @@ model User {
   conversations      PraxisConversation[]
   orgsCreated        MarketosOrg[]        @relation("OrgCreator")
   marketosMembers    MarketosMember[]
-  capitalAccounts    CapitalAccount[]
-  capitalLiabilities CapitalLiability[]
-  capitalGoals       CapitalGoal[]
-  capitalSnapshots   CapitalSnapshot[]
+  capitalAccounts          CapitalAccount[]
+  capitalLiabilities       CapitalLiability[]
+  capitalGoals             CapitalGoal[]
+  capitalSnapshots         CapitalSnapshot[]
   capitalSnowballSnapshots CapitalSnowballSnapshot[]
-  capitalSettings    CapitalSettings?
-  capitalSyncLogs    CapitalSyncLog[]
-  capitalAlerts      CapitalAlert[]
-  capitalScenarios   CapitalScenario[]
+  capitalSettings          CapitalSettings?
+  capitalSyncLogs          CapitalSyncLog[]
+  capitalAlerts            CapitalAlert[]
+  capitalScenarios         CapitalScenario[]
   capitalAirtableConfigs   CapitalAirtableConfig[]
   capitalAirtableSnapshots CapitalAirtableSnapshot[]
+  capitalSACategories      CapitalSACategory[] @relation("UserSACategories")
+  capitalMappingConfigs    CapitalMappingConfig[] @relation("UserMappingConfigs")
 
   @@map("nexus_users")
 }
@@ -497,22 +499,42 @@ enum CapitalAccountSource {
   MANUAL
   YNAB
   AIRTABLE
+  SA_SNAPSHOT
+}
+
+enum CapitalMappingRole {
+  SA_COVERED  // SA has authoritative value; YNAB is stale reference
+  YNAB_ONLY   // Not in SA; adds independently to NW (e.g., PPE)
+}
+
+enum CapitalPortfolioType {
+  STRATEGIC
+  TACTICAL
+}
+
+enum CapitalInsightSeverity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  INFO
 }
 
 model CapitalAccount {
-  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String               @map("user_id") @db.Uuid
-  name       String
+  id          String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String                @map("user_id") @db.Uuid
+  name        String
   /// Stored in satangs (1/100 THB).
-  balance    BigInt               @default(0)
-  type       CapitalAssetType
-  source     CapitalAccountSource @default(MANUAL)
-  externalId String?              @map("external_id")
-  icon       String?
-  color      String?
-  archivedAt DateTime?            @map("archived_at") @db.Timestamptz(6)
-  createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  balance     BigInt                @default(0)
+  type        CapitalAssetType
+  source      CapitalAccountSource  @default(MANUAL)
+  externalId  String?               @map("external_id")
+  saCategory  String?               @map("sa_category")
+  mappingRole CapitalMappingRole?   @map("mapping_role")
+  icon        String?
+  color       String?
+  archivedAt  DateTime?             @map("archived_at") @db.Timestamptz(6)
+  createdAt   DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   user User @relation(fields: [userId], references: [id])
 
@@ -562,14 +584,17 @@ model CapitalGoal {
 }
 
 model CapitalSnapshot {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId      String   @map("user_id") @db.Uuid
-  date        DateTime @db.Date
-  netWorth    BigInt   @map("net_worth")
-  liquid      BigInt
-  invested    BigInt
-  liabilities BigInt
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  date          DateTime @db.Date
+  netWorth      BigInt   @map("net_worth")
+  liquid        BigInt
+  invested      BigInt
+  liabilities   BigInt
+  saTotal       BigInt?  @map("sa_total")
+  saPortfolios  Json?    @map("sa_portfolios")
+  fxRateUsdThb  Decimal? @map("fx_rate_usd_thb") @db.Decimal(10, 4)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   user User @relation(fields: [userId], references: [id])
 
@@ -587,6 +612,58 @@ model CapitalSettings {
   user User @relation(fields: [userId], references: [id])
 
   @@map("capital_settings")
+}
+
+model CapitalSACategory {
+  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String              @map("user_id") @db.Uuid
+  portfolioType CapitalPortfolioType
+  name          String
+  targetPct     Decimal?            @db.Decimal(5, 2)
+  sortOrder     Int                 @default(0) @map("sort_order")
+  createdAt     DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user   User             @relation("UserSACategories", fields: [userId], references: [id])
+  assets CapitalSAAsset[]
+
+  @@index([userId, portfolioType])
+  @@map("capital_sa_categories")
+}
+
+model CapitalSAAsset {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  categoryId String   @map("category_id") @db.Uuid
+  ticker     String
+  name       String
+  valueThb   BigInt?  @map("value_thb")
+  shares     Decimal? @db.Decimal(18, 6)
+  targetPct  Decimal? @map("target_pct") @db.Decimal(5, 2)
+  sortOrder  Int      @default(0) @map("sort_order")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  category CapitalSACategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+  @@map("capital_sa_assets")
+}
+
+model CapitalMappingConfig {
+  id         String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String             @map("user_id") @db.Uuid
+  ynabAccId  String             @map("ynab_acc_id")
+  saCategory String?            @map("sa_category")
+  role       CapitalMappingRole
+  note       String?
+  createdAt  DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation("UserMappingConfigs", fields: [userId], references: [id])
+
+  @@unique([userId, ynabAccId])
+  @@index([userId])
+  @@map("capital_mapping_configs")
 }
 
 model CapitalSyncLog {

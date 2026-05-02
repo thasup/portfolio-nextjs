@@ -6,7 +6,7 @@
  * The command center: KPI cards, net worth trajectory chart,
  * asset distribution pie, liabilities panel, and AI insights.
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TrendingUp,
   Wallet,
@@ -34,7 +34,7 @@ import {
 } from "recharts";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
 import { SyncButton } from "@/components/prototypes/capital-os/SyncButton";
-import { CapitalScenarioMode, CapitalAssetType } from "@/lib/capital-os/types";
+import { CapitalScenarioMode, CapitalAssetType, CapitalMappingRole, type CapitalSACategory, type CapitalMappingConfig } from "@/lib/capital-os/types";
 import { useCapitalData } from "@/lib/capital-os/hooks";
 import { sumByType } from "@/lib/capital-os/mock-data";
 import { computeProjection } from "@/lib/capital-os/projection";
@@ -55,6 +55,30 @@ export default function DashboardPage() {
   } = useCapitalData();
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Dual-source state for v4
+  const [saTotal, setSaTotal] = useState<number>(0);
+  const [mappingConfig, setMappingConfig] = useState<CapitalMappingConfig[]>([]);
+  const [dualSourceEnabled, setDualSourceEnabled] = useState(false);
+
+  // Fetch dual-source data
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/capital-os/mapping").then(r => r.json()),
+      fetch("/api/capital-os/sa-categories").then(r => r.json()),
+    ]).then(([mappingRes, saRes]) => {
+      if (mappingRes?.length > 0) {
+        setMappingConfig(mappingRes);
+        setDualSourceEnabled(true);
+      }
+      // Calculate SA total from categories (would come from snapshots in full implementation)
+      const categories: CapitalSACategory[] = [...(saRes.strategic || []), ...(saRes.tactical || [])];
+      const demoTotal = categories.reduce((sum, cat) => sum + (cat.assets?.reduce((a, asset) => a + (asset.valueThb || 0), 0) || 0), 0);
+      setSaTotal(demoTotal || 0);
+    }).catch(() => {
+      setDualSourceEnabled(false);
+    });
+  }, []);
 
   const [params] = useState({
     burnRate: 2500000,
@@ -236,6 +260,41 @@ export default function DashboardPage() {
           </div>
           <SyncButton onSyncComplete={refresh} />
         </div>
+
+        {/* ── Dual-Source NW Banner (v4) ─────────────── */}
+        {dualSourceEnabled && (
+          <div className="rounded-xl border p-4" style={{
+            background: "var(--cos-surface)",
+            borderColor: "var(--intent-accent)",
+          }}>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--intent-accent)" }}>
+                Dual-Source NW
+              </span>
+              <div className="flex flex-wrap items-center gap-2 text-sm font-mono">
+                <span className="font-bold" style={{ color: "var(--intent-accent)" }}>
+                  {fmtCurrency(toTHB(nw + (saTotal * 100) - (mappingConfig.filter(m => m.role === CapitalMappingRole.SA_COVERED).length > 0 ? 
+                    accounts.filter(a => mappingConfig.find(m => m.ynabAccId === a.externalId && m.role === CapitalMappingRole.SA_COVERED)).reduce((s, a) => s + Number(a.balance), 0) : 0)))}
+                </span>
+                <span style={{ color: "var(--cos-text-3)" }}>=</span>
+                <span style={{ color: "var(--intent-accent)" }}>
+                  SA {fmtCurrency(toTHB(saTotal * 100))}
+                </span>
+                <span style={{ color: "var(--cos-text-3)" }}>+</span>
+                <span style={{ color: "var(--intent-info)" }}>
+                  YNAB {fmtCurrency(toTHB(accounts.filter(a => {
+                    const m = mappingConfig.find(mc => mc.ynabAccId === a.externalId);
+                    return !m || m.role === CapitalMappingRole.YNAB_ONLY;
+                  }).reduce((s, a) => s + Number(a.balance), 0)))}
+                </span>
+                <span style={{ color: "var(--cos-text-3)" }}>−</span>
+                <span style={{ color: "var(--intent-danger)" }}>
+                  Debt {fmtCurrency(toTHB(totalDebt))}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── KPI Cards ──────────────────────────────── */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
