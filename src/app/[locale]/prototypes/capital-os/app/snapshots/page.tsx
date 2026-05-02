@@ -546,7 +546,6 @@ export default function SnapshotsPage() {
             setIsWizardOpen(false);
             // Could refetch SA snapshot history here
           }}
-          categories={saCategories}
         />
       </div>
     </div>
