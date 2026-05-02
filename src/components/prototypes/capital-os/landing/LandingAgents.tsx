@@ -46,9 +46,9 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Net worth is ฿671,234
-                  as of 02:04 ICT. Airtable last updated 217 days ago (gap:
-                  ฿395K)."
+                  <span className="output-arrow">→</span>"Net worth is ฿500,000
+                  as of sync time. Manual records last updated 180 days ago (gap:
+                  ฿400K)."
                 </li>
                 <li className="agent-output-item">
                   <span className="output-arrow">→</span>"YNAB matches within
@@ -78,8 +78,8 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Health & Fitness: ฿17K
-                  this month, 340% above 3-month average. Intentional?"
+                  <span className="output-arrow">→</span>"Health & Fitness: ฿15K
+                  this month, 300% above 3-month average. Intentional?"
                 </li>
                 <li className="agent-output-item">
                   <span className="output-arrow">→</span>"Wedding Fund: ฿0
@@ -112,8 +112,8 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Paying off ฿45K in
-                  credit cards today extends runway by 2.4 months."
+                  <span className="output-arrow">→</span>"Paying off ฿50K in
+                  credit cards today extends runway by 2.5 months."
                 </li>
                 <li className="agent-output-item">
                   <span className="output-arrow">→</span>"If MissionOS succeeds
@@ -145,9 +145,9 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Pay ฿45,281 from KBank
-                  to TTB + Shopee today. Saves ฿567/month interest. Liquid drops
-                  to ฿366K — still 14.7 months runway."
+                  <span className="output-arrow">→</span>"Pay ฿50,000 from savings
+                  to credit cards today. Saves ฿600/month interest. Liquid drops
+                  to ฿350K — still 14 months runway."
                 </li>
                 <li className="agent-output-item">
                   <span className="output-arrow">→</span>"This recommendation
@@ -166,7 +166,10 @@ export function LandingAgents() {
               <div className="pipeline-step">
                 <div
                   className="pipeline-node"
-                  style="background:var(--emerald-dim); border-color:rgba(0,201,122,0.3)"
+                  style={{
+                    background: "var(--emerald-dim)",
+                    borderColor: "rgba(0,201,122,0.3)",
+                  }}
                 >
                   🔢
                 </div>
@@ -180,7 +183,10 @@ export function LandingAgents() {
               <div className="pipeline-step">
                 <div
                   className="pipeline-node"
-                  style="background:var(--sapphire-dim); border-color:rgba(58,130,247,0.3)"
+                  style={{
+                    background: "var(--sapphire-dim)",
+                    borderColor: "rgba(58,130,247,0.3)",
+                  }}
                 >
                   📡
                 </div>
@@ -194,7 +200,10 @@ export function LandingAgents() {
               <div className="pipeline-step">
                 <div
                   className="pipeline-node"
-                  style="background:var(--amber-dim); border-color:rgba(240,160,32,0.3)"
+                  style={{
+                    background: "var(--amber-dim)",
+                    borderColor: "rgba(240,160,32,0.3)",
+                  }}
                 >
                   🔭
                 </div>
@@ -208,7 +217,10 @@ export function LandingAgents() {
               <div className="pipeline-step">
                 <div
                   className="pipeline-node"
-                  style="background:var(--violet-dim); border-color:rgba(155,109,255,0.3)"
+                  style={{
+                    background: "var(--violet-dim)",
+                    borderColor: "rgba(155,109,255,0.3)",
+                  }}
                 >
                   🧭
                 </div>
@@ -222,7 +234,10 @@ export function LandingAgents() {
               <div className="pipeline-step">
                 <div
                   className="pipeline-node"
-                  style="background:var(--surface-2); border-color:var(--border-strong)"
+                  style={{
+                    background: "var(--surface-2)",
+                    borderColor: "var(--border-strong)",
+                  }}
                 >
                   👤
                 </div>

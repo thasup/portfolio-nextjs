@@ -146,6 +146,53 @@ export async function executeYnabSync(userId: string) {
     },
   });
 
+  // ── Accountant Agent: Divergence Detection ─────────────────────
+  // Get previous snapshot for delta calculation
+  const previousSnapshot = await prisma.capitalSnapshot.findFirst({
+    where: { userId, date: { lt: today } },
+    orderBy: { date: "desc" },
+  });
+
+  if (previousSnapshot) {
+    const prevNetWorth = Number(previousSnapshot.netWorth);
+    const currNetWorth = Number(netWorth);
+    const delta = currNetWorth - prevNetWorth;
+    const deltaPercent = prevNetWorth !== 0 ? Math.abs(delta / prevNetWorth) : 0;
+
+    // Flag divergences > 5%
+    if (deltaPercent > 0.05) {
+      const toTHB = (satangs: bigint) =>
+        (Number(satangs) / 100).toLocaleString("en-US", {
+          style: "currency",
+          currency: "THB",
+          maximumFractionDigits: 0,
+        });
+
+      await prisma.capitalAlert.create({
+        data: {
+          userId,
+          type: "DIVERGENCE",
+          severity: deltaPercent > 0.15 ? "HIGH" : "MEDIUM",
+          title: `Net Worth ${delta > 0 ? "Jump" : "Drop"} Detected`,
+          message: `Net worth changed ${delta > 0 ? "+" : ""}${toTHB(BigInt(Math.abs(delta)))} (${(deltaPercent * 100).toFixed(1)}%) since ${previousSnapshot.date.toISOString().slice(0, 10)}. Current: ${toTHB(netWorth)}. Please verify this is expected.`,
+        },
+      });
+    }
+  }
+
+  // Record sync log
+  await prisma.capitalSyncLog.create({
+    data: {
+      userId,
+      source: "YNAB",
+      action: "SYNC",
+      entityType: "SNAPSHOT",
+      entityId: null,
+      before: previousSnapshot ? { netWorth: previousSnapshot.netWorth.toString() } : {},
+      after: { netWorth: netWorth.toString(), accounts: synced, liabilities: syncedLiabilities },
+    },
+  });
+
   return { synced, syncedLiabilities };
 }
 
@@ -262,6 +309,68 @@ export async function executeAirtableSync(userId: string) {
     }
     syncedGoals++;
   }
+
+  // ── Accountant Agent: Divergence Detection for Airtable ─────────
+  const [dbAccs, dbLiabs] = await Promise.all([
+    prisma.capitalAccount.findMany({
+      where: { userId, archivedAt: null },
+    }),
+    prisma.capitalLiability.findMany({
+      where: { userId, archivedAt: null },
+    }),
+  ]);
+
+  const liab = dbLiabs.reduce((sum, l) => sum + l.balance, BigInt(0));
+  const netWorth = dbAccs.reduce((sum, a) => sum + a.balance, BigInt(0)) + liab;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Get previous snapshot for delta calculation
+  const previousSnapshot = await prisma.capitalSnapshot.findFirst({
+    where: { userId, date: { lt: today } },
+    orderBy: { date: "desc" },
+  });
+
+  if (previousSnapshot) {
+    const prevNetWorth = Number(previousSnapshot.netWorth);
+    const currNetWorth = Number(netWorth);
+    const delta = currNetWorth - prevNetWorth;
+    const deltaPercent = prevNetWorth !== 0 ? Math.abs(delta / prevNetWorth) : 0;
+
+    // Flag divergences > 5%
+    if (deltaPercent > 0.05) {
+      const toTHB = (satangs: bigint) =>
+        (Number(satangs) / 100).toLocaleString("en-US", {
+          style: "currency",
+          currency: "THB",
+          maximumFractionDigits: 0,
+        });
+
+      await prisma.capitalAlert.create({
+        data: {
+          userId,
+          type: "DIVERGENCE",
+          severity: deltaPercent > 0.15 ? "HIGH" : "MEDIUM",
+          title: `Airtable Sync: Net Worth ${delta > 0 ? "Jump" : "Drop"}`,
+          message: `Airtable sync caused net worth change of ${delta > 0 ? "+" : ""}${toTHB(BigInt(Math.abs(delta)))} (${(deltaPercent * 100).toFixed(1)}%). Previous: ${toTHB(previousSnapshot.netWorth)}, Current: ${toTHB(netWorth)}.`,
+        },
+      });
+    }
+  }
+
+  // Record sync log
+  await prisma.capitalSyncLog.create({
+    data: {
+      userId,
+      source: "AIRTABLE",
+      action: "SYNC",
+      entityType: "SNAPSHOT",
+      entityId: null,
+      before: previousSnapshot ? { netWorth: previousSnapshot.netWorth.toString() } : {},
+      after: { netWorth: netWorth.toString(), accounts: syncedAccounts, liabilities: syncedLiabilities, goals: syncedGoals },
+    },
+  });
 
   return { syncedAccounts, syncedLiabilities, syncedGoals };
 }

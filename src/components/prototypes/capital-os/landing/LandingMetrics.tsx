@@ -23,7 +23,7 @@ export function LandingMetrics() {
             <div className="metric-cell">
               <div className="metric-number">
                 <span className="accent">฿</span>
-                <span className="counter" data-target="671673">
+                <span className="counter" data-target="500000">
                   0
                 </span>
               </div>
@@ -40,7 +40,7 @@ export function LandingMetrics() {
             <div className="metric-cell">
               <div className="metric-number">
                 <span className="accent">฿</span>
-                <span className="counter" data-target="395000">
+                <span className="counter" data-target="400000">
                   0
                 </span>
               </div>
@@ -83,12 +83,12 @@ export function LandingMetrics() {
             <div className="alert-icon">⚠️</div>
             <div className="alert-body">
               <div className="alert-title">
-                Real example: Airtable showed ฿276K. Reality was ฿671K.
+                Real example: Stale snapshot showed ฿250K. Reality was ฿650K.
               </div>
               <div className="alert-desc">
-                After a ฿266K severance deposit on April 10, 2026 — Airtable's
-                net worth field still read <code>฿276,444</code> seven months
-                later because no one updated it manually. CapitalOS detected
+                After a large income deposit, the manual spreadsheet
+                net worth field remained unchanged for months
+                because no one updated it. CapitalOS detected
                 this divergence on first sync and flagged it as a{" "}
                 <code>CRITICAL</code> reconciliation failure. That's what the
                 Accountant agent exists to do.

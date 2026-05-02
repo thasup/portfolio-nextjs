@@ -53,8 +53,8 @@ export default function GoalsPage() {
                 id={`goal-card-${goal.id}`}
                 className="group relative overflow-hidden rounded-xl border transition-all duration-200 hover:translate-y-[-2px]"
                 style={{
-                  background: "var(--cos-surface)",
-                  borderColor: "var(--cos-border-subtle)",
+                  background: "var(--surface-elevated)",
+                  borderColor: "var(--border-subtle)",
                 }}
               >
                 {/* Priority stripe */}
@@ -89,7 +89,7 @@ export default function GoalsPage() {
                     {isCompleted ? (
                       <CheckCircle2
                         className="h-5 w-5 shrink-0"
-                        style={{ color: "var(--cos-positive)" }}
+                        style={{ color: "var(--intent-success)" }}
                       />
                     ) : (
                       <Target

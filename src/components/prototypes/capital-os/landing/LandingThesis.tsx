@@ -80,25 +80,41 @@ export function LandingThesis() {
                 {/*<!-- orbital dots -->*/}
                 <div
                   className="orbit-dot"
-                  style="top:10px;left:50%;transform:translateX(-50%)"
+                  style={{
+                    top: "10px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  }}
                 >
                   📊
                 </div>
                 <div
                   className="orbit-dot"
-                  style="bottom:10px;left:50%;transform:translateX(-50%)"
+                  style={{
+                    bottom: "10px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  }}
                 >
                   💰
                 </div>
                 <div
                   className="orbit-dot"
-                  style="left:10px;top:50%;transform:translateY(-50%)"
+                  style={{
+                    left: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                  }}
                 >
                   📈
                 </div>
                 <div
                   className="orbit-dot"
-                  style="right:10px;top:50%;transform:translateY(-50%)"
+                  style={{
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                  }}
                 >
                   🤖
                 </div>

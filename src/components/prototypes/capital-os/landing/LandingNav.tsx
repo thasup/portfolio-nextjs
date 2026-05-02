@@ -9,7 +9,7 @@ export function LandingNav() {
   return (
     <>
       <nav>
-        <a href="#" className="nav-logo">
+        <Link href={`/${locale}/prototypes/capital-os`} className="nav-logo">
           <svg
             className="nav-logo-mark"
             viewBox="0 0 32 32"
@@ -37,24 +37,29 @@ export function LandingNav() {
           <span className="nav-wordmark">
             Capital<span>OS</span>
           </span>
-        </a>
+        </Link>
         <ul className="nav-links">
           <li>
-            <a href={`#problem`}>Problem</a>
+            <Link href={`#problem`}>Problem</Link>
           </li>
           <li>
-            <a href={`#agents`}>Intelligence</a>
+            <Link href={`#agents`}>Intelligence</Link>
           </li>
           <li>
-            <a href={`#roadmap`}>Roadmap</a>
+            <Link href={`#roadmap`}>Roadmap</Link>
           </li>
           <li>
-            <a href={`#brand`}>Design System</a>
+            <Link href={`/${locale}/prototypes/capital-os/design`}>
+              Design System
+            </Link>
           </li>
           <li>
-            <a href={`#cta`} className="nav-cta">
+            <Link
+              href={`/${locale}/prototypes/capital-os/app`}
+              className="nav-cta"
+            >
               View Prototype
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

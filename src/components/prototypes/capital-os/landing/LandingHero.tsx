@@ -16,20 +16,28 @@ export function LandingHero() {
             Personal Financial Intelligence · Built May 2026
           </div>
 
-          <h1 className="hero-title reveal reveal-delay-1">
+          <p className="hero-problem-statement reveal reveal-delay-1">
+            Three platforms.
+            <br />
+            Three truths.
+            <br />
+            <span style={{ color: "var(--emerald)" }}>Zero synthesis.</span>
+          </p>
+
+          <h1 className="hero-title reveal reveal-delay-2">
             One source
             <br />
             of financial <em>truth.</em>
           </h1>
 
-          <p className="hero-sub reveal reveal-delay-2">
+          <p className="hero-sub reveal reveal-delay-3">
             CapitalOS collapses YNAB, Airtable, and Snowball into a single
             authoritative intelligence layer — so every capital decision is made
             from reconciled, real-time data, not manual approximation.
           </p>
 
-          <div className="hero-actions reveal reveal-delay-3">
-            <a href={`#agents`} className="btn-primary">
+          <div className="hero-actions reveal reveal-delay-4">
+            <Link href={`#agents`} className="btn-primary">
               Explore Intelligence Layer
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path
@@ -40,17 +48,14 @@ export function LandingHero() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
-            <a href={`#brand`} className="btn-ghost">
-              View Design System
-            </a>
+            </Link>
           </div>
 
-          <div className="hero-stats reveal reveal-delay-4">
+          <div className="hero-stats reveal reveal-delay-5">
             <div className="hero-stat">
               <span className="hero-stat-val">
                 <span className="unit">฿</span>
-                <span className="counter" data-target="671673">
+                <span className="counter" data-target="500000">
                   0
                 </span>
               </span>

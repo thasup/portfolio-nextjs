@@ -9,6 +9,7 @@
  */
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import type { JSX } from "react";
 import {
   LayoutDashboard,
   TrendingUp,
@@ -30,6 +31,7 @@ interface NavItem {
   icon: React.ElementType;
   disabled?: boolean;
   badge?: string;
+  isRoot?: boolean;
 }
 
 const NAV_PRIMARY: NavItem[] = [
@@ -82,6 +84,7 @@ const NAV_SECONDARY: NavItem[] = [
   },
 ];
 
+
 export function CapitalOSSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
@@ -92,8 +95,15 @@ export function CapitalOSSidebar() {
   const locale = segments[localeIndex] || "en";
   const basePath = `/${locale}/prototypes/capital-os/app`;
 
-  const isActive = (href: string) => {
-    const fullHref = `${basePath}/${href}`;
+  const getHref = (item: NavItem) => {
+    return item.isRoot ? `/${locale}${item.href}` : `${basePath}/${item.href}`;
+  };
+
+  const isActive = (item: NavItem) => {
+    const fullHref = getHref(item);
+    if (item.isRoot) {
+      return pathname === fullHref;
+    }
     return pathname === fullHref || pathname.startsWith(`${fullHref}/`);
   };
 
@@ -113,8 +123,9 @@ export function CapitalOSSidebar() {
       }}
     >
       {/* ── Header ─────────────────────────────────── */}
-      <div
-        className="flex items-center gap-3 border-b px-4 py-4"
+      <Link
+        href={`${basePath}/dashboard`}
+        className="flex items-center gap-3 border-b px-4 py-4 hover:bg-[var(--cos-surface-2)] transition-colors"
         style={{ borderColor: "var(--cos-border-subtle)" }}
       >
         <div
@@ -134,7 +145,7 @@ export function CapitalOSSidebar() {
             </span>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* ── Primary nav ────────────────────────────── */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
@@ -152,21 +163,17 @@ export function CapitalOSSidebar() {
               <li key={item.id}>
                 <Link
                   id={item.id}
-                  href={`${basePath}/${item.href}`}
+                  href={getHref(item)}
                   className={`
                     flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium
                     transition-colors duration-150
-                    ${
-                      isActive(item.href)
-                        ? ""
-                        : "hover:bg-[var(--cos-surface-2)]"
-                    }
+                    ${isActive(item) ? "" : "hover:bg-[var(--cos-surface-2)]"}
                   `}
                   style={{
-                    background: isActive(item.href)
+                    background: isActive(item)
                       ? "var(--cos-accent-muted)"
                       : undefined,
-                    color: isActive(item.href)
+                    color: isActive(item)
                       ? "var(--cos-accent)"
                       : "var(--cos-text-2)",
                   }}
@@ -194,21 +201,17 @@ export function CapitalOSSidebar() {
               <li key={item.id}>
                 <Link
                   id={item.id}
-                  href={`${basePath}/${item.href}`}
+                  href={getHref(item)}
                   className={`
                     flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium
                     transition-colors duration-150
-                    ${
-                      isActive(item.href)
-                        ? ""
-                        : "hover:bg-[var(--cos-surface-2)]"
-                    }
+                    ${isActive(item) ? "" : "hover:bg-[var(--cos-surface-2)]"}
                   `}
                   style={{
-                    background: isActive(item.href)
+                    background: isActive(item)
                       ? "var(--cos-accent-muted)"
                       : undefined,
-                    color: isActive(item.href)
+                    color: isActive(item)
                       ? "var(--cos-accent)"
                       : "var(--cos-text-2)",
                   }}
@@ -235,6 +238,7 @@ export function CapitalOSSidebar() {
             ))}
           </ul>
         </div>
+
       </nav>
 
       {/* ── Collapse toggle ────────────────────────── */}

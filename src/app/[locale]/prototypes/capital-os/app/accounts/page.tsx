@@ -122,16 +122,16 @@ export default function AccountsPage() {
               className="h-3.5 w-3.5"
               style={{
                 color: isMockData
-                  ? "var(--cos-warning)"
-                  : "var(--cos-positive)",
+                  ? "var(--intent-warning)"
+                  : "var(--intent-success)",
               }}
             />
             <span
               className="text-xs font-medium"
               style={{
                 color: isMockData
-                  ? "var(--cos-warning)"
-                  : "var(--cos-positive)",
+                  ? "var(--intent-warning)"
+                  : "var(--intent-success)",
               }}
             >
               {isMockData ? "Mock data" : "Live data"}
@@ -148,17 +148,17 @@ export default function AccountsPage() {
               id={card.id}
               className="rounded-xl border p-4"
               style={{
-                background: "var(--cos-surface)",
-                borderColor: "var(--cos-border-subtle)",
+                background: "var(--surface-elevated)",
+                borderColor: "var(--border-subtle)",
               }}
             >
               <p
                 className="text-xs font-medium"
-                style={{ color: "var(--cos-text-2)" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 {card.label}
               </p>
-              <p className="mt-1 text-xl font-bold sm:text-2xl">{card.value}</p>
+              <p className="mt-1 text-xl font-bold sm:text-2xl" style={{ fontFamily: 'var(--font-mono)' }}>{card.value}</p>
             </div>
           ))}
         </div>
@@ -268,20 +268,23 @@ export default function AccountsPage() {
                           </div>
                           <span
                             className="text-xs"
-                            style={{ color: "var(--cos-text-3)" }}
+                            style={{ color: "var(--text-tertiary)" }}
                           >
                             {pct}%
                           </span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-right text-sm font-bold">
+                      <td
+                        className="px-4 py-3 text-right text-sm font-bold"
+                        style={{ fontFamily: 'var(--font-mono)' }}
+                      >
                         {fmtCurrency(toTHB(acc.balance))}
                       </td>
                       <td className="px-4 py-3">
                         <button
                           onClick={() => setItemToDelete(acc)}
                           className="rounded-lg p-1.5 transition-colors hover:bg-red-500/10 hover:text-red-500"
-                          style={{ color: "var(--cos-text-3)" }}
+                          style={{ color: "var(--text-tertiary)" }}
                           aria-label="Delete account"
                         >
                           <Trash2 className="h-4 w-4" />

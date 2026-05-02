@@ -108,8 +108,8 @@ export default function DashboardPage() {
       value: fmtCurrency(toTHB(nw)),
       description: "Total assets minus debt",
       icon: TrendingUp,
-      color: "var(--cos-accent)",
-      bgColor: "var(--cos-accent-muted)",
+      color: "var(--intent-success)",
+      bgColor: "var(--intent-success-muted)",
       trend: "up",
     },
     {
@@ -118,8 +118,8 @@ export default function DashboardPage() {
       value: fmtCurrency(toTHB(liquid)),
       description: "Available for deployment",
       icon: Wallet,
-      color: "var(--cos-accent-2)",
-      bgColor: "var(--cos-accent-2-muted)",
+      color: "var(--intent-info)",
+      bgColor: "var(--intent-info-muted)",
       trend: "neutral",
     },
     {
@@ -128,14 +128,9 @@ export default function DashboardPage() {
       value: `${runway} Months`,
       description: `At ${fmtCurrency(toTHB(burnRate))}/mo burn`,
       icon: Clock,
-      color: "var(--cos-warning)",
-      bgColor: "var(--cos-warning-muted)",
+      color: "var(--intent-warning)",
+      bgColor: "var(--intent-warning-muted)",
       trend: "neutral",
-      action: {
-        label: "Customize",
-        onClick: () => setIsSettingsOpen(true),
-        icon: Settings2,
-      },
     },
     {
       id: "metric-ef",
@@ -143,8 +138,8 @@ export default function DashboardPage() {
       value: `${efPercent}%`,
       description: `Of ${params.ssoMonths} month target`,
       icon: Target,
-      color: "#ec4899",
-      bgColor: "rgba(236, 72, 153, 0.12)",
+      color: "var(--intent-danger)",
+      bgColor: "var(--intent-danger-muted)",
       trend: "neutral",
     },
     {
@@ -153,8 +148,8 @@ export default function DashboardPage() {
       value: fmtCurrency(toTHB(totalDebt)),
       description: "Total active liabilities",
       icon: CreditCard,
-      color: "var(--cos-negative)",
-      bgColor: "rgba(239, 68, 68, 0.12)",
+      color: "var(--intent-danger)",
+      bgColor: "var(--intent-danger-muted)",
       trend: "down",
     },
   ];
@@ -210,7 +205,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col">
       <CapitalOSHeader
-        title="Capital Intelligence"
+        title="Dashboard"
         subtitle={`${sourceLabel}`}
       />
 
@@ -222,16 +217,16 @@ export default function DashboardPage() {
               className="h-3.5 w-3.5"
               style={{
                 color: isMockData
-                  ? "var(--cos-warning)"
-                  : "var(--cos-positive)",
+                  ? "var(--intent-warning)"
+                  : "var(--intent-success)",
               }}
             />
             <span
               className="text-xs font-medium"
               style={{
                 color: isMockData
-                  ? "var(--cos-warning)"
-                  : "var(--cos-positive)",
+                  ? "var(--intent-warning)"
+                  : "var(--intent-success)",
               }}
             >
               {isMockData
@@ -250,15 +245,15 @@ export default function DashboardPage() {
               id={m.id}
               className="rounded-xl border p-4 transition-all duration-200 hover:translate-y-[-2px]"
               style={{
-                background: "var(--cos-surface)",
-                borderColor: "var(--cos-border-subtle)",
-                boxShadow: "var(--cos-shadow-sm)",
+                background: "var(--surface-elevated)",
+                borderColor: "var(--border-subtle)",
+                boxShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
               }}
             >
               <div className="mb-3 flex items-center justify-between">
                 <span
                   className="text-xs font-medium"
-                  style={{ color: "var(--cos-text-2)" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {m.label}
                 </span>
@@ -269,25 +264,34 @@ export default function DashboardPage() {
                   <m.icon className="h-4 w-4" />
                 </div>
               </div>
-              <div className="text-xl font-bold sm:text-2xl">{m.value}</div>
+              <div className="text-xl font-bold sm:text-2xl" style={{ fontFamily: 'var(--font-mono)' }}>{m.value}</div>
               <p
                 className="mt-1 flex items-center gap-1 text-xs"
-                style={{ color: "var(--cos-text-3)" }}
+                style={{ color: "var(--text-tertiary)" }}
               >
                 {m.trend === "up" && (
                   <ArrowUpRight
                     className="h-3 w-3"
-                    style={{ color: "var(--cos-positive)" }}
+                    style={{ color: "var(--intent-success)" }}
                   />
                 )}
                 {m.trend === "down" && (
                   <ArrowDownRight
                     className="h-3 w-3"
-                    style={{ color: "var(--cos-negative)" }}
+                    style={{ color: "var(--intent-danger)" }}
                   />
                 )}
                 {m.description}
               </p>
+              {lastSynced && (
+                <p
+                  className="mt-1 text-[10px]"
+                  style={{ color: "var(--text-tertiary)" }}
+                  title={`Data synced: ${lastSynced.toLocaleString()}`}
+                >
+                  Synced: {lastSynced.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })}
+                </p>
+              )}
               {"action" in m && m.action && (
                 <button
                   id={`${m.id}-action`}
@@ -326,25 +330,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="h-[300px] sm:h-[350px]">
-              {snapshots.length < 4 && !isMockData ? (
-                <div
-                  className="flex h-full w-full flex-col items-center justify-center rounded-xl border border-dashed text-center"
-                  style={{ borderColor: "var(--cos-border-subtle)" }}
-                >
-                  <Database className="mb-2 h-8 w-8 opacity-20" />
-                  <p
-                    className="text-sm font-medium"
-                    style={{ color: "var(--cos-text-2)" }}
-                  >
-                    Syncing history...
-                  </p>
-                  <p className="text-xs" style={{ color: "var(--cos-text-3)" }}>
-                    Need {4 - snapshots.length} more snapshot
-                    {4 - snapshots.length > 1 ? "s" : ""} to unlock trajectory
-                    analysis.
-                  </p>
-                </div>
-              ) : (
+              {(
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={chartData}>
                     <defs>
@@ -553,7 +539,7 @@ export default function DashboardPage() {
                       <p className="text-sm font-semibold">{l.name}</p>
                       <p
                         className="text-xs"
-                        style={{ color: "var(--cos-text-3)" }}
+                        style={{ color: "var(--text-tertiary)" }}
                       >
                         {l.apr ? `${l.apr}% APR` : "0% Interest"}
                       </p>
@@ -650,16 +636,92 @@ export default function DashboardPage() {
                 });
 
                 // 3. Low runway
-                if (runway < 3) {
+                if (runway < 6) {
                   actions.push({
                     id: `action-runway`,
                     icon: Clock,
-                    color: "var(--cos-negative)",
-                    bg: "rgba(239, 68, 68, 0.12)",
-                    title: `Critical Runway`,
-                    body: `Your runway is only ${runway} months. Reduce burn rate or liquidate assets to secure at least 6 months of runway.`,
+                    color: runway < 3 ? "var(--cos-negative)" : "var(--cos-warning)",
+                    bg: runway < 3 ? "rgba(239, 68, 68, 0.12)" : "var(--cos-warning-muted)",
+                    title: runway < 3 ? `Critical Runway` : `Low Runway`,
+                    body: `Your runway is ${runway} months. Aim for at least 6 months of liquid capital coverage.`,
                   });
                 }
+
+                // 4. Emergency fund gap
+                if (efPercent < 100) {
+                  const gap = emergencyFundTarget - liquid;
+                  actions.push({
+                    id: `action-ef`,
+                    icon: Target,
+                    color: efPercent < 50 ? "var(--cos-negative)" : "var(--cos-warning)",
+                    bg: efPercent < 50 ? "rgba(239, 68, 68, 0.12)" : "var(--cos-warning-muted)",
+                    title: `Emergency Fund Gap`,
+                    body: `At ${efPercent}% of target. Need ${fmtCurrency(toTHB(gap))} more to reach ${params.ssoMonths}-month runway coverage.`,
+                  });
+                }
+
+                // 5. Goal velocity warnings (approaching deadline, insufficient velocity)
+                goals.forEach((g) => {
+                  if (g.deadline && g.current < g.target) {
+                    const daysToDeadline = Math.floor(
+                      (new Date(g.deadline).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+                    );
+                    const monthsToDeadline = Math.max(daysToDeadline / 30, 1);
+                    const remaining = Number(g.target) - Number(g.current);
+                    const monthlyNeeded = remaining / monthsToDeadline;
+                    // Simple heuristic: if need > ฿10K/mo and deadline < 6 months, flag it
+                    if (daysToDeadline > 0 && daysToDeadline < 180 && monthlyNeeded > 1000000) {
+                      actions.push({
+                        id: `action-goal-velocity-${g.id}`,
+                        icon: TrendingUp,
+                        color: "var(--cos-warning)",
+                        bg: "var(--cos-warning-muted)",
+                        title: `Goal Velocity: ${g.name}`,
+                        body: `Need ${fmtCurrency(toTHB(monthlyNeeded))}/mo to hit target by deadline (${Math.ceil(monthsToDeadline)} months left).`,
+                      });
+                    }
+                  }
+                });
+
+                // 6. Data staleness (mock data or old sync)
+                if (isMockData) {
+                  actions.push({
+                    id: `action-stale-mock`,
+                    icon: Database,
+                    color: "var(--cos-warning)",
+                    bg: "var(--cos-warning-muted)",
+                    title: `Using Mock Data`,
+                    body: `Dashboard is showing synthetic data. Connect YNAB to load your real financial data.`,
+                  });
+                } else if (lastSynced) {
+                  const daysSinceSync = Math.floor(
+                    (new Date().getTime() - new Date(lastSynced).getTime()) / (1000 * 60 * 60 * 24)
+                  );
+                  if (daysSinceSync > 7) {
+                    actions.push({
+                      id: `action-stale-sync`,
+                      icon: Database,
+                      color: "var(--cos-warning)",
+                      bg: "var(--cos-warning-muted)",
+                      title: `Data Stale`,
+                      body: `Last sync was ${daysSinceSync} days ago. Refresh data for accurate insights.`,
+                    });
+                  }
+                }
+
+                // 7. High APR debt prioritized
+                liabilities
+                  .filter((l) => l.apr && Number(l.apr) > 15 && Number(l.balance) < 0)
+                  .forEach((l) => {
+                    actions.push({
+                      id: `action-high-apr-${l.id}`,
+                      icon: CreditCard,
+                      color: "var(--cos-negative)",
+                      bg: "rgba(239, 68, 68, 0.12)",
+                      title: `High APR Debt: ${l.name}`,
+                      body: `${l.apr}% APR is expensive. Pay off ${fmtCurrency(toTHB(Math.abs(Number(l.balance))))} immediately for guaranteed ${l.apr}% return.`,
+                    });
+                  });
 
                 if (actions.length === 0) {
                   return (
@@ -672,7 +734,7 @@ export default function DashboardPage() {
                       </p>
                       <p
                         className="text-xs"
-                        style={{ color: "var(--cos-text-2)" }}
+                        style={{ color: "var(--text-secondary)" }}
                       >
                         No pending actions required.
                       </p>
@@ -699,7 +761,7 @@ export default function DashboardPage() {
                       <p className="text-sm font-medium">{insight.title}</p>
                       <p
                         className="mt-0.5 text-xs leading-relaxed"
-                        style={{ color: "var(--cos-text-2)" }}
+                        style={{ color: "var(--text-secondary)" }}
                       >
                         {insight.body}
                       </p>

@@ -11,7 +11,7 @@ export function LandingCTA() {
       <section id="cta">
         <div className="container">
           <div className="cta-inner reveal">
-            <div className="section-label" style="justify-content:center">
+            <div className="section-label" style={{ justifyContent: "center" }}>
               Built by First · May 2026
             </div>
             <h2>
@@ -23,8 +23,11 @@ export function LandingCTA() {
               CapitalOS is the intelligence layer your wealth management stack
               is missing. Stop approximating. Start reasoning.
             </p>
-            <div className="hero-actions" style="justify-content:center">
-              <a href="#" className="btn-primary">
+            <div className="hero-actions" style={{ justifyContent: "center" }}>
+              <Link
+                href={`/${locale}/prototypes/capital-os/app`}
+                className="btn-primary"
+              >
                 View Live Prototype
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path
@@ -35,10 +38,10 @@ export function LandingCTA() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
-              <a href={`#problem`} className="btn-ghost">
+              </Link>
+              <Link href={`#agents`} className="btn-ghost">
                 Read the Architecture
-              </a>
+              </Link>
             </div>
           </div>
         </div>

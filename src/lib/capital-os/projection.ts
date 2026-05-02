@@ -52,29 +52,29 @@ export function computeProjection(
   const activeAccounts = accounts.filter((a) => !a.archivedAt);
   const activeLiabs = liabilities.filter((l) => !l.archivedAt);
 
-  const tAssets = activeAccounts.reduce((s, a) => s + a.balance, 0);
-  const tLiabs = activeLiabs.reduce((s, l) => s + Math.abs(l.balance), 0);
+  const tAssets = Number(activeAccounts.reduce((s, a) => s + BigInt(a.balance), BigInt(0)));
+  const tLiabs = Number(activeLiabs.reduce((s, l) => s + BigInt(Math.abs(Number(l.balance))), BigInt(0)));
   const nw = tAssets - tLiabs;
 
-  const liquidTotal = activeAccounts
+  const liquidTotal = Number(activeAccounts
     .filter((a) => a.type === CapitalAssetType.LIQUID)
-    .reduce((s, a) => s + a.balance, 0);
+    .reduce((s, a) => s + BigInt(a.balance), BigInt(0)));
 
   const runwayPoolTotal = settings?.runwayAccountIds?.length
-    ? activeAccounts
+    ? Number(activeAccounts
         .filter((a) => settings.runwayAccountIds.includes(a.id))
-        .reduce((s, a) => s + a.balance, 0)
+        .reduce((s, a) => s + BigInt(a.balance), BigInt(0)))
     : liquidTotal;
 
   const runwayBurnRate = settings?.runwayBurnRate ?? params.burnRate;
 
-  const investedTotal = activeAccounts
+  const investedTotal = Number(activeAccounts
     .filter(
       (a) =>
         a.type === CapitalAssetType.INVESTMENT ||
         a.type === CapitalAssetType.SEMI_LIQUID,
     )
-    .reduce((s, a) => s + a.balance, 0);
+    .reduce((s, a) => s + BigInt(a.balance), BigInt(0)));
 
   const mult = SCENARIO_MULTIPLIERS[params.scenarioMode];
   const ssoIncome = 900000; // 9,000 THB in satangs

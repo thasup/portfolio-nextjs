@@ -109,53 +109,53 @@ export function LandingBrand() {
               <div className="swatch">
                 <div
                   className="swatch-color"
-                  style="background:#060c14; border: 1px solid #111;"
+                  style={{ background: "#060c14", border: "1px solid #111" }}
                 ></div>
                 <div className="swatch-name">Void</div>
                 <div className="swatch-hex">#060c14</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#0d1421;"></div>
+                <div className="swatch-color" style={{ background: "#0d1421" }}></div>
                 <div className="swatch-name">Surface</div>
                 <div className="swatch-hex">#0d1421</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#162035;"></div>
+                <div className="swatch-color" style={{ background: "#162035" }}></div>
                 <div className="swatch-name">Surface+</div>
                 <div className="swatch-hex">#162035</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#eef2f8;"></div>
+                <div className="swatch-color" style={{ background: "#eef2f8" }}></div>
                 <div className="swatch-name">Text Primary</div>
                 <div className="swatch-hex">#eef2f8</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#8da0b8;"></div>
+                <div className="swatch-color" style={{ background: "#8da0b8" }}></div>
                 <div className="swatch-name">Text Secondary</div>
                 <div className="swatch-hex">#8da0b8</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#00c97a;"></div>
+                <div className="swatch-color" style={{ background: "#00c97a" }}></div>
                 <div className="swatch-name">Emerald</div>
                 <div className="swatch-hex">Growth · CTA</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#f0a020;"></div>
+                <div className="swatch-color" style={{ background: "#f0a020" }}></div>
                 <div className="swatch-name">Amber</div>
                 <div className="swatch-hex">Warning · Attention</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#ff4466;"></div>
+                <div className="swatch-color" style={{ background: "#ff4466" }}></div>
                 <div className="swatch-name">Rose</div>
                 <div className="swatch-hex">Danger · Debt</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#3a82f7;"></div>
+                <div className="swatch-color" style={{ background: "#3a82f7" }}></div>
                 <div className="swatch-name">Sapphire</div>
                 <div className="swatch-hex">Info · Secondary</div>
               </div>
               <div className="swatch">
-                <div className="swatch-color" style="background:#9b6dff;"></div>
+                <div className="swatch-color" style={{ background: "#9b6dff" }}></div>
                 <div className="swatch-name">Violet</div>
                 <div className="swatch-hex">AI · Intelligence</div>
               </div>
@@ -249,7 +249,7 @@ export function LandingBrand() {
               </div>
               <div
                 className="component-panel-title"
-                style="margin-top: var(--space-5)"
+                style={{ marginTop: "var(--space-5)" }}
               >
                 Goal Progress Bars
               </div>
@@ -262,7 +262,7 @@ export function LandingBrand() {
                   <div className="prog-track">
                     <div
                       className="prog-fill"
-                      style="width:0%;background:var(--amber)"
+                      style={{ width: "0%", background: "var(--amber)" }}
                       data-target-width="58.7"
                     ></div>
                   </div>
@@ -275,7 +275,7 @@ export function LandingBrand() {
                   <div className="prog-track">
                     <div
                       className="prog-fill"
-                      style="width:0%;background:var(--sapphire)"
+                      style={{ width: "0%", background: "var(--sapphire)" }}
                       data-target-width="51.7"
                     ></div>
                   </div>
@@ -288,7 +288,7 @@ export function LandingBrand() {
                   <div className="prog-track">
                     <div
                       className="prog-fill"
-                      style="width:0%;background:var(--rose)"
+                      style={{ width: "0%", background: "var(--rose)" }}
                       data-target-width="2"
                     ></div>
                   </div>
@@ -301,7 +301,7 @@ export function LandingBrand() {
                   <div className="prog-track">
                     <div
                       className="prog-fill"
-                      style="width:0%;background:var(--emerald)"
+                      style={{ width: "0%", background: "var(--emerald)" }}
                       data-target-width="100"
                     ></div>
                   </div>
