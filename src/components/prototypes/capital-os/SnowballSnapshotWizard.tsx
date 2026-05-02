@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Upload, X, ChevronRight, ChevronLeft, Check, AlertCircle } from "lucide-react";
+import Image from "next/image";
+import { X, ChevronRight, ChevronLeft, Check, AlertCircle } from "lucide-react";
 import { fmtCurrency } from "@/lib/capital-os/format";
 
 interface WizardProps {
@@ -201,7 +202,13 @@ export function SnowballSnapshotWizard({ onClose, onSuccess }: WizardProps) {
         <div className="p-6 overflow-y-auto">
           {step === 4 && (
             <div className="flex flex-col items-center justify-center py-10 border-2 border-dashed rounded-xl border-[var(--cos-accent)] bg-[var(--cos-accent-muted)]">
-              <Upload className="h-10 w-10 text-[var(--cos-accent)] mb-4" />
+              <Image
+                src="/capital_os/icons/snowball-analytics-icon.webp"
+                alt="Snowball Analytics"
+                width={48}
+                height={48}
+                className="h-12 w-12 mb-4 object-contain rounded-lg"
+              />
               <p className="text-sm font-medium mb-2 text-white">Upload Snowball Export (CSV)</p>
               <p className="text-xs text-[var(--cos-text-2)] mb-6 text-center max-w-sm">
                 Export your holdings from the Snowball Analytics tab and upload here to auto-fill the snapshot.
@@ -226,11 +233,11 @@ export function SnowballSnapshotWizard({ onClose, onSuccess }: WizardProps) {
                   <h4 className="text-sm font-semibold text-white">Portfolio KPIs</h4>
                   <p className="text-xs text-[var(--cos-text-2)]">Read from Snowball Dashboard tab</p>
                 </div>
-                <button 
+                <button
                   onClick={() => setStep(4)}
                   className="flex items-center gap-1.5 text-xs font-medium text-[var(--cos-accent)] hover:opacity-80 transition-opacity bg-[var(--cos-accent-muted)] px-3 py-1.5 rounded-lg"
                 >
-                  <Upload className="h-3.5 w-3.5" /> CSV Import
+                  CSV Import
                 </button>
               </div>
 

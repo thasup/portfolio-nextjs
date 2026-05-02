@@ -10,6 +10,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import type { JSX } from "react";
+import Image from "next/image";
 import {
   LayoutDashboard,
   TrendingUp,
@@ -20,7 +21,6 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Activity,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -128,11 +128,14 @@ export function CapitalOSSidebar() {
         className="flex items-center gap-3 border-b px-4 py-4 hover:bg-[var(--cos-surface-2)] transition-colors"
         style={{ borderColor: "var(--cos-border-subtle)" }}
       >
-        <div
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-          style={{ background: "var(--cos-accent)", color: "#fff" }}
-        >
-          <Activity className="h-4 w-4" />
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg overflow-hidden">
+          <Image
+            src="/capital_os/icons/capital_os-icon.png"
+            alt="CapitalOS"
+            width={32}
+            height={32}
+            className="h-8 w-8 object-contain"
+          />
         </div>
         {!collapsed && (
           <div className="flex flex-col overflow-hidden">
