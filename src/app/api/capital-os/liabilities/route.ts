@@ -33,10 +33,7 @@ export async function POST(req: NextRequest) {
   const { name, balance, apr, icon, color } = body;
 
   if (!name) {
-    return NextResponse.json(
-      { error: "name is required" },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "name is required" }, { status: 400 });
   }
 
   const liability = await prisma.capitalLiability.create({

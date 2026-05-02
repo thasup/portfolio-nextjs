@@ -17,8 +17,21 @@ export async function GET() {
     orderBy: [{ type: "asc" }, { name: "asc" }],
   });
 
+  const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const deletedAccounts = await prisma.capitalAccount.findMany({
+    where: {
+      userId: auth.session.userId,
+      archivedAt: { gte: twentyFourHoursAgo },
+    },
+    orderBy: { archivedAt: "desc" },
+  });
+
   return NextResponse.json({
     accounts: accounts.map((a) => ({
+      ...a,
+      balance: Number(a.balance),
+    })),
+    deletedAccounts: deletedAccounts.map((a) => ({
       ...a,
       balance: Number(a.balance),
     })),
@@ -56,6 +69,20 @@ export async function POST(req: NextRequest) {
       externalId: externalId ?? null,
       icon: icon ?? null,
       color: color ?? null,
+    },
+  });
+
+  await prisma.capitalSyncLog.create({
+    data: {
+      userId: auth.session.userId,
+      source: "MANUAL",
+      action: "CREATE",
+      entityType: "ACCOUNT",
+      entityId: account.id,
+      after: {
+        ...account,
+        balance: Number(account.balance),
+      },
     },
   });
 

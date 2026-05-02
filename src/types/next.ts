@@ -8,7 +8,9 @@
  * @example
  * type ArticlePageProps = PageProps<{ slug: string; locale: string }>;
  */
-export type PageProps<T extends Record<string, string> = Record<string, never>> = {
+export type PageProps<
+  T extends Record<string, string> = Record<string, never>,
+> = {
   params: Promise<T>;
   searchParams?: Promise<Record<string, string | string[]>>;
 };
@@ -19,7 +21,7 @@ export type PageProps<T extends Record<string, string> = Record<string, never>> 
  * const { locale, slug } = await extractParams(params);
  */
 export async function extractParams<T extends Record<string, string>>(
-  params: Promise<T>
+  params: Promise<T>,
 ): Promise<T> {
   return await params;
 }
@@ -30,7 +32,7 @@ export async function extractParams<T extends Record<string, string>>(
  * const query = await extractSearchParams(searchParams);
  */
 export async function extractSearchParams(
-  searchParams?: Promise<Record<string, string | string[]>>
+  searchParams?: Promise<Record<string, string | string[]>>,
 ): Promise<Record<string, string | string[]>> {
   if (!searchParams) return {};
   return await searchParams;

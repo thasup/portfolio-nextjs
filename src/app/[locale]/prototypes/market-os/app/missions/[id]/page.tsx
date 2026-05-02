@@ -1,9 +1,9 @@
-import { notFound } from 'next/navigation';
-import { MissionDetailView } from '@/components/prototypes/market-os/app/MissionDetailView';
-import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
-import { getMissionBySlugOrId } from '@/lib/marketos/queries/missions';
-import { listBidsForMission } from '@/lib/marketos/queries/bids';
-import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { notFound } from "next/navigation";
+import { MissionDetailView } from "@/components/prototypes/market-os/app/MissionDetailView";
+import { getOrgBySlug } from "@/lib/marketos/queries/orgs";
+import { getMissionBySlugOrId } from "@/lib/marketos/queries/missions";
+import { listBidsForMission } from "@/lib/marketos/queries/bids";
+import { DEMO_ORG_SLUG } from "@/lib/marketos/constants";
 
 export default async function MissionDetailPage({
   params,

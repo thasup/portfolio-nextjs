@@ -42,7 +42,9 @@ export function TimelineYear({
             style={{ backgroundColor: theme.accentHex }}
           />
           <div className="space-y-1">
-            <h3 className={`text-xl md:text-2xl font-bold ${theme.accentClass}`}>
+            <h3
+              className={`text-xl md:text-2xl font-bold ${theme.accentClass}`}
+            >
               {t(theme.labelKey)}
             </h3>
             <div className="text-sm text-muted-foreground">{theme.period}</div>

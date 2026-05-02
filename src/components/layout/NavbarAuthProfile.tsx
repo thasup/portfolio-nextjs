@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings, User } from "lucide-react";
 
@@ -28,7 +28,9 @@ export function NavbarAuthProfile() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setProfile(null);
         setLoading(false);
@@ -43,7 +45,11 @@ export function NavbarAuthProfile() {
         .maybeSingle();
 
       setProfile({
-        displayName: nexusUser?.display_name || user.user_metadata?.full_name || user.email?.split("@")[0] || "User",
+        displayName:
+          nexusUser?.display_name ||
+          user.user_metadata?.full_name ||
+          user.email?.split("@")[0] ||
+          "User",
         avatarUrl: user.user_metadata?.avatar_url,
         role: nexusUser?.role || "MEMBER",
       });
@@ -52,11 +58,11 @@ export function NavbarAuthProfile() {
 
     fetchProfile();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      () => {
-        fetchProfile();
-      }
-    );
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      fetchProfile();
+    });
 
     return () => subscription.unsubscribe();
   }, [supabase]);
@@ -66,7 +72,12 @@ export function NavbarAuthProfile() {
     window.location.href = "/";
   };
 
-  const isLandingPage = pathname === "/" || pathname === "/en" || pathname === "/th" || pathname === "/en/" || pathname === "/th/";
+  const isLandingPage =
+    pathname === "/" ||
+    pathname === "/en" ||
+    pathname === "/th" ||
+    pathname === "/en/" ||
+    pathname === "/th/";
 
   if (loading || !profile || isLandingPage) return null;
 
@@ -97,7 +108,9 @@ export function NavbarAuthProfile() {
           <DropdownMenuLabel>
             <div className="flex flex-col">
               <span className="text-sm font-medium">{profile.displayName}</span>
-              <span className="text-xs text-muted-foreground font-normal">Nexus Identity</span>
+              <span className="text-xs text-muted-foreground font-normal">
+                Nexus Identity
+              </span>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />

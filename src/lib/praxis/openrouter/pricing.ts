@@ -24,13 +24,22 @@ export interface ModelPricing {
 
 const PRICING: Record<string, ModelPricing> = {
   // Anthropic
-  'anthropic/claude-sonnet-4.6': { inputCentsPerMillion: 300, outputCentsPerMillion: 1500 },
-  'anthropic/claude-haiku-4.5': { inputCentsPerMillion: 100, outputCentsPerMillion: 500 },
+  "anthropic/claude-sonnet-4.6": {
+    inputCentsPerMillion: 300,
+    outputCentsPerMillion: 1500,
+  },
+  "anthropic/claude-haiku-4.5": {
+    inputCentsPerMillion: 100,
+    outputCentsPerMillion: 500,
+  },
   // OpenAI
-  'openai/gpt-5-nano': { inputCentsPerMillion: 5, outputCentsPerMillion: 40 },
-  'openai/gpt-oss-120b:free': { inputCentsPerMillion: 0, outputCentsPerMillion: 0 },
+  "openai/gpt-5-nano": { inputCentsPerMillion: 5, outputCentsPerMillion: 40 },
+  "openai/gpt-oss-120b:free": {
+    inputCentsPerMillion: 0,
+    outputCentsPerMillion: 0,
+  },
   // Fallback for ledger safety. Intentionally high.
-  'default': { inputCentsPerMillion: 500, outputCentsPerMillion: 2000 },
+  default: { inputCentsPerMillion: 500, outputCentsPerMillion: 2000 },
 };
 
 /** Returns cents (rounded up) for the given token counts on `model`. */
@@ -39,9 +48,10 @@ export function estimateCents(
   inputTokens: number,
   outputTokens: number,
 ): number {
-  const entry = PRICING[model] ?? PRICING['default'];
+  const entry = PRICING[model] ?? PRICING["default"];
   const cents =
-    (inputTokens * entry.inputCentsPerMillion + outputTokens * entry.outputCentsPerMillion) /
+    (inputTokens * entry.inputCentsPerMillion +
+      outputTokens * entry.outputCentsPerMillion) /
     1_000_000;
   return Math.max(0, Math.ceil(cents));
 }

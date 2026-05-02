@@ -10,13 +10,13 @@
  * text completions only. Streaming is added in Week 2 alongside the
  * chat endpoint.
  */
-import { setTimeout as delay } from 'node:timers/promises';
+import { setTimeout as delay } from "node:timers/promises";
 
 /** Canonical message role enum. Matches OpenAI/OpenRouter wire format. */
 export enum ChatRole {
-  SYSTEM = 'system',
-  USER = 'user',
-  ASSISTANT = 'assistant',
+  SYSTEM = "system",
+  USER = "user",
+  ASSISTANT = "assistant",
 }
 
 export interface ChatMessage {
@@ -26,8 +26,8 @@ export interface ChatMessage {
 
 /** Response-format hint. Every structured generation uses `JSON_OBJECT`. */
 export enum ResponseFormat {
-  TEXT = 'text',
-  JSON_OBJECT = 'json_object',
+  TEXT = "text",
+  JSON_OBJECT = "json_object",
 }
 
 export interface TokenUsage {
@@ -53,7 +53,7 @@ export interface ChatCompletionOptions {
   signal?: AbortSignal;
 }
 
-const OPENROUTER_ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions';
+const OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
 const DEFAULT_MAX_TOKENS = 2048;
 const MAX_RETRIES = 2;
 const RETRY_BASE_DELAY_MS = 500;
@@ -64,7 +64,7 @@ export class OpenRouterError extends Error {
 
   constructor(status: number, body: string) {
     super(`OpenRouter ${status}: ${body.slice(0, 240)}`);
-    this.name = 'OpenRouterError';
+    this.name = "OpenRouterError";
     this.status = status;
     this.body = body;
   }
@@ -85,21 +85,24 @@ export class OpenRouterClient {
 
   constructor(config: OpenRouterClientConfig) {
     if (!config.apiKey) {
-      throw new Error('OpenRouterClient: apiKey is required');
+      throw new Error("OpenRouterClient: apiKey is required");
     }
     this.apiKey = config.apiKey;
-    this.referer = config.referer ?? 'https://thanachon.me';
-    this.title = config.title ?? 'PRAXIS';
+    this.referer = config.referer ?? "https://thanachon.me";
+    this.title = config.title ?? "PRAXIS";
   }
 
   async chat(opts: ChatCompletionOptions): Promise<ChatCompletion> {
     const body = {
       model: opts.model,
-      messages: opts.messages.map((m) => ({ role: m.role, content: m.content })),
+      messages: opts.messages.map((m) => ({
+        role: m.role,
+        content: m.content,
+      })),
       temperature: opts.temperature ?? 0.4,
       max_tokens: opts.maxTokens ?? DEFAULT_MAX_TOKENS,
       ...(opts.responseFormat === ResponseFormat.JSON_OBJECT
-        ? { response_format: { type: 'json_object' as const } }
+        ? { response_format: { type: "json_object" as const } }
         : {}),
     };
 
@@ -107,12 +110,12 @@ export class OpenRouterClient {
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
       try {
         const res = await fetch(OPENROUTER_ENDPOINT, {
-          method: 'POST',
+          method: "POST",
           headers: {
             Authorization: `Bearer ${this.apiKey}`,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': this.referer,
-            'X-Title': this.title,
+            "Content-Type": "application/json",
+            "HTTP-Referer": this.referer,
+            "X-Title": this.title,
           },
           body: JSON.stringify(body),
           signal: opts.signal,
@@ -133,7 +136,7 @@ export class OpenRouterClient {
           usage?: { prompt_tokens?: number; completion_tokens?: number };
         };
 
-        const content = json.choices?.[0]?.message?.content ?? '';
+        const content = json.choices?.[0]?.message?.content ?? "";
         return {
           content,
           model: json.model ?? opts.model,
@@ -145,7 +148,8 @@ export class OpenRouterClient {
       } catch (err) {
         lastError = err;
         const retriable =
-          err instanceof OpenRouterError && (err.status >= 500 || err.status === 429);
+          err instanceof OpenRouterError &&
+          (err.status >= 500 || err.status === 429);
         if (!retriable || attempt === MAX_RETRIES) break;
         await delay(RETRY_BASE_DELAY_MS * 2 ** attempt);
       }
@@ -153,7 +157,7 @@ export class OpenRouterClient {
 
     throw lastError instanceof Error
       ? lastError
-      : new Error('OpenRouter request failed');
+      : new Error("OpenRouter request failed");
   }
 }
 
@@ -174,8 +178,8 @@ export function extractJson<T = unknown>(raw: string): T | null {
   if (fence?.[1]) candidates.push(fence[1].trim());
 
   // Locate the first `{` ... last `}` to peel away prose preambles.
-  const first = trimmed.indexOf('{');
-  const last = trimmed.lastIndexOf('}');
+  const first = trimmed.indexOf("{");
+  const last = trimmed.lastIndexOf("}");
   if (first !== -1 && last > first) {
     candidates.push(trimmed.slice(first, last + 1));
   }

@@ -6,12 +6,12 @@
  * whole Resend SDK, and future email types (reminder, weekly digest)
  * slot in next to `sendInvitation`.
  */
-import 'server-only';
-import { Resend } from 'resend';
+import "server-only";
+import { Resend } from "resend";
 
 export enum EmailDeliveryStatus {
-  SENT = 'sent',
-  FAILED = 'failed',
+  SENT = "sent",
+  FAILED = "failed",
 }
 
 export interface InvitationEmailParams {
@@ -28,20 +28,28 @@ export interface SendResult {
   error: string | null;
 }
 
-function readConfig(): { apiKey: string; fromAddress: string; fromName: string } {
+function readConfig(): {
+  apiKey: string;
+  fromAddress: string;
+  fromName: string;
+} {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    throw new Error('RESEND_API_KEY is not set. Add it to .env.local.');
+    throw new Error("RESEND_API_KEY is not set. Add it to .env.local.");
   }
   return {
     apiKey,
-    fromAddress: process.env.PRAXIS_EMAIL_FROM ?? 'praxis@thanachon.me',
-    fromName: process.env.PRAXIS_EMAIL_FROM_NAME ?? 'PRAXIS · Thanachon Supasatian',
+    fromAddress: process.env.PRAXIS_EMAIL_FROM ?? "praxis@thanachon.me",
+    fromName:
+      process.env.PRAXIS_EMAIL_FROM_NAME ?? "PRAXIS · Thanachon Supasatian",
   };
 }
 
-function renderInvitationHtml({ actionUrl, displayName }: InvitationEmailParams): string {
-  const greeting = displayName ? `Hi ${displayName},` : 'Hi there,';
+function renderInvitationHtml({
+  actionUrl,
+  displayName,
+}: InvitationEmailParams): string {
+  const greeting = displayName ? `Hi ${displayName},` : "Hi there,";
   // Keep HTML minimal — inline styles only, table-free, no custom fonts.
   return `<!doctype html>
 <html>
@@ -59,23 +67,28 @@ function renderInvitationHtml({ actionUrl, displayName }: InvitationEmailParams)
 </html>`;
 }
 
-function renderInvitationText({ actionUrl, displayName }: InvitationEmailParams): string {
-  const greeting = displayName ? `Hi ${displayName},` : 'Hi there,';
+function renderInvitationText({
+  actionUrl,
+  displayName,
+}: InvitationEmailParams): string {
+  const greeting = displayName ? `Hi ${displayName},` : "Hi there,";
   return [
     greeting,
-    '',
-    'You\'re invited to PRAXIS, a small, invite-only learning space.',
-    'Turn any topic you care about into a short, personalised course and talk it through with a coach named Nori.',
-    '',
-    'Start your course:',
+    "",
+    "You're invited to PRAXIS, a small, invite-only learning space.",
+    "Turn any topic you care about into a short, personalised course and talk it through with a coach named Nori.",
+    "",
+    "Start your course:",
     actionUrl,
-    '',
-    'This link is valid for 15 minutes and can only be used once.',
-    'If you didn\'t expect this email, you can safely ignore it.',
-  ].join('\n');
+    "",
+    "This link is valid for 15 minutes and can only be used once.",
+    "If you didn't expect this email, you can safely ignore it.",
+  ].join("\n");
 }
 
-export async function sendInvitationEmail(params: InvitationEmailParams): Promise<SendResult> {
+export async function sendInvitationEmail(
+  params: InvitationEmailParams,
+): Promise<SendResult> {
   const { apiKey, fromAddress, fromName } = readConfig();
   const resend = new Resend(apiKey);
 
@@ -89,11 +102,23 @@ export async function sendInvitationEmail(params: InvitationEmailParams): Promis
     });
 
     if (error) {
-      return { status: EmailDeliveryStatus.FAILED, providerId: null, error: error.message };
+      return {
+        status: EmailDeliveryStatus.FAILED,
+        providerId: null,
+        error: error.message,
+      };
     }
-    return { status: EmailDeliveryStatus.SENT, providerId: data?.id ?? null, error: null };
+    return {
+      status: EmailDeliveryStatus.SENT,
+      providerId: data?.id ?? null,
+      error: null,
+    };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    return { status: EmailDeliveryStatus.FAILED, providerId: null, error: message };
+    return {
+      status: EmailDeliveryStatus.FAILED,
+      providerId: null,
+      error: message,
+    };
   }
 }

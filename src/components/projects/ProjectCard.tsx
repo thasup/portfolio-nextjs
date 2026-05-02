@@ -1,48 +1,48 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { type Project } from '@/types/project'
-import { TechBadge } from '@/components/shared/TechBadge'
-import { DomainBadge } from '@/components/shared/DomainBadge'
-import { ArrowRight } from 'lucide-react'
-import { useModal } from '@/hooks/useModal'
-import { useTranslations } from 'next-intl'
-import { getSignalLabel } from '@/lib/content'
+import Image from "next/image";
+import { type Project } from "@/types/project";
+import { TechBadge } from "@/components/shared/TechBadge";
+import { DomainBadge } from "@/components/shared/DomainBadge";
+import { ArrowRight } from "lucide-react";
+import { useModal } from "@/hooks/useModal";
+import { useTranslations } from "next-intl";
+import { getSignalLabel } from "@/lib/content";
 
 interface ProjectCardProps {
-  project: Project
+  project: Project;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const { open } = useModal()
-  const t = useTranslations('projects.' + project.slug)
-  const labelsT = useTranslations('projects.labels')
+  const { open } = useModal();
+  const t = useTranslations("projects." + project.slug);
+  const labelsT = useTranslations("projects.labels");
 
-  const tRoot = useTranslations()
-  const title = t('title')
-  const tagline = t('tagline')
-  const problemSummary = t('problemSummary')
-  const whatIOwned = t.raw('whatIOwned')
-  
-  const signalKeys = (project.signals ?? []).slice(0, 3).map((signal) =>
-    getSignalLabel(signal)
-  )
+  const tRoot = useTranslations();
+  const title = t("title");
+  const tagline = t("tagline");
+  const problemSummary = t("problemSummary");
+  const whatIOwned = t.raw("whatIOwned");
+
+  const signalKeys = (project.signals ?? [])
+    .slice(0, 3)
+    .map((signal) => getSignalLabel(signal));
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    open({ type: 'project', id: project.slug });
+    open({ type: "project", id: project.slug });
   };
 
   return (
-    <div 
-      onClick={handleClick} 
+    <div
+      onClick={handleClick}
       className="group block h-full cursor-pointer"
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          open({ type: 'project', id: project.slug });
+          open({ type: "project", id: project.slug });
         }
       }}
     >
@@ -57,42 +57,45 @@ export function ProjectCard({ project }: ProjectCardProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
-        
+
         <div className="p-5 flex-1 flex flex-col">
           <div className="mb-3 flex items-start justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               <DomainBadge domain={project.domain} />
               {signalKeys.map((key) => (
-                <span key={key} className="rounded-full border border-[var(--color-line)] px-2 py-1 text-[10px] text-[var(--color-ink-3)]">
+                <span
+                  key={key}
+                  className="rounded-full border border-[var(--color-line)] px-2 py-1 text-[10px] text-[var(--color-ink-3)]"
+                >
                   {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {tRoot(key as any)}
                 </span>
               ))}
             </div>
-            <span className="text-xs font-medium text-[var(--color-ink-3)]">{project.year}</span>
+            <span className="text-xs font-medium text-[var(--color-ink-3)]">
+              {project.year}
+            </span>
           </div>
-          
+
           <h3 className="font-display text-xl font-medium tracking-tight text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-praxis-accent)]">
             {title}
           </h3>
-          <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-            {tagline}
-          </p>
-        
+          <p className="mt-2 text-sm text-[var(--color-ink-2)]">{tagline}</p>
+
           <div className="mt-4 space-y-4">
             <p className="line-clamp-3 text-sm text-[var(--color-ink-3)]">
               {problemSummary}
             </p>
             {whatIOwned && (
               <div className="card inset p-3">
-                <div className="eyebrow mb-1">
-                  {labelsT('whatIOwned')}
-                </div>
-                <p className="text-sm text-[var(--color-ink-2)]">{whatIOwned}</p>
+                <div className="eyebrow mb-1">{labelsT("whatIOwned")}</div>
+                <p className="text-sm text-[var(--color-ink-2)]">
+                  {whatIOwned}
+                </p>
               </div>
             )}
           </div>
-          
+
           <div className="flex-col items-start gap-4 pt-5 mt-auto">
             <div className="flex flex-wrap gap-1.5">
               {project.techStack.slice(0, 3).map((tech) => (
@@ -100,18 +103,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
               ))}
               {project.techStack.length > 3 && (
                 <span className="text-[10px] text-[var(--color-ink-3)] px-1 py-0.5">
-                  +{project.techStack.length - 3} {labelsT('more')}
+                  +{project.techStack.length - 3} {labelsT("more")}
                 </span>
               )}
             </div>
-            
+
             <div className="flex items-center text-sm font-medium text-[var(--color-praxis-accent)] mt-3">
-              {labelsT('viewCaseStudy')}
+              {labelsT("viewCaseStudy")}
               <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

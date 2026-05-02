@@ -10,7 +10,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "Toparch",
     type: "work",
     skills: ["MEP Engineering", "Systems Thinking", "Technical Design"],
-    featured: true
+    featured: true,
   },
 
   // Chapter Bet
@@ -22,7 +22,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "Self-Directed",
     type: "learning",
     skills: ["JavaScript", "React", "Software Architecture"],
-    featured: true
+    featured: true,
   },
   {
     id: "toeic-first",
@@ -32,7 +32,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "CPA (Thailand)",
     type: "achievement",
     skills: ["English Proficiency"],
-    featured: false
+    featured: false,
   },
 
   // Chapter Craft
@@ -44,7 +44,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "MAQE Bangkok",
     type: "milestone",
     skills: ["Professional Craft"],
-    featured: false
+    featured: false,
   },
   {
     id: "ap-thai",
@@ -55,7 +55,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["NuxtJS", "Analytics", "Mobile-First"],
     featured: true,
-    tech: ["NuxtJS", "Tailwind CSS", "Cypress"]
+    tech: ["NuxtJS", "Tailwind CSS", "Cypress"],
   },
   {
     id: "peatix-series",
@@ -66,7 +66,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["Product Ownership", "Technical Judgment"],
     featured: true,
-    tech: ["Vue 2/3", "SCSS", "Jest"]
+    tech: ["Vue 2/3", "SCSS", "Jest"],
   },
 
   // Chapter Frontier
@@ -78,7 +78,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "MAQE Bangkok",
     type: "work",
     skills: ["Leadership", "Mentorship", "Standardization"],
-    featured: true
+    featured: true,
   },
   {
     id: "token-gating",
@@ -89,7 +89,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["Web3", "Blockchain", "Full-stack"],
     featured: false,
-    tech: ["Vue 3", "NestJS", "Ethers.js"]
+    tech: ["Vue 3", "NestJS", "Ethers.js"],
   },
   {
     id: "maqe-website-v5",
@@ -100,7 +100,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["Architecture", "Performance", "End-to-end Ownership"],
     featured: true,
-    tech: ["Next.js 13", "TypeScript", "Framer Motion"]
+    tech: ["Next.js 13", "TypeScript", "Framer Motion"],
   },
   {
     id: "toeic-second",
@@ -110,7 +110,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "CPA (Thailand)",
     type: "achievement",
     skills: ["English Proficiency"],
-    featured: false
+    featured: false,
   },
   {
     id: "online-catalog",
@@ -121,7 +121,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["GraphQL", "Apollo", "Headless Commerce"],
     featured: false,
-    tech: ["React", "GraphQL", "Apollo Client"]
+    tech: ["React", "GraphQL", "Apollo Client"],
   },
 
   // Chapter Intelligence
@@ -134,7 +134,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["Solidity", "Smart Contracts", "Governance"],
     featured: true,
-    tech: ["Solidity", "Hardhat", "React"]
+    tech: ["Solidity", "Hardhat", "React"],
   },
   {
     id: "ai-event-platform",
@@ -145,7 +145,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["Generative AI", "Production AI Integration"],
     featured: true,
-    tech: ["OpenAI SDK", "Next.js", "AWS"]
+    tech: ["OpenAI SDK", "Next.js", "AWS"],
   },
   {
     id: "aws-certified",
@@ -155,7 +155,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "AWS",
     type: "achievement",
     skills: ["Cloud Architecture"],
-    featured: false
+    featured: false,
   },
 
   // Chapter Vision
@@ -167,7 +167,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "TeamStack",
     type: "milestone",
     skills: ["Product Focused", "Strategic Collaboration"],
-    featured: false
+    featured: false,
   },
   {
     id: "the-air-product",
@@ -178,7 +178,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["AI Product Architecture", "Founder Proximity"],
     featured: true,
-    tech: ["Next.js", "Python", "LLMs"]
+    tech: ["Next.js", "Python", "LLMs"],
   },
   {
     id: "teamstack-roster",
@@ -189,7 +189,7 @@ export const timelineEvents: TimelineEvent[] = [
     type: "project",
     skills: ["0→1 Product Delivery", "System Design"],
     featured: true,
-    tech: ["React", "Node.js", "PostgreSQL"]
+    tech: ["React", "Node.js", "PostgreSQL"],
   },
   {
     id: "gaia-project",
@@ -199,7 +199,7 @@ export const timelineEvents: TimelineEvent[] = [
     company: "Personal",
     type: "project",
     skills: ["Self-Mastery", "Knowledge Systems"],
-    featured: false
+    featured: false,
   },
   {
     id: "portfolio-refactor",
@@ -209,6 +209,6 @@ export const timelineEvents: TimelineEvent[] = [
     company: "Personal",
     type: "project",
     skills: ["Next.js 15", "I18n", "AI Pairing"],
-    featured: false
-  }
+    featured: false,
+  },
 ];

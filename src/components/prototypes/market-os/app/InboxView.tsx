@@ -1,74 +1,77 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
+import Link from "next/link";
+import { useState } from "react";
+import { AppPage } from "@/components/prototypes/market-os/app/AppPage";
 import {
   type NotificationDTO,
   type NotificationType,
-} from '@/lib/marketos/types';
-import { fmtRelative } from '@/lib/marketos/format';
+} from "@/lib/marketos/types";
+import { fmtRelative } from "@/lib/marketos/format";
 
 const AC = {
-  dark: '#1e3a2f',
-  orange: '#f2a84b',
-  muted: '#7a7f79',
-  border: 'rgba(30,58,47,0.1)',
+  dark: "#1e3a2f",
+  orange: "#f2a84b",
+  muted: "#7a7f79",
+  border: "rgba(30,58,47,0.1)",
 };
 
 const TYPE_DOT: Record<NotificationType, string> = {
-  bid_received: '#f2a84b',
-  bid_accepted: '#a5d6a7',
-  bid_declined: '#c4554d',
-  bid_shortlisted: '#b9d9e0',
-  mission_posted: '#f6d9a3',
-  mission_delivered: '#d1c4e9',
-  mission_completed: '#a5d6a7',
-  mission_cancelled: 'rgba(30,58,47,0.18)',
-  reputation_up: '#f2a84b',
-  pool_period_closed: '#b9d9e0',
-  payout_released: '#a5d6a7',
+  bid_received: "#f2a84b",
+  bid_accepted: "#a5d6a7",
+  bid_declined: "#c4554d",
+  bid_shortlisted: "#b9d9e0",
+  mission_posted: "#f6d9a3",
+  mission_delivered: "#d1c4e9",
+  mission_completed: "#a5d6a7",
+  mission_cancelled: "rgba(30,58,47,0.18)",
+  reputation_up: "#f2a84b",
+  pool_period_closed: "#b9d9e0",
+  payout_released: "#a5d6a7",
 };
 
 export function InboxView({ initial }: { initial: NotificationDTO[] }) {
   const [items, setItems] = useState(initial);
-  const [tab, setTab] = useState<'all' | 'unread'>('all');
+  const [tab, setTab] = useState<"all" | "unread">("all");
 
-  const visible = tab === 'unread' ? items.filter((n) => !n.read) : items;
+  const visible = tab === "unread" ? items.filter((n) => !n.read) : items;
   const unreadCount = items.filter((n) => !n.read).length;
 
-  const markAll = () => setItems((prev) => prev.map((n) => ({ ...n, read: true })));
+  const markAll = () =>
+    setItems((prev) => prev.map((n) => ({ ...n, read: true })));
   const toggleRead = (id: string) =>
-    setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: !n.read } : n)));
+    setItems((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, read: !n.read } : n)),
+    );
 
   return (
     <AppPage>
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
           marginBottom: 28,
         }}
       >
         <div>
           <h1
             style={{
-              fontFamily: 'var(--font-bricolage), sans-serif',
+              fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
               fontSize: 28,
               color: AC.dark,
-              margin: '0 0 4px',
-              letterSpacing: '-0.03em',
+              margin: "0 0 4px",
+              letterSpacing: "-0.03em",
             }}
           >
             Inbox
           </h1>
           <p
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 14,
-              color: 'rgba(30,58,47,0.5)',
+              color: "rgba(30,58,47,0.5)",
               margin: 0,
             }}
           >
@@ -82,23 +85,23 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
           disabled={unreadCount === 0}
           style={{
             height: 38,
-            padding: '0 16px',
+            padding: "0 16px",
             fontSize: 13,
             opacity: unreadCount === 0 ? 0.4 : 1,
-            cursor: unreadCount === 0 ? 'not-allowed' : 'pointer',
+            cursor: unreadCount === 0 ? "not-allowed" : "pointer",
           }}
         >
           Mark all read
         </button>
       </div>
 
-      <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-        {(['all', 'unread'] as const).map((t) => (
+      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+        {(["all", "unread"] as const).map((t) => (
           <div
             key={t}
-            className={`a-pill-filter${tab === t ? ' active' : ''}`}
+            className={`a-pill-filter${tab === t ? " active" : ""}`}
             onClick={() => setTab(t)}
-            style={{ textTransform: 'capitalize' }}
+            style={{ textTransform: "capitalize" }}
           >
             {t}
           </div>
@@ -107,18 +110,18 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
 
       <div
         style={{
-          background: 'white',
+          background: "white",
           borderRadius: 16,
-          overflow: 'hidden',
-          boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
+          overflow: "hidden",
+          boxShadow: "0 1px 4px rgba(30,58,47,0.06)",
         }}
       >
         {visible.length === 0 && (
           <div
             style={{
               padding: 48,
-              textAlign: 'center',
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              textAlign: "center",
+              fontFamily: "var(--font-dm-sans), sans-serif",
               color: AC.muted,
             }}
           >
@@ -127,15 +130,16 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
         )}
         {visible.map((n, i) => {
           const rowStyle: React.CSSProperties = {
-            display: 'flex',
-            alignItems: 'flex-start',
+            display: "flex",
+            alignItems: "flex-start",
             gap: 14,
-            padding: '16px 20px',
-            borderBottom: i < visible.length - 1 ? `1px solid ${AC.border}` : 'none',
-            background: n.read ? 'transparent' : 'rgba(242,168,75,0.05)',
-            textDecoration: 'none',
-            color: 'inherit',
-            cursor: 'pointer',
+            padding: "16px 20px",
+            borderBottom:
+              i < visible.length - 1 ? `1px solid ${AC.border}` : "none",
+            background: n.read ? "transparent" : "rgba(242,168,75,0.05)",
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
           };
           const onClick = () => {
             if (!n.read) toggleRead(n.id);
@@ -146,7 +150,7 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
                 style={{
                   width: 10,
                   height: 10,
-                  borderRadius: '50%',
+                  borderRadius: "50%",
                   background: TYPE_DOT[n.type] ?? AC.orange,
                   marginTop: 6,
                   flexShrink: 0,
@@ -156,15 +160,15 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                     gap: 12,
                   }}
                 >
                   <span
                     style={{
-                      fontFamily: 'var(--font-dm-sans), sans-serif',
+                      fontFamily: "var(--font-dm-sans), sans-serif",
                       fontWeight: n.read ? 500 : 700,
                       fontSize: 14,
                       color: AC.dark,
@@ -174,7 +178,7 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
                   </span>
                   <span
                     style={{
-                      fontFamily: 'var(--font-dm-sans), sans-serif',
+                      fontFamily: "var(--font-dm-sans), sans-serif",
                       fontSize: 12,
                       color: AC.muted,
                       flexShrink: 0,
@@ -185,10 +189,10 @@ export function InboxView({ initial }: { initial: NotificationDTO[] }) {
                 </div>
                 <p
                   style={{
-                    fontFamily: 'var(--font-dm-sans), sans-serif',
+                    fontFamily: "var(--font-dm-sans), sans-serif",
                     fontSize: 13.5,
-                    color: 'rgba(30,58,47,0.62)',
-                    margin: '4px 0 0',
+                    color: "rgba(30,58,47,0.62)",
+                    margin: "4px 0 0",
                     lineHeight: 1.55,
                   }}
                 >

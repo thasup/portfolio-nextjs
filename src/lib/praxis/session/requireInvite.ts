@@ -14,22 +14,26 @@
  * Token verification (JWT) is handled separately in the callback route
  * itself; this helper only gates on the invitation table.
  */
-import 'server-only';
-import { createAdminClient } from '@/lib/praxis/supabase/admin';
-import type { InvitationRow } from '@/lib/praxis/supabase/tables';
+import "server-only";
+import { createAdminClient } from "@/lib/praxis/supabase/admin";
+import type { InvitationRow } from "@/lib/praxis/supabase/tables";
 
 export enum InviteFailureReason {
-  NOT_FOUND = 'not_found',
-  REVOKED = 'revoked',
-  LOOKUP_ERROR = 'lookup_error',
+  NOT_FOUND = "not_found",
+  REVOKED = "revoked",
+  LOOKUP_ERROR = "lookup_error",
 }
 
 export class InviteRejectionError extends Error {
   readonly reason: InviteFailureReason;
 
   constructor(reason: InviteFailureReason, detail?: string) {
-    super(detail ? `Invite rejected: ${reason} — ${detail}` : `Invite rejected: ${reason}`);
-    this.name = 'InviteRejectionError';
+    super(
+      detail
+        ? `Invite rejected: ${reason} — ${detail}`
+        : `Invite rejected: ${reason}`,
+    );
+    this.name = "InviteRejectionError";
     this.reason = reason;
   }
 }
@@ -45,24 +49,33 @@ export class InviteRejectionError extends Error {
 export async function requireInvite(email: string): Promise<InvitationRow> {
   const normalised = email.trim().toLowerCase();
   if (!normalised) {
-    throw new InviteRejectionError(InviteFailureReason.NOT_FOUND, 'empty email');
+    throw new InviteRejectionError(
+      InviteFailureReason.NOT_FOUND,
+      "empty email",
+    );
   }
 
   const admin = createAdminClient();
   const { data, error } = await admin
-    .from('praxis_invitations')
-    .select('*')
-    .eq('email', normalised)
+    .from("praxis_invitations")
+    .select("*")
+    .eq("email", normalised)
     .maybeSingle();
 
   if (error) {
-    throw new InviteRejectionError(InviteFailureReason.LOOKUP_ERROR, error.message);
+    throw new InviteRejectionError(
+      InviteFailureReason.LOOKUP_ERROR,
+      error.message,
+    );
   }
   if (!data) {
     throw new InviteRejectionError(InviteFailureReason.NOT_FOUND);
   }
   if (data.revoked_at) {
-    throw new InviteRejectionError(InviteFailureReason.REVOKED, data.revoked_at);
+    throw new InviteRejectionError(
+      InviteFailureReason.REVOKED,
+      data.revoked_at,
+    );
   }
   return data;
 }

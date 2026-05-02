@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Single onboarding question input.
@@ -8,8 +8,8 @@
  * deliberately minimal — these questions are asked once and revisited
  * rarely.
  */
-import { useId } from 'react';
-import { OnboardingInputType } from '@/lib/praxis/prompts/types';
+import { useId } from "react";
+import { OnboardingInputType } from "@/lib/praxis/prompts/types";
 
 export interface AdaptiveQuestionData {
   id: string;
@@ -29,7 +29,12 @@ export interface AdaptiveQuestionProps {
 const SHORT_MAX = 160;
 const LONG_MAX = 2000;
 
-export function AdaptiveQuestion({ question, value, busy = false, onChange }: AdaptiveQuestionProps) {
+export function AdaptiveQuestion({
+  question,
+  value,
+  busy = false,
+  onChange,
+}: AdaptiveQuestionProps) {
   const inputId = useId();
   const helperId = useId();
 
@@ -62,7 +67,11 @@ export function AdaptiveQuestion({ question, value, busy = false, onChange }: Ad
       case OnboardingInputType.SINGLE_SELECT: {
         const options = question.options ?? [];
         return (
-          <ul className="flex flex-wrap gap-2" role="radiogroup" aria-describedby={question.helperText ? helperId : undefined}>
+          <ul
+            className="flex flex-wrap gap-2"
+            role="radiogroup"
+            aria-describedby={question.helperText ? helperId : undefined}
+          >
             {options.map((option) => {
               const selected = value === option;
               return (
@@ -74,11 +83,11 @@ export function AdaptiveQuestion({ question, value, busy = false, onChange }: Ad
                     disabled={busy}
                     onClick={() => onChange(option)}
                     className={[
-                      'rounded-full border px-4 py-2 text-sm transition-colors disabled:opacity-50',
+                      "rounded-full border px-4 py-2 text-sm transition-colors disabled:opacity-50",
                       selected
-                        ? 'border-primary bg-primary text-primary-foreground'
-                        : 'border-border bg-card text-foreground hover:border-primary',
-                    ].join(' ')}
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-card text-foreground hover:border-primary",
+                    ].join(" ")}
                   >
                     {option}
                   </button>
@@ -96,7 +105,10 @@ export function AdaptiveQuestion({ question, value, busy = false, onChange }: Ad
   return (
     <fieldset className="space-y-3">
       <legend className="block">
-        <label htmlFor={inputId} className="text-base font-medium text-foreground">
+        <label
+          htmlFor={inputId}
+          className="text-base font-medium text-foreground"
+        >
           {question.prompt}
         </label>
       </legend>

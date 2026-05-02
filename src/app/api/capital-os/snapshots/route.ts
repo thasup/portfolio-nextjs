@@ -20,14 +20,12 @@ export async function GET(req: NextRequest) {
   });
 
   return NextResponse.json({
-    snapshots: snapshots
-      .reverse()
-      .map((s) => ({
-        ...s,
-        netWorth: Number(s.netWorth),
-        liquid: Number(s.liquid),
-        invested: Number(s.invested),
-        liabilities: Number(s.liabilities),
-      })),
+    snapshots: snapshots.reverse().map((s) => ({
+      ...s,
+      netWorth: Number(s.netWorth),
+      liquid: Number(s.liquid),
+      invested: Number(s.invested),
+      liabilities: Number(s.liabilities),
+    })),
   });
 }

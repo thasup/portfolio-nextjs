@@ -29,7 +29,9 @@ export function TimelineSpine({
         className="absolute inset-x-0 top-0 w-1 rounded-full origin-top"
         style={{
           scaleY: scrollProgress,
-          backgroundColor: activeYear ? YEAR_THEMES[activeYear].spineColor : "#6366F1",
+          backgroundColor: activeYear
+            ? YEAR_THEMES[activeYear].spineColor
+            : "#6366F1",
         }}
       />
 
@@ -39,7 +41,9 @@ export function TimelineSpine({
           className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full shadow-lg"
           style={{
             top: `${scrollProgress * totalHeight}px`,
-            backgroundColor: activeYear ? YEAR_THEMES[activeYear].dotColor : "#A5B4FC",
+            backgroundColor: activeYear
+              ? YEAR_THEMES[activeYear].dotColor
+              : "#A5B4FC",
             boxShadow: activeYear
               ? `0 0 12px ${YEAR_THEMES[activeYear].dotColor}`
               : "0 0 12px #A5B4FC",

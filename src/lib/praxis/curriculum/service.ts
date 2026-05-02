@@ -17,33 +17,33 @@
  * writes in `persistAcceptedOutline()` still go through the authed
  * cookie client so RLS ownership checks fire.
  */
-import 'server-only';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { createAdminClient } from '@/lib/praxis/supabase/admin';
-import type { Database } from '@/lib/praxis/supabase/database.types';
+import "server-only";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/praxis/supabase/admin";
+import type { Database } from "@/lib/praxis/supabase/database.types";
 import {
   ChatRole,
   ResponseFormat,
   extractJson,
-} from '@/lib/praxis/openrouter/client';
+} from "@/lib/praxis/openrouter/client";
 import {
   getClient,
   createModelResolver,
   ModelTask,
-} from '@/lib/praxis/openrouter/factory';
-import type { ModelPreferences } from '@/lib/praxis/openrouter/factory';
+} from "@/lib/praxis/openrouter/factory";
+import type { ModelPreferences } from "@/lib/praxis/openrouter/factory";
 import {
   LedgerEndpoint,
   assertBudget,
   recordLedgerEntry,
-} from '@/lib/praxis/openrouter/ledger';
+} from "@/lib/praxis/openrouter/ledger";
 import {
   PROMPT_VERSIONS,
   ScopeCategory,
   curriculumOutline,
   scopeGuardrail,
-} from '@/lib/praxis/prompts';
-import type { PraxisLocale } from '@/lib/praxis/prompts/types';
+} from "@/lib/praxis/prompts";
+import type { PraxisLocale } from "@/lib/praxis/prompts/types";
 
 // ---- scope guardrail -------------------------------------------------------
 
@@ -61,7 +61,10 @@ export async function runScopeGuardrail(opts: {
   await assertBudget();
   const client = getClient();
   const model = createModelResolver(opts.preferences)(ModelTask.GUARDRAIL);
-  const prompt = scopeGuardrail.build({ topic: opts.rawInput, locale: opts.locale });
+  const prompt = scopeGuardrail.build({
+    topic: opts.rawInput,
+    locale: opts.locale,
+  });
 
   const res = await client.chat({
     model,
@@ -83,12 +86,12 @@ export async function runScopeGuardrail(opts: {
   // through to outline generation than reject on a JSON hiccup. The
   // outline prompt itself will refuse frankly unsafe topics.
   if (!parsed) {
-    return { admitted: true, category: ScopeCategory.OK, explanation: '' };
+    return { admitted: true, category: ScopeCategory.OK, explanation: "" };
   }
   return {
     admitted: !!parsed.admitted && parsed.category === ScopeCategory.OK,
     category: (parsed.category as ScopeCategory) ?? ScopeCategory.OK,
-    explanation: parsed.explanation ?? '',
+    explanation: parsed.explanation ?? "",
   };
 }
 
@@ -108,7 +111,8 @@ export interface OutlineResult {
   cacheRowId: string;
 }
 
-const JSON_RETRY_SUFFIX = '\n\nReturn ONLY valid JSON matching the schema above. Do not include prose before or after.';
+const JSON_RETRY_SUFFIX =
+  "\n\nReturn ONLY valid JSON matching the schema above. Do not include prose before or after.";
 
 async function generateOutlineOnce(opts: {
   rawInput: string;
@@ -118,7 +122,10 @@ async function generateOutlineOnce(opts: {
 }): Promise<{ units: OutlineUnit[] } | null> {
   const client = getClient();
   const model = createModelResolver(opts.preferences)(ModelTask.CURRICULUM);
-  const basePrompt = curriculumOutline.build({ topic: opts.rawInput, locale: opts.locale });
+  const basePrompt = curriculumOutline.build({
+    topic: opts.rawInput,
+    locale: opts.locale,
+  });
   const prompt = opts.strict ? basePrompt + JSON_RETRY_SUFFIX : basePrompt;
 
   const res = await client.chat({
@@ -159,28 +166,31 @@ export async function getOrGenerateOutline(opts: {
 
   // 1. Cache lookup.
   const { data: hit, error: hitErr } = await admin
-    .from('praxis_curriculum_cache')
-    .select('id, units, hit_count')
-    .eq('fingerprint', opts.fingerprint)
-    .eq('locale', opts.locale)
-    .eq('model_version', modelVersion)
+    .from("praxis_curriculum_cache")
+    .select("id, units, hit_count")
+    .eq("fingerprint", opts.fingerprint)
+    .eq("locale", opts.locale)
+    .eq("model_version", modelVersion)
     .maybeSingle();
 
   if (hitErr) {
-    console.error('[praxis/curriculum] cache lookup failed', hitErr);
+    console.error("[praxis/curriculum] cache lookup failed", hitErr);
   }
 
   if (hit) {
     // Increment hit_count opportunistically; don't block on failure.
     admin
-      .from('praxis_curriculum_cache')
+      .from("praxis_curriculum_cache")
       .update({ hit_count: (hit.hit_count ?? 0) + 1 })
-      .eq('id', hit.id)
+      .eq("id", hit.id)
       .then(({ error }) => {
-        if (error) console.error('[praxis/curriculum] hit_count bump failed', error);
+        if (error)
+          console.error("[praxis/curriculum] hit_count bump failed", error);
       });
 
-    const unitsJson = hit.units as { units?: Array<{ title: string; objective: string; summary: string }> } | null;
+    const unitsJson = hit.units as {
+      units?: Array<{ title: string; objective: string; summary: string }>;
+    } | null;
     const cachedUnits = unitsJson?.units ?? [];
     return {
       cached: true,
@@ -197,30 +207,43 @@ export async function getOrGenerateOutline(opts: {
 
   // 2. Cache miss — generate with one retry.
   await assertBudget();
-  let generated = await generateOutlineOnce({ rawInput: opts.rawInput, locale: opts.locale, preferences: opts.preferences });
+  let generated = await generateOutlineOnce({
+    rawInput: opts.rawInput,
+    locale: opts.locale,
+    preferences: opts.preferences,
+  });
   if (!generated) {
-    generated = await generateOutlineOnce({ rawInput: opts.rawInput, locale: opts.locale, strict: true, preferences: opts.preferences });
+    generated = await generateOutlineOnce({
+      rawInput: opts.rawInput,
+      locale: opts.locale,
+      strict: true,
+      preferences: opts.preferences,
+    });
   }
   if (!generated) {
-    throw new Error('outline generation failed — invalid JSON after retry');
+    throw new Error("outline generation failed — invalid JSON after retry");
   }
 
   // 3. Persist into cache.
   const { data: inserted, error: insertErr } = await admin
-    .from('praxis_curriculum_cache')
+    .from("praxis_curriculum_cache")
     .insert({
       fingerprint: opts.fingerprint,
       locale: opts.locale,
       model_version: modelVersion,
       units: {
-        units: generated.units.map(({ title, objective, summary }) => ({ title, objective, summary })),
+        units: generated.units.map(({ title, objective, summary }) => ({
+          title,
+          objective,
+          summary,
+        })),
       },
     })
-    .select('id')
+    .select("id")
     .single();
 
   if (insertErr || !inserted) {
-    throw new Error(`cache insert failed: ${insertErr?.message ?? 'no row'}`);
+    throw new Error(`cache insert failed: ${insertErr?.message ?? "no row"}`);
   }
 
   return {
@@ -278,9 +301,10 @@ function editRatio(a: string, b: string): number {
     dp[0] = i;
     for (let j = 1; j <= shorter.length; j += 1) {
       const tmp = dp[j];
-      dp[j] = longer[i - 1] === shorter[j - 1]
-        ? prev
-        : 1 + Math.min(prev, dp[j - 1], dp[j]);
+      dp[j] =
+        longer[i - 1] === shorter[j - 1]
+          ? prev
+          : 1 + Math.min(prev, dp[j - 1], dp[j]);
       prev = tmp;
     }
   }
@@ -291,8 +315,8 @@ export function outlineEditedMaterially(
   original: ReadonlyArray<OutlineUnit>,
   edited: ReadonlyArray<OutlineUnit>,
 ): boolean {
-  const origTitles = original.map((u) => u.title).join(' | ');
-  const editTitles = edited.map((u) => u.title).join(' | ');
+  const origTitles = original.map((u) => u.title).join(" | ");
+  const editTitles = edited.map((u) => u.title).join(" | ");
   return editRatio(origTitles, editTitles) > TITLE_EDIT_THRESHOLD;
 }
 
@@ -316,39 +340,43 @@ export async function persistAcceptedOutline(
   if (edited) {
     const admin = createAdminClient();
     const { data: clone, error: cloneErr } = await admin
-      .from('praxis_curriculum_cache')
+      .from("praxis_curriculum_cache")
       .insert({
         fingerprint: `${fingerprint}+edited-${learnerId}`,
         locale,
         model_version: PROMPT_VERSIONS.curriculumOutline,
         units: {
-          units: units.map(({ title, objective, summary }) => ({ title, objective, summary })),
+          units: units.map(({ title, objective, summary }) => ({
+            title,
+            objective,
+            summary,
+          })),
         },
       })
-      .select('id')
+      .select("id")
       .single();
     if (cloneErr || !clone) {
-      throw new Error(`cache clone failed: ${cloneErr?.message ?? 'no row'}`);
+      throw new Error(`cache clone failed: ${cloneErr?.message ?? "no row"}`);
     }
     curriculumId = clone.id;
   }
 
   // Insert topic.
   const { data: topic, error: topicErr } = await supabase
-    .from('praxis_topics')
+    .from("praxis_topics")
     .insert({
       user_id: learnerId,
       title,
       raw_input: rawInput,
       fingerprint,
       locale,
-      status: 'outline_ready',
+      status: "outline_ready",
       curriculum_id: curriculumId,
     })
-    .select('id')
+    .select("id")
     .single();
   if (topicErr || !topic) {
-    throw new Error(`topic insert failed: ${topicErr?.message ?? 'no row'}`);
+    throw new Error(`topic insert failed: ${topicErr?.message ?? "no row"}`);
   }
 
   // Insert units in one batch.
@@ -357,15 +385,15 @@ export async function persistAcceptedOutline(
     index: u.index,
     title: u.title,
     objective: u.objective,
-    status: 'pending' as const,
+    status: "pending" as const,
   }));
   const { data: insertedUnits, error: unitsErr } = await supabase
-    .from('praxis_units')
+    .from("praxis_units")
     .insert(unitsPayload)
-    .select('id, index, title, status');
+    .select("id, index, title, status");
 
   if (unitsErr || !insertedUnits) {
-    throw new Error(`units insert failed: ${unitsErr?.message ?? 'no rows'}`);
+    throw new Error(`units insert failed: ${unitsErr?.message ?? "no rows"}`);
   }
 
   return {
@@ -373,7 +401,11 @@ export async function persistAcceptedOutline(
     curriculumId,
     units: insertedUnits
       .sort((a, b) => a.index - b.index)
-      .map((u) => ({ id: u.id, index: u.index, title: u.title, status: u.status })),
+      .map((u) => ({
+        id: u.id,
+        index: u.index,
+        title: u.title,
+        status: u.status,
+      })),
   };
 }
-

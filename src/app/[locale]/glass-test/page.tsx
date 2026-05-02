@@ -1,5 +1,5 @@
-import { GlassThemeTest } from '@/components/glass/GlassThemeTest';
-import { getTranslations } from 'next-intl/server';
+import { GlassThemeTest } from "@/components/glass/GlassThemeTest";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
   params,
@@ -7,27 +7,27 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'nav' });
+  const t = await getTranslations({ locale, namespace: "nav" });
 
   return {
-    title: `Liquid Glass Test | ${t('menu_title')}`,
+    title: `Liquid Glass Test | ${t("menu_title")}`,
   };
 }
 
 export default function GlassTestPage() {
   const experiments = [
-    'Refraction intensity sweep',
-    'Displacement fidelity baseline',
-    'Pulse hover micro-interactions',
-    'Layered glass stack latency',
-    'Specular bloom thresholds',
-    'Controller affordance clarity',
-    'Focus ring glow containment',
-    'Liquid morph targets',
-    'Button depth illusion',
-    'Noise seed stability',
-    'Motion blur contrast',
-    'Soft shadow fringing',
+    "Refraction intensity sweep",
+    "Displacement fidelity baseline",
+    "Pulse hover micro-interactions",
+    "Layered glass stack latency",
+    "Specular bloom thresholds",
+    "Controller affordance clarity",
+    "Focus ring glow containment",
+    "Liquid morph targets",
+    "Button depth illusion",
+    "Noise seed stability",
+    "Motion blur contrast",
+    "Soft shadow fringing",
   ];
 
   return (
@@ -36,20 +36,26 @@ export default function GlassTestPage() {
         className="glass-test-page relative min-h-[320vh] overflow-hidden"
         style={{
           backgroundImage: "url('/outdate_images/test.jpg')",
-          backgroundSize: '100vw',
-          backgroundRepeat: 'repeat',
-          backgroundPosition: 'center',
-          animation: 'moveBackground 60s linear infinite',
+          backgroundSize: "100vw",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "center",
+          animation: "moveBackground 60s linear infinite",
         }}
       >
-        <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/30 to-black/80" aria-hidden />
+        <div
+          className="absolute inset-0 bg-linear-to-b from-black/70 via-black/30 to-black/80"
+          aria-hidden
+        />
         <div className="relative container mx-auto py-20 text-white space-y-16">
           <div className="text-center space-y-4">
-            <p className="text-sm uppercase tracking-[0.4em] text-white/60">Glass Lab</p>
+            <p className="text-sm uppercase tracking-[0.4em] text-white/60">
+              Glass Lab
+            </p>
             <h1 className="text-4xl font-bold">Liquid Glass System</h1>
             <p className="text-white/80 max-w-2xl mx-auto">
-              Infinite scroll testbed for glassmorphism effects, displacement maps, and specular highlights.
-              Scroll to stress-test gradients, turbulence maps, and layered controls under motion.
+              Infinite scroll testbed for glassmorphism effects, displacement
+              maps, and specular highlights. Scroll to stress-test gradients,
+              turbulence maps, and layered controls under motion.
             </p>
           </div>
 
@@ -60,7 +66,11 @@ export default function GlassTestPage() {
                 className="relative flex flex-col items-center justify-between gap-10 md:flex-row"
               >
                 <div className="glass-container">
-                  <button type="button" className="glass-btn" aria-label="Add glass layer">
+                  <button
+                    type="button"
+                    className="glass-btn"
+                    aria-label="Add glass layer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -77,12 +87,14 @@ export default function GlassTestPage() {
                 </div>
                 <div className="max-w-xl text-center md:text-left space-y-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">
-                    Pass #{String(index + 1).padStart(2, '0')}
+                    Pass #{String(index + 1).padStart(2, "0")}
                   </p>
                   <h2 className="text-2xl font-semibold">{title}</h2>
                   <p className="text-white/75">
-                    Observe how the distortion grid reacts to vertical scroll velocity and background parallax.
-                    Tune displacement scale, blur falloff, and bloom halos to maintain clarity under motion.
+                    Observe how the distortion grid reacts to vertical scroll
+                    velocity and background parallax. Tune displacement scale,
+                    blur falloff, and bloom halos to maintain clarity under
+                    motion.
                   </p>
                 </div>
               </section>
@@ -94,11 +106,23 @@ export default function GlassTestPage() {
           </div>
         </div>
 
-        <svg style={{ display: 'none' }} aria-hidden>
+        <svg style={{ display: "none" }} aria-hidden>
           <filter id="container-glass" x="0%" y="0%" width="100%" height="100%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.008 0.008"
+              numOctaves="2"
+              seed="92"
+              result="noise"
+            />
             <feGaussianBlur in="noise" stdDeviation="0.02" result="blur" />
-            <feDisplacementMap in="SourceGraphic" in2="blur" scale="18" xChannelSelector="R" yChannelSelector="G" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="blur"
+              scale="18"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
           </filter>
           <filter id="btn-glass" primitiveUnits="objectBoundingBox">
             <feImage
@@ -109,8 +133,18 @@ export default function GlassTestPage() {
               height="1"
               result="map"
             />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.02" result="blur" />
-            <feDisplacementMap in="blur" in2="map" scale="4" xChannelSelector="R" yChannelSelector="G" />
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="0.02"
+              result="blur"
+            />
+            <feDisplacementMap
+              in="blur"
+              in2="map"
+              scale="4"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
           </filter>
         </svg>
       </main>

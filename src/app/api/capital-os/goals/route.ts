@@ -60,7 +60,13 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json(
-    { goal: { ...goal, current: Number(goal.current), target: Number(goal.target) } },
+    {
+      goal: {
+        ...goal,
+        current: Number(goal.current),
+        target: Number(goal.target),
+      },
+    },
     { status: 201 },
   );
 }

@@ -1,9 +1,9 @@
-import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { SettingsView } from '@/components/prototypes/market-os/app/SettingsView';
-import { getOrgBySlug, getOrgSettings } from '@/lib/marketos/queries/orgs';
-import { getCurrentPool } from '@/lib/marketos/queries/pool';
-import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
-import type { OrgAccent, OrgPeriod } from '@/lib/marketos/types';
+import { AppPage } from "@/components/prototypes/market-os/app/AppPage";
+import { SettingsView } from "@/components/prototypes/market-os/app/SettingsView";
+import { getOrgBySlug, getOrgSettings } from "@/lib/marketos/queries/orgs";
+import { getCurrentPool } from "@/lib/marketos/queries/pool";
+import { DEMO_ORG_SLUG } from "@/lib/marketos/constants";
+import type { OrgAccent, OrgPeriod } from "@/lib/marketos/types";
 
 /**
  * Settings — spec §8.11. Hydrates the live preview from the org's
@@ -18,8 +18,8 @@ export default async function SettingsPage() {
       <AppPage>
         <p
           style={{
-            fontFamily: 'var(--font-dm-sans), sans-serif',
-            color: '#7a7f79',
+            fontFamily: "var(--font-dm-sans), sans-serif",
+            color: "#7a7f79",
             fontSize: 14,
           }}
         >
@@ -42,8 +42,8 @@ export default async function SettingsPage() {
       initial={{
         ratio: settings?.ratio ?? 45,
         baseSplit: settings?.baseSplit ?? 60,
-        period: (settings?.period ?? 'quarter') as OrgPeriod,
-        accent: (settings?.accent ?? 'orange') as OrgAccent,
+        period: (settings?.period ?? "quarter") as OrgPeriod,
+        accent: (settings?.accent ?? "orange") as OrgAccent,
         dark: settings?.dark ?? false,
       }}
     />

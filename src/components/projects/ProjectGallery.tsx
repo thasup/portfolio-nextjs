@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Navigation, A11y } from 'swiper/modules'
-import Image from 'next/image'
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, A11y } from "swiper/modules";
+import Image from "next/image";
 
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 interface ProjectGalleryProps {
-  images: string[]
-  altText: string
+  images: string[];
+  altText: string;
 }
 
 export function ProjectGallery({ images, altText }: ProjectGalleryProps) {
-  if (!images || images.length === 0) return null
+  if (!images || images.length === 0) return null;
 
   return (
     <div className="relative w-full overflow-hidden rounded-xl border border-border bg-muted">
@@ -39,5 +39,5 @@ export function ProjectGallery({ images, altText }: ProjectGalleryProps) {
         ))}
       </Swiper>
     </div>
-  )
+  );
 }

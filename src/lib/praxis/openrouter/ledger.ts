@@ -9,18 +9,18 @@
  * `PRAXIS_MONTHLY_BUDGET_CENTS`. `assertBudget()` short-circuits calls
  * when the rolling 30-day total exceeds the cap.
  */
-import 'server-only';
-import { createAdminClient } from '@/lib/praxis/supabase/admin';
-import { estimateCents } from '@/lib/praxis/openrouter/pricing';
+import "server-only";
+import { createAdminClient } from "@/lib/praxis/supabase/admin";
+import { estimateCents } from "@/lib/praxis/openrouter/pricing";
 
 /** Must match the CHECK constraint on `praxis_spend_ledger.endpoint`. */
 export enum LedgerEndpoint {
-  CHAT = 'chat',
-  CURRICULUM = 'curriculum',
-  UNIT = 'unit',
-  ONBOARDING = 'onboarding',
-  TEMPLATE = 'template',
-  GUARDRAIL = 'guardrail',
+  CHAT = "chat",
+  CURRICULUM = "curriculum",
+  UNIT = "unit",
+  ONBOARDING = "onboarding",
+  TEMPLATE = "template",
+  GUARDRAIL = "guardrail",
 }
 
 export interface LedgerEntry {
@@ -37,8 +37,12 @@ export interface LedgerEntry {
  */
 export async function recordLedgerEntry(entry: LedgerEntry): Promise<void> {
   const admin = createAdminClient();
-  const estimatedCents = estimateCents(entry.model, entry.inputTokens, entry.outputTokens);
-  const { error } = await admin.from('praxis_spend_ledger').insert({
+  const estimatedCents = estimateCents(
+    entry.model,
+    entry.inputTokens,
+    entry.outputTokens,
+  );
+  const { error } = await admin.from("praxis_spend_ledger").insert({
     endpoint: entry.endpoint,
     model: entry.model,
     input_tokens: entry.inputTokens,
@@ -46,7 +50,7 @@ export async function recordLedgerEntry(entry: LedgerEntry): Promise<void> {
     estimated_cents: estimatedCents,
   });
   if (error) {
-    console.error('[praxis/ledger] failed to insert row', error);
+    console.error("[praxis/ledger] failed to insert row", error);
   }
 }
 
@@ -58,7 +62,7 @@ export class BudgetExceededError extends Error {
     super(
       `PRAXIS monthly budget exceeded: ${currentSpendCents}/${monthlyCapCents} cents`,
     );
-    this.name = 'BudgetExceededError';
+    this.name = "BudgetExceededError";
     this.monthlyCapCents = monthlyCapCents;
     this.currentSpendCents = currentSpendCents;
   }
@@ -78,12 +82,12 @@ export async function assertBudget(): Promise<void> {
   const admin = createAdminClient();
   const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
   const { data, error } = await admin
-    .from('praxis_spend_ledger')
-    .select('estimated_cents')
-    .gte('timestamp', since);
+    .from("praxis_spend_ledger")
+    .select("estimated_cents")
+    .gte("timestamp", since);
 
   if (error) {
-    console.error('[praxis/ledger] budget lookup failed', error);
+    console.error("[praxis/ledger] budget lookup failed", error);
     return;
   }
   const total = (data ?? []).reduce((sum, row) => sum + row.estimated_cents, 0);

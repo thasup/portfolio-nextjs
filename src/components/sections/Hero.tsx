@@ -17,13 +17,13 @@ export function Hero() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-    }
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
   const Wrapper = reducedMotion ? "div" : motion.div;
@@ -39,7 +39,7 @@ export function Hero() {
           {...(!reducedMotion && {
             variants: containerVariants,
             initial: "hidden",
-            animate: "visible"
+            animate: "visible",
           })}
           className="grid items-center gap-12 lg:grid-cols-2"
         >
@@ -83,7 +83,9 @@ export function Hero() {
                   <Link href="/#projects" className="btn primary lg">
                     {t("ctaPrimary")}
                   </Link>
-                  <p className="text-xs text-[var(--color-ink-4)] mt-2">{t("ctaPrimaryHint")}</p>
+                  <p className="text-xs text-[var(--color-ink-4)] mt-2">
+                    {t("ctaPrimaryHint")}
+                  </p>
                 </div>
               </div>
             </Wrapper>

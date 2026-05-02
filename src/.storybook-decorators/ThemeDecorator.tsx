@@ -1,21 +1,21 @@
-import React from 'react';
-import { ThemeProvider } from 'next-themes';
-import { Decorator } from '@storybook/react';
+import React from "react";
+import { ThemeProvider } from "next-themes";
+import { Decorator } from "@storybook/react";
 
 const canvasStyles: React.CSSProperties = {
-  width: '100%',
-  height: 'auto',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-start',
-  padding: '2rem',
-  boxSizing: 'border-box',
-  backgroundColor: 'transparent',
-  color: 'var(--color-foreground)',
+  width: "100%",
+  height: "auto",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  padding: "2rem",
+  boxSizing: "border-box",
+  backgroundColor: "transparent",
+  color: "var(--color-foreground)",
 };
 
 export const ThemeDecorator: Decorator = (Story, context) => {
-  const theme = context.globals.theme || 'light';
+  const theme = context.globals.theme || "light";
 
   return (
     <ThemeProvider

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Lightweight vertical indicator for the outline review.
@@ -7,7 +7,7 @@
  * a navigational aid when the outline is long enough to scroll. Clicks
  * scroll the matching unit card into view via its `id`.
  */
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 export interface OutlineStepperProps {
   units: ReadonlyArray<{ index: number; title: string }>;
@@ -15,13 +15,11 @@ export interface OutlineStepperProps {
 }
 
 export function OutlineStepper({ units, activeIndex }: OutlineStepperProps) {
-  const t = useTranslations('praxis.outline');
+  const t = useTranslations("praxis.outline");
 
   return (
-    <nav aria-label={t('stepperLabel')} className="sticky top-24">
-      <div className="eyebrow mb-4">
-        {t('stepperHeading')}
-      </div>
+    <nav aria-label={t("stepperLabel")} className="sticky top-24">
+      <div className="eyebrow mb-4">{t("stepperHeading")}</div>
       <div className="phases">
         {units.map((u) => {
           const active = activeIndex === u.index;
@@ -29,9 +27,11 @@ export function OutlineStepper({ units, activeIndex }: OutlineStepperProps) {
             <a
               key={u.index}
               href={`#unit-${u.index}`}
-              className={`phase ${active ? 'on' : ''}`}
+              className={`phase ${active ? "on" : ""}`}
             >
-              <span className="n">{u.index < 10 ? `0${u.index}` : u.index}</span>
+              <span className="n">
+                {u.index < 10 ? `0${u.index}` : u.index}
+              </span>
               <span className="t truncate">{u.title}</span>
             </a>
           );

@@ -3,7 +3,14 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase, Code2, Trophy, BookOpen, Rocket, LucideIcon } from "lucide-react";
+import {
+  Briefcase,
+  Code2,
+  Trophy,
+  BookOpen,
+  Rocket,
+  LucideIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { GlassCard } from "@/components/glass";
 import type { TimelineEvent } from "@/types/timeline";
@@ -35,7 +42,7 @@ export function TimelineEventCard({
   event,
   year,
   index,
-}: Omit<TimelineEventCardProps, 'locale'>) {
+}: Omit<TimelineEventCardProps, "locale">) {
   const t = useTranslations("timeline");
   const tRoot = useTranslations();
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +75,9 @@ export function TimelineEventCard({
   const impact = t(`events.${event.id}.impact`);
   const capabilityGained = t(`events.${event.id}.capabilityGained`);
   const categoryLabel = t(`categories.${event.type}`);
-  const signalKeys = (event.signals ?? []).slice(0, 3).map((signal) => getSignalLabel(signal));
+  const signalKeys = (event.signals ?? [])
+    .slice(0, 3)
+    .map((signal) => getSignalLabel(signal));
 
   const displayedSkills = event.skills.slice(0, 5);
   const remainingCount = event.skills.length - 5;
@@ -84,10 +93,12 @@ export function TimelineEventCard({
         elevation="e2"
         hover
         className="p-6 ring-1"
-        style={{
-          borderColor: `${theme.accentHex}40`,
-          "--tw-ring-color": `${theme.accentHex}30`,
-        } as RingColorStyle}
+        style={
+          {
+            borderColor: `${theme.accentHex}40`,
+            "--tw-ring-color": `${theme.accentHex}30`,
+          } as RingColorStyle
+        }
       >
         {/* Glow strip */}
         <div
@@ -111,7 +122,9 @@ export function TimelineEventCard({
           >
             {categoryLabel}
           </span>
-          <span className="text-xs text-muted-foreground ml-auto">{event.date}</span>
+          <span className="text-xs text-muted-foreground ml-auto">
+            {event.date}
+          </span>
         </div>
 
         {/* Title and company */}

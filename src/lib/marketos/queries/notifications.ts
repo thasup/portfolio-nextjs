@@ -1,10 +1,10 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
 import {
   type NotificationDTO,
   type NotificationType,
-} from '@/lib/marketos/types';
-import type { MarketosNotification } from '@prisma/client';
+} from "@/lib/marketos/types";
+import type { MarketosNotification } from "@prisma/client";
 
 /**
  * MarketOS — notification reads.
@@ -46,7 +46,7 @@ export async function listNotifications(
       ...(unreadOnly ? { readAt: null } : {}),
       ...(cursor ? { createdAt: { lt: new Date(cursor) } } : {}),
     },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     take: limit,
   });
   return rows.map(toNotificationDTO);

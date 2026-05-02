@@ -16,6 +16,8 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   BarChart3,
+  Database,
+  Settings2,
 } from "lucide-react";
 import {
   PieChart,
@@ -31,17 +33,29 @@ import {
   Area,
 } from "recharts";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
+import { SyncButton } from "@/components/prototypes/capital-os/SyncButton";
 import { CapitalScenarioMode, CapitalAssetType } from "@/lib/capital-os/types";
-import {
-  MOCK_ACCOUNTS,
-  MOCK_LIABILITIES,
-  MOCK_GOALS,
-  sumByType,
-} from "@/lib/capital-os/mock-data";
+import { useCapitalData } from "@/lib/capital-os/hooks";
+import { sumByType } from "@/lib/capital-os/mock-data";
 import { computeProjection } from "@/lib/capital-os/projection";
-import { fmtCurrency, fmtDate } from "@/lib/capital-os/format";
+import { fmtCurrency, fmtDate, fmtTime } from "@/lib/capital-os/format";
+import { RunwaySettingsModal } from "@/components/prototypes/capital-os/RunwaySettingsModal";
 
 export default function DashboardPage() {
+  const {
+    accounts,
+    liabilities,
+    goals,
+    settings,
+    updateSettings,
+    snapshots,
+    isMockData,
+    refresh,
+    lastSynced,
+  } = useCapitalData();
+
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
   const [params] = useState({
     burnRate: 2500000,
     ssoMonths: 6,
@@ -51,11 +65,7 @@ export default function DashboardPage() {
     scenarioMode: CapitalScenarioMode.BASE,
   });
 
-  const projection = computeProjection(
-    params,
-    MOCK_ACCOUNTS,
-    MOCK_LIABILITIES,
-  );
+  const projection = computeProjection(params, accounts, liabilities, settings);
 
   const nw = projection.netWorth;
   const liquid = projection.liquid;
@@ -63,6 +73,19 @@ export default function DashboardPage() {
 
   // Convert satangs to THB for display
   const toTHB = (v: number) => v / 100;
+
+  const totalDebt = liabilities.reduce(
+    (sum, l) => sum + Math.abs(Number(l.balance)),
+    0,
+  );
+  const burnRate = settings?.runwayBurnRate
+    ? Number(settings.runwayBurnRate)
+    : params.burnRate;
+  const emergencyFundTarget = burnRate * params.ssoMonths;
+  const efPercent =
+    liquid > 0 && emergencyFundTarget > 0
+      ? Math.min(100, Math.round((liquid / emergencyFundTarget) * 100))
+      : 0;
 
   const metrics: Array<{
     id: string;
@@ -73,12 +96,17 @@ export default function DashboardPage() {
     color: string;
     bgColor: string;
     trend: "up" | "down" | "neutral";
+    action?: {
+      label: string;
+      onClick: () => void;
+      icon: React.ElementType;
+    };
   }> = [
     {
       id: "metric-net-worth",
       label: "Net Worth",
       value: fmtCurrency(toTHB(nw)),
-      description: "↑ 12% from last month",
+      description: "Total assets minus debt",
       icon: TrendingUp,
       color: "var(--cos-accent)",
       bgColor: "var(--cos-accent-muted)",
@@ -98,21 +126,36 @@ export default function DashboardPage() {
       id: "metric-runway",
       label: "Financial Runway",
       value: `${runway} Months`,
-      description: `At ${fmtCurrency(toTHB(params.burnRate))}/mo burn`,
+      description: `At ${fmtCurrency(toTHB(burnRate))}/mo burn`,
       icon: Clock,
       color: "var(--cos-warning)",
       bgColor: "var(--cos-warning-muted)",
       trend: "neutral",
+      action: {
+        label: "Customize",
+        onClick: () => setIsSettingsOpen(true),
+        icon: Settings2,
+      },
     },
     {
-      id: "metric-goals",
-      label: "Active Goals",
-      value: `${MOCK_GOALS.length}`,
-      description: `${MOCK_GOALS.filter((g) => g.current >= g.target).length} completed`,
+      id: "metric-ef",
+      label: "Emergency Fund",
+      value: `${efPercent}%`,
+      description: `Of ${params.ssoMonths} month target`,
       icon: Target,
       color: "#ec4899",
       bgColor: "rgba(236, 72, 153, 0.12)",
-      trend: "up",
+      trend: "neutral",
+    },
+    {
+      id: "metric-debt",
+      label: "Total Debt",
+      value: fmtCurrency(toTHB(totalDebt)),
+      description: "Total active liabilities",
+      icon: CreditCard,
+      color: "var(--cos-negative)",
+      bgColor: "rgba(239, 68, 68, 0.12)",
+      trend: "down",
     },
   ];
 
@@ -120,31 +163,31 @@ export default function DashboardPage() {
   const assetPieData = [
     {
       name: "Liquid",
-      value: toTHB(sumByType(MOCK_ACCOUNTS, CapitalAssetType.LIQUID)),
+      value: toTHB(sumByType(accounts, CapitalAssetType.LIQUID)),
       color: "var(--cos-chart-1)",
       fill: "#10b981",
     },
     {
       name: "Semi-Liquid",
-      value: toTHB(sumByType(MOCK_ACCOUNTS, CapitalAssetType.SEMI_LIQUID)),
+      value: toTHB(sumByType(accounts, CapitalAssetType.SEMI_LIQUID)),
       color: "var(--cos-chart-3)",
       fill: "#8b5cf6",
     },
     {
       name: "Investment",
-      value: toTHB(sumByType(MOCK_ACCOUNTS, CapitalAssetType.INVESTMENT)),
+      value: toTHB(sumByType(accounts, CapitalAssetType.INVESTMENT)),
       color: "var(--cos-chart-4)",
       fill: "#f59e0b",
     },
     {
       name: "Fixed Assets",
-      value: toTHB(sumByType(MOCK_ACCOUNTS, CapitalAssetType.FIXED_ASSET)),
+      value: toTHB(sumByType(accounts, CapitalAssetType.FIXED_ASSET)),
       color: "var(--cos-chart-2)",
       fill: "#3b82f6",
     },
     {
       name: "Goal Funds",
-      value: toTHB(sumByType(MOCK_ACCOUNTS, CapitalAssetType.GOAL_FUND)),
+      value: toTHB(sumByType(accounts, CapitalAssetType.GOAL_FUND)),
       color: "var(--cos-chart-5)",
       fill: "#ec4899",
     },
@@ -160,14 +203,45 @@ export default function DashboardPage() {
       portfolio: toTHB(p.portfolio),
     }));
 
+  const sourceLabel = isMockData
+    ? "Sources: Mock Data"
+    : `As of: ${lastSynced ? fmtDate(lastSynced) + " " + fmtTime(lastSynced) : "—"}`;
+
   return (
     <div className="flex flex-col">
       <CapitalOSHeader
         title="Capital Intelligence"
-        subtitle={`Last Updated: ${fmtDate(new Date())} · Sources: Mock Data`}
+        subtitle={`${sourceLabel}`}
       />
 
       <div className="flex flex-col gap-6 p-4 sm:p-6">
+        {/* ── Data Source Indicator + Sync ────────────── */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Database
+              className="h-3.5 w-3.5"
+              style={{
+                color: isMockData
+                  ? "var(--cos-warning)"
+                  : "var(--cos-positive)",
+              }}
+            />
+            <span
+              className="text-xs font-medium"
+              style={{
+                color: isMockData
+                  ? "var(--cos-warning)"
+                  : "var(--cos-positive)",
+              }}
+            >
+              {isMockData
+                ? "Using mock data — sync YNAB to load real data"
+                : "Live data from database"}
+            </span>
+          </div>
+          <SyncButton onSyncComplete={refresh} />
+        </div>
+
         {/* ── KPI Cards ──────────────────────────────── */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metrics.map((m) => (
@@ -214,6 +288,20 @@ export default function DashboardPage() {
                 )}
                 {m.description}
               </p>
+              {"action" in m && m.action && (
+                <button
+                  id={`${m.id}-action`}
+                  onClick={m.action.onClick}
+                  className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg border py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all hover:bg-white/5 active:scale-95"
+                  style={{
+                    borderColor: "var(--cos-border-subtle)",
+                    color: "var(--cos-text-2)",
+                  }}
+                >
+                  <m.action.icon className="h-3 w-3" />
+                  {m.action.label}
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -233,108 +321,128 @@ export default function DashboardPage() {
               <h2 className="text-base font-semibold sm:text-lg">
                 Net Worth Trajectory
               </h2>
-              <p
-                className="text-xs"
-                style={{ color: "var(--cos-text-2)" }}
-              >
+              <p className="text-xs" style={{ color: "var(--cos-text-2)" }}>
                 24-month projection based on current parameters
               </p>
             </div>
             <div className="h-[300px] sm:h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData}>
-                  <defs>
-                    <linearGradient
-                      id="gradNetWorth"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="5%"
-                        stopColor="#10b981"
-                        stopOpacity={0.3}
-                      />
-                      <stop
-                        offset="95%"
-                        stopColor="#10b981"
-                        stopOpacity={0}
-                      />
-                    </linearGradient>
-                    <linearGradient
-                      id="gradLiquid"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="5%"
-                        stopColor="#3b82f6"
-                        stopOpacity={0.2}
-                      />
-                      <stop
-                        offset="95%"
-                        stopColor="#3b82f6"
-                        stopOpacity={0}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="#374151"
-                    vertical={false}
-                  />
-                  <XAxis
-                    dataKey="label"
-                    stroke="#6b7280"
-                    fontSize={11}
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <YAxis
-                    stroke="#6b7280"
-                    fontSize={11}
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(v) =>
-                      `${Math.round(v / 1000)}K`
-                    }
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1f2937",
-                      borderColor: "#374151",
-                      borderRadius: "8px",
-                      color: "#f9fafb",
-                      fontSize: "12px",
-                    }}
-                    
-                    formatter={(value: string | number | readonly (string | number)[] | undefined) => [
-                      value ? fmtCurrency(Number(value)) : "-",
-                      undefined,
-                    ]}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="netWorth"
-                    name="Net Worth"
-                    stroke="#10b981"
-                    fill="url(#gradNetWorth)"
-                    strokeWidth={2}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="liquid"
-                    name="Liquid"
-                    stroke="#3b82f6"
-                    fill="url(#gradLiquid)"
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+              {snapshots.length < 4 && !isMockData ? (
+                <div
+                  className="flex h-full w-full flex-col items-center justify-center rounded-xl border border-dashed text-center"
+                  style={{ borderColor: "var(--cos-border-subtle)" }}
+                >
+                  <Database className="mb-2 h-8 w-8 opacity-20" />
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: "var(--cos-text-2)" }}
+                  >
+                    Syncing history...
+                  </p>
+                  <p className="text-xs" style={{ color: "var(--cos-text-3)" }}>
+                    Need {4 - snapshots.length} more snapshot
+                    {4 - snapshots.length > 1 ? "s" : ""} to unlock trajectory
+                    analysis.
+                  </p>
+                </div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData}>
+                    <defs>
+                      <linearGradient
+                        id="gradNetWorth"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#10b981"
+                          stopOpacity={0.3}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#10b981"
+                          stopOpacity={0}
+                        />
+                      </linearGradient>
+                      <linearGradient
+                        id="gradLiquid"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#3b82f6"
+                          stopOpacity={0.2}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#3b82f6"
+                          stopOpacity={0}
+                        />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="#374151"
+                      vertical={false}
+                    />
+                    <XAxis
+                      dataKey="label"
+                      stroke="#6b7280"
+                      fontSize={11}
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis
+                      stroke="#6b7280"
+                      fontSize={11}
+                      tickLine={false}
+                      axisLine={false}
+                      tickFormatter={(v) => `${Math.round(v / 1000)}K`}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#1f2937",
+                        borderColor: "#374151",
+                        borderRadius: "8px",
+                        color: "#f9fafb",
+                        fontSize: "12px",
+                      }}
+                      formatter={(
+                        value:
+                          | string
+                          | number
+                          | readonly (string | number)[]
+                          | undefined,
+                      ) => [
+                        value ? fmtCurrency(Number(value)) : "-",
+                        undefined,
+                      ]}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="netWorth"
+                      name="Net Worth"
+                      stroke="#10b981"
+                      fill="url(#gradNetWorth)"
+                      strokeWidth={2}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="liquid"
+                      name="Liquid"
+                      stroke="#3b82f6"
+                      fill="url(#gradLiquid)"
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              )}
             </div>
           </div>
 
@@ -351,10 +459,7 @@ export default function DashboardPage() {
               <h2 className="text-base font-semibold sm:text-lg">
                 Asset Distribution
               </h2>
-              <p
-                className="text-xs"
-                style={{ color: "var(--cos-text-2)" }}
-              >
+              <p className="text-xs" style={{ color: "var(--cos-text-2)" }}>
                 Current allocation across asset classes
               </p>
             </div>
@@ -382,11 +487,13 @@ export default function DashboardPage() {
                       color: "#f9fafb",
                       fontSize: "12px",
                     }}
-                    
-                    formatter={(value: string | number | readonly (string | number)[] | undefined) => [
-                      value ? fmtCurrency(Number(value)) : "-",
-                      undefined,
-                    ]}
+                    formatter={(
+                      value:
+                        | string
+                        | number
+                        | readonly (string | number)[]
+                        | undefined,
+                    ) => [value ? fmtCurrency(Number(value)) : "-", undefined]}
                   />
                   <Legend
                     verticalAlign="bottom"
@@ -418,15 +525,12 @@ export default function DashboardPage() {
               <h2 className="text-base font-semibold sm:text-lg">
                 Liabilities & Debt
               </h2>
-              <p
-                className="text-xs"
-                style={{ color: "var(--cos-text-2)" }}
-              >
+              <p className="text-xs" style={{ color: "var(--cos-text-2)" }}>
                 High-interest tracking and payoff strategy
               </p>
             </div>
             <div className="space-y-3">
-              {MOCK_LIABILITIES.map((l) => (
+              {liabilities.map((l) => (
                 <div
                   key={l.id}
                   className="flex items-center justify-between rounded-lg border p-3"
@@ -489,7 +593,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* AI Insights */}
+          {/* Action Required */}
           <div
             id="panel-insights"
             className="rounded-xl border p-4 sm:p-6 lg:col-span-4"
@@ -500,71 +604,127 @@ export default function DashboardPage() {
           >
             <div className="mb-4">
               <h2 className="text-base font-semibold sm:text-lg">
-                Intelligence Insights
+                Action Required
               </h2>
-              <p
-                className="text-xs"
-                style={{ color: "var(--cos-text-2)" }}
-              >
-                AI-generated financial health summary
+              <p className="text-xs" style={{ color: "var(--cos-text-2)" }}>
+                Prioritized financial actions based on your data
               </p>
             </div>
             <div className="space-y-4">
-              {[
-                {
-                  id: "insight-trend",
-                  icon: TrendingUp,
-                  color: "var(--cos-accent)",
-                  bg: "var(--cos-accent-muted)",
-                  title: "Positive Net Worth Trend",
-                  body: `Your net worth is projected to increase by 24% over the next 12 months if current income targets are met.`,
-                },
-                {
-                  id: "insight-liquidity",
-                  icon: Wallet,
-                  color: "var(--cos-warning)",
-                  bg: "var(--cos-warning-muted)",
-                  title: "Liquidity Buffer",
-                  body: `You have ${runway} months of runway. Consider moving 20% of your liquid capital to high-yield savings.`,
-                },
-                {
-                  id: "insight-diversification",
-                  icon: BarChart3,
-                  color: "var(--cos-accent-2)",
-                  bg: "var(--cos-accent-2-muted)",
-                  title: "Income Diversification",
-                  body: "Your SSO income covers 36% of your monthly burn. Post-success income target is essential for long-term sustainability.",
-                },
-              ].map((insight) => (
-                <div
-                  key={insight.id}
-                  id={insight.id}
-                  className="flex items-start gap-3"
-                >
+              {(() => {
+                const actions = [];
+                // 1. Credit card debt
+                liabilities.forEach((l) => {
+                  if (
+                    Math.abs(Number(l.balance)) > 0 &&
+                    l.apr &&
+                    Number(l.apr) > 0
+                  ) {
+                    actions.push({
+                      id: `action-liab-${l.id}`,
+                      icon: CreditCard,
+                      color: "var(--cos-negative)",
+                      bg: "rgba(239, 68, 68, 0.12)",
+                      title: `Pay down ${l.name}`,
+                      body: `You are carrying ${fmtCurrency(toTHB(Math.abs(Number(l.balance))))} at ${l.apr}% APR. Paying this off immediately improves net worth trajectory.`,
+                    });
+                  }
+                });
+
+                // 2. Underfunded Goals past deadline
+                goals.forEach((g) => {
+                  if (
+                    g.current < g.target &&
+                    g.deadline &&
+                    new Date(g.deadline) < new Date()
+                  ) {
+                    actions.push({
+                      id: `action-goal-${g.id}`,
+                      icon: Target,
+                      color: "var(--cos-warning)",
+                      bg: "var(--cos-warning-muted)",
+                      title: `Goal Deadline Passed: ${g.name}`,
+                      body: `This goal is underfunded by ${fmtCurrency(toTHB(Number(g.target) - Number(g.current)))} but the deadline has passed. Please update the deadline or allocate funds.`,
+                    });
+                  }
+                });
+
+                // 3. Low runway
+                if (runway < 3) {
+                  actions.push({
+                    id: `action-runway`,
+                    icon: Clock,
+                    color: "var(--cos-negative)",
+                    bg: "rgba(239, 68, 68, 0.12)",
+                    title: `Critical Runway`,
+                    body: `Your runway is only ${runway} months. Reduce burn rate or liquidate assets to secure at least 6 months of runway.`,
+                  });
+                }
+
+                if (actions.length === 0) {
+                  return (
+                    <div className="flex h-32 flex-col items-center justify-center text-center">
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "var(--cos-positive)" }}
+                      >
+                        All good!
+                      </p>
+                      <p
+                        className="text-xs"
+                        style={{ color: "var(--cos-text-2)" }}
+                      >
+                        No pending actions required.
+                      </p>
+                    </div>
+                  );
+                }
+
+                return actions.slice(0, 4).map((insight) => (
                   <div
-                    className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                    style={{
-                      background: insight.bg,
-                      color: insight.color,
-                    }}
+                    key={insight.id}
+                    id={insight.id}
+                    className="flex items-start gap-3"
                   >
-                    <insight.icon className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{insight.title}</p>
-                    <p
-                      className="mt-0.5 text-xs leading-relaxed"
-                      style={{ color: "var(--cos-text-2)" }}
+                    <div
+                      className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                      style={{
+                        background: insight.bg,
+                        color: insight.color,
+                      }}
                     >
-                      {insight.body}
-                    </p>
+                      <insight.icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">{insight.title}</p>
+                      <p
+                        className="mt-0.5 text-xs leading-relaxed"
+                        style={{ color: "var(--cos-text-2)" }}
+                      >
+                        {insight.body}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
         </div>
       </div>
+
+      <RunwaySettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        currentBurnRate={settings?.runwayBurnRate ?? params.burnRate}
+        currentAccountIds={settings?.runwayAccountIds ?? []}
+        accounts={accounts}
+        onSave={async (burnRate, accountIds) => {
+          await updateSettings({
+            runwayBurnRate: burnRate,
+            runwayAccountIds: accountIds,
+          });
+        }}
+      />
     </div>
   );
 }

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { testimonials } from '@/data/testimonials';
-import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Quote } from 'lucide-react';
-import { getInitials } from '@/lib/utils';
-import { type Testimonial } from '@/types/testimonial';
+import { useTranslations } from "next-intl";
+import { testimonials } from "@/data/testimonials";
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Quote } from "lucide-react";
+import { getInitials } from "@/lib/utils";
+import { type Testimonial } from "@/types/testimonial";
 
 export function TestimonialModal({ id }: { id: string }) {
-  const t = useTranslations('testimonials');
+  const t = useTranslations("testimonials");
   const testimonial = testimonials.find((t: Testimonial) => t.id === id);
 
   if (!testimonial) {
     return (
       <div className="p-8 text-center text-muted-foreground">
-        {t('card.notFound')}
+        {t("card.notFound")}
       </div>
     );
   }
@@ -25,10 +25,12 @@ export function TestimonialModal({ id }: { id: string }) {
   const proofThemeLabel = t(`entries.${testimonial.id}.proofThemeLabel`);
   // Note: contextNote is optional and might need a t.has() check if added in JSON later
   // For now let's assume it's optional in JSON too but not added yet
-  const contextNote = t.has(`entries.${testimonial.id}.contextNote`) ? t(`entries.${testimonial.id}.contextNote`) : null;
+  const contextNote = t.has(`entries.${testimonial.id}.contextNote`)
+    ? t(`entries.${testimonial.id}.contextNote`)
+    : null;
 
   // Split quote by double newlines to preserve paragraph structure
-  const paragraphs = fullQuote.split('\n\n').filter((p: string) => p.trim());
+  const paragraphs = fullQuote.split("\n\n").filter((p: string) => p.trim());
 
   return (
     <div className="flex flex-col h-full relative p-6 sm:p-8 lg:p-12 overflow-y-auto">
@@ -40,21 +42,25 @@ export function TestimonialModal({ id }: { id: string }) {
               {proofThemeLabel}
             </div>
           </div>
-          
+
           <DialogTitle className="sr-only">
-            {t('card.modalTitle')} {testimonial.authorName}
+            {t("card.modalTitle")} {testimonial.authorName}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6 mb-10 px-4">
           {paragraphs.map((paragraph: string, index: number) => (
-            <p 
+            <p
               key={index}
               className="text-base sm:text-lg md:text-xl font-serif leading-relaxed text-foreground text-left"
             >
-              {index === 0 && <span className="text-3xl text-primary/40 mr-1">&ldquo;</span>}
+              {index === 0 && (
+                <span className="text-3xl text-primary/40 mr-1">&ldquo;</span>
+              )}
               {paragraph}
-              {index === paragraphs.length - 1 && <span className="text-3xl text-primary/40 ml-1">&rdquo;</span>}
+              {index === paragraphs.length - 1 && (
+                <span className="text-3xl text-primary/40 ml-1">&rdquo;</span>
+              )}
             </p>
           ))}
         </div>
@@ -71,10 +77,16 @@ export function TestimonialModal({ id }: { id: string }) {
           <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary mb-4">
             {getInitials(testimonial.authorName)}
           </div>
-          <div className="text-xl font-bold text-center">{testimonial.authorName}</div>
-          <div className="text-base text-muted-foreground mt-2 text-center">{authorRole}</div>
+          <div className="text-xl font-bold text-center">
+            {testimonial.authorName}
+          </div>
+          <div className="text-base text-muted-foreground mt-2 text-center">
+            {authorRole}
+          </div>
           {testimonial.company && (
-            <div className="text-sm text-muted-foreground/80 mt-1 text-center">{testimonial.company}</div>
+            <div className="text-sm text-muted-foreground/80 mt-1 text-center">
+              {testimonial.company}
+            </div>
           )}
           <div className="text-sm text-muted-foreground/70 mt-1 uppercase tracking-wider text-center">
             {relationship}

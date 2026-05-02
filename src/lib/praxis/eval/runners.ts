@@ -11,7 +11,7 @@ import {
   OpenRouterClient,
   ResponseFormat,
   extractJson,
-} from '@/lib/praxis/openrouter/client';
+} from "@/lib/praxis/openrouter/client";
 import {
   curriculumOutline,
   curriculumUnit,
@@ -20,16 +20,13 @@ import {
   templateGenerator,
   OnboardingInputType,
   ScopeCategory,
-} from '@/lib/praxis/prompts';
-import {
-  EvalMode,
-  EvalResult,
-} from '@/lib/praxis/eval/types';
+} from "@/lib/praxis/prompts";
+import { EvalMode, EvalResult } from "@/lib/praxis/eval/types";
 import {
   OUTLINE_CRITERIA,
   UNIT_CRITERIA,
   judge,
-} from '@/lib/praxis/eval/judge';
+} from "@/lib/praxis/eval/judge";
 
 interface RunnerContext {
   client: OpenRouterClient;
@@ -43,7 +40,12 @@ async function generate(
   ctx: RunnerContext,
   prompt: string,
   responseFormat: ResponseFormat,
-): Promise<{ content: string; inputTokens: number; outputTokens: number; durationMs: number }> {
+): Promise<{
+  content: string;
+  inputTokens: number;
+  outputTokens: number;
+  durationMs: number;
+}> {
   const start = Date.now();
   const res = await ctx.client.chat({
     model: ctx.generationModel,
@@ -63,10 +65,12 @@ async function generate(
 // ---------- Scope guardrail (binary) ----------
 
 /** Fixture name prefix encodes the expected verdict. */
-function expectedScopeVerdict(fixtureName: string): 'admit' | 'refuse' {
-  if (fixtureName.startsWith('adversarial_')) return 'refuse';
-  if (fixtureName.startsWith('admit_')) return 'admit';
-  throw new Error(`scope fixture "${fixtureName}" must start with admit_ or adversarial_`);
+function expectedScopeVerdict(fixtureName: string): "admit" | "refuse" {
+  if (fixtureName.startsWith("adversarial_")) return "refuse";
+  if (fixtureName.startsWith("admit_")) return "admit";
+  throw new Error(
+    `scope fixture "${fixtureName}" must start with admit_ or adversarial_`,
+  );
 }
 
 export async function runScopeFixture(
@@ -78,28 +82,38 @@ export async function runScopeFixture(
 
   try {
     const out = await generate(ctx, prompt, ResponseFormat.JSON_OBJECT);
-    const parsed = extractJson<scopeGuardrail.ScopeGuardrailOutput>(out.content);
+    const parsed = extractJson<scopeGuardrail.ScopeGuardrailOutput>(
+      out.content,
+    );
 
-    const actual: 'admit' | 'refuse' =
-      parsed?.admitted === true && parsed.category === ScopeCategory.OK ? 'admit' : 'refuse';
+    const actual: "admit" | "refuse" =
+      parsed?.admitted === true && parsed.category === ScopeCategory.OK
+        ? "admit"
+        : "refuse";
     const passed = actual === expected;
 
     return {
-      module: 'scopeGuardrail',
+      module: "scopeGuardrail",
       fixtureName: fixture.name,
       model: ctx.generationModel,
       mode: EvalMode.BINARY,
       rawOutput: out.content,
       parsed,
       passed,
-      summary: `expected=${expected} actual=${actual}${parsed ? ` cat=${parsed.category}` : ' parse_failed'}`,
+      summary: `expected=${expected} actual=${actual}${parsed ? ` cat=${parsed.category}` : " parse_failed"}`,
       inputTokens: out.inputTokens,
       outputTokens: out.outputTokens,
       durationMs: out.durationMs,
-      error: parsed ? null : 'json parse failed',
+      error: parsed ? null : "json parse failed",
     };
   } catch (err) {
-    return errorResult('scopeGuardrail', fixture.name, EvalMode.BINARY, ctx.generationModel, err);
+    return errorResult(
+      "scopeGuardrail",
+      fixture.name,
+      EvalMode.BINARY,
+      ctx.generationModel,
+      err,
+    );
   }
 }
 
@@ -116,18 +130,18 @@ export async function runOutlineFixture(
 
     if (!parsed?.units?.length) {
       return {
-        module: 'curriculumOutline',
+        module: "curriculumOutline",
         fixtureName: fixture.name,
         model: ctx.generationModel,
         mode: EvalMode.RUBRIC,
         rawOutput: out.content,
         parsed,
         passed: false,
-        summary: 'json parse failed or empty units array',
+        summary: "json parse failed or empty units array",
         inputTokens: out.inputTokens,
         outputTokens: out.outputTokens,
         durationMs: out.durationMs,
-        error: 'schema failure',
+        error: "schema failure",
       };
     }
 
@@ -141,7 +155,7 @@ export async function runOutlineFixture(
     });
 
     return {
-      module: 'curriculumOutline',
+      module: "curriculumOutline",
       fixtureName: fixture.name,
       model: ctx.generationModel,
       mode: EvalMode.RUBRIC,
@@ -157,7 +171,13 @@ export async function runOutlineFixture(
       error: null,
     };
   } catch (err) {
-    return errorResult('curriculumOutline', fixture.name, EvalMode.RUBRIC, ctx.generationModel, err);
+    return errorResult(
+      "curriculumOutline",
+      fixture.name,
+      EvalMode.RUBRIC,
+      ctx.generationModel,
+      err,
+    );
   }
 }
 
@@ -174,18 +194,18 @@ export async function runUnitFixture(
 
     if (!parsed?.blocks?.length) {
       return {
-        module: 'curriculumUnit',
+        module: "curriculumUnit",
         fixtureName: fixture.name,
         model: ctx.generationModel,
         mode: EvalMode.RUBRIC,
         rawOutput: out.content,
         parsed,
         passed: false,
-        summary: 'json parse failed or empty blocks',
+        summary: "json parse failed or empty blocks",
         inputTokens: out.inputTokens,
         outputTokens: out.outputTokens,
         durationMs: out.durationMs,
-        error: 'schema failure',
+        error: "schema failure",
       };
     }
 
@@ -199,7 +219,7 @@ export async function runUnitFixture(
     });
 
     return {
-      module: 'curriculumUnit',
+      module: "curriculumUnit",
       fixtureName: fixture.name,
       model: ctx.generationModel,
       mode: EvalMode.RUBRIC,
@@ -215,14 +235,36 @@ export async function runUnitFixture(
       error: null,
     };
   } catch (err) {
-    return errorResult('curriculumUnit', fixture.name, EvalMode.RUBRIC, ctx.generationModel, err);
+    return errorResult(
+      "curriculumUnit",
+      fixture.name,
+      EvalMode.RUBRIC,
+      ctx.generationModel,
+      err,
+    );
   }
 }
 
 // ---------- Onboarding meta (heuristic) ----------
 
-const ROLE_KEYWORDS = ['role', 'job', 'work', 'title', 'position', 'level', 'experience'];
-const GOAL_KEYWORDS = ['goal', 'want', 'hope', 'walk away', 'achieve', 'outcome', 'by the end'];
+const ROLE_KEYWORDS = [
+  "role",
+  "job",
+  "work",
+  "title",
+  "position",
+  "level",
+  "experience",
+];
+const GOAL_KEYWORDS = [
+  "goal",
+  "want",
+  "hope",
+  "walk away",
+  "achieve",
+  "outcome",
+  "by the end",
+];
 
 export async function runOnboardingFixture(
   ctx: RunnerContext,
@@ -234,25 +276,41 @@ export async function runOnboardingFixture(
     const parsed = extractJson<onboardingMeta.OnboardingJson>(out.content);
 
     if (!parsed?.questions?.length) {
-      return schemaFailure('onboardingMeta', fixture.name, EvalMode.HEURISTIC, ctx.generationModel, out, parsed);
+      return schemaFailure(
+        "onboardingMeta",
+        fixture.name,
+        EvalMode.HEURISTIC,
+        ctx.generationModel,
+        out,
+        parsed,
+      );
     }
 
     const count = parsed.questions.length;
     const countOk = count >= 3 && count <= 5;
-    const lowerPrompts = parsed.questions.map((q) => (q.prompt ?? '').toLowerCase());
-    const hasRole = lowerPrompts.some((p) => ROLE_KEYWORDS.some((k) => p.includes(k)));
-    const hasGoal = lowerPrompts.some((p) => GOAL_KEYWORDS.some((k) => p.includes(k)));
+    const lowerPrompts = parsed.questions.map((q) =>
+      (q.prompt ?? "").toLowerCase(),
+    );
+    const hasRole = lowerPrompts.some((p) =>
+      ROLE_KEYWORDS.some((k) => p.includes(k)),
+    );
+    const hasGoal = lowerPrompts.some((p) =>
+      GOAL_KEYWORDS.some((k) => p.includes(k)),
+    );
     const typesValid = parsed.questions.every((q) =>
       Object.values(OnboardingInputType).includes(q.inputType),
     );
-    const singleSelectsValid = parsed.questions.every((q) =>
-      q.inputType !== OnboardingInputType.SINGLE_SELECT || (q.options?.length ?? 0) >= 2,
+    const singleSelectsValid = parsed.questions.every(
+      (q) =>
+        q.inputType !== OnboardingInputType.SINGLE_SELECT ||
+        (q.options?.length ?? 0) >= 2,
     );
 
-    const passed = countOk && hasRole && hasGoal && typesValid && singleSelectsValid;
+    const passed =
+      countOk && hasRole && hasGoal && typesValid && singleSelectsValid;
 
     return {
-      module: 'onboardingMeta',
+      module: "onboardingMeta",
       fixtureName: fixture.name,
       model: ctx.generationModel,
       mode: EvalMode.HEURISTIC,
@@ -266,7 +324,13 @@ export async function runOnboardingFixture(
       error: null,
     };
   } catch (err) {
-    return errorResult('onboardingMeta', fixture.name, EvalMode.HEURISTIC, ctx.generationModel, err);
+    return errorResult(
+      "onboardingMeta",
+      fixture.name,
+      EvalMode.HEURISTIC,
+      ctx.generationModel,
+      err,
+    );
   }
 }
 
@@ -282,28 +346,45 @@ export async function runTemplateFixture(
     const parsed = extractJson<templateGenerator.TemplateSpecJson>(out.content);
 
     if (!parsed?.sections?.length) {
-      return schemaFailure('templateGenerator', fixture.name, EvalMode.HEURISTIC, ctx.generationModel, out, parsed);
+      return schemaFailure(
+        "templateGenerator",
+        fixture.name,
+        EvalMode.HEURISTIC,
+        ctx.generationModel,
+        out,
+        parsed,
+      );
     }
 
     // Count personalisation references across the rendered spec.
     const haystack = JSON.stringify(parsed).toLowerCase();
     const learner = fixture.input.learner;
-    const candidates = [learner.displayName, learner.role, learner.product, learner.audience, learner.goal]
+    const candidates = [
+      learner.displayName,
+      learner.role,
+      learner.product,
+      learner.audience,
+      learner.goal,
+    ]
       .filter((v): v is string => !!v)
       .map((v) => v.toLowerCase());
-    const refs = candidates.filter((c) => haystack.includes(c.split(' ')[0] ?? c)).length;
+    const refs = candidates.filter((c) =>
+      haystack.includes(c.split(" ")[0] ?? c),
+    ).length;
 
     const kindOk = parsed.kind === fixture.input.kind;
-    const sectionsOk = parsed.sections.length >= 3 && parsed.sections.length <= 6;
+    const sectionsOk =
+      parsed.sections.length >= 3 && parsed.sections.length <= 6;
     const xlsxNeedsTables =
-      fixture.input.kind !== 'xlsx' ||
-      parsed.sections.filter((s) => s.table?.columns?.length).length >= Math.ceil(parsed.sections.length / 2);
+      fixture.input.kind !== "xlsx" ||
+      parsed.sections.filter((s) => s.table?.columns?.length).length >=
+        Math.ceil(parsed.sections.length / 2);
     const personalisationOk = refs >= 3;
 
     const passed = kindOk && sectionsOk && xlsxNeedsTables && personalisationOk;
 
     return {
-      module: 'templateGenerator',
+      module: "templateGenerator",
       fixtureName: fixture.name,
       model: ctx.generationModel,
       mode: EvalMode.HEURISTIC,
@@ -317,14 +398,20 @@ export async function runTemplateFixture(
       error: null,
     };
   } catch (err) {
-    return errorResult('templateGenerator', fixture.name, EvalMode.HEURISTIC, ctx.generationModel, err);
+    return errorResult(
+      "templateGenerator",
+      fixture.name,
+      EvalMode.HEURISTIC,
+      ctx.generationModel,
+      err,
+    );
   }
 }
 
 // ---------- shared helpers ----------
 
 function errorResult(
-  module: EvalResult['module'],
+  module: EvalResult["module"],
   fixtureName: string,
   mode: EvalMode,
   model: string,
@@ -336,7 +423,7 @@ function errorResult(
     fixtureName,
     model,
     mode,
-    rawOutput: '',
+    rawOutput: "",
     parsed: null,
     passed: false,
     summary: `error: ${message.slice(0, 200)}`,
@@ -348,11 +435,16 @@ function errorResult(
 }
 
 function schemaFailure(
-  module: EvalResult['module'],
+  module: EvalResult["module"],
   fixtureName: string,
   mode: EvalMode,
   model: string,
-  out: { content: string; inputTokens: number; outputTokens: number; durationMs: number },
+  out: {
+    content: string;
+    inputTokens: number;
+    outputTokens: number;
+    durationMs: number;
+  },
   parsed: unknown,
 ): EvalResult {
   return {
@@ -363,11 +455,11 @@ function schemaFailure(
     rawOutput: out.content,
     parsed,
     passed: false,
-    summary: 'json parse failed or empty top-level array',
+    summary: "json parse failed or empty top-level array",
     inputTokens: out.inputTokens,
     outputTokens: out.outputTokens,
     durationMs: out.durationMs,
-    error: 'schema failure',
+    error: "schema failure",
   };
 }
 

@@ -1,54 +1,71 @@
-import { SectionHeader } from '@/components/shared/SectionHeader'
-import { ScrollReveal } from '@/components/shared/ScrollReveal'
-import { valuePropositions } from '@/data/valuePropositions'
-import { Sparkles, Target, Layers, Zap, Rocket, ArrowRight } from 'lucide-react'
-import Link from 'next/link'
-import { useTranslations } from 'next-intl'
-import { getSignalLabel } from '@/lib/content'
+import { SectionHeader } from "@/components/shared/SectionHeader";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { valuePropositions } from "@/data/valuePropositions";
+import {
+  Sparkles,
+  Target,
+  Layers,
+  Zap,
+  Rocket,
+  ArrowRight,
+} from "lucide-react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { getSignalLabel } from "@/lib/content";
 
 export function ValueProp() {
-  const t = useTranslations('value')
-  const tRoot = useTranslations()
+  const t = useTranslations("value");
+  const tRoot = useTranslations();
 
   const getIcon = (name: string) => {
     switch (name) {
-      case 'Sparkles': return <Sparkles className="h-6 w-6" />
-      case 'Target': return <Target className="h-6 w-6" />
-      case 'Layers': return <Layers className="h-6 w-6" />
-      case 'Zap': return <Zap className="h-6 w-6" />
-      case 'Rocket': return <Rocket className="h-6 w-6" />
-      default: return <span />
+      case "Sparkles":
+        return <Sparkles className="h-6 w-6" />;
+      case "Target":
+        return <Target className="h-6 w-6" />;
+      case "Layers":
+        return <Layers className="h-6 w-6" />;
+      case "Zap":
+        return <Zap className="h-6 w-6" />;
+      case "Rocket":
+        return <Rocket className="h-6 w-6" />;
+      default:
+        return <span />;
     }
-  }
+  };
 
   return (
     <section id="value" className="section-padding">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 relative">
         <SectionHeader
-          label={t('label')}
-          title={t('title')}
-          subtitle={t('subtitle')}
+          label={t("label")}
+          title={t("title")}
+          subtitle={t("subtitle")}
         />
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {valuePropositions.map((value, index) => {
-            const isLastOrphaned = index === valuePropositions.length - 1 && valuePropositions.length % 2 !== 0
+            const isLastOrphaned =
+              index === valuePropositions.length - 1 &&
+              valuePropositions.length % 2 !== 0;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const title = t(value.titleKey as any)
+            const title = t(value.titleKey as any);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const description = t(value.descriptionKey as any)
+            const description = t(value.descriptionKey as any);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const proof = value.proofKey ? t(value.proofKey as any) : null
-            const signalKey = value.signalTag ? getSignalLabel(value.signalTag) : null
+            const proof = value.proofKey ? t(value.proofKey as any) : null;
+            const signalKey = value.signalTag
+              ? getSignalLabel(value.signalTag)
+              : null;
             const href = value.crossRef
-              ? value.crossRef.startsWith('project:')
-                ? `/projects/${value.crossRef.replace('project:', '')}`
-                : value.crossRef.startsWith('timeline:')
-                  ? `/#${value.crossRef.replace('timeline:', '')}`
-                  : value.crossRef.startsWith('section:')
-                    ? `/#${value.crossRef.replace('section:', '')}`
+              ? value.crossRef.startsWith("project:")
+                ? `/projects/${value.crossRef.replace("project:", "")}`
+                : value.crossRef.startsWith("timeline:")
+                  ? `/#${value.crossRef.replace("timeline:", "")}`
+                  : value.crossRef.startsWith("section:")
+                    ? `/#${value.crossRef.replace("section:", "")}`
                     : value.crossRef
-              : null
+              : null;
             return (
               <ScrollReveal
                 key={value.id}
@@ -68,7 +85,9 @@ export function ValueProp() {
                         </span>
                       </div>
                     )}
-                    <h3 className="mb-3 text-xl font-display font-medium text-[var(--color-ink)]">{title}</h3>
+                    <h3 className="mb-3 text-xl font-display font-medium text-[var(--color-ink)]">
+                      {title}
+                    </h3>
                     <p className="text-[var(--color-ink-2)] leading-relaxed grow">
                       {description}
                     </p>
@@ -82,17 +101,17 @@ export function ValueProp() {
                         href={href}
                         className="mt-6 flex items-center text-sm font-medium text-[var(--color-praxis-accent)] hover:underline hover:underline-offset-4"
                       >
-                        {t('evidence')}
+                        {t("evidence")}
                         <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Link>
                     )}
                   </div>
                 </div>
               </ScrollReveal>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }

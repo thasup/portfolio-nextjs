@@ -211,5 +211,3 @@ async function handleAccept(
     { status: 201 },
   );
 }
-
-

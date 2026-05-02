@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Editable outline review — redesigned with proper form styling.
@@ -7,8 +7,8 @@
  * `title`, `objective`, and `summary`. Clean visual hierarchy with
  * proper labels, subtle borders, and elegant typography.
  */
-import { useCallback } from 'react';
-import { useTranslations } from 'next-intl';
+import { useCallback } from "react";
+import { useTranslations } from "next-intl";
 
 export interface OutlineUnitDraft {
   index: number;
@@ -34,7 +34,7 @@ export function OutlinePreview({
   onDiscard,
   cached,
 }: OutlinePreviewProps) {
-  const t = useTranslations('praxis.outline');
+  const t = useTranslations("praxis.outline");
 
   const update = useCallback(
     (index: number, patch: Partial<OutlineUnitDraft>) => {
@@ -48,10 +48,10 @@ export function OutlinePreview({
       {/* Header */}
       <header className="outline-header">
         <div className="outline-badge">
-          {cached ? t('cachedBadge') : t('freshBadge')}
+          {cached ? t("cachedBadge") : t("freshBadge")}
         </div>
-        <h2 className="outline-title">{t('heading')}</h2>
-        <p className="outline-subtitle">{t('hint')}</p>
+        <h2 className="outline-title">{t("heading")}</h2>
+        <p className="outline-subtitle">{t("hint")}</p>
       </header>
 
       {/* Units */}
@@ -68,50 +68,65 @@ export function OutlinePreview({
                 {u.index < 10 ? `0${u.index}` : u.index}
               </span>
               <div className="outline-unit-field outline-unit-field--title">
-                <label htmlFor={`unit-${u.index}-title`} className="outline-field-label">
-                  {t('unitTitleLabel')}
+                <label
+                  htmlFor={`unit-${u.index}-title`}
+                  className="outline-field-label"
+                >
+                  {t("unitTitleLabel")}
                 </label>
                 <input
                   id={`unit-${u.index}-title`}
                   type="text"
                   value={u.title}
-                  onChange={(e) => update(u.index, { title: e.target.value.slice(0, 120) })}
+                  onChange={(e) =>
+                    update(u.index, { title: e.target.value.slice(0, 120) })
+                  }
                   disabled={busy}
                   className="outline-input outline-input--title"
-                  placeholder={t('unitTitlePlaceholder')}
+                  placeholder={t("unitTitlePlaceholder")}
                 />
               </div>
             </div>
 
             {/* Objective Field */}
             <div className="outline-unit-field">
-              <label htmlFor={`unit-${u.index}-objective`} className="outline-field-label">
-                {t('unitObjective')}
+              <label
+                htmlFor={`unit-${u.index}-objective`}
+                className="outline-field-label"
+              >
+                {t("unitObjective")}
               </label>
               <textarea
                 id={`unit-${u.index}-objective`}
                 value={u.objective}
-                onChange={(e) => update(u.index, { objective: e.target.value.slice(0, 280) })}
+                onChange={(e) =>
+                  update(u.index, { objective: e.target.value.slice(0, 280) })
+                }
                 disabled={busy}
                 rows={2}
                 className="outline-textarea"
-                placeholder={t('unitObjectivePlaceholder')}
+                placeholder={t("unitObjectivePlaceholder")}
               />
             </div>
 
             {/* Summary Field */}
             <div className="outline-unit-field">
-              <label htmlFor={`unit-${u.index}-summary`} className="outline-field-label">
-                {t('unitSummary')}
+              <label
+                htmlFor={`unit-${u.index}-summary`}
+                className="outline-field-label"
+              >
+                {t("unitSummary")}
               </label>
               <textarea
                 id={`unit-${u.index}-summary`}
                 value={u.summary}
-                onChange={(e) => update(u.index, { summary: e.target.value.slice(0, 640) })}
+                onChange={(e) =>
+                  update(u.index, { summary: e.target.value.slice(0, 640) })
+                }
                 disabled={busy}
                 rows={3}
                 className="outline-textarea"
-                placeholder={t('unitSummaryPlaceholder')}
+                placeholder={t("unitSummaryPlaceholder")}
               />
             </div>
           </article>
@@ -126,7 +141,7 @@ export function OutlinePreview({
           disabled={busy}
           className="btn ghost"
         >
-          {t('discard')}
+          {t("discard")}
         </button>
         <button
           type="button"
@@ -134,7 +149,7 @@ export function OutlinePreview({
           disabled={busy}
           className="btn primary"
         >
-          {busy ? t('accepting') : t('accept')}
+          {busy ? t("accepting") : t("accept")}
         </button>
       </footer>
     </div>

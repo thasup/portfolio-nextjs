@@ -24,17 +24,21 @@ model User {
   lastActiveAt      DateTime @default(now()) @map("last_active_at") @db.Timestamptz(6)
   role              Role?    @default(MEMBER)
 
-  topics        PraxisTopic[]
-  invitations   PraxisInvitation[] @relation("Inviter")
-  onboarding    PraxisOnboarding[]
-  templates     PraxisTemplate[]
-  conversations PraxisConversation[]
-  orgsCreated   MarketosOrg[]      @relation("OrgCreator")
-  marketosMembers MarketosMember[]
+  topics             PraxisTopic[]
+  invitations        PraxisInvitation[]   @relation("Inviter")
+  onboarding         PraxisOnboarding[]
+  templates          PraxisTemplate[]
+  conversations      PraxisConversation[]
+  orgsCreated        MarketosOrg[]        @relation("OrgCreator")
+  marketosMembers    MarketosMember[]
   capitalAccounts    CapitalAccount[]
   capitalLiabilities CapitalLiability[]
   capitalGoals       CapitalGoal[]
   capitalSnapshots   CapitalSnapshot[]
+  capitalSettings    CapitalSettings?
+  capitalSyncLogs    CapitalSyncLog[]
+  capitalAlerts      CapitalAlert[]
+  capitalScenarios   CapitalScenario[]
 
   @@map("nexus_users")
 }
@@ -223,7 +227,7 @@ model MarketosOrg {
   archivedAt DateTime? @map("archived_at") @db.Timestamptz(6)
   createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  creator        User?                 @relation("OrgCreator", fields: [createdBy], references: [id])
+  creator        User?                   @relation("OrgCreator", fields: [createdBy], references: [id])
   members        MarketosMember[]
   invitations    MarketosInvitation[]
   settings       MarketosOrgSettings?
@@ -380,9 +384,9 @@ model MarketosBid {
   decidedAt   DateTime? @map("decided_at") @db.Timestamptz(6)
   decidedBy   String?   @map("decided_by") @db.Uuid
 
-  mission     MarketosMission @relation(fields: [missionId], references: [id])
-  bidder      MarketosMember  @relation(fields: [bidderId], references: [id])
-  decider     MarketosMember? @relation("BidDecider", fields: [decidedBy], references: [id])
+  mission     MarketosMission  @relation(fields: [missionId], references: [id])
+  bidder      MarketosMember   @relation(fields: [bidderId], references: [id])
+  decider     MarketosMember?  @relation("BidDecider", fields: [decidedBy], references: [id])
   acceptedFor MarketosMission? @relation("AcceptedBid")
   payout      MarketosPayout?
 
@@ -569,4 +573,67 @@ model CapitalSnapshot {
   @@unique([userId, date])
   @@index([userId, date(sort: Desc)])
   @@map("capital_snapshots")
+}
+
+model CapitalSettings {
+  userId           String   @id @map("user_id") @db.Uuid
+  runwayBurnRate   BigInt   @default(2500000) @map("runway_burn_rate")
+  runwayAccountIds String[] @default([]) @map("runway_account_ids")
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("capital_settings")
+}
+
+model CapitalSyncLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  source     String // YNAB, AIRTABLE, MANUAL, SYSTEM
+  action     String // CREATE, UPDATE, DELETE, SYNC
+  entityType String   @map("entity_type") // ACCOUNT, LIABILITY, GOAL
+  entityId   String?  @map("entity_id")
+  before     Json?
+  after      Json?
+  timestamp  DateTime @default(now()) @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, timestamp(sort: Desc)])
+  @@map("capital_sync_logs")
+}
+
+model CapitalAlert {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  type       String // DIVERGENCE, ACTION_REQUIRED
+  severity   String // HIGH, MEDIUM, LOW
+  title      String
+  message    String
+  isResolved Boolean   @default(false) @map("is_resolved")
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  resolvedAt DateTime? @map("resolved_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, isResolved])
+  @@map("capital_alerts")
+}
+
+model CapitalScenario {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String   @map("user_id") @db.Uuid
+  name                String
+  burnRate            BigInt   @map("burn_rate")
+  ssoMonths           Int      @map("sso_months")
+  investReturn        Decimal  @map("invest_return") @db.Decimal(5, 2)
+  missionSuccessMonth Int      @map("mission_success_month")
+  postSuccessIncome   BigInt   @map("post_success_income")
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("capital_scenarios")
 }

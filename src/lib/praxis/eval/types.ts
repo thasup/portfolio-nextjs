@@ -12,12 +12,12 @@
  *      inspect the JSON shape (question count, personalisation references,
  *      etc.) without needing a judge call.
  */
-import { PromptModuleKey } from '@/lib/praxis/prompts';
+import { PromptModuleKey } from "@/lib/praxis/prompts";
 
 export enum EvalMode {
-  RUBRIC = 'rubric',
-  BINARY = 'binary',
-  HEURISTIC = 'heuristic',
+  RUBRIC = "rubric",
+  BINARY = "binary",
+  HEURISTIC = "heuristic",
 }
 
 /** Rubric criteria are module-specific; scored 0–3 each. */

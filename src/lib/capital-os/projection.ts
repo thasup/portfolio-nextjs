@@ -12,6 +12,7 @@ import type {
   ProjectionPoint,
   CashFlowPoint,
   ProjectionParams,
+  CapitalSettings,
 } from "@/lib/capital-os/types";
 import { MONTHS } from "@/lib/capital-os/format";
 
@@ -46,6 +47,7 @@ export function computeProjection(
   params: ProjectionParams,
   accounts: CapitalAccount[],
   liabilities: CapitalLiability[],
+  settings?: CapitalSettings | null,
 ): ProjectionResult {
   const activeAccounts = accounts.filter((a) => !a.archivedAt);
   const activeLiabs = liabilities.filter((l) => !l.archivedAt);
@@ -57,6 +59,14 @@ export function computeProjection(
   const liquidTotal = activeAccounts
     .filter((a) => a.type === CapitalAssetType.LIQUID)
     .reduce((s, a) => s + a.balance, 0);
+
+  const runwayPoolTotal = settings?.runwayAccountIds?.length
+    ? activeAccounts
+        .filter((a) => settings.runwayAccountIds.includes(a.id))
+        .reduce((s, a) => s + a.balance, 0)
+    : liquidTotal;
+
+  const runwayBurnRate = settings?.runwayBurnRate ?? params.burnRate;
 
   const investedTotal = activeAccounts
     .filter(
@@ -76,13 +86,14 @@ export function computeProjection(
     investedTotal,
     mult,
     ssoIncome,
+    runwayBurnRate,
   );
 
   // ── Runway calculation ──
-  const runway = computeRunway(liquidTotal, params.burnRate);
+  const runway = computeRunway(runwayPoolTotal, runwayBurnRate);
 
   // ── 12-month cash flow ──
-  const cashFlow = computeCashFlow(params, mult, ssoIncome);
+  const cashFlow = computeCashFlow(params, mult, ssoIncome, runwayBurnRate);
 
   return {
     points,
@@ -104,14 +115,14 @@ function computeTrajectory(
   initialPortfolio: number,
   mult: number,
   ssoIncome: number,
+  burnRate: number,
 ): ProjectionPoint[] {
   const months = 24;
   const data: ProjectionPoint[] = [];
   let liquid = initialLiquid;
   let portfolio = initialPortfolio;
 
-  const monthlyReturn =
-    Math.pow(1 + params.investReturn / 100, 1 / 12) - 1;
+  const monthlyReturn = Math.pow(1 + params.investReturn / 100, 1 / 12) - 1;
 
   const now = new Date();
   const startMonth = now.getMonth();
@@ -120,8 +131,7 @@ function computeTrajectory(
     const monthIndex = (startMonth + i) % 12;
     const yearOffset = Math.floor((startMonth + i) / 12);
     const yearSuffix = String(now.getFullYear() + yearOffset).slice(-2);
-    const label =
-      i === 0 ? "Now" : `${MONTHS[monthIndex]} '${yearSuffix}`;
+    const label = i === 0 ? "Now" : `${MONTHS[monthIndex]} '${yearSuffix}`;
 
     const isSSOActive = i <= params.ssoMonths;
     const isMissionActive = i >= params.missionSuccessMonth;
@@ -129,7 +139,7 @@ function computeTrajectory(
     const income =
       (isSSOActive ? ssoIncome : 0) +
       (isMissionActive ? Math.round(params.postSuccessIncome * mult) : 0);
-    const burn = params.burnRate;
+    const burn = burnRate;
     const netFlow = income - burn;
 
     liquid = Math.max(0, liquid + netFlow);
@@ -164,20 +174,19 @@ function computeCashFlow(
   params: ProjectionParams,
   mult: number,
   ssoIncome: number,
+  burnRate: number,
 ): CashFlowPoint[] {
   return MONTHS.map((m, i) => {
     const isSSOActive = i < params.ssoMonths;
     const isMissionActive = i >= params.missionSuccessMonth;
     const income =
       (isSSOActive ? ssoIncome : 0) +
-      (isMissionActive
-        ? Math.round(params.postSuccessIncome * mult)
-        : 0);
+      (isMissionActive ? Math.round(params.postSuccessIncome * mult) : 0);
     return {
       month: m,
       income,
-      burn: params.burnRate,
-      net: income - params.burnRate,
+      burn: burnRate,
+      net: income - burnRate,
     };
   });
 }

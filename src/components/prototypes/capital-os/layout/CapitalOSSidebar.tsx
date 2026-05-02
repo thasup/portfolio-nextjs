@@ -88,9 +88,7 @@ export function CapitalOSSidebar() {
 
   // Extract the base path to build relative links
   const segments = pathname.split("/");
-  const localeIndex = segments.findIndex(
-    (s) => s === "en" || s === "th",
-  );
+  const localeIndex = segments.findIndex((s) => s === "en" || s === "th");
   const locale = segments[localeIndex] || "en";
   const basePath = `/${locale}/prototypes/capital-os/app`;
 

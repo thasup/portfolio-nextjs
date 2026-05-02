@@ -6,4 +6,4 @@
  * Falls back to `'nexus'` so local dev works even without an env file.
  */
 export const DEMO_ORG_SLUG: string =
-  process.env.NEXT_PUBLIC_MARKETOS_DEMO_ORG_SLUG ?? 'nexus';
+  process.env.NEXT_PUBLIC_MARKETOS_DEMO_ORG_SLUG ?? "nexus";

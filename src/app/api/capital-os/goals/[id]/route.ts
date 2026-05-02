@@ -30,14 +30,20 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
       ...(name !== undefined && { name }),
       ...(current !== undefined && { current: BigInt(current) }),
       ...(target !== undefined && { target: BigInt(target) }),
-      ...(deadline !== undefined && { deadline: deadline ? new Date(deadline) : null }),
+      ...(deadline !== undefined && {
+        deadline: deadline ? new Date(deadline) : null,
+      }),
       ...(priority !== undefined && { priority }),
       ...(vehicle !== undefined && { vehicle }),
     },
   });
 
   return NextResponse.json({
-    goal: { ...goal, current: Number(goal.current), target: Number(goal.target) },
+    goal: {
+      ...goal,
+      current: Number(goal.current),
+      target: Number(goal.target),
+    },
   });
 }
 

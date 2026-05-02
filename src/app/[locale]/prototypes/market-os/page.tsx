@@ -5,7 +5,7 @@
  * market_os/Landing.jsx) into App Router React Server Components.
  * Interactive scroll-state lives only in `LandingNav`.
  */
-import { LandingNav } from '@/components/prototypes/market-os/landing/LandingNav';
+import { LandingNav } from "@/components/prototypes/market-os/landing/LandingNav";
 import {
   Hero,
   WhySection,
@@ -16,11 +16,11 @@ import {
   MissionOSTeaser,
   CTAFooter,
   LandingFooter,
-} from '@/components/prototypes/market-os/landing/LandingSections';
+} from "@/components/prototypes/market-os/landing/LandingSections";
 
 export default function MarketOSLandingPage() {
   return (
-    <div style={{ background: 'var(--mk-cream)', minHeight: '100vh' }}>
+    <div style={{ background: "var(--mk-cream)", minHeight: "100vh" }}>
       <LandingNav />
       <Hero />
       <WhySection />

@@ -1,4 +1,4 @@
-export type CapabilityId = 'frontend' | 'fullstack' | 'product' | 'ai';
+export type CapabilityId = "frontend" | "fullstack" | "product" | "ai";
 
 export interface Tool {
   name: string;
@@ -18,7 +18,7 @@ export interface Capability {
   signalKey: string;
   outcomeTextKey: string;
   outcomeProject: string;
-  iconName: 'LayoutTemplate' | 'Server' | 'Target' | 'Sparkles';
+  iconName: "LayoutTemplate" | "Server" | "Target" | "Sparkles";
   emphasized: boolean;
   accentColor: string;
   accentRgb: string;

@@ -10,13 +10,13 @@
  * The middleware guarantees an authenticated session. `requireUser()`
  * is safe to call here.
  */
-import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
-import { requireUser } from '@/lib/nexus/session/getUser';
-import { UnitRenderer } from '@/components/praxis/UnitRenderer';
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { requireUser } from "@/lib/nexus/session/getUser";
+import { UnitRenderer } from "@/components/praxis/UnitRenderer";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface UnitPageProps {
   params: Promise<{ topicId: string; unitId: string }>;
@@ -32,14 +32,14 @@ export default async function UnitPage({ params }: UnitPageProps) {
   // Load unit + parent topic in parallel.
   const [{ data: unit }, { data: topic }] = await Promise.all([
     supabase
-      .from('praxis_units')
-      .select('id, index, title, objective, status, blocks, topic_id')
-      .eq('id', unitId)
+      .from("praxis_units")
+      .select("id, index, title, objective, status, blocks, topic_id")
+      .eq("id", unitId)
       .maybeSingle(),
     supabase
-      .from('praxis_topics')
-      .select('id, title, user_id')
-      .eq('id', topicId)
+      .from("praxis_topics")
+      .select("id, title, user_id")
+      .eq("id", topicId)
       .maybeSingle(),
   ]);
 
@@ -51,12 +51,12 @@ export default async function UnitPage({ params }: UnitPageProps) {
   // Parse blocks from JSONB.
   const blocks = Array.isArray(unit.blocks)
     ? (unit.blocks as Array<{
-      id: string;
-      kind: string;
-      content: string;
-      regeneratedFrom: string | null;
-      generatedAt: string;
-    }>)
+        id: string;
+        kind: string;
+        content: string;
+        regeneratedFrom: string | null;
+        generatedAt: string;
+      }>)
     : [];
 
   return (
@@ -66,11 +66,11 @@ export default async function UnitPage({ params }: UnitPageProps) {
       unitObjective={unit.objective}
       unitIndex={unit.index}
       initialStatus={unit.status}
-      initialBlocks={blocks as Parameters<typeof UnitRenderer>[0]['initialBlocks']}
+      initialBlocks={
+        blocks as Parameters<typeof UnitRenderer>[0]["initialBlocks"]
+      }
       topicId={topicId}
       topicTitle={topic.title}
     />
   );
 }
-
-

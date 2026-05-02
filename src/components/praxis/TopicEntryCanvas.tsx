@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Blank-canvas topic entry.
@@ -13,8 +13,8 @@
  *   - Enter-to-submit respected (Ctrl/Cmd+Enter also accepted), while
  *     plain Enter inside the textarea still inserts a newline.
  */
-import { useCallback, useId, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useCallback, useId, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export interface TopicEntryCanvasProps {
   initialValue?: string;
@@ -24,25 +24,25 @@ export interface TopicEntryCanvasProps {
 }
 
 const DEFAULT_SUGGESTIONS = [
-  'sales',
-  'negotiation',
-  'public speaking',
-  'giving feedback',
-  'SQL fundamentals',
-  'product management basics',
+  "sales",
+  "negotiation",
+  "public speaking",
+  "giving feedback",
+  "SQL fundamentals",
+  "product management basics",
 ] as const;
 
 const MIN_LENGTH = 3;
 const MAX_LENGTH = 240;
 
 export function TopicEntryCanvas({
-  initialValue = '',
+  initialValue = "",
   busy = false,
   suggestions = DEFAULT_SUGGESTIONS,
   onSubmit,
 }: TopicEntryCanvasProps) {
   const [value, setValue] = useState(initialValue);
-  const t = useTranslations('praxis.newTopic');
+  const t = useTranslations("praxis.newTopic");
   const hintId = useId();
   const canSubmit = value.trim().length >= MIN_LENGTH && !busy;
 
@@ -58,7 +58,7 @@ export function TopicEntryCanvas({
         <em>today?</em>
       </h2>
       <p className="lede" id={hintId}>
-        {t('hint')}
+        {t("hint")}
       </p>
 
       <form
@@ -71,14 +71,14 @@ export function TopicEntryCanvas({
           value={value}
           onChange={(e) => setValue(e.target.value.slice(0, MAX_LENGTH))}
           onKeyDown={(e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
               e.preventDefault();
               submit();
             }
           }}
           aria-describedby={hintId}
           disabled={busy}
-          placeholder={t('placeholder')}
+          placeholder={t("placeholder")}
           className="answer"
         />
 
@@ -99,14 +99,14 @@ export function TopicEntryCanvas({
 
           <div className="flex items-center gap-4">
             <span className="text-xs text-[var(--color-ink-3)] hidden sm:inline-block">
-              {t('characters', { count: value.length, max: MAX_LENGTH })}
+              {t("characters", { count: value.length, max: MAX_LENGTH })}
             </span>
             <button
               type="submit"
               disabled={!canSubmit}
               className="btn primary lg"
             >
-              {busy ? t('submitting') : t('submit')}
+              {busy ? t("submitting") : t("submit")}
             </button>
           </div>
         </div>

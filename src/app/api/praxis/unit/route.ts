@@ -10,12 +10,12 @@
  *   3. Dispatch to the service.
  *   4. Format responses per contract.
  */
-import { NextResponse, type NextRequest } from 'next/server';
-import { z } from 'zod';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
-import { getUser } from '@/lib/nexus/session/getUser';
-import { BudgetExceededError } from '@/lib/praxis/openrouter/ledger';
+import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { getUser } from "@/lib/nexus/session/getUser";
+import { BudgetExceededError } from "@/lib/praxis/openrouter/ledger";
 import {
   BlockNotFoundError,
   UnitGeneratingError,
@@ -24,28 +24,28 @@ import {
   generateUnit,
   markUnitComplete,
   regenerateBlock,
-} from '@/lib/praxis/unit/service';
+} from "@/lib/praxis/unit/service";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 const GenerateBodySchema = z.object({
-  action: z.literal('generate'),
+  action: z.literal("generate"),
   unitId: z.string().uuid(),
 });
 
 const RegenerateBlockBodySchema = z.object({
-  action: z.literal('regenerate_block'),
+  action: z.literal("regenerate_block"),
   unitId: z.string().uuid(),
   blockId: z.string().uuid(),
   instruction: z.string().trim().min(1).max(500),
 });
 
 const CompleteBodySchema = z.object({
-  action: z.literal('complete'),
+  action: z.literal("complete"),
   unitId: z.string().uuid(),
 });
 
-const BodySchema = z.discriminatedUnion('action', [
+const BodySchema = z.discriminatedUnion("action", [
   GenerateBodySchema,
   RegenerateBlockBodySchema,
   CompleteBodySchema,
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // ---- auth ---------------------------------------------------------------
   const session = await getUser();
   if (!session) {
-    return errorResponse(401, 'NOT_AUTHENTICATED', 'Sign-in required');
+    return errorResponse(401, "NOT_AUTHENTICATED", "Sign-in required");
   }
 
   // ---- parse --------------------------------------------------------------
@@ -67,8 +67,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     body = BodySchema.parse(await request.json());
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Invalid body';
-    return errorResponse(400, 'INVALID_BODY', message);
+    const message = err instanceof Error ? err.message : "Invalid body";
+    return errorResponse(400, "INVALID_BODY", message);
   }
 
   const cookieStore = await cookies();
@@ -76,8 +76,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   try {
     switch (body.action) {
-      case 'generate': {
-
+      case "generate": {
         const result = await generateUnit({
           unitId: body.unitId,
           learnerId: session.userId,
@@ -93,8 +92,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         });
       }
 
-      case 'regenerate_block': {
-
+      case "regenerate_block": {
         const result = await regenerateBlock({
           unitId: body.unitId,
           blockId: body.blockId,
@@ -112,30 +110,29 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         });
       }
 
-      case 'complete': {
+      case "complete": {
         await markUnitComplete(body.unitId, session.userId, supabase);
-        return NextResponse.json({ status: 'completed' });
+        return NextResponse.json({ status: "completed" });
       }
     }
   } catch (err) {
     if (err instanceof UnitNotFoundError) {
-      return errorResponse(404, 'UNIT_NOT_FOUND', err.message);
+      return errorResponse(404, "UNIT_NOT_FOUND", err.message);
     }
     if (err instanceof UnitNotOwnedError) {
-      return errorResponse(403, 'NOT_OWNER', err.message);
+      return errorResponse(403, "NOT_OWNER", err.message);
     }
     if (err instanceof UnitGeneratingError) {
-      return errorResponse(409, 'UNIT_GENERATING', err.message);
+      return errorResponse(409, "UNIT_GENERATING", err.message);
     }
     if (err instanceof BlockNotFoundError) {
-      return errorResponse(404, 'BLOCK_NOT_FOUND', err.message);
+      return errorResponse(404, "BLOCK_NOT_FOUND", err.message);
     }
     if (err instanceof BudgetExceededError) {
-      return errorResponse(503, 'BUDGET_EXCEEDED', err.message);
+      return errorResponse(503, "BUDGET_EXCEEDED", err.message);
     }
-    const message = err instanceof Error ? err.message : 'Upstream failure';
-    console.error('[praxis/unit] unhandled', err);
-    return errorResponse(502, 'UPSTREAM_FAILED', message);
+    const message = err instanceof Error ? err.message : "Upstream failure";
+    console.error("[praxis/unit] unhandled", err);
+    return errorResponse(502, "UPSTREAM_FAILED", message);
   }
 }
-

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { LayoutTemplate, Server, Target, Sparkles } from 'lucide-react';
-import { Capability } from '@/types/tech-capabilities';
-import { useModal } from '@/hooks/useModal';
-import { featureFlags } from '@/lib/featureFlags'
+import { useTranslations } from "next-intl";
+import { LayoutTemplate, Server, Target, Sparkles } from "lucide-react";
+import { Capability } from "@/types/tech-capabilities";
+import { useModal } from "@/hooks/useModal";
+import { featureFlags } from "@/lib/featureFlags";
 
 interface CapabilityCardProps {
   capability: Capability;
@@ -20,13 +20,13 @@ const iconMap = {
 
 export function CapabilityCard({ capability, index }: CapabilityCardProps) {
   const t = useTranslations();
-  const { showWipSections } = featureFlags
+  const { showWipSections } = featureFlags;
   const Icon = iconMap[capability.iconName];
 
   const cssVars = {
-    '--card-accent': capability.accentColor,
-    '--card-accent-rgb': capability.accentRgb,
-    '--card-delay': `${index * 110}ms`,
+    "--card-accent": capability.accentColor,
+    "--card-accent-rgb": capability.accentRgb,
+    "--card-delay": `${index * 110}ms`,
   } as React.CSSProperties;
 
   const { open } = useModal();
@@ -100,14 +100,14 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
                     style={
                       tool.primary
                         ? {
-                          color: capability.accentColor,
-                          backgroundColor: `rgba(${capability.accentRgb}, 0.15)`,
-                          borderWidth: '1px',
-                          borderColor: `rgba(${capability.accentRgb}, 0.3)`,
-                        }
+                            color: capability.accentColor,
+                            backgroundColor: `rgba(${capability.accentRgb}, 0.15)`,
+                            borderWidth: "1px",
+                            borderColor: `rgba(${capability.accentRgb}, 0.3)`,
+                          }
                         : {
-                          backgroundColor: 'rgba(0, 0, 0, 0.05)',
-                        }
+                            backgroundColor: "rgba(0, 0, 0, 0.05)",
+                          }
                     }
                     data-primary={tool.primary}
                   >
@@ -137,7 +137,7 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
                 className="text-[10px] font-bold uppercase tracking-wider"
                 style={{ color: capability.accentColor }}
               >
-                {t('tech.outcomeLabel')}
+                {t("tech.outcomeLabel")}
               </span>
             </div>
             <p className="text-sm leading-relaxed text-[var(--color-ink)]">
@@ -146,16 +146,21 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                const projectSlug = capability.outcomeProject.toLowerCase().replace(/\s+/g, '-').replace(/\/.*$/, '');
-                open({ type: 'project', id: projectSlug });
+                const projectSlug = capability.outcomeProject
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")
+                  .replace(/\/.*$/, "");
+                open({ type: "project", id: projectSlug });
               }}
               className="group/flagship mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-[var(--color-ink-2)] transition-colors hover:text-[var(--color-ink)]"
             >
-              <span>{t('tech.flagshipLabel')}:</span>
+              <span>{t("tech.flagshipLabel")}:</span>
               <span className="underline decoration-[var(--color-line)] underline-offset-2 group-hover/flagship:decoration-[var(--color-ink)]">
                 {capability.outcomeProject}
               </span>
-              <span className="opacity-0 transition-opacity group-hover/flagship:opacity-100">→</span>
+              <span className="opacity-0 transition-opacity group-hover/flagship:opacity-100">
+                →
+              </span>
             </button>
           </div>
         )}
@@ -165,7 +170,7 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
           className="mt-auto rounded-lg border p-4"
           style={{
             backgroundColor: `rgba(${capability.accentRgb}, 0.06)`,
-            borderLeftWidth: '3px',
+            borderLeftWidth: "3px",
             borderLeftColor: capability.accentColor,
             borderTopColor: `rgba(${capability.accentRgb}, 0.14)`,
             borderRightColor: `rgba(${capability.accentRgb}, 0.1)`,
@@ -173,7 +178,9 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
           }}
         >
           <blockquote className="flex items-start gap-3">
-            <span className="shrink-0 text-base leading-relaxed opacity-90">⚡</span>
+            <span className="shrink-0 text-base leading-relaxed opacity-90">
+              ⚡
+            </span>
             <p className="text-[13.5px] font-medium italic leading-relaxed text-[var(--color-ink)]">
               &ldquo;{t(capability.signalKey)}&rdquo;
             </p>

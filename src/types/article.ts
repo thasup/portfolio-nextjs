@@ -1,8 +1,8 @@
 export enum ArticleCategory {
-  HISTORY = 'history',
-  TECHNOLOGY = 'technology',
-  CULTURE = 'culture',
-  SCIENCE = 'science',
+  HISTORY = "history",
+  TECHNOLOGY = "technology",
+  CULTURE = "culture",
+  SCIENCE = "science",
 }
 
 export interface TimelineEvent {

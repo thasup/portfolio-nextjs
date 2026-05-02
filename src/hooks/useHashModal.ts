@@ -1,11 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { useModal } from './useModal';
+import { useEffect, useRef } from "react";
+import { useModal } from "./useModal";
 
-type HashOpenType = 'project' | 'timeline-event' | 'testimonial';
+type HashOpenType = "project" | "timeline-event" | "testimonial";
 
-const HASH_MODAL_TYPES: HashOpenType[] = ['project', 'timeline-event', 'testimonial'];
+const HASH_MODAL_TYPES: HashOpenType[] = [
+  "project",
+  "timeline-event",
+  "testimonial",
+];
 
 export function useHashModal() {
   const { open, close, isOpen, payload } = useModal();
@@ -24,7 +28,7 @@ export function useHashModal() {
         return;
       }
 
-      const firstHyphen = hash.indexOf('-');
+      const firstHyphen = hash.indexOf("-");
       if (firstHyphen === -1) {
         if (isOpenRef.current) close();
         return;
@@ -40,15 +44,19 @@ export function useHashModal() {
 
     handleHashChange();
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, [open, close]);
 
   useEffect(() => {
     if (!payload) {
       if (window.location.hash) {
         isInternalChange.current = true;
-        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search,
+        );
         queueMicrotask(() => {
           isInternalChange.current = false;
         });
@@ -60,7 +68,7 @@ export function useHashModal() {
     const targetHash = `#${payload.type}-${payload.id}`;
     if (window.location.hash !== targetHash) {
       isInternalChange.current = true;
-      window.history.replaceState(null, '', targetHash);
+      window.history.replaceState(null, "", targetHash);
       queueMicrotask(() => {
         isInternalChange.current = false;
       });

@@ -1,13 +1,13 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
-import { centsToDollars } from '@/lib/marketos/calc';
-import { toMemberDTO } from '@/lib/marketos/auth';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
+import { centsToDollars } from "@/lib/marketos/calc";
+import { toMemberDTO } from "@/lib/marketos/auth";
 import {
   type MemberWithStatsDTO,
   type MissionHistoryEntryDTO,
   type Category,
   type Tier,
-} from '@/lib/marketos/types';
+} from "@/lib/marketos/types";
 
 /**
  * MarketOS — member reads with computed stats from `marketos_member_stats`.
@@ -46,7 +46,7 @@ function rowToMemberWithStats(r: StatsRow): MemberWithStatsDTO {
     orgId: r.org_id,
     userId: r.user_id,
     displayName: r.display_name,
-    role: r.role as MemberWithStatsDTO['role'],
+    role: r.role as MemberWithStatsDTO["role"],
     title: r.title,
     bio: r.bio,
     skills: r.skills,
@@ -142,10 +142,10 @@ export async function getMemberMissionHistory(
   const limit = options.limit ?? 20;
   const rows = await prisma.marketosMission.findMany({
     where: {
-      status: 'completed',
+      status: "completed",
       acceptedBid: { bidderId: memberId },
     },
-    orderBy: { completedAt: 'desc' },
+    orderBy: { completedAt: "desc" },
     take: limit,
     select: {
       id: true,
@@ -158,7 +158,7 @@ export async function getMemberMissionHistory(
         },
       },
       reviews: {
-        where: { direction: 'poster_to_contributor' },
+        where: { direction: "poster_to_contributor" },
         select: { rating: true },
         take: 1,
       },
@@ -170,7 +170,9 @@ export async function getMemberMissionHistory(
       missionId: m.id,
       title: m.title,
       category: m.category as Category,
-      earnedUsd: centsToDollars(m.acceptedBid?.payout?.amountCents ?? BigInt(0)),
+      earnedUsd: centsToDollars(
+        m.acceptedBid?.payout?.amountCents ?? BigInt(0),
+      ),
       rating: m.reviews[0]?.rating ?? null,
       completedAt: m.completedAt!.toISOString(),
     }));
@@ -184,7 +186,7 @@ export async function getMemberMissionHistory(
 export async function listActiveMembers(orgId: string) {
   const rows = await prisma.marketosMember.findMany({
     where: { orgId, removedAt: null },
-    orderBy: { displayName: 'asc' },
+    orderBy: { displayName: "asc" },
   });
   return rows.map(toMemberDTO);
 }

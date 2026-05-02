@@ -11,14 +11,14 @@
  * For now, clicking a unit simply goes to `/learn/[topicId]/[unit]`
  * which will 404 until T-038 ships — that's expected during Week 3.
  */
-import { notFound, redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
-import { createClient } from '@/utils/supabase/server';
-import { requireUser } from '@/lib/nexus/session/getUser';
+import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
+import { requireUser } from "@/lib/nexus/session/getUser";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface TopicPageProps {
   params: Promise<{ topicId: string }>;
@@ -29,36 +29,37 @@ interface TopicUnit {
   index: number;
   title: string;
   objective: string;
-  status: 'pending' | 'ready' | 'completed';
+  status: "pending" | "ready" | "completed";
 }
 
 export default async function TopicPage({ params }: TopicPageProps) {
   const session = await requireUser();
   const { topicId } = await params;
-  const t = await getTranslations('praxis.topic');
+  const t = await getTranslations("praxis.topic");
 
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const [{ data: topic }, { data: units }, { data: onboarding }] = await Promise.all([
-    supabase
-      .from('praxis_topics')
-      .select('id, title, status, user_id')
-      .eq('id', topicId)
-      .maybeSingle(),
-    supabase
-      .from('praxis_units')
-      .select('id, index, title, objective, status')
-      .eq('topic_id', topicId)
-      .order('index', { ascending: true }),
-    supabase
-      .from('praxis_onboarding')
-      .select('id')
-      .eq('topic_id', topicId)
-      .eq('user_id', session.userId)
-      .limit(1)
-      .maybeSingle(),
-  ]);
+  const [{ data: topic }, { data: units }, { data: onboarding }] =
+    await Promise.all([
+      supabase
+        .from("praxis_topics")
+        .select("id, title, status, user_id")
+        .eq("id", topicId)
+        .maybeSingle(),
+      supabase
+        .from("praxis_units")
+        .select("id, index, title, objective, status")
+        .eq("topic_id", topicId)
+        .order("index", { ascending: true }),
+      supabase
+        .from("praxis_onboarding")
+        .select("id")
+        .eq("topic_id", topicId)
+        .eq("user_id", session.userId)
+        .limit(1)
+        .maybeSingle(),
+    ]);
 
   if (!topic || topic.user_id !== session.userId) notFound();
 
@@ -68,15 +69,16 @@ export default async function TopicPage({ params }: TopicPageProps) {
   }
 
   const unitList = (units ?? []) as TopicUnit[];
-  const completed = unitList.filter((u) => u.status === 'completed').length;
-  const progressPercent = unitList.length > 0 ? Math.round((completed / unitList.length) * 100) : 0;
-  const firstReadyIndex = unitList.findIndex((u) => u.status !== 'completed');
+  const completed = unitList.filter((u) => u.status === "completed").length;
+  const progressPercent =
+    unitList.length > 0 ? Math.round((completed / unitList.length) * 100) : 0;
+  const firstReadyIndex = unitList.findIndex((u) => u.status !== "completed");
 
   return (
     <section id="module-overview" className="reveal">
       <div className="mod-head">
         <div>
-          <div className="eyebrow">{t('eyebrow')}</div>
+          <div className="eyebrow">{t("eyebrow")}</div>
           <h1>
             <em>{topic.title}</em>
           </h1>
@@ -85,7 +87,9 @@ export default async function TopicPage({ params }: TopicPageProps) {
               <span style={{ width: `${progressPercent}%` }} />
             </div>
             <div className="mt-2 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-ink-3)]">
-              <span>{t('progress', { completed, total: unitList.length })}</span>
+              <span>
+                {t("progress", { completed, total: unitList.length })}
+              </span>
               <span>{progressPercent}%</span>
             </div>
           </div>
@@ -95,14 +99,14 @@ export default async function TopicPage({ params }: TopicPageProps) {
               href={`/learn/${topicId}/mate`}
               className="btn ai"
             >
-              {t('talkToNori')}
+              {t("talkToNori")}
             </Link>
             <Link
               id="edit-onboarding-link"
               href={`/learn/${topicId}/onboarding`}
               className="btn ghost"
             >
-              {t('editOnboarding')}
+              {t("editOnboarding")}
             </Link>
           </div>
         </div>
@@ -110,28 +114,28 @@ export default async function TopicPage({ params }: TopicPageProps) {
 
       <ol id="unit-list" className="unit-list">
         {unitList.map((u, i) => {
-          const isCompleted = u.status === 'completed';
-          const isReady = u.status === 'ready' || u.status === 'pending';
+          const isCompleted = u.status === "completed";
+          const isReady = u.status === "ready" || u.status === "pending";
           const isCurrent = i === firstReadyIndex;
           const locked = !isCompleted && !isReady;
           const cls = [
-            'unit-row',
-            isCompleted ? 'done' : '',
-            isCurrent && !isCompleted ? 'current' : '',
-            locked ? 'locked' : '',
+            "unit-row",
+            isCompleted ? "done" : "",
+            isCurrent && !isCompleted ? "current" : "",
+            locked ? "locked" : "",
           ]
             .filter(Boolean)
-            .join(' ');
+            .join(" ");
           const content = (
             <>
-              <div className="num">{String(u.index).padStart(2, '0')}</div>
+              <div className="num">{String(u.index).padStart(2, "0")}</div>
               <div>
                 <h3>{u.title}</h3>
                 <p>{u.objective}</p>
               </div>
               <div className="text-right">
                 <div className="state">
-                  {t(`status.${u.status}` as 'status.pending')}
+                  {t(`status.${u.status}` as "status.pending")}
                 </div>
                 {!locked && <div className="chev mt-1.5">→</div>}
               </div>
@@ -159,5 +163,3 @@ export default async function TopicPage({ params }: TopicPageProps) {
     </section>
   );
 }
-
-

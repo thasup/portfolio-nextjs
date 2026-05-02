@@ -71,11 +71,10 @@ async function buildFinancialContext(userId: string): Promise<string> {
   if (goals.length > 0) {
     ctx += `\n### Financial Goals (${goals.length})\n`;
     for (const g of goals) {
-      const pct = Math.round(
-        (Number(g.current) / Number(g.target)) * 100,
-      );
+      const pct = Math.round((Number(g.current) / Number(g.target)) * 100);
       ctx += `- ${g.name} (${g.priority}): ${toTHB(g.current)} / ${toTHB(g.target)} (${pct}%)`;
-      if (g.deadline) ctx += ` — deadline: ${g.deadline.toISOString().slice(0, 10)}`;
+      if (g.deadline)
+        ctx += ` — deadline: ${g.deadline.toISOString().slice(0, 10)}`;
       ctx += "\n";
     }
   }
@@ -88,12 +87,10 @@ export async function POST(req: NextRequest) {
   if (!isAuthed(auth)) return auth;
 
   const { messages } = await req.json();
-  const financialContext = await buildFinancialContext(
-    auth.session.userId,
-  );
+  const financialContext = await buildFinancialContext(auth.session.userId);
 
   const result = streamText({
-    model: openrouter("google/gemini-2.0-flash-001"),
+    model: openrouter("google/gemini-2.5-flash-lite"),
     system: `You are CapitalOS Intelligence — a sharp, professional financial analyst embedded in a personal wealth dashboard.
 
 Your role:

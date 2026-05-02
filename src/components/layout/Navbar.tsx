@@ -5,7 +5,12 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { NavbarAuthProfile } from "@/components/layout/NavbarAuthProfile";
@@ -26,17 +31,19 @@ export function Navbar() {
     const normalized = pathname.replace(/^\/(en|th)/, "") || "/";
     const isLanding = normalized === "/";
     const segments = normalized.split("/").filter(Boolean);
-    const protoId = segments[0] === "prototypes" && segments.length > 1 ? segments[1] : null;
-    
-    return { 
-      isLandingPage: isLanding, 
-      activePrototypeId: protoId 
+    const protoId =
+      segments[0] === "prototypes" && segments.length > 1 ? segments[1] : null;
+
+    return {
+      isLandingPage: isLanding,
+      activePrototypeId: protoId,
     };
   }, [pathname]);
 
-  const protoConfig = useMemo(() => 
-    activePrototypeId ? getPrototypeConfig(activePrototypeId) : null
-  , [activePrototypeId]);
+  const protoConfig = useMemo(
+    () => (activePrototypeId ? getPrototypeConfig(activePrototypeId) : null),
+    [activePrototypeId],
+  );
 
   // Global control: Hide navbar if prototype explicitly requests it
   const hideNav = !!protoConfig?.hideGlobalNav;
@@ -51,7 +58,7 @@ export function Navbar() {
       { id: "value", label: t("value"), href: "/#value" },
       { id: "contact", label: t("contact"), href: "/#contact" },
     ],
-    [t]
+    [t],
   );
 
   const nexusItems = useMemo(
@@ -60,12 +67,12 @@ export function Navbar() {
       { id: "prototypes", label: t("prototypes"), href: "/prototypes" },
       { id: "articles", label: t("articles"), href: "/articles" },
     ],
-    [t]
+    [t],
   );
 
   const navItems = useMemo(
     () => baseItems.filter((item) => isNavAnchorEnabled(item.href)),
-    [baseItems]
+    [baseItems],
   );
 
   const displayItems = isLandingPage ? navItems : nexusItems;
@@ -75,7 +82,7 @@ export function Navbar() {
       navItems
         .filter((item) => item.href.startsWith("/#"))
         .map((item) => item.href.split("#")[1] || ""),
-    [navItems]
+    [navItems],
   );
 
   const activeSection = useScrollSpy(sectionIds);
@@ -123,7 +130,9 @@ export function Navbar() {
             href={item.href}
             className={cn(
               "rounded-md px-3 py-2 text-sm font-medium transition-colors",
-              isActive(item.href) ? "text-primary" : "text-muted-foreground hover:text-foreground"
+              isActive(item.href)
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             {item.label}
@@ -145,7 +154,12 @@ export function Navbar() {
         <NavbarAuthProfile />
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-9 w-9" aria-label={t("open_menu")}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              aria-label={t("open_menu")}
+            >
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
@@ -161,7 +175,7 @@ export function Navbar() {
                     "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
                     isActive(item.href)
                       ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -183,14 +197,13 @@ export function Navbar() {
   if (hideNav) return null;
 
   return (
-    <header 
+    <header
       className={cn(
         "hdr flex items-center justify-between px-6 py-4 border-b border-[var(--color-line-soft)] bg-[var(--color-paper)] z-40 fixed top-0 w-full transition-all duration-300",
-        scrolled ? "py-3 shadow-sm" : "py-4"
+        scrolled ? "py-3 shadow-sm" : "py-4",
       )}
     >
       {navContent}
     </header>
   );
 }
-

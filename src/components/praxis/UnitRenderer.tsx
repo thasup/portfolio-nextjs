@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * `UnitRenderer` — the full unit view orchestrator.
@@ -10,10 +10,10 @@
  *   3. Render the block list via `ContentBlock` once ready.
  *   4. Show a "Mark complete" button + progress.
  */
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { ContentBlock } from '@/components/praxis/ContentBlock';
-import type { UnitBlockKind } from '@/lib/praxis/prompts/types';
-import { showApiError } from '@/lib/praxis/toast';
+import { useState, useEffect, useRef, useCallback } from "react";
+import { ContentBlock } from "@/components/praxis/ContentBlock";
+import type { UnitBlockKind } from "@/lib/praxis/prompts/types";
+import { showApiError } from "@/lib/praxis/toast";
 
 interface UnitBlock {
   id: string;
@@ -35,10 +35,10 @@ export interface UnitRendererProps {
 }
 
 enum Phase {
-  LOADING = 'loading',
-  GENERATING = 'generating',
-  READY = 'ready',
-  COMPLETED = 'completed',
+  LOADING = "loading",
+  GENERATING = "generating",
+  READY = "ready",
+  COMPLETED = "completed",
 }
 
 export function UnitRenderer({
@@ -52,8 +52,9 @@ export function UnitRenderer({
   topicTitle,
 }: UnitRendererProps) {
   const [phase, setPhase] = useState<Phase>(() => {
-    if (initialStatus === 'completed') return Phase.COMPLETED;
-    if (initialStatus === 'ready' && initialBlocks.length > 0) return Phase.READY;
+    if (initialStatus === "completed") return Phase.COMPLETED;
+    if (initialStatus === "ready" && initialBlocks.length > 0)
+      return Phase.READY;
     return Phase.LOADING;
   });
   const [blocks, setBlocks] = useState<UnitBlock[]>(initialBlocks);
@@ -81,15 +82,17 @@ export function UnitRenderer({
       setPhase(Phase.GENERATING);
 
       try {
-        const res = await fetch('/api/praxis/unit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'generate', unitId }),
+        const res = await fetch("/api/praxis/unit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "generate", unitId }),
         });
 
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
-          const error = new Error(data?.error?.message ?? `Generation failed (${res.status})`);
+          const error = new Error(
+            data?.error?.message ?? `Generation failed (${res.status})`,
+          );
           (error as { code?: string }).code = data?.error?.code;
           throw error;
         }
@@ -98,7 +101,9 @@ export function UnitRenderer({
         if (unmountedRef.current) return;
         const latestBlocks = getLatestBlocks(data.unit.blocks ?? []);
         setBlocks(latestBlocks);
-        setPhase(data.unit.status === 'completed' ? Phase.COMPLETED : Phase.READY);
+        setPhase(
+          data.unit.status === "completed" ? Phase.COMPLETED : Phase.READY,
+        );
       } catch (err) {
         if (unmountedRef.current) return;
         // Show toast instead of inline error card
@@ -120,9 +125,17 @@ export function UnitRenderer({
   }, [unitId, generationAttempt]);
 
   const handleBlockRegenerated = useCallback(
-    (newBlock: { id: string; kind: UnitBlockKind; content: string; regeneratedFrom: string }) => {
+    (newBlock: {
+      id: string;
+      kind: UnitBlockKind;
+      content: string;
+      regeneratedFrom: string;
+    }) => {
       setBlocks((prev) => {
-        const updated = [...prev, { ...newBlock, generatedAt: new Date().toISOString() }];
+        const updated = [
+          ...prev,
+          { ...newBlock, generatedAt: new Date().toISOString() },
+        ];
         return getLatestBlocks(updated);
       });
     },
@@ -132,21 +145,25 @@ export function UnitRenderer({
   const handleMarkComplete = useCallback(async () => {
     setIsCompleting(true);
     try {
-      const res = await fetch('/api/praxis/unit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'complete', unitId }),
+      const res = await fetch("/api/praxis/unit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "complete", unitId }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        const error = new Error(data?.error?.message ?? 'Failed to mark complete');
+        const error = new Error(
+          data?.error?.message ?? "Failed to mark complete",
+        );
         (error as { code?: string }).code = data?.error?.code;
         throw error;
       }
       setPhase(Phase.COMPLETED);
     } catch (err) {
       // Show toast for completion errors but don't block UI
-      showApiError(err, { description: 'Your progress is still saved locally.' });
+      showApiError(err, {
+        description: "Your progress is still saved locally.",
+      });
     } finally {
       setIsCompleting(false);
     }
@@ -176,8 +193,12 @@ export function UnitRenderer({
             className="card flex flex-col items-center justify-center gap-4 text-center my-8 pulse"
           >
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-ink)] border-t-transparent" />
-            <p className="text-sm font-medium text-[var(--color-ink)]">Generating your unit content…</p>
-            <p className="text-xs text-[var(--color-ink-3)]">This usually takes 10–20 seconds.</p>
+            <p className="text-sm font-medium text-[var(--color-ink)]">
+              Generating your unit content…
+            </p>
+            <p className="text-xs text-[var(--color-ink-3)]">
+              This usually takes 10–20 seconds.
+            </p>
           </div>
         )}
 
@@ -188,8 +209,12 @@ export function UnitRenderer({
             className="card flex flex-col items-center justify-center gap-4 text-center my-8"
           >
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-ink)] border-t-transparent" />
-            <p className="text-sm font-medium text-[var(--color-ink)]">Preparing unit content…</p>
-            <p className="text-xs text-[var(--color-ink-3)]">If this takes too long, check your connection.</p>
+            <p className="text-sm font-medium text-[var(--color-ink)]">
+              Preparing unit content…
+            </p>
+            <p className="text-xs text-[var(--color-ink-3)]">
+              If this takes too long, check your connection.
+            </p>
             <button
               id="unit-retry-btn"
               type="button"
@@ -222,8 +247,12 @@ export function UnitRenderer({
             <div className="end flex items-center justify-between mt-12 pt-6">
               {phase === Phase.COMPLETED ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-lg" aria-hidden="true">✅</span>
-                  <p className="text-sm font-medium text-[var(--color-ink)]">Unit complete</p>
+                  <span className="text-lg" aria-hidden="true">
+                    ✅
+                  </span>
+                  <p className="text-sm font-medium text-[var(--color-ink)]">
+                    Unit complete
+                  </p>
                 </div>
               ) : (
                 <div className="flex items-center gap-4">
@@ -237,7 +266,7 @@ export function UnitRenderer({
                     disabled={isCompleting}
                     className="btn primary"
                   >
-                    {isCompleting ? 'Saving…' : 'Mark complete'}
+                    {isCompleting ? "Saving…" : "Mark complete"}
                   </button>
                 </div>
               )}
@@ -252,12 +281,13 @@ export function UnitRenderer({
           </>
         )}
       </div>
-      
+
       {/* Right Rail (Mate Placeholder) */}
       <div className="mate-rail hidden lg:block">
         <h4 className="eyebrow mb-2">Mate</h4>
         <div className="ctx">
-          I&apos;m following along with your unit progress. Soon, you&apos;ll be able to discuss concepts with me right here.
+          I&apos;m following along with your unit progress. Soon, you&apos;ll be
+          able to discuss concepts with me right here.
         </div>
       </div>
     </div>
@@ -281,4 +311,3 @@ function getLatestBlocks(blocks: UnitBlock[]): UnitBlock[] {
   // Return only blocks that haven't been superseded.
   return blocks.filter((b) => !superseded.has(b.id));
 }
-

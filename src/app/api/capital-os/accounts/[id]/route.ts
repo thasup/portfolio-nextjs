@@ -35,12 +35,30 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
     },
   });
 
+  await prisma.capitalSyncLog.create({
+    data: {
+      userId: auth.session.userId,
+      source: "MANUAL",
+      action: "UPDATE",
+      entityType: "ACCOUNT",
+      entityId: id,
+      before: {
+        ...existing,
+        balance: Number(existing.balance),
+      },
+      after: {
+        ...account,
+        balance: Number(account.balance),
+      },
+    },
+  });
+
   return NextResponse.json({
     account: { ...account, balance: Number(account.balance) },
   });
 }
 
-export async function DELETE(_req: NextRequest, ctx: RouteContext) {
+export async function DELETE(req: NextRequest, ctx: RouteContext) {
   const auth = await requireCapitalOSAuth();
   if (!isAuthed(auth)) return auth;
   const { id } = await ctx.params;
@@ -52,9 +70,25 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext) {
     return NextResponse.json({ error: "Account not found" }, { status: 404 });
   }
 
-  await prisma.capitalAccount.update({
+  // Check if we are doing an UNDO (restoring)
+  const { searchParams } = new URL(req.url);
+  const undo = searchParams.get("undo") === "true";
+
+  const updated = await prisma.capitalAccount.update({
     where: { id },
-    data: { archivedAt: new Date() },
+    data: { archivedAt: undo ? null : new Date() },
+  });
+
+  await prisma.capitalSyncLog.create({
+    data: {
+      userId: auth.session.userId,
+      source: "MANUAL",
+      action: undo ? "RESTORE" : "DELETE",
+      entityType: "ACCOUNT",
+      entityId: id,
+      before: { ...existing, balance: Number(existing.balance) },
+      after: { ...updated, balance: Number(updated.balance) },
+    },
   });
 
   return NextResponse.json({ success: true });

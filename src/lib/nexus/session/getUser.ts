@@ -70,9 +70,7 @@ export async function getUser(): Promise<NexusSession | null> {
 export async function requireUser(): Promise<NexusSession> {
   const session = await getUser();
   if (!session) {
-    throw new Error(
-      "requireUser: no authenticated user found. Access denied.",
-    );
+    throw new Error("requireUser: no authenticated user found. Access denied.");
   }
   return session;
 }

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useModal } from '@/hooks/useModal';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { ProjectModal } from './content/ProjectModal';
-import { TimelineModal } from './content/TimelineModal';
-import { CertificateModal } from './content/CertificateModal';
-import { TestimonialModal } from './content/TestimonialModal';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { DialogTitle } from '@radix-ui/react-dialog';
+import { useModal } from "@/hooks/useModal";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { ProjectModal } from "./content/ProjectModal";
+import { TimelineModal } from "./content/TimelineModal";
+import { CertificateModal } from "./content/CertificateModal";
+import { TestimonialModal } from "./content/TestimonialModal";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export function ModalShell() {
   const { isOpen, close, payload } = useModal();
@@ -22,10 +22,16 @@ export function ModalShell() {
         </VisuallyHidden>
 
         <div className="w-full flex-grow relative overflow-auto rounded-b-lg">
-          {payload.type === 'project' && <ProjectModal id={payload.id} />}
-          {payload.type === 'timeline-event' && <TimelineModal id={payload.id} />}
-          {payload.type === 'certificate' && <CertificateModal id={payload.id} />}
-          {payload.type === 'testimonial' && <TestimonialModal id={payload.id} />}
+          {payload.type === "project" && <ProjectModal id={payload.id} />}
+          {payload.type === "timeline-event" && (
+            <TimelineModal id={payload.id} />
+          )}
+          {payload.type === "certificate" && (
+            <CertificateModal id={payload.id} />
+          )}
+          {payload.type === "testimonial" && (
+            <TestimonialModal id={payload.id} />
+          )}
         </div>
       </DialogContent>
     </Dialog>

@@ -34,5 +34,11 @@
   },
   "env": {
     "LIGHTNINGCSS_FORCE_WASM": "1"
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/capital-os/sync/cron",
+      "schedule": "0 19 * * *"
+    }
+  ]
 }

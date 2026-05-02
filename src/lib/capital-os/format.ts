@@ -25,7 +25,9 @@ const thbFormatterDecimals = new Intl.NumberFormat("en-US", {
  * Input should be in whole THB (not satangs).
  */
 export function fmtCurrency(value: number, decimals = false): string {
-  return decimals ? thbFormatterDecimals.format(value) : thbFormatter.format(value);
+  return decimals
+    ? thbFormatterDecimals.format(value)
+    : thbFormatter.format(value);
 }
 
 /**
@@ -88,7 +90,8 @@ export function fmtRelative(date: string | Date): string {
     return rtf.format(diffHours, "hour");
   }
   if (Math.abs(diffDays) < 30) return rtf.format(diffDays, "day");
-  if (Math.abs(diffDays) < 365) return rtf.format(Math.round(diffDays / 30), "month");
+  if (Math.abs(diffDays) < 365)
+    return rtf.format(Math.round(diffDays / 30), "month");
   return rtf.format(Math.round(diffDays / 365), "year");
 }
 
@@ -132,6 +135,16 @@ export function fmtAxisValue(value: number): string {
 // ── Month labels ────────────────────────────────────────────────
 
 export const MONTHS = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ] as const;

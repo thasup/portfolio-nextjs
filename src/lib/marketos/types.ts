@@ -21,76 +21,76 @@
 // ---------- Enums ---------------------------------------------------------
 
 export const MissionStatus = {
-  Open: 'open',
-  Active: 'active',
-  Delivered: 'delivered',
-  Completed: 'completed',
-  Cancelled: 'cancelled',
+  Open: "open",
+  Active: "active",
+  Delivered: "delivered",
+  Completed: "completed",
+  Cancelled: "cancelled",
 } as const;
 export type MissionStatus = (typeof MissionStatus)[keyof typeof MissionStatus];
 
 export const Category = {
-  Design: 'Design',
-  Engineering: 'Engineering',
-  Research: 'Research',
-  Marketing: 'Marketing',
-  HR: 'HR',
-  Operations: 'Operations',
+  Design: "Design",
+  Engineering: "Engineering",
+  Research: "Research",
+  Marketing: "Marketing",
+  HR: "HR",
+  Operations: "Operations",
 } as const;
 export type Category = (typeof Category)[keyof typeof Category];
 
 export const BidStatus = {
-  Pending: 'pending',
-  Shortlisted: 'shortlisted',
-  Accepted: 'accepted',
-  Declined: 'declined',
-  Withdrawn: 'withdrawn',
+  Pending: "pending",
+  Shortlisted: "shortlisted",
+  Accepted: "accepted",
+  Declined: "declined",
+  Withdrawn: "withdrawn",
 } as const;
 export type BidStatus = (typeof BidStatus)[keyof typeof BidStatus];
 
 export const Tier = {
-  Bronze: 'bronze',
-  Silver: 'silver',
-  Gold: 'gold',
-  Platinum: 'platinum',
-  Diamond: 'diamond',
+  Bronze: "bronze",
+  Silver: "silver",
+  Gold: "gold",
+  Platinum: "platinum",
+  Diamond: "diamond",
 } as const;
 export type Tier = (typeof Tier)[keyof typeof Tier];
 
 export const MemberRole = {
-  Owner: 'owner',
-  Admin: 'admin',
-  Member: 'member',
+  Owner: "owner",
+  Admin: "admin",
+  Member: "member",
 } as const;
 export type MemberRole = (typeof MemberRole)[keyof typeof MemberRole];
 
 export const NotificationType = {
-  BidReceived: 'bid_received',
-  BidShortlisted: 'bid_shortlisted',
-  BidAccepted: 'bid_accepted',
-  BidDeclined: 'bid_declined',
-  MissionPosted: 'mission_posted',
-  MissionDelivered: 'mission_delivered',
-  MissionCompleted: 'mission_completed',
-  MissionCancelled: 'mission_cancelled',
-  ReputationUp: 'reputation_up',
-  PoolPeriodClosed: 'pool_period_closed',
-  PayoutReleased: 'payout_released',
+  BidReceived: "bid_received",
+  BidShortlisted: "bid_shortlisted",
+  BidAccepted: "bid_accepted",
+  BidDeclined: "bid_declined",
+  MissionPosted: "mission_posted",
+  MissionDelivered: "mission_delivered",
+  MissionCompleted: "mission_completed",
+  MissionCancelled: "mission_cancelled",
+  ReputationUp: "reputation_up",
+  PoolPeriodClosed: "pool_period_closed",
+  PayoutReleased: "payout_released",
 } as const;
 export type NotificationType =
   (typeof NotificationType)[keyof typeof NotificationType];
 
 export const OrgPeriod = {
-  Month: 'month',
-  Quarter: 'quarter',
-  Half: 'half',
+  Month: "month",
+  Quarter: "quarter",
+  Half: "half",
 } as const;
 export type OrgPeriod = (typeof OrgPeriod)[keyof typeof OrgPeriod];
 
 export const OrgAccent = {
-  Orange: 'orange',
-  Blue: 'blue',
-  Green: 'green',
+  Orange: "orange",
+  Blue: "blue",
+  Green: "green",
 } as const;
 export type OrgAccent = (typeof OrgAccent)[keyof typeof OrgAccent];
 

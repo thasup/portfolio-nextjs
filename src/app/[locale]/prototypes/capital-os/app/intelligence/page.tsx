@@ -6,8 +6,21 @@
  * AI-powered financial analysis chat interface.
  * Uses native fetch + streaming for maximum compatibility.
  */
-import { useState, useRef, useEffect, useCallback, type FormEvent } from "react";
-import { Brain, Send, Sparkles, User, RefreshCw, Lightbulb } from "lucide-react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  type FormEvent,
+} from "react";
+import {
+  Brain,
+  Send,
+  Sparkles,
+  User,
+  RefreshCw,
+  Lightbulb,
+} from "lucide-react";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
 
 interface ChatMessage {
@@ -92,9 +105,7 @@ export default function IntelligencePage() {
             if (done) break;
             content += decoder.decode(value, { stream: true });
             setMessages((prev) =>
-              prev.map((m) =>
-                m.id === assistantId ? { ...m, content } : m,
-              ),
+              prev.map((m) => (m.id === assistantId ? { ...m, content } : m)),
             );
           }
         }
@@ -102,7 +113,10 @@ export default function IntelligencePage() {
         setMessages((prev) =>
           prev.map((m) =>
             m.id === assistantId
-              ? { ...m, content: `Error: ${err instanceof Error ? err.message : "Unknown error"}` }
+              ? {
+                  ...m,
+                  content: `Error: ${err instanceof Error ? err.message : "Unknown error"}`,
+                }
               : m,
           ),
         );
@@ -120,20 +134,35 @@ export default function IntelligencePage() {
 
   return (
     <div className="flex h-screen flex-col">
-      <CapitalOSHeader title="Intelligence" subtitle="AI-powered financial analysis and strategic insights" />
+      <CapitalOSHeader
+        title="Intelligence"
+        subtitle="AI-powered financial analysis and strategic insights"
+      />
 
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Message area */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto px-4 py-6 sm:px-6"
+        >
           {messages.length === 0 ? (
             <div className="mx-auto flex max-w-2xl flex-col items-center gap-8 pt-12">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: "var(--cos-accent-muted)", color: "var(--cos-accent)" }}>
+              <div
+                className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                style={{
+                  background: "var(--cos-accent-muted)",
+                  color: "var(--cos-accent)",
+                }}
+              >
                 <Brain className="h-8 w-8" />
               </div>
               <div className="text-center">
-                <h2 id="intelligence-title" className="mb-2 text-xl font-bold">Capital Intelligence</h2>
+                <h2 id="intelligence-title" className="mb-2 text-xl font-bold">
+                  Capital Intelligence
+                </h2>
                 <p className="text-sm" style={{ color: "var(--cos-text-2)" }}>
-                  Ask anything about your financial data. I have full context of your accounts, liabilities, and goals.
+                  Ask anything about your financial data. I have full context of
+                  your accounts, liabilities, and goals.
                 </p>
               </div>
               <div className="grid w-full gap-3 sm:grid-cols-2">
@@ -143,9 +172,16 @@ export default function IntelligencePage() {
                     id={`suggested-prompt-${i}`}
                     onClick={() => sendMessage(prompt)}
                     className="rounded-xl border p-3 text-left text-xs leading-relaxed transition-all hover:translate-y-[-1px]"
-                    style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)", color: "var(--cos-text-2)" }}
+                    style={{
+                      background: "var(--cos-surface)",
+                      borderColor: "var(--cos-border-subtle)",
+                      color: "var(--cos-text-2)",
+                    }}
                   >
-                    <Lightbulb className="mb-1.5 h-3.5 w-3.5" style={{ color: "var(--cos-accent)" }} />
+                    <Lightbulb
+                      className="mb-1.5 h-3.5 w-3.5"
+                      style={{ color: "var(--cos-accent)" }}
+                    />
                     {prompt}
                   </button>
                 ))}
@@ -154,42 +190,72 @@ export default function IntelligencePage() {
           ) : (
             <div className="mx-auto max-w-3xl space-y-6">
               {messages.map((msg) => (
-                <div key={msg.id} id={`msg-${msg.id}`} className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}>
+                <div
+                  key={msg.id}
+                  id={`msg-${msg.id}`}
+                  className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}
+                >
                   {msg.role === "assistant" && (
-                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: "var(--cos-accent-muted)", color: "var(--cos-accent)" }}>
+                    <div
+                      className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                      style={{
+                        background: "var(--cos-accent-muted)",
+                        color: "var(--cos-accent)",
+                      }}
+                    >
                       <Sparkles className="h-4 w-4" />
                     </div>
                   )}
                   <div
                     className="max-w-[85%] rounded-xl px-4 py-3 text-sm leading-relaxed"
                     style={{
-                      background: msg.role === "user" ? "var(--cos-accent)" : "var(--cos-surface)",
+                      background:
+                        msg.role === "user"
+                          ? "var(--cos-accent)"
+                          : "var(--cos-surface)",
                       color: msg.role === "user" ? "#fff" : "var(--cos-text)",
-                      border: msg.role === "assistant" ? "1px solid var(--cos-border-subtle)" : undefined,
+                      border:
+                        msg.role === "assistant"
+                          ? "1px solid var(--cos-border-subtle)"
+                          : undefined,
                     }}
                   >
                     {msg.role === "assistant" ? (
-                      <div className="prose prose-invert prose-sm max-w-none" style={{ color: "var(--cos-text)" }}>
-                        {msg.content.split("\n").map((line: string, i: number) => (
-                          <p key={i} className={line === "" ? "h-2" : "mb-1"}>
-                            {line.startsWith("- ") ? (
-                              <span>
-                                <span style={{ color: "var(--cos-accent)" }}>•</span> {line.slice(2)}
-                              </span>
-                            ) : line.startsWith("**") ? (
-                              <strong>{line.replace(/\*\*/g, "")}</strong>
-                            ) : (
-                              line
-                            )}
-                          </p>
-                        ))}
+                      <div
+                        className="prose prose-invert prose-sm max-w-none"
+                        style={{ color: "var(--cos-text)" }}
+                      >
+                        {msg.content
+                          .split("\n")
+                          .map((line: string, i: number) => (
+                            <p key={i} className={line === "" ? "h-2" : "mb-1"}>
+                              {line.startsWith("- ") ? (
+                                <span>
+                                  <span style={{ color: "var(--cos-accent)" }}>
+                                    •
+                                  </span>{" "}
+                                  {line.slice(2)}
+                                </span>
+                              ) : line.startsWith("**") ? (
+                                <strong>{line.replace(/\*\*/g, "")}</strong>
+                              ) : (
+                                line
+                              )}
+                            </p>
+                          ))}
                       </div>
                     ) : (
                       msg.content
                     )}
                   </div>
                   {msg.role === "user" && (
-                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: "var(--cos-surface-2)", color: "var(--cos-text-2)" }}>
+                    <div
+                      className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                      style={{
+                        background: "var(--cos-surface-2)",
+                        color: "var(--cos-text-2)",
+                      }}
+                    >
                       <User className="h-4 w-4" />
                     </div>
                   )}
@@ -197,10 +263,23 @@ export default function IntelligencePage() {
               ))}
               {isLoading && messages[messages.length - 1]?.content === "" && (
                 <div className="flex gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: "var(--cos-accent-muted)", color: "var(--cos-accent)" }}>
+                  <div
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                    style={{
+                      background: "var(--cos-accent-muted)",
+                      color: "var(--cos-accent)",
+                    }}
+                  >
                     <RefreshCw className="h-4 w-4 animate-spin" />
                   </div>
-                  <div className="rounded-xl border px-4 py-3 text-sm" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)", color: "var(--cos-text-2)" }}>
+                  <div
+                    className="rounded-xl border px-4 py-3 text-sm"
+                    style={{
+                      background: "var(--cos-surface)",
+                      borderColor: "var(--cos-border-subtle)",
+                      color: "var(--cos-text-2)",
+                    }}
+                  >
                     Analyzing your financial data...
                   </div>
                 </div>
@@ -210,8 +289,17 @@ export default function IntelligencePage() {
         </div>
 
         {/* Input area */}
-        <div className="border-t px-4 py-4 sm:px-6" style={{ borderColor: "var(--cos-border-subtle)", background: "var(--cos-surface)" }}>
-          <form onSubmit={handleSubmit} className="mx-auto flex max-w-3xl gap-3">
+        <div
+          className="border-t px-4 py-4 sm:px-6"
+          style={{
+            borderColor: "var(--cos-border-subtle)",
+            background: "var(--cos-surface)",
+          }}
+        >
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto flex max-w-3xl gap-3"
+          >
             <input
               id="intelligence-input"
               type="text"
@@ -219,7 +307,11 @@ export default function IntelligencePage() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about your finances..."
               className="flex-1 rounded-xl border px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--cos-accent)]"
-              style={{ background: "var(--cos-bg)", borderColor: "var(--cos-border)", color: "var(--cos-text)" }}
+              style={{
+                background: "var(--cos-bg)",
+                borderColor: "var(--cos-border)",
+                color: "var(--cos-text)",
+              }}
               disabled={isLoading}
             />
             <button

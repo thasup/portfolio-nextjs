@@ -1,43 +1,43 @@
-'use client'
+"use client";
 
-import { useTranslations } from 'next-intl'
-import { ScrollReveal } from '@/components/shared/ScrollReveal'
-import { AnimatedCounter } from '@/components/shared/AnimatedCounter'
-import type { GitHubStats } from '@/lib/github'
+import { useTranslations } from "next-intl";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
+import type { GitHubStats } from "@/lib/github";
 
 interface ValueStripProps {
-  githubStats?: GitHubStats | null
+  githubStats?: GitHubStats | null;
 }
 
 export function ValueStrip({ githubStats }: ValueStripProps) {
-  const t = useTranslations('hero')
+  const t = useTranslations("hero");
 
   const stats = [
     {
       value: githubStats?.totalStars ?? 0,
-      suffix: '',
-      label: t('stripStars'),
+      suffix: "",
+      label: t("stripStars"),
       available: !!githubStats,
     },
     {
       value: githubStats?.totalCommits ?? 0,
-      suffix: '+',
-      label: t('stripCommits'),
+      suffix: "+",
+      label: t("stripCommits"),
       available: !!githubStats,
     },
     {
       value: githubStats?.totalContributions ?? 0,
-      suffix: '+',
-      label: t('stripContributions'),
+      suffix: "+",
+      label: t("stripContributions"),
       available: !!githubStats,
     },
     {
       value: githubStats?.contributedRepos ?? 0,
-      suffix: '',
-      label: t('stripRepos'),
+      suffix: "",
+      label: t("stripRepos"),
       available: !!githubStats,
     },
-  ]
+  ];
 
   return (
     <section className="border-y border-border bg-muted/30 py-6 md:py-8">
@@ -62,5 +62,5 @@ export function ValueStrip({ githubStats }: ValueStripProps) {
         </ScrollReveal>
       </div>
     </section>
-  )
+  );
 }

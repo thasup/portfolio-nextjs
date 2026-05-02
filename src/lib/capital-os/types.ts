@@ -87,6 +87,13 @@ export interface CapitalSnapshot {
   createdAt: string;
 }
 
+export interface CapitalSettings {
+  userId: string;
+  runwayBurnRate: number; // Stored as satangs, but handled as number in JS
+  runwayAccountIds: string[];
+  updatedAt: string;
+}
+
 // ── Projection types ────────────────────────────────────────────
 
 export interface ProjectionPoint {
