@@ -35,6 +35,7 @@ model User {
   capitalLiabilities CapitalLiability[]
   capitalGoals       CapitalGoal[]
   capitalSnapshots   CapitalSnapshot[]
+  capitalSnowballSnapshots CapitalSnowballSnapshot[]
   capitalSettings    CapitalSettings?
   capitalSyncLogs    CapitalSyncLog[]
   capitalAlerts      CapitalAlert[]
@@ -636,4 +637,66 @@ model CapitalScenario {
 
   @@index([userId])
   @@map("capital_scenarios")
+}
+
+model CapitalSnowballSnapshot {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String   @map("user_id") @db.Uuid
+  snapshotDate       DateTime @map("snapshot_date")
+  importMethod       String   @map("import_method") // "manual_form" | "csv_import"
+  totalValueUsd      BigInt   @map("total_value_usd") // cents — always USD from Snowball
+  totalValueThb      BigInt   @map("total_value_thb") // satangs — computed via fxRate
+  fxRateUsdThb       Float    @map("fx_rate_usd_thb") // e.g. 33.47 at snapshot time
+  totalProfitUsd     BigInt   @map("total_profit_usd") // cents
+  totalProfitPct     Float    @map("total_profit_pct") // e.g. 0.123 = 12.3%
+  irrPct             Float    @map("irr_pct") // e.g. 0.1617 = 16.17%
+  passiveIncomeUsd   BigInt   @map("passive_income_usd") // annual, cents
+  passiveYieldPct    Float    @map("passive_yield_pct") // e.g. 0.0051 = 0.51%
+  cashBalanceUsd     BigInt?  @map("cash_balance_usd") // cents
+
+  strategicValueUsd  BigInt?  @map("strategic_value_usd") // cents
+  strategicAllocPct  Float?   @map("strategic_alloc_pct") // computed: strategicValue/totalValue
+  strategicProfitPct Float?   @map("strategic_profit_pct") // e.g. 0.1097 = +10.97%
+  tacticalValueUsd   BigInt?  @map("tactical_value_usd") // cents
+  tacticalAllocPct   Float?   @map("tactical_alloc_pct") // computed
+  tacticalProfitPct  Float?   @map("tactical_profit_pct") // e.g. 0.3407 = +34.07%
+
+  globalEquitiesUsd  BigInt?  @map("global_equities_usd")
+  globalEquitiesPct  Float?   @map("global_equities_pct")
+  fixedIncomeUsd     BigInt?  @map("fixed_income_usd")
+  fixedIncomePct     Float?   @map("fixed_income_pct")
+  realAssetUsd       BigInt?  @map("real_asset_usd")
+  thematicUsd        BigInt?  @map("thematic_usd")
+  airtableSnapshotId String?  @map("airtable_snapshot_id") // FK → Airtable Allocations Snapshots
+
+  notes              String?
+  totalHoldings      Int?     @map("total_holdings")
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user               User                      @relation(fields: [userId], references: [id])
+  positions          CapitalPositionSnapshot[]
+
+  @@index([userId, snapshotDate(sort: Desc)])
+  @@map("capital_snowball_snapshots")
+}
+
+model CapitalPositionSnapshot {
+  id               String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  snapshotId       String                  @map("snapshot_id") @db.Uuid
+  ticker           String
+  portfolioName    String                  @map("portfolio_name") // "strategic" | "tactical"
+  sharesHeld       Float                   @map("shares_held")
+  costBasisUsd     BigInt                  @map("cost_basis_usd") // cents
+  currentValueUsd  BigInt                  @map("current_value_usd") // cents
+  totalProfitUsd   BigInt?                 @map("total_profit_usd") // cents
+  totalProfitPct   Float?                  @map("total_profit_pct")
+  irrPct           Float?                  @map("irr_pct")
+  dividendYieldPct Float?                  @map("dividend_yield_pct")
+  peRatio          Float?                  @map("pe_ratio")
+  beta             Float?
+
+  snapshot         CapitalSnowballSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+
+  @@index([snapshotId])
+  @@map("capital_position_snapshots")
 }

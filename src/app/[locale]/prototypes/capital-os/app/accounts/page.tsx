@@ -26,14 +26,13 @@ import { useCapitalData } from "@/lib/capital-os/hooks";
 import { sumByType, totalAssets } from "@/lib/capital-os/mock-data";
 import { CapitalAssetType } from "@/lib/capital-os/types";
 import { fmtCurrency } from "@/lib/capital-os/format";
+import { SnowballSnapshotWizard } from "@/components/prototypes/capital-os/SnowballSnapshotWizard";
 
 import { useState } from "react";
 
 export default function AccountsPage() {
   const { accounts, deletedAccounts, isMockData, refresh } = useCapitalData();
   const [isSnowballOpen, setIsSnowballOpen] = useState(false);
-  const [snowballValue, setSnowballValue] = useState("");
-  const [snowballSubmitting, setSnowballSubmitting] = useState(false);
 
   const [itemToDelete, setItemToDelete] = useState<any>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -348,88 +347,13 @@ export default function AccountsPage() {
 
       {/* Snowball Modal */}
       {isSnowballOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-          <div
-            className="w-full max-w-md rounded-xl border bg-[var(--cos-surface)] p-6 shadow-xl"
-            style={{ borderColor: "var(--cos-border-subtle)" }}
-          >
-            <h3 className="mb-2 text-lg font-bold">
-              Snowball Portfolio Snapshot
-            </h3>
-            <p className="mb-6 text-sm text-[var(--cos-text-2)]">
-              Enter your current total portfolio balance from Snowball
-              Analytics.
-            </p>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                if (!snowballValue || isNaN(Number(snowballValue))) return;
-                setSnowballSubmitting(true);
-
-                const satangs = BigInt(Math.round(Number(snowballValue) * 100));
-                try {
-                  // Post to an API endpoint that updates Snowball manual account
-                  const res = await fetch("/api/capital-os/accounts", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      name: "Snowball Portfolio",
-                      balance: satangs.toString(),
-                      type: "INVESTMENT",
-                      source: "MANUAL",
-                      externalId: "manual-snowball",
-                      icon: "📈",
-                    }),
-                  });
-
-                  if (res.ok) {
-                    setIsSnowballOpen(false);
-                    setSnowballValue("");
-                    refresh();
-                  } else {
-                    alert("Failed to save snapshot");
-                  }
-                } catch (err) {
-                  console.error(err);
-                } finally {
-                  setSnowballSubmitting(false);
-                }
-              }}
-            >
-              <div className="mb-4">
-                <label className="mb-1 block text-sm font-medium text-[var(--cos-text-3)]">
-                  Portfolio Value (THB)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  required
-                  value={snowballValue}
-                  onChange={(e) => setSnowballValue(e.target.value)}
-                  className="w-full rounded-lg border bg-[var(--cos-surface-2)] p-3 text-white focus:border-[var(--cos-accent)] focus:outline-none"
-                  style={{ borderColor: "var(--cos-border-subtle)" }}
-                  placeholder="e.g. 500000"
-                />
-              </div>
-              <div className="flex justify-end gap-3 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setIsSnowballOpen(false)}
-                  className="rounded-lg px-4 py-2 text-sm font-medium hover:bg-white/5"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={snowballSubmitting}
-                  className="rounded-lg bg-[var(--cos-accent)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
-                >
-                  {snowballSubmitting ? "Saving..." : "Save Snapshot"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <SnowballSnapshotWizard 
+          onClose={() => setIsSnowballOpen(false)} 
+          onSuccess={() => {
+            setIsSnowballOpen(false);
+            refresh();
+          }} 
+        />
       )}
     </div>
   );

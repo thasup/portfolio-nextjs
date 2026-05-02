@@ -1,21 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import "./landing.css";
+import "../landing.css";
 
 import { LandingNav } from "@/components/prototypes/capital-os/landing/LandingNav";
-import { LandingHero } from "@/components/prototypes/capital-os/landing/LandingHero";
-import { LandingProblem } from "@/components/prototypes/capital-os/landing/LandingProblem";
-import { LandingThesis } from "@/components/prototypes/capital-os/landing/LandingThesis";
-import { LandingAgents } from "@/components/prototypes/capital-os/landing/LandingAgents";
-import { LandingSignals } from "@/components/prototypes/capital-os/landing/LandingSignals";
-import { LandingMetrics } from "@/components/prototypes/capital-os/landing/LandingMetrics";
-import { LandingRoadmap } from "@/components/prototypes/capital-os/landing/LandingRoadmap";
-import { LandingArchitecture } from "@/components/prototypes/capital-os/landing/LandingArchitecture";
-import { LandingCTA } from "@/components/prototypes/capital-os/landing/LandingCTA";
+import { LandingBrand } from "@/components/prototypes/capital-os/landing/LandingBrand";
 import { LandingFooter } from "@/components/prototypes/capital-os/landing/LandingFooter";
 
-export default function CapitalOSLandingPage() {
+export default function CapitalOSDesignPage() {
   useEffect(() => {
     const cursor = document.getElementById("cursor");
     const ring = document.getElementById("cursor-ring");
@@ -84,15 +76,9 @@ export default function CapitalOSLandingPage() {
       <div className="cursor-ring" id="cursor-ring"></div>
 
       <LandingNav />
-      <LandingHero />
-      <LandingProblem />
-      <LandingThesis />
-      <LandingAgents />
-      <LandingSignals />
-      <LandingMetrics />
-      <LandingRoadmap />
-      <LandingArchitecture />
-      <LandingCTA />
+      {/* Add some top padding so the nav doesn't overlap the content immediately */}
+      <div style={{ paddingTop: "80px" }}></div>
+      <LandingBrand />
       <LandingFooter />
     </div>
   );
