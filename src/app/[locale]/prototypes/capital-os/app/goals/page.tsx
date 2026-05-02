@@ -1,20 +1,83 @@
 "use client";
 
+import { useState } from "react";
 import {
   CheckCircle2,
   Target,
   Calendar,
   Plus,
   AlertTriangle,
+  Pencil,
 } from "lucide-react";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
+import { GoalModal } from "@/components/prototypes/capital-os/GoalModal";
 import { useCapitalData } from "@/lib/capital-os/hooks";
-import { CapitalGoalPriority } from "@/lib/capital-os/types";
+import { CapitalGoal, CapitalGoalPriority } from "@/lib/capital-os/types";
 import { fmtCurrency, fmtDate } from "@/lib/capital-os/format";
 
 export default function GoalsPage() {
-  const { goals } = useCapitalData();
+  const { goals, accounts, settings, refresh } = useCapitalData();
   const toTHB = (v: number) => v / 100;
+  const monthlyBurnRate = settings?.runwayBurnRate ? settings.runwayBurnRate / 100 : 0;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingGoal, setEditingGoal] = useState<CapitalGoal | null>(null);
+
+  const handleCreateGoal = async (data: {
+    name: string;
+    target: number;
+    current: number;
+    deadline: string | null;
+    priority: CapitalGoalPriority;
+    vehicle: string | null;
+    monthlyAllocation?: number;
+    linkedAccountId?: string | null;
+    category?: string;
+  }) => {
+    const res = await fetch("/api/capital-os/goals", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to create goal");
+    await refresh();
+  };
+
+  const handleUpdateGoal = async (data: {
+    name: string;
+    target: number;
+    current: number;
+    deadline: string | null;
+    priority: CapitalGoalPriority;
+    vehicle: string | null;
+    monthlyAllocation?: number;
+    linkedAccountId?: string | null;
+    category?: string;
+  }) => {
+    if (!editingGoal) return;
+    const res = await fetch(`/api/capital-os/goals/${editingGoal.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to update goal");
+    await refresh();
+  };
+
+  const openCreateModal = () => {
+    setEditingGoal(null);
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (goal: CapitalGoal) => {
+    setEditingGoal(goal);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingGoal(null);
+  };
 
   const priorityColor: Record<string, string> = {
     [CapitalGoalPriority.CRITICAL]: "#ef4444",
@@ -86,17 +149,27 @@ export default function GoalsPage() {
                       </div>
                       <h3 className="text-base font-semibold">{goal.name}</h3>
                     </div>
-                    {isCompleted ? (
-                      <CheckCircle2
-                        className="h-5 w-5 shrink-0"
-                        style={{ color: "var(--intent-success)" }}
-                      />
-                    ) : (
-                      <Target
-                        className="h-5 w-5 shrink-0 opacity-30 transition-opacity group-hover:opacity-60"
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => openEditModal(goal)}
+                        className="rounded-full p-1.5 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-white/10"
                         style={{ color: "var(--cos-text-3)" }}
-                      />
-                    )}
+                        title="Edit goal"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </button>
+                      {isCompleted ? (
+                        <CheckCircle2
+                          className="h-5 w-5 shrink-0"
+                          style={{ color: "var(--intent-success)" }}
+                        />
+                      ) : (
+                        <Target
+                          className="h-5 w-5 shrink-0 opacity-30 transition-opacity group-hover:opacity-60"
+                          style={{ color: "var(--cos-text-3)" }}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -190,6 +263,7 @@ export default function GoalsPage() {
           {/* Add New Goal card */}
           <button
             id="btn-add-goal"
+            onClick={openCreateModal}
             className="flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-6 transition-all hover:border-[var(--cos-accent)] hover:bg-[var(--cos-accent-muted)]"
             style={{ borderColor: "var(--cos-border)" }}
           >
@@ -211,6 +285,16 @@ export default function GoalsPage() {
           </button>
         </div>
       </div>
+
+      {/* Goal Modal */}
+      <GoalModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        goal={editingGoal}
+        accounts={accounts}
+        monthlyBurnRate={monthlyBurnRate}
+        onSave={editingGoal ? handleUpdateGoal : handleCreateGoal}
+      />
     </div>
   );
 }

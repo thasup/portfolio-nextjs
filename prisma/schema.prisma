@@ -40,6 +40,8 @@ model User {
   capitalSyncLogs    CapitalSyncLog[]
   capitalAlerts      CapitalAlert[]
   capitalScenarios   CapitalScenario[]
+  capitalAirtableConfigs   CapitalAirtableConfig[]
+  capitalAirtableSnapshots CapitalAirtableSnapshot[]
 
   @@map("nexus_users")
 }
@@ -699,4 +701,96 @@ model CapitalPositionSnapshot {
 
   @@index([snapshotId])
   @@map("capital_position_snapshots")
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CapitalOS — Airtable Integration (Configurable Sync)
+// ═══════════════════════════════════════════════════════════════════
+
+enum CapitalAirtableEntityType {
+  ACCOUNTS
+  LIABILITIES
+  GOALS
+  SNAPSHOTS
+  HOLDINGS
+}
+
+model CapitalAirtableConfig {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  /// Base ID from Airtable (e.g., "appXXXXXXXXXXXXXX")
+  baseId      String   @map("base_id")
+  /// Friendly name for this configuration
+  name        String   @default("My Airtable Base")
+  /// Whether this config is active for syncing
+  isActive    Boolean  @default(true) @map("is_active")
+  /// Last successful sync timestamp
+  lastSyncAt  DateTime? @map("last_sync_at") @db.Timestamptz(6)
+  /// Error message from last failed sync
+  lastError   String?   @map("last_error")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user    User                       @relation(fields: [userId], references: [id])
+  tables  CapitalAirtableTableMapping[]
+  snapshots CapitalAirtableSnapshot[]
+
+  @@index([userId, isActive])
+  @@map("capital_airtable_configs")
+}
+
+model CapitalAirtableTableMapping {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  configId  String   @map("config_id") @db.Uuid
+  /// Which entity type this table maps to
+  entityType CapitalAirtableEntityType @map("entity_type")
+  /// Airtable table name (exact case-sensitive name)
+  tableName String   @map("table_name")
+  /// Custom display title for this table (optional, defaults to tableName)
+  customTitle String? @map("custom_title")
+  /// Custom description for this table
+  customDescription String? @map("custom_description") @db.Text
+  /// Whether this table is enabled for sync
+  isEnabled Boolean  @default(true) @map("is_enabled")
+  /// Field mappings as JSON: { capitalField: "airtableFieldName", ... }
+  fieldMap  Json?    @map("field_map")
+  /// Optional filter formula for this table
+  filterFormula String? @map("filter_formula")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  config CapitalAirtableConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, entityType])
+  @@index([configId, isEnabled])
+  @@map("capital_airtable_table_mappings")
+}
+
+model CapitalAirtableSnapshot {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  configId   String   @map("config_id") @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  /// Which sync run this snapshot belongs to (groups records synced together)
+  syncRunId  String   @map("sync_run_id") @db.Uuid
+  /// Entity type of the records in this snapshot
+  entityType CapitalAirtableEntityType @map("entity_type")
+  /// The Airtable record ID
+  recordId   String   @map("record_id")
+  /// Full raw Airtable record data as JSON
+  rawData    Json     @map("raw_data")
+  /// Whether this record was processed into CapitalOS entities
+  processed  Boolean  @default(false)
+  /// CapitalOS entity ID if processed (optional, for traceability)
+  capitalEntityId String? @map("capital_entity_id") @db.Uuid
+  /// Any processing errors
+  errorMessage String? @map("error_message")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  config CapitalAirtableConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id])
+
+  @@index([configId, syncRunId, entityType])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([recordId, configId])
+  @@map("capital_airtable_snapshots")
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   Settings,
   Database,
@@ -10,9 +11,13 @@ import {
   ShieldCheck,
   CheckCircle2,
   AlertCircle,
+  Download,
 } from "lucide-react";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
-import { useYNABSync, useAirtableSync } from "@/lib/capital-os/hooks";
+import { useYNABSync } from "@/lib/capital-os/hooks";
+import { AirtableConfigForm } from "@/components/prototypes/capital-os/AirtableConfigForm";
+import { AirtableSyncButton } from "@/components/prototypes/capital-os/AirtableSyncButton";
+import { useAirtableConfig } from "@/lib/capital-os/hooks/useAirtableConfig";
 
 export default function SettingsPage() {
   const {
@@ -21,12 +26,7 @@ export default function SettingsPage() {
     result: ynabResult,
     triggerSync: triggerYnabSync,
   } = useYNABSync();
-  const {
-    syncing: airtableSyncing,
-    error: airtableError,
-    result: airtableResult,
-    triggerSync: triggerAirtableSync,
-  } = useAirtableSync();
+  const { configs: airtableConfigs, configsLoading: airtableConfigLoading } = useAirtableConfig();
   const [activeTab, setActiveTab] = useState<"connections" | "preferences">(
     "connections",
   );
@@ -76,8 +76,14 @@ export default function SettingsPage() {
             >
               <div className="flex items-start justify-between">
                 <div className="flex gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500">
-                    <Database className="h-6 w-6" />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 overflow-hidden">
+                    <Image
+                      src="/capital_os/icons/ynab-icon.png"
+                      alt="YNAB"
+                      width={48}
+                      height={48}
+                      className="h-10 w-10 object-contain"
+                    />
                   </div>
                   <div>
                     <h3 className="font-semibold text-base">
@@ -150,67 +156,32 @@ export default function SettingsPage() {
                 borderColor: "var(--cos-border-subtle)",
               }}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10 text-yellow-500">
-                    <Database className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base">Airtable</h3>
-                    <p
-                      className="text-sm mt-1 mb-4"
-                      style={{ color: "var(--cos-text-2)" }}
-                    >
-                      Secondary source for custom assets, goals, and fixed
-                      investments.
-                    </p>
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10 overflow-hidden">
+                  <Image
+                    src="/capital_os/icons/airtable-icon.png"
+                    alt="Airtable"
+                    width={48}
+                    height={48}
+                    className="h-10 w-10 object-contain"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-base">Airtable</h3>
+                  <p
+                    className="text-sm mt-1 mb-4"
+                    style={{ color: "var(--cos-text-2)" }}
+                  >
+                    Secondary source for custom assets, goals, and fixed
+                    investments. Configure your base and tables below.
+                  </p>
 
-                    <div className="flex items-center gap-2 mb-6">
-                      <ShieldCheck
-                        className="h-4 w-4"
-                        style={{ color: "var(--cos-positive)" }}
-                      />
-                      <span
-                        className="text-xs font-medium"
-                        style={{ color: "var(--cos-positive)" }}
-                      >
-                        Connected via Environment Variables
-                      </span>
-                    </div>
+                  {/* Configuration Form */}
+                  <AirtableConfigForm />
 
-                    <button
-                      onClick={triggerAirtableSync}
-                      disabled={airtableSyncing}
-                      className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:translate-y-[-1px] disabled:opacity-50"
-                      style={{
-                        borderColor: "var(--cos-border)",
-                        background: "var(--cos-surface-2)",
-                        color: "var(--cos-text)",
-                      }}
-                    >
-                      <RefreshCw
-                        className={`h-4 w-4 ${airtableSyncing ? "animate-spin" : ""}`}
-                      />
-                      {airtableSyncing ? "Syncing..." : "Sync Now"}
-                    </button>
-
-                    {airtableResult && !airtableError && (
-                      <p
-                        className="mt-3 text-xs flex items-center gap-1"
-                        style={{ color: "var(--cos-positive)" }}
-                      >
-                        <CheckCircle2 className="h-3 w-3" /> Successfully synced{" "}
-                        {airtableResult.total} items.
-                      </p>
-                    )}
-                    {airtableError && (
-                      <p
-                        className="mt-3 text-xs flex items-center gap-1"
-                        style={{ color: "var(--cos-negative)" }}
-                      >
-                        <AlertCircle className="h-3 w-3" /> {airtableError}
-                      </p>
-                    )}
+                  {/* Sync Button */}
+                  <div className="mt-4 pt-4 border-t" style={{ borderColor: "var(--cos-border-subtle)" }}>
+                    <AirtableSyncButton hasConfig={airtableConfigs.length > 0 && !airtableConfigLoading} />
                   </div>
                 </div>
               </div>
@@ -319,7 +290,7 @@ export default function SettingsPage() {
                     color: "var(--cos-text)",
                   }}
                 >
-                  <Database className="h-4 w-4" />
+                  <Download className="h-4 w-4" />
                   Export JSON
                 </button>
               </div>
