@@ -126,9 +126,6 @@ export async function fetchGitHubStats(
 ): Promise<GitHubStats | null> {
   const token = process.env.GITHUB_TOKEN;
 
-  console.log("[GitHub API] Attempting to fetch stats for:", username);
-  console.log("[GitHub API] Token configured:", !!token);
-
   if (!token) {
     console.warn(
       "[GitHub API] GITHUB_TOKEN not configured, skipping GitHub stats fetch",
@@ -173,7 +170,6 @@ export async function fetchGitHubStats(
   `;
 
   try {
-    console.log("[GitHub API] Making GraphQL request...");
     const json = (await fetchGraphQL(token, query, {
       username,
     })) as GitHubResponse;
@@ -182,8 +178,6 @@ export async function fetchGitHubStats(
       console.error("[GitHub API] Invalid response structure:", json);
       return null;
     }
-
-    console.log("[GitHub API] ✓ Successfully fetched user data");
 
     const {
       contributionsCollection,
@@ -239,7 +233,6 @@ export async function fetchGitHubStats(
       longestStreak: streaks.longest,
     };
 
-    console.log("[GitHub API] ✓ Stats compiled:", stats);
     return stats;
   } catch (error) {
     console.error("[GitHub API] ✗ Failed to fetch GitHub stats:", error);

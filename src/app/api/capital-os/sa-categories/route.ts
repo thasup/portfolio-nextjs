@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const categories = await prisma.capitalSACategory.findMany({
       where: { userId },
       orderBy: [
-        { portfolioType: "asc" },
+        { portfolio_type: "asc" },
         { sortOrder: "asc" },
         { name: "asc" },
       ],
@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
 
     // Group by portfolio type
     const grouped = {
-      strategic: categories.filter((c) => c.portfolioType === CapitalPortfolioType.STRATEGIC),
-      tactical: categories.filter((c) => c.portfolioType === CapitalPortfolioType.TACTICAL),
+      strategic: categories.filter((c) => c.portfolio_type === CapitalPortfolioType.STRATEGIC),
+      tactical: categories.filter((c) => c.portfolio_type === CapitalPortfolioType.TACTICAL),
     };
 
     return NextResponse.json(grouped);
@@ -70,9 +70,9 @@ export async function POST(request: NextRequest) {
     const category = await prisma.capitalSACategory.create({
       data: {
         userId,
-        portfolioType: portfolioType as CapitalPortfolioType,
+        portfolio_type: portfolioType as CapitalPortfolioType,
         name,
-        targetPct: targetPct ? Number(targetPct) : null,
+        target_pct: targetPct ? Number(targetPct) : null,
         sortOrder: sortOrder ?? 0,
       },
     });

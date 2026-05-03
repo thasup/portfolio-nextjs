@@ -9,12 +9,25 @@
 import { Wifi } from "lucide-react";
 import { fmtDate, fmtTime } from "@/lib/capital-os/format";
 
+interface StatusBadge {
+  label: string;
+  variant?: "success" | "warning" | "info" | "neutral";
+}
+
 interface CapitalOSHeaderProps {
   title: string;
   subtitle?: string;
+  badges?: StatusBadge[];
 }
 
-export function CapitalOSHeader({ title, subtitle }: CapitalOSHeaderProps) {
+const BADGE_STYLES: Record<NonNullable<StatusBadge["variant"]>, { bg: string; color: string }> = {
+  success: { bg: "var(--intent-success-muted)", color: "var(--intent-success)" },
+  warning: { bg: "var(--intent-warning-muted)", color: "var(--intent-warning)" },
+  info:    { bg: "var(--intent-info-muted)",    color: "var(--intent-info)" },
+  neutral: { bg: "var(--cos-surface-2)",         color: "var(--cos-text-2)" },
+};
+
+export function CapitalOSHeader({ title, subtitle, badges }: CapitalOSHeaderProps) {
   const now = new Date();
 
   return (
@@ -43,7 +56,21 @@ export function CapitalOSHeader({ title, subtitle }: CapitalOSHeaderProps) {
         )}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+        {/* Optional status badges */}
+        {badges?.map((badge, i) => {
+          const style = BADGE_STYLES[badge.variant ?? "neutral"];
+          return (
+            <span
+              key={i}
+              className="hidden sm:inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold"
+              style={{ background: style.bg, color: style.color }}
+            >
+              {badge.label}
+            </span>
+          );
+        })}
+
         {/* Sync status */}
         <div
           className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs"

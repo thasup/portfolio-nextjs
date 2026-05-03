@@ -23,7 +23,18 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: "asc" },
     });
 
-    return NextResponse.json(mapping);
+    return NextResponse.json(
+      mapping.map((m) => {
+        const raw = m as any;
+        return {
+          id: m.id,
+          ynabAccId: m.ynabAccId,
+          role: m.role,
+          note: m.note,
+          saAssetMappings: (raw.saAssetMappings as { saTicker: string }[] | null) ?? [],
+        };
+      })
+    );
   } catch (error) {
     console.error("Failed to fetch mapping config:", error);
     return NextResponse.json(
@@ -46,8 +57,8 @@ export async function POST(request: NextRequest) {
     const { mappings } = body as {
       mappings: Array<{
         ynabAccId: string;
-        saCategory?: string;
         role: CapitalMappingRole;
+        saAssetMappings?: { saTicker: string }[];
         note?: string;
       }>;
     };
@@ -59,26 +70,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Upsert mappings in a transaction
     const results = await prisma.$transaction(
       mappings.map((m) =>
-        prisma.capitalMappingConfig.upsert({
-          where: {
-            userId_ynabAccId: {
-              userId,
-              ynabAccId: m.ynabAccId,
-            },
-          },
+        (prisma.capitalMappingConfig.upsert as any)({
+          where: { userId_ynabAccId: { userId, ynabAccId: m.ynabAccId } },
           update: {
-            saCategory: m.saCategory || null,
             role: m.role,
+            saAssetMappings: m.saAssetMappings ?? [],
             note: m.note || null,
           },
           create: {
             userId,
             ynabAccId: m.ynabAccId,
-            saCategory: m.saCategory || null,
             role: m.role,
+            saAssetMappings: m.saAssetMappings ?? [],
             note: m.note || null,
           },
         })

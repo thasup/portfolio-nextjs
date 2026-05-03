@@ -22,11 +22,20 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     snapshots: snapshots.reverse().map((s) => ({
-      ...s,
+      id: s.id,
+      userId: s.userId,
+      date: s.date.toISOString(),
+      createdAt: s.createdAt.toISOString(),
+
       netWorth: Number(s.netWorth),
       liquid: Number(s.liquid),
       invested: Number(s.invested),
       liabilities: Number(s.liabilities),
+
+      saTotal: s.saTotal != null ? Number(s.saTotal) : null,
+      saPortfolios: s.saPortfolios ?? null,
+      saAssets: s.saAssets ?? null,
+      fxRateUsdThb: s.fxRateUsdThb != null ? Number(s.fxRateUsdThb) : null,
     })),
   });
 }
@@ -37,7 +46,7 @@ export async function GET(req: NextRequest) {
  *   fxRateUsdThb: number,
  *   saTotal: number (in satangs),
  *   saPortfolios: { strategic: { total }, tactical: { total } },
- *   assets: [{ ticker, name, valueThb, shares, categoryId }]
+ *   assets: [{ ticker, name, investedValue, currentValue, shares, currency, categoryId }]
  * }
  */
 export async function POST(req: NextRequest) {
@@ -55,6 +64,19 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Build saAssets from payload - stores full asset-level snapshot data
+    const saAssets = Array.isArray(assets)
+      ? assets.map((a: any) => ({
+          ticker: a.ticker || "",
+          name: a.name || "",
+          categoryId: a.categoryId || "",
+          investedValue: a.investedValue ?? a.investedValueThb ?? null, // cost basis (satangs)
+          currentValue: a.currentValue ?? a.valueThb ?? null, // market value (satangs)
+          currency: a.currency || "THB",
+          shares: a.shares != null ? String(a.shares) : null,
+        }))
+      : [];
 
     // Upsert the SA snapshot (update if exists for today, create if not)
     const today = new Date();
@@ -74,6 +96,7 @@ export async function POST(req: NextRequest) {
         liabilities: BigInt(0),
         saTotal: BigInt(saTotal),
         saPortfolios: saPortfolios as any,
+        saAssets: saAssets as any,
         fxRateUsdThb,
       },
       create: {
@@ -85,6 +108,7 @@ export async function POST(req: NextRequest) {
         liabilities: BigInt(0),
         saTotal: BigInt(saTotal),
         saPortfolios: saPortfolios as any,
+        saAssets: saAssets as any,
         fxRateUsdThb,
       },
     });
@@ -98,6 +122,7 @@ export async function POST(req: NextRequest) {
         saTotal: Number(snapshot.saTotal),
         fxRateUsdThb: snapshot.fxRateUsdThb,
         saPortfolios: snapshot.saPortfolios,
+        saAssets: snapshot.saAssets,
       },
     });
   } catch (error) {

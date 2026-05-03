@@ -1,159 +1,428 @@
 "use client";
 
 /**
- * CapitalOS v4 — Mapping Configuration Page
- * Allows users to configure which YNAB accounts map to SA categories.
+ * CapitalOS v5 — YNAB → SA Mapping Page
+ *
+ * Asset-level many-to-one: multiple SA assets → one YNAB account.
+ *
+ * Left:  SA Assets (from latest snapshot), grouped by category.
+ *        Each asset has a "Held in" dropdown → pick the YNAB account.
+ * Right: YNAB Accounts → Role toggle (SA⚡ / ONLY) + assigned SA assets.
+ *        Liabilities + Mapping Summary at the bottom.
+ *
+ * On save: builds saAssetMappings JSON per YNAB account and POSTs to
+ * /api/capital-os/mapping.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
-import type { CapitalAccount, CapitalSACategory, CapitalMappingConfig } from "@/lib/capital-os/types";
+import type { CapitalAccount, CapitalLiability } from "@/lib/capital-os/types";
 import { CapitalMappingRole } from "@/lib/capital-os/types";
-import { Save, Info, ArrowRightLeft } from "lucide-react";
+import { ALL_SA_CATEGORIES } from "@/lib/capital-os/categories";
+import { fmtSatangs } from "@/lib/capital-os/format";
+import { Save } from "lucide-react";
 
-interface YNABAccountWithMapping extends CapitalAccount {
-  mappingRole?: CapitalMappingRole;
-  saCategoryName?: string | null;
+// ── Types ────────────────────────────────────────────────────────
+
+interface SAAssetRef {
+  saTicker: string;
 }
 
+interface MappingEntry {
+  id?: string;
+  ynabAccId: string;
+  role: CapitalMappingRole;
+  saAssetMappings: SAAssetRef[];
+  note?: string | null;
+}
+
+interface SnapshotAsset {
+  ticker: string;
+  name: string;
+  categoryId: string;
+  currentValue?: number | null;
+  currency: string;
+}
+
+// ── Sub-component: role toggle badge ────────────────────────────
+
+function RoleBadge({ role, onToggle }: { role: CapitalMappingRole; onToggle: () => void }) {
+  const isSA = role === CapitalMappingRole.SA_COVERED;
+  return (
+    <button
+      onClick={onToggle}
+      className="inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-semibold transition-colors shrink-0"
+      style={{
+        background: isSA ? "var(--intent-success-muted)" : "var(--intent-warning-muted)",
+        color: isSA ? "var(--intent-success)" : "var(--intent-warning)",
+      }}
+    >
+      {isSA ? "SA ⚡" : "ONLY"}
+    </button>
+  );
+}
+
+// ── Main page ────────────────────────────────────────────────────
+
 export default function MappingPage() {
-  const [accounts, setAccounts] = useState<YNABAccountWithMapping[]>([]);
-  const [saCategories, setSACategories] = useState<CapitalSACategory[]>([]);
+  const [accounts, setAccounts] = useState<CapitalAccount[]>([]);
+  const [liabilities, setLiabilities] = useState<CapitalLiability[]>([]);
+  const [snapshotAssets, setSnapshotAssets] = useState<SnapshotAsset[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [dirty, setDirty] = useState(false);
+
+  // Asset-level state (many-to-many): ticker → array of ynab externalIds
+  const [assetToAccounts, setAssetToAccounts] = useState<Record<string, string[]>>({});
+  // Account-level state: externalId → role
+  const [accountRoles, setAccountRoles] = useState<Record<string, CapitalMappingRole>>({});
 
   useEffect(() => {
     Promise.all([
       fetch("/api/capital-os/accounts").then(r => r.json()),
-      fetch("/api/capital-os/sa-categories").then(r => r.json()),
       fetch("/api/capital-os/mapping").then(r => r.json()),
-    ]).then(([accountsRes, saRes, mappingRes]) => {
-      const categories = [...(saRes.strategic || []), ...(saRes.tactical || [])];
-      setSACategories(categories);
-      
-      const config: CapitalMappingConfig[] = mappingRes || [];
-      const accountsList: CapitalAccount[] = accountsRes.accounts || [];
-      const enriched = accountsList.map((acc: CapitalAccount) => {
-        const m = config.find((c: CapitalMappingConfig) => c.ynabAccId === acc.externalId);
-        return { ...acc, mappingRole: m?.role || CapitalMappingRole.YNAB_ONLY, saCategoryName: m?.saCategory || null };
-      });
-      setAccounts(enriched);
+      fetch("/api/capital-os/liabilities").then(r => r.json()),
+      fetch("/api/capital-os/snapshots?limit=90").then(r => r.json()),
+    ]).then(([accRes, mapRes, liabRes, snapRes]) => {
+      setAccounts(accRes.accounts || []);
+      setLiabilities(liabRes.liabilities || []);
+
+      const entries: MappingEntry[] = mapRes || [];
+      const roles: Record<string, CapitalMappingRole> = {};
+      const a2accs: Record<string, string[]> = {};
+      for (const entry of entries) {
+        roles[entry.ynabAccId] = entry.role;
+        for (const { saTicker } of entry.saAssetMappings ?? []) {
+          a2accs[saTicker] = [...(a2accs[saTicker] ?? []), entry.ynabAccId];
+        }
+      }
+      setAccountRoles(roles);
+      setAssetToAccounts(a2accs);
+
+      const snaps: any[] = snapRes.snapshots || [];
+      const saSnap = [...snaps].reverse().find((s: any) => s.saTotal != null);
+      if (saSnap && Array.isArray(saSnap.saAssets)) {
+        setSnapshotAssets(saSnap.saAssets);
+      }
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
-  const updateRole = (externalId: string, role: CapitalMappingRole) => {
-    setAccounts(prev => prev.map(acc => acc.externalId === externalId ? { ...acc, mappingRole: role } : acc));
+  // ── Helpers ───────────────────────────────────────────────────────
+
+  const getRole = (ynabAccId: string): CapitalMappingRole =>
+    accountRoles[ynabAccId] ?? CapitalMappingRole.YNAB_ONLY;
+
+  const toggleRole = (ynabAccId: string) => {
+    const current = getRole(ynabAccId);
+    setAccountRoles(prev => ({
+      ...prev,
+      [ynabAccId]: current === CapitalMappingRole.SA_COVERED
+        ? CapitalMappingRole.YNAB_ONLY
+        : CapitalMappingRole.SA_COVERED,
+    }));
+    setDirty(true);
   };
 
-  const updateCategory = (externalId: string, categoryId: string) => {
-    setAccounts(prev => prev.map(acc => acc.externalId === externalId ? { ...acc, saCategoryName: categoryId } : acc));
+  const addAssetToAccount = (ticker: string, ynabAccId: string) => {
+    if (!ynabAccId) return;
+    setAssetToAccounts(prev => {
+      const cur = prev[ticker] ?? [];
+      if (cur.includes(ynabAccId)) return prev;
+      return { ...prev, [ticker]: [...cur, ynabAccId] };
+    });
+    if (getRole(ynabAccId) !== CapitalMappingRole.SA_COVERED) {
+      setAccountRoles(prev => ({ ...prev, [ynabAccId]: CapitalMappingRole.SA_COVERED }));
+    }
+    setDirty(true);
+  };
+
+  const removeAssetFromAccount = (ticker: string, ynabAccId: string) => {
+    setAssetToAccounts(prev => ({
+      ...prev,
+      [ticker]: (prev[ticker] ?? []).filter(id => id !== ynabAccId),
+    }));
+    setDirty(true);
   };
 
   const save = async () => {
     setSaving(true);
+    // Build saAssetMappings per YNAB account from assetToAccounts (many-to-many)
+    const byAccount: Record<string, SAAssetRef[]> = {};
+    for (const [ticker, ynabAccIds] of Object.entries(assetToAccounts)) {
+      for (const ynabAccId of ynabAccIds) {
+        byAccount[ynabAccId] = [...(byAccount[ynabAccId] ?? []), { saTicker: ticker }];
+      }
+    }
+    const mappings = accounts.map(acc => ({
+      ynabAccId: acc.externalId!,
+      role: getRole(acc.externalId!),
+      saAssetMappings: byAccount[acc.externalId!] ?? [],
+    }));
     await fetch("/api/capital-os/mapping", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        mappings: accounts.map(acc => ({
-          ynabAccId: acc.externalId,
-          role: acc.mappingRole || CapitalMappingRole.YNAB_ONLY,
-          saCategory: acc.saCategoryName || undefined,
-        })),
-      }),
+      body: JSON.stringify({ mappings }),
     });
     setSaving(false);
+    setDirty(false);
   };
 
-  const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "THB", maximumFractionDigits: 0 }).format(n / 100);
+  // ── Derived ───────────────────────────────────────────────────────
 
-  const saCovered = accounts.filter(a => a.mappingRole === CapitalMappingRole.SA_COVERED);
-  const ynabOnly = accounts.filter(a => a.mappingRole === CapitalMappingRole.YNAB_ONLY);
-
-  if (loading) return (
-    <div className="flex flex-col h-full">
-      <CapitalOSHeader title="Account Mapping" subtitle="Configure YNAB to SA mapping" />
-      <div className="p-6"><div className="h-24 animate-pulse rounded-xl bg-[var(--cos-surface)]" /></div>
-    </div>
+  const saTotal = useMemo(
+    () => snapshotAssets.reduce((s, a) => s + (a.currentValue ?? 0), 0),
+    [snapshotAssets]
   );
+
+  const ynabOnlyTotal = useMemo(
+    () => accounts
+      .filter(a => getRole(a.externalId!) === CapitalMappingRole.YNAB_ONLY)
+      .reduce((s, a) => s + Number(a.balance), 0),
+    [accounts, accountRoles]
+  );
+
+  const liabTotal = useMemo(
+    () => liabilities.reduce((s, l) => s + Math.abs(Number(l.balance)), 0),
+    [liabilities]
+  );
+
+  const canonicalNw = saTotal + ynabOnlyTotal - liabTotal;
+  const saCoveredCount = accounts.filter(a => getRole(a.externalId!) === CapitalMappingRole.SA_COVERED).length;
+
+  // Assets assigned to each account (for display in right panel)
+  const accountAssets = useMemo(() => {
+    const map: Record<string, SnapshotAsset[]> = {};
+    for (const asset of snapshotAssets) {
+      for (const ynabAccId of assetToAccounts[asset.ticker] ?? []) {
+        map[ynabAccId] = [...(map[ynabAccId] ?? []), asset];
+      }
+    }
+    return map;
+  }, [snapshotAssets, assetToAccounts]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col h-full">
+        <CapitalOSHeader title="YNAB → SA Mapping" />
+        <div className="p-6 space-y-4">
+          {[1, 2].map(i => <div key={i} className="h-32 animate-pulse rounded-xl" style={{ background: "var(--cos-surface)" }} />)}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
-      <CapitalOSHeader title="Account Mapping" subtitle="Configure YNAB to SA mapping" />
+      <CapitalOSHeader title="YNAB → SA Mapping" />
 
-      <div className="flex-1 p-6 overflow-y-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="text-sm">
-              <span className="font-mono text-[var(--intent-accent)]">{saCovered.length}</span> accounts mapped to SA
-            </div>
-            <ArrowRightLeft className="h-4 w-4 text-[var(--cos-text-3)]" />
-            <div className="text-sm">
-              <span className="font-mono text-[var(--intent-warning)]">{ynabOnly.length}</span> YNAB-only accounts
-            </div>
-          </div>
-          <button onClick={save} disabled={saving} className="flex items-center gap-2 rounded-lg bg-[var(--intent-success)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50">
-            <Save className="h-4 w-4" />
-            {saving ? "Saving..." : "Save Mapping"}
-          </button>
+      <div className="flex-1 overflow-hidden flex flex-col">
+
+        {/* Explanatory header */}
+        <div className="px-6 py-3 border-b text-sm" style={{ borderColor: "var(--cos-border-subtle)", background: "var(--cos-surface)" }}>
+          Each SA asset is assigned to one YNAB account that holds it.
+          Multiple SA assets can map to the same YNAB account (many-to-one).{" "}
+          <strong>Net Worth = SA Total + YNAB-only − Liabilities.</strong>
         </div>
 
-        {/* YNAB Accounts Table */}
-        <div className="rounded-xl border overflow-hidden" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)" }}>
-          <div className="grid grid-cols-[1fr,140px,200px,140px] gap-4 p-3 text-xs font-semibold uppercase tracking-wider" style={{ background: "var(--cos-surface-2)", color: "var(--cos-text-3)" }}>
-            <span>YNAB Account</span>
-            <span className="text-right">Balance</span>
-            <span className="text-center">Role</span>
-            <span className="text-center">SA Category</span>
+        {/* Two-column body */}
+        <div className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-[55%_45%]">
+
+          {/* ── Left: SA Assets → Held in YNAB Account ─────────── */}
+          <div className="overflow-y-auto p-4 space-y-5 border-r" style={{ borderColor: "var(--cos-border-subtle)" }}>
+            <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--cos-text-3)" }}>
+              SA Assets → Held in YNAB Account
+            </h2>
+
+            {ALL_SA_CATEGORIES.map((cat, catIdx) => {
+              const catAssets = snapshotAssets.filter(a => a.categoryId === cat.id);
+              if (catAssets.length === 0) return null;
+
+              const isFirstTactical = catIdx > 0 && cat.portfolioType !== ALL_SA_CATEGORIES[catIdx - 1].portfolioType;
+              return (
+                <div key={cat.id}>
+                  {(catIdx === 0 || isFirstTactical) && (
+                    <p className="text-xs font-semibold mb-2" style={{ color: "var(--cos-text-2)" }}>
+                      {cat.portfolioType === "STRATEGIC" ? "🎯 The Strategic" : "⚡ The Tactical"}
+                    </p>
+                  )}
+                  <div className="rounded-lg border overflow-hidden" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)" }}>
+                    <div className="px-3 py-2 border-b text-xs font-semibold" style={{ background: "var(--cos-surface-2)", borderColor: "var(--cos-border-subtle)", color: "var(--cos-text-2)" }}>
+                      {cat.name}
+                    </div>
+                    {catAssets.map(asset => {
+                      const assignedIds = assetToAccounts[asset.ticker] ?? [];
+                      const assignedAccounts = assignedIds.map(id => accounts.find(a => a.externalId === id)).filter(Boolean) as typeof accounts;
+                      const unassigned = accounts.filter(a => !assignedIds.includes(a.externalId!));
+                      return (
+                        <div
+                          key={asset.ticker}
+                          className="flex items-start gap-3 px-3 py-2.5 border-t"
+                          style={{ borderColor: "var(--cos-border-subtle)" }}
+                        >
+                          {/* Ticker + name */}
+                          <div className="w-[80px] shrink-0 pt-0.5">
+                            <p className="font-mono text-xs font-semibold" style={{ color: "var(--intent-success)" }}>{asset.ticker}</p>
+                            <p className="font-mono text-[10px]" style={{ color: "var(--cos-text-3)" }}>
+                              {asset.currentValue ? fmtSatangs(asset.currentValue) : "—"}
+                            </p>
+                          </div>
+                          {/* Name */}
+                          <p className="text-xs flex-1 truncate pt-0.5" style={{ color: "var(--cos-text-2)" }}>{asset.name}</p>
+                          {/* Account chips + add selector */}
+                          <div className="flex flex-wrap items-center gap-1 justify-end max-w-[220px]">
+                            {assignedAccounts.map(acc => (
+                              <span
+                                key={acc.id}
+                                className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-medium"
+                                style={{ background: "var(--intent-success-muted)", color: "var(--intent-success)" }}
+                              >
+                                {acc.icon ?? ""} {acc.name}
+                                <button
+                                  onClick={() => removeAssetFromAccount(asset.ticker, acc.externalId!)}
+                                  className="ml-0.5 leading-none hover:opacity-70"
+                                  style={{ color: "var(--intent-success)" }}
+                                >×</button>
+                              </span>
+                            ))}
+                            {unassigned.length > 0 && (
+                              <select
+                                value=""
+                                onChange={e => addAssetToAccount(asset.ticker, e.target.value)}
+                                className="rounded border text-[11px] px-1.5 py-0.5"
+                                style={{
+                                  background: "var(--cos-surface-2)",
+                                  borderColor: "var(--cos-border-subtle)",
+                                  color: "var(--cos-text-3)",
+                                  maxWidth: "140px",
+                                }}
+                              >
+                                <option value="">+ add account</option>
+                                {unassigned.map(acc => (
+                                  <option key={acc.id} value={acc.externalId!}>
+                                    {acc.icon ?? ""} {acc.name}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {accounts.map(acc => (
-            <div key={acc.id} className="grid grid-cols-[1fr,140px,200px,140px] gap-4 items-center p-3 border-t" style={{ borderColor: "var(--cos-border-subtle)" }}>
-              <div className="flex items-center gap-3">
-                <span className="text-lg">{acc.icon || "💰"}</span>
-                <div>
-                  <div className="font-medium text-sm">{acc.name}</div>
-                  <div className="text-xs" style={{ color: "var(--cos-text-3)" }}>{acc.source}</div>
+          {/* ── Right: YNAB Accounts → Role + Assigned Assets ───── */}
+          <div className="overflow-y-auto p-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--cos-text-3)" }}>
+                YNAB Accounts → Role
+              </h2>
+              {dirty && (
+                <button
+                  onClick={save}
+                  disabled={saving}
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90 disabled:opacity-50"
+                  style={{ background: "var(--intent-success)" }}
+                >
+                  <Save className="h-3.5 w-3.5" />
+                  {saving ? "Saving…" : "Save"}
+                </button>
+              )}
+            </div>
+
+            {/* Account list */}
+            <div className="rounded-xl border overflow-hidden" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)" }}>
+              {accounts.map(acc => {
+                const role = getRole(acc.externalId!);
+                const isSA = role === CapitalMappingRole.SA_COVERED;
+                const assigned = accountAssets[acc.externalId!] ?? [];
+                return (
+                  <div key={acc.id} className="flex items-start gap-3 px-3 py-2.5 border-t first:border-t-0" style={{ borderColor: "var(--cos-border-subtle)" }}>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-base">{acc.icon ?? "💰"}</span>
+                        <span className="font-medium text-sm truncate">{acc.name}</span>
+                      </div>
+                      {assigned.length > 0 ? (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {assigned.map(a => (
+                            <span key={a.ticker} className="font-mono text-[10px] rounded px-1 py-0.5" style={{ background: "var(--cos-surface-2)", color: "var(--intent-success)" }}>
+                              {a.ticker}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-[11px] mt-0.5" style={{ color: "var(--cos-text-3)" }}>
+                          {isSA ? "no assets assigned yet" : "YNAB-only · not in SA"}
+                        </p>
+                      )}
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="font-mono text-xs">{fmtSatangs(Number(acc.balance))}</p>
+                      <RoleBadge role={role} onToggle={() => toggleRole(acc.externalId!)} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Liabilities */}
+            {liabilities.length > 0 && (
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--cos-text-3)" }}>
+                  Liabilities
+                </p>
+                <div className="rounded-xl border overflow-hidden" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)" }}>
+                  {liabilities.map(l => (
+                    <div key={l.id} className="flex items-center justify-between px-3 py-2 border-t first:border-t-0" style={{ borderColor: "var(--cos-border-subtle)" }}>
+                      <div className="flex items-center gap-2">
+                        <span>{l.icon ?? "💳"}</span>
+                        <div>
+                          <p className="text-sm font-medium">{l.name}</p>
+                          {l.apr != null && <p className="text-[11px]" style={{ color: "var(--cos-text-3)" }}>{l.apr}% APR</p>}
+                        </div>
+                      </div>
+                      <p className="font-mono text-sm" style={{ color: "var(--intent-danger)" }}>
+                        {fmtSatangs(Math.abs(Number(l.balance)))}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="text-right font-mono text-sm">{fmt(Number(acc.balance))}</div>
-              <div className="flex justify-center">
-                <select 
-                  value={acc.mappingRole || CapitalMappingRole.YNAB_ONLY}
-                  onChange={e => updateRole(acc.externalId!, e.target.value as CapitalMappingRole)}
-                  className="rounded border px-3 py-1.5 text-sm w-full max-w-[180px]"
-                  style={{ background: "var(--cos-bg)", borderColor: "var(--cos-border-subtle)" }}
-                >
-                  <option value={CapitalMappingRole.SA_COVERED}>SA Covered</option>
-                  <option value={CapitalMappingRole.YNAB_ONLY}>YNAB Only</option>
-                </select>
-              </div>
-              <div className="flex justify-center">
-                <select
-                  value={acc.saCategoryName || ""}
-                  onChange={e => updateCategory(acc.externalId!, e.target.value)}
-                  disabled={acc.mappingRole !== CapitalMappingRole.SA_COVERED}
-                  className="rounded border px-3 py-1.5 text-sm w-full max-w-[180px] disabled:opacity-40"
-                  style={{ background: "var(--cos-bg)", borderColor: "var(--cos-border-subtle)" }}
-                >
-                  <option value="">— Select —</option>
-                  {saCategories.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          ))}
-        </div>
+            )}
 
-        {/* Help */}
-        <div className="mt-6 flex items-start gap-3 rounded-lg border p-4" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)" }}>
-          <Info className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "var(--cos-accent)" }} />
-          <div className="text-sm" style={{ color: "var(--cos-text-2)" }}>
-            <strong>SA Covered</strong> = SA has the authoritative live value; YNAB is just a reference.
-            <strong> YNAB Only</strong> = This account is not tracked in SA (e.g., physical assets/PPE).
+            {/* Mapping Summary */}
+            <div className="rounded-xl border p-3 space-y-1.5 text-xs" style={{ background: "var(--cos-surface)", borderColor: "var(--cos-border-subtle)" }}>
+              <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--cos-text-3)" }}>Summary</p>
+              {[
+                ["SA-covered accounts", String(saCoveredCount)],
+                ["SA total (live)", saTotal > 0 ? fmtSatangs(saTotal) : "—"],
+                ["YNAB-only accounts", String(accounts.length - saCoveredCount)],
+                ["YNAB-only total", fmtSatangs(ynabOnlyTotal)],
+                ["Liabilities", fmtSatangs(liabTotal)],
+                ["Canonical NW", canonicalNw > 0 ? fmtSatangs(canonicalNw) : "—"],
+              ].map(([label, value]) => (
+                <div key={label} className="flex justify-between">
+                  <span style={{ color: "var(--cos-text-2)" }}>{label}</span>
+                  <span className="font-mono font-semibold">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Save (always at bottom) */}
+            <button
+              onClick={save}
+              disabled={saving || !dirty}
+              className="w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
+              style={{ background: "var(--intent-success)" }}
+            >
+              <Save className="h-4 w-4" />
+              {saving ? "Saving…" : dirty ? "Save Mapping" : "No Changes"}
+            </button>
           </div>
         </div>
       </div>

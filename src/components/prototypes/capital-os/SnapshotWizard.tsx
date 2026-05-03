@@ -27,6 +27,8 @@ import {
   RefreshCw,
   Shield,
   Rocket,
+  FileJson,
+  Keyboard,
 } from "lucide-react";
 import { CapitalPortfolioType } from "@/lib/capital-os/types";
 
@@ -93,6 +95,9 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
   const [fxLoading, setFxLoading] = useState(false);
   const [fxError, setFxError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [importMode, setImportMode] = useState(false);
+  const [importJson, setImportJson] = useState("");
+  const [importError, setImportError] = useState<string | null>(null);
 
   // Category states — one per pre-defined category, initially empty
   const [categoryStates, setCategoryStates] = useState<Record<string, CategoryState>>(() => {
@@ -194,6 +199,115 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
 
   const hasAnyValue = grandTotal > 0;
 
+  /* ── JSON Import ─────────────────────────────────────────────── */
+  interface ImportAsset {
+    categoryId?: string;
+    ticker?: string;
+    name?: string;
+    investedValue?: string | number;
+    currentValue?: string | number;
+    valueThb?: string | number; // backward compat: old format maps to currentValue
+    currency?: "THB" | "USD";
+    shares?: string | number | null;
+  }
+
+  interface ImportPayload {
+    fxRateUsdThb?: number;
+    assets?: ImportAsset[];
+  }
+
+  const handleImportJson = () => {
+    setImportError(null);
+    if (!importJson.trim()) {
+      setImportError("Paste JSON payload first");
+      return;
+    }
+
+    try {
+      const parsed: ImportPayload = JSON.parse(importJson);
+      console.log("[Import] Parsed JSON:", parsed);
+      console.log("[Import] Assets count:", parsed.assets?.length);
+
+      if (!Array.isArray(parsed.assets)) {
+        setImportError('JSON must have an "assets" array');
+        return;
+      }
+
+      // Validate category IDs
+      const validCatIds = new Set(PREDEFINED_CATEGORIES.map((c) => c.id));
+      console.log("[Import] Valid category IDs:", Array.from(validCatIds));
+
+      const invalidCats = parsed.assets.filter((a) => a.categoryId && !validCatIds.has(a.categoryId));
+      if (invalidCats.length > 0) {
+        setImportError(`Invalid categoryIds: ${invalidCats.map((a) => a.categoryId).join(", ")}`);
+        return;
+      }
+
+      // Set FX rate if provided
+      if (typeof parsed.fxRateUsdThb === "number") {
+        setFxRate(parsed.fxRateUsdThb.toFixed(4));
+      }
+
+      // Build new category states
+      const newStates: Record<string, CategoryState> = {};
+      for (const cat of PREDEFINED_CATEGORIES) {
+        newStates[cat.id] = { categoryId: cat.id, assets: [] };
+      }
+
+      let importedCount = 0;
+      for (const asset of parsed.assets) {
+        const catId = asset.categoryId || "strat_cash";
+        console.log("[Import] Processing asset:", asset.ticker, "-> category:", catId);
+
+        if (!validCatIds.has(catId)) {
+          console.warn(`[Import] Skipping asset with invalid categoryId: ${asset.categoryId}`);
+          continue;
+        }
+
+        // Determine current value: prefer currentValue (if not empty), fallback to valueThb
+        const hasCurrentValue = asset.currentValue != null && String(asset.currentValue).trim() !== "";
+        const hasValueThb = asset.valueThb != null && String(asset.valueThb).trim() !== "";
+
+        console.log("[Import] hasCurrentValue:", hasCurrentValue, "hasValueThb:", hasValueThb);
+
+        let currentVal = "";
+        if (hasCurrentValue) {
+          currentVal = String(asset.currentValue);
+        } else if (hasValueThb) {
+          currentVal = String(asset.valueThb);
+        }
+
+        // Determine invested value
+        const hasInvestedValue = asset.investedValue != null && String(asset.investedValue).trim() !== "";
+        const investedVal = hasInvestedValue ? String(asset.investedValue) : "";
+
+        const row: AssetRow = {
+          tempId: uid(),
+          ticker: asset.ticker || "",
+          name: asset.name || "",
+          investedValue: investedVal,
+          currentValue: currentVal,
+          currency: asset.currency === "USD" ? "USD" : "THB",
+          shares: asset.shares != null ? String(asset.shares) : "",
+        };
+
+        console.log("[Import] Created row:", row);
+        newStates[catId].assets.push(row);
+        importedCount++;
+      }
+
+      console.log("[Import] Total imported:", importedCount);
+      console.log("[Import] New states:", newStates);
+
+      setCategoryStates(newStates);
+      setImportMode(false);
+      setStep(2); // Jump to review/entry
+    } catch (e) {
+      console.error("[Import] Error:", e);
+      setImportError(e instanceof Error ? e.message : "Invalid JSON");
+    }
+  };
+
   /* ── Format helpers ──────────────────────────────────────────── */
   const fmtCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -210,21 +324,30 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
       const allAssets: {
         ticker: string;
         name: string;
-        valueThb: number;
-        shares: number | null;
+        currency: "THB" | "USD";
+        currentValue: number;
+        investedValue: number | null;
+        shares: string | null;
         categoryId: string;
       }[] = [];
 
       for (const cat of PREDEFINED_CATEGORIES) {
         const state = categoryStates[cat.id];
         for (const asset of state.assets) {
-          const currentThb = convertToThb(valueInThb(asset.currentValue), asset.currency);
+          const currentRaw = valueInThb(asset.currentValue);
+          const currentThb = convertToThb(currentRaw, asset.currency);
+
+          const investedRaw = asset.investedValue ? valueInThb(asset.investedValue) : 0;
+          const investedThb = asset.investedValue ? convertToThb(investedRaw, asset.currency) : 0;
+
           if (currentThb > 0) {
             allAssets.push({
               ticker: asset.ticker || "UNKNOWN",
               name: asset.name || asset.ticker || "Unnamed Asset",
-              valueThb: Math.round(currentThb * 100), // satangs
-              shares: asset.shares ? parseFloat(asset.shares) : null,
+              currency: asset.currency,
+              currentValue: Math.round(currentThb * 100), // satangs
+              investedValue: asset.investedValue ? Math.round(investedThb * 100) : null, // satangs
+              shares: asset.shares ? asset.shares : null,
               categoryId: cat.id,
             });
           }
@@ -558,6 +681,80 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
               <div className="text-xs" style={{ color: "var(--cos-text-3)" }}>
                 FX rate will be fetched automatically from CurrencyFreaks.
               </div>
+
+              {/* Import mode toggle */}
+              <div className="flex items-center justify-center gap-3 pt-2">
+                <button
+                  onClick={() => { setImportMode(false); setImportError(null); }}
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors"
+                  style={{
+                    background: !importMode ? "var(--cos-surface-2)" : "transparent",
+                    color: !importMode ? "var(--cos-text)" : "var(--cos-text-3)",
+                  }}
+                >
+                  <Keyboard className="h-3.5 w-3.5" />
+                  Manual Entry
+                </button>
+                <button
+                  onClick={() => { setImportMode(true); setImportError(null); }}
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors"
+                  style={{
+                    background: importMode ? "var(--cos-surface-2)" : "transparent",
+                    color: importMode ? "var(--cos-text)" : "var(--cos-text-3)",
+                  }}
+                >
+                  <FileJson className="h-3.5 w-3.5" />
+                  Import JSON
+                </button>
+              </div>
+
+              {/* JSON Import panel */}
+              {importMode && (
+                <div className="space-y-3">
+                  <div
+                    className="rounded-xl border p-4 space-y-3"
+                    style={{ background: "var(--cos-bg)", borderColor: "var(--cos-border-subtle)" }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium">Paste JSON Payload</label>
+                      <span className="text-[10px]" style={{ color: "var(--cos-text-3)" }}>
+                        {PREDEFINED_CATEGORIES.length} categories supported
+                      </span>
+                    </div>
+                    <textarea
+                      value={importJson}
+                      onChange={(e) => { setImportJson(e.target.value); setImportError(null); }}
+                      placeholder={`{\n  "fxRateUsdThb": 32.44,\n  "assets": [\n    {\n      "categoryId": "strat_bonds",\n      "ticker": "VUAA",\n      "name": "Vanguard S&P 500",\n      "investedValue": "1000",\n      "currentValue": "1200",\n      "currency": "USD",\n      "shares": "9.08"\n    }\n  ]\n}`}
+                      className="w-full h-48 rounded-lg border p-3 font-mono text-xs resize-none"
+                      style={{
+                        background: "var(--cos-surface)",
+                        borderColor: importError ? "var(--intent-danger)" : "var(--cos-border-subtle)",
+                        color: "var(--cos-text)",
+                      }}
+                      spellCheck={false}
+                    />
+                    {importError && (
+                      <div className="text-xs" style={{ color: "var(--intent-danger)" }}>
+                        {importError}
+                      </div>
+                    )}
+                    <button
+                      onClick={handleImportJson}
+                      disabled={!importJson.trim()}
+                      className="w-full flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors disabled:opacity-50"
+                      style={{ background: "var(--intent-accent)" }}
+                    >
+                      <FileJson className="h-4 w-4" />
+                      Import & Review
+                    </button>
+                  </div>
+
+                  <div className="text-[10px] space-y-1" style={{ color: "var(--cos-text-3)" }}>
+                    <p><strong>Expected JSON shape:</strong></p>
+                    <p>fxRateUsdThb (optional), assets[] with categoryId, ticker, name, investedValue, currentValue, currency (THB/USD), shares (optional)</p>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -769,6 +966,17 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
               style={{ background: "var(--intent-success)" }}
             >
               {isSubmitting ? "Saving..." : "Save Snapshot"}
+            </button>
+          ) : step === 0 && importMode ? (
+            /* Step 0 + Import JSON mode: Import button */
+            <button
+              onClick={handleImportJson}
+              disabled={!importJson.trim()}
+              className="flex items-center gap-2 rounded-lg px-6 py-2 text-sm font-semibold text-white transition-colors disabled:opacity-50"
+              style={{ background: "var(--intent-accent)" }}
+            >
+              <FileJson className="h-4 w-4" />
+              Import & Review
             </button>
           ) : (
             <button
