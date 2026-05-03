@@ -84,10 +84,10 @@ export default function MappingPage() {
       fetch("/api/capital-os/liabilities").then(r => r.json()),
       fetch("/api/capital-os/snapshots?limit=90").then(r => r.json()),
     ]).then(([accRes, mapRes, liabRes, snapRes]) => {
-      setAccounts(accRes.accounts || []);
-      setLiabilities(liabRes.liabilities || []);
+      setAccounts(accRes.data?.accounts || []);
+      setLiabilities(liabRes.data?.liabilities || []);
 
-      const entries: MappingEntry[] = mapRes || [];
+      const entries: MappingEntry[] = mapRes.data || [];
       const roles: Record<string, CapitalMappingRole> = {};
       const a2accs: Record<string, string[]> = {};
       for (const entry of entries) {
@@ -99,7 +99,7 @@ export default function MappingPage() {
       setAccountRoles(roles);
       setAssetToAccounts(a2accs);
 
-      const snaps: any[] = snapRes.snapshots || [];
+      const snaps: any[] = snapRes.data?.snapshots || [];
       const saSnap = [...snaps].reverse().find((s: any) => s.saTotal != null);
       if (saSnap && Array.isArray(saSnap.saAssets)) {
         setSnapshotAssets(saSnap.saAssets);

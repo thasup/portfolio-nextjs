@@ -36,7 +36,8 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
   });
 
   return NextResponse.json({
-    liability: {
+    success: true,
+    data: {
       ...liability,
       balance: Number(liability.balance),
       apr: liability.apr ? Number(liability.apr) : null,
@@ -61,5 +62,5 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext) {
     data: { archivedAt: new Date() },
   });
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, data: { archived: true } });
 }

@@ -39,7 +39,8 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
   });
 
   return NextResponse.json({
-    goal: {
+    success: true,
+    data: {
       ...goal,
       current: Number(goal.current),
       target: Number(goal.target),
@@ -64,5 +65,5 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext) {
     data: { archivedAt: new Date() },
   });
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, data: { archived: true } });
 }

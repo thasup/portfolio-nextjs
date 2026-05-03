@@ -21,22 +21,25 @@ export async function GET(req: NextRequest) {
   });
 
   return NextResponse.json({
-    snapshots: snapshots.reverse().map((s) => ({
-      id: s.id,
-      userId: s.userId,
-      date: s.date.toISOString(),
-      createdAt: s.createdAt.toISOString(),
+    success: true,
+    data: {
+      snapshots: snapshots.reverse().map((s) => ({
+        id: s.id,
+        userId: s.userId,
+        date: s.date.toISOString(),
+        createdAt: s.createdAt.toISOString(),
 
-      netWorth: Number(s.netWorth),
-      liquid: Number(s.liquid),
-      invested: Number(s.invested),
-      liabilities: Number(s.liabilities),
+        netWorth: Number(s.netWorth),
+        liquid: Number(s.liquid),
+        invested: Number(s.invested),
+        liabilities: Number(s.liabilities),
 
-      saTotal: s.saTotal != null ? Number(s.saTotal) : null,
-      saPortfolios: s.saPortfolios ?? null,
-      saAssets: s.saAssets ?? null,
-      fxRateUsdThb: s.fxRateUsdThb != null ? Number(s.fxRateUsdThb) : null,
-    })),
+        saTotal: s.saTotal != null ? Number(s.saTotal) : null,
+        saPortfolios: s.saPortfolios ?? null,
+        saAssets: s.saAssets ?? null,
+        fxRateUsdThb: s.fxRateUsdThb != null ? Number(s.fxRateUsdThb) : null,
+      })),
+    },
   });
 }
 
@@ -115,7 +118,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      snapshot: {
+      data: {
         id: snapshot.id,
         date: snapshot.date,
         netWorth: Number(snapshot.netWorth),

@@ -12,12 +12,15 @@ export async function GET(req: NextRequest) {
   });
 
   return NextResponse.json({
-    scenarios: scenarios.map((s) => ({
-      ...s,
-      burnRate: Number(s.burnRate),
-      postSuccessIncome: Number(s.postSuccessIncome),
-      investReturn: Number(s.investReturn),
-    })),
+    success: true,
+    data: {
+      scenarios: scenarios.map((s) => ({
+        ...s,
+        burnRate: Number(s.burnRate),
+        postSuccessIncome: Number(s.postSuccessIncome),
+        investReturn: Number(s.investReturn),
+      })),
+    },
   });
 }
 
@@ -41,7 +44,7 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     success: true,
-    scenario: {
+    data: {
       ...scenario,
       burnRate: Number(scenario.burnRate),
       postSuccessIncome: Number(scenario.postSuccessIncome),

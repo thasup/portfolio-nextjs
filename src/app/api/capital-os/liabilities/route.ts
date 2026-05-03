@@ -17,11 +17,14 @@ export async function GET() {
   });
 
   return NextResponse.json({
-    liabilities: liabilities.map((l) => ({
-      ...l,
-      balance: Number(l.balance),
-      apr: l.apr ? Number(l.apr) : null,
-    })),
+    success: true,
+    data: {
+      liabilities: liabilities.map((l) => ({
+        ...l,
+        balance: Number(l.balance),
+        apr: l.apr ? Number(l.apr) : null,
+      })),
+    },
   });
 }
 
@@ -49,7 +52,8 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(
     {
-      liability: {
+      success: true,
+      data: {
         ...liability,
         balance: Number(liability.balance),
         apr: liability.apr ? Number(liability.apr) : null,

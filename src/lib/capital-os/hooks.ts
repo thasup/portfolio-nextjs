@@ -84,23 +84,23 @@ export function useCapitalData(): UseCapitalDataResult {
       const accData = await accRes.json();
       const liabData = await liabRes.json();
       const goalData = await goalRes.json();
-      const setData = setRes.ok ? await setRes.json() : { settings: null };
-      const snapData = snapRes.ok ? await snapRes.json() : { snapshots: [] };
-      const scenData = scenRes.ok ? await scenRes.json() : { scenarios: [] };
+      const setData = setRes.ok ? await setRes.json() : { data: null };
+      const snapData = snapRes.ok ? await snapRes.json() : { data: { snapshots: [] } };
+      const scenData = scenRes.ok ? await scenRes.json() : { data: { scenarios: [] } };
 
       const hasData =
-        accData.accounts?.length > 0 ||
-        liabData.liabilities?.length > 0 ||
-        goalData.goals?.length > 0;
+        accData.data?.accounts?.length > 0 ||
+        liabData.data?.liabilities?.length > 0 ||
+        goalData.data?.goals?.length > 0;
 
       if (hasData) {
-        setAccounts(accData.accounts ?? []);
-        setDeletedAccounts(accData.deletedAccounts ?? []);
-        setLiabilities(liabData.liabilities ?? []);
-        setGoals(goalData.goals ?? []);
-        setSettings(setData.settings);
-        setSnapshots(snapData.snapshots ?? []);
-        setScenarios(scenData.scenarios ?? []);
+        setAccounts(accData.data?.accounts ?? []);
+        setDeletedAccounts(accData.data?.deletedAccounts ?? []);
+        setLiabilities(liabData.data?.liabilities ?? []);
+        setGoals(goalData.data?.goals ?? []);
+        setSettings(setData.data);
+        setSnapshots(snapData.data?.snapshots ?? []);
+        setScenarios(scenData.data?.scenarios ?? []);
         setIsMockData(false);
         setLastSynced(new Date());
       } else {
@@ -124,8 +124,8 @@ export function useCapitalData(): UseCapitalDataResult {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error("Failed to update settings");
-      const { settings } = await res.json();
-      setSettings(settings);
+      const result = await res.json();
+      setSettings(result.data);
     } catch (err) {
       console.error("[CapitalOS] Failed to update settings:", err);
       throw err;

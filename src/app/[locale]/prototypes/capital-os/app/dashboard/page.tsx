@@ -67,8 +67,8 @@ export default function DashboardPage() {
       fetch("/api/capital-os/mapping").then(r => r.json()),
       fetch("/api/capital-os/sa-categories").then(r => r.json()),
     ]).then(([mappingRes, saRes]) => {
-      if (mappingRes?.length > 0) {
-        setMappingConfig(mappingRes);
+      if (mappingRes.data?.length > 0) {
+        setMappingConfig(mappingRes.data);
         setDualSourceEnabled(true);
       }
       // Calculate SA total from categories (would come from snapshots in full implementation)

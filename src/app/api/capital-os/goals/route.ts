@@ -18,11 +18,14 @@ export async function GET() {
   });
 
   return NextResponse.json({
-    goals: goals.map((g) => ({
-      ...g,
-      current: Number(g.current),
-      target: Number(g.target),
-    })),
+    success: true,
+    data: {
+      goals: goals.map((g) => ({
+        ...g,
+        current: Number(g.current),
+        target: Number(g.target),
+      })),
+    },
   });
 }
 
@@ -61,7 +64,8 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(
     {
-      goal: {
+      success: true,
+      data: {
         ...goal,
         current: Number(goal.current),
         target: Number(goal.target),
