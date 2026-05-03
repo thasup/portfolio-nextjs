@@ -133,7 +133,7 @@ export default function ReconciliationPage() {
       fetch("/api/capital-os/snapshots?limit=90").then(r => r.json()),
     ]).then(([accRes, mapRes, liabRes, snapRes]) => {
       setAccounts(accRes.accounts || []);
-      setMappingConfig(mapRes || []);
+      setMappingConfig(mapRes.data || []);
       setLiabilities(liabRes.liabilities || []);
       const snaps: any[] = snapRes.snapshots || [];
       const saSnap = [...snaps].reverse().find((s: any) => s.saTotal != null);

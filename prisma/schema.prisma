@@ -534,12 +534,23 @@ model CapitalSnapshot {
 }
 
 model CapitalSettings {
-  userId           String   @id @map("user_id") @db.Uuid
-  runwayBurnRate   BigInt   @default(2500000) @map("runway_burn_rate")
-  runwayAccountIds String[] @default([]) @map("runway_account_ids")
-  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
-  user             User     @relation(fields: [userId], references: [id])
+  userId            String    @id @map("user_id") @db.Uuid
+  runwayBurnRate    BigInt    @default(2500000) @map("runway_burn_rate")
+  runwayAccountIds  String[]  @default([]) @map("runway_account_ids")
+  /// ISO 4217 currency code for display (e.g., THB, USD, EUR)
+  preferredCurrency String    @default("THB") @map("preferred_currency")
+  /// BCP 47 locale for number formatting (e.g., en-US, th-TH)
+  numberFormat      String    @default("en-US") @map("number_format")
+  /// Date format string (YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY)
+  dateFormat        String    @default("YYYY-MM-DD") @map("date_format")
+  /// UI theme: dark (default) or light
+  theme             String    @default("dark")
+  /// Last FX rate fetch timestamp for cache invalidation
+  fxRatesUpdatedAt  DateTime? @map("fx_rates_updated_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user              User      @relation(fields: [userId], references: [id])
 
+  @@index([fxRatesUpdatedAt], map: "capital_settings_fx_cache_idx")
   @@map("capital_settings")
 }
 
@@ -580,9 +591,9 @@ model CapitalMappingConfig {
   id            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId        String             @map("user_id") @db.Uuid
   ynabAccId     String             @map("ynab_acc_id")
-  /// Legacy single category mapping (deprecated, use saAssetMappings for new mappings)
+  /// @deprecated Legacy single category mapping. Use saAssetMappings instead. Will be removed in future version.
   saCategory    String?            @map("sa_category")
-  /// JSON array of {categoryId, assetId?, allocationPct?} for one-to-many YNAB→SA mapping
+  /// JSONB array of SA asset mappings: [{saTicker: string}, ...]. Supports many-to-one SA asset → YNAB account mapping.
   saAssetMappings Json?            @map("sa_asset_mappings")
   role          CapitalMappingRole
   note          String?
