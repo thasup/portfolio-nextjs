@@ -18,33 +18,33 @@
  *
  * @see specs/010-praxis-learning-platform/contracts/unit.generate.md
  */
-import 'server-only';
-import { createAdminClient } from '@/lib/praxis/supabase/admin';
-import type { Database } from '@/lib/praxis/supabase/database.types';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import "server-only";
+import { createAdminClient } from "@/lib/praxis/supabase/admin";
+import type { Database } from "@/lib/praxis/supabase/database.types";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   ChatRole,
   ResponseFormat,
   extractJson,
-} from '@/lib/praxis/openrouter/client';
+} from "@/lib/praxis/openrouter/client";
 import {
   getClient,
   getUnitModel,
   getUniversalModel,
-} from '@/lib/praxis/openrouter/factory';
+} from "@/lib/praxis/openrouter/factory";
 import {
   LedgerEndpoint,
   assertBudget,
   recordLedgerEntry,
-} from '@/lib/praxis/openrouter/ledger';
-import { PROMPT_VERSIONS, curriculumUnit } from '@/lib/praxis/prompts';
+} from "@/lib/praxis/openrouter/ledger";
+import { PROMPT_VERSIONS, curriculumUnit } from "@/lib/praxis/prompts";
 import type {
   LearnerContext,
   OutlineUnit,
   PraxisLocale,
   UnitBlockKind,
-} from '@/lib/praxis/prompts/types';
-import { JSON_ONLY_DIRECTIVE, clamp, renderLearner } from '@/lib/praxis/prompts/_shared';
+} from "@/lib/praxis/prompts/types";
+import { JSON_ONLY_DIRECTIVE, clamp } from "@/lib/praxis/prompts/_shared";
 
 // ---- types -----------------------------------------------------------------
 
@@ -87,28 +87,28 @@ export interface RegenerateBlockResult {
 export class UnitNotFoundError extends Error {
   constructor(unitId: string) {
     super(`Unit not found: ${unitId}`);
-    this.name = 'UnitNotFoundError';
+    this.name = "UnitNotFoundError";
   }
 }
 
 export class UnitNotOwnedError extends Error {
   constructor() {
-    super('Unit does not belong to caller');
-    this.name = 'UnitNotOwnedError';
+    super("Unit does not belong to caller");
+    this.name = "UnitNotOwnedError";
   }
 }
 
 export class UnitGeneratingError extends Error {
   constructor() {
-    super('Unit is already being generated');
-    this.name = 'UnitGeneratingError';
+    super("Unit is already being generated");
+    this.name = "UnitGeneratingError";
   }
 }
 
 export class BlockNotFoundError extends Error {
   constructor(blockId: string) {
     super(`Block not found: ${blockId}`);
-    this.name = 'BlockNotFoundError';
+    this.name = "BlockNotFoundError";
   }
 }
 
@@ -123,23 +123,37 @@ async function loadUnitContext(
   learnerId: string,
   supabase: SupabaseClient<Database>,
 ): Promise<{
-  unit: { id: string; index: number; title: string; objective: string; status: string; topic_id: string };
-  topic: { id: string; title: string; fingerprint: string; locale: string; raw_input: string; curriculum_id: string | null };
+  unit: {
+    id: string;
+    index: number;
+    title: string;
+    objective: string;
+    status: string;
+    topic_id: string;
+  };
+  topic: {
+    id: string;
+    title: string;
+    fingerprint: string;
+    locale: string;
+    raw_input: string;
+    curriculum_id: string | null;
+  };
   outline: OutlineUnit[];
 } | null> {
   // Load unit + topic in one round-trip where possible.
   const { data: unit, error: unitErr } = await supabase
-    .from('praxis_units')
-    .select('id, index, title, objective, status, topic_id')
-    .eq('id', unitId)
+    .from("praxis_units")
+    .select("id, index, title, objective, status, topic_id")
+    .eq("id", unitId)
     .maybeSingle();
 
   if (unitErr || !unit) return null;
 
   const { data: topic, error: topicErr } = await supabase
-    .from('praxis_topics')
-    .select('id, title, fingerprint, locale, raw_input, curriculum_id, user_id')
-    .eq('id', unit.topic_id)
+    .from("praxis_topics")
+    .select("id, title, fingerprint, locale, raw_input, curriculum_id, user_id")
+    .eq("id", unit.topic_id)
     .maybeSingle();
 
   if (topicErr || !topic || topic.user_id !== learnerId) return null;
@@ -149,13 +163,15 @@ async function loadUnitContext(
   if (topic.curriculum_id) {
     const admin = createAdminClient();
     const { data: cache } = await admin
-      .from('praxis_curriculum_cache')
-      .select('units')
-      .eq('id', topic.curriculum_id)
+      .from("praxis_curriculum_cache")
+      .select("units")
+      .eq("id", topic.curriculum_id)
       .maybeSingle();
 
     if (cache) {
-      const parsed = cache.units as { units?: Array<{ title: string; objective: string; summary: string }> } | null;
+      const parsed = cache.units as {
+        units?: Array<{ title: string; objective: string; summary: string }>;
+      } | null;
       outline = (parsed?.units ?? []).map((u) => ({
         title: u.title,
         objective: u.objective,
@@ -180,11 +196,11 @@ async function loadLearnerContext(
   supabase: SupabaseClient<Database>,
 ): Promise<LearnerContext | null> {
   const { data: onboarding } = await supabase
-    .from('praxis_onboarding')
-    .select('answers')
-    .eq('user_id', learnerId)
-    .eq('topic_id', topicId)
-    .order('version', { ascending: false })
+    .from("praxis_onboarding")
+    .select("answers")
+    .eq("user_id", learnerId)
+    .eq("topic_id", topicId)
+    .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
 
@@ -208,13 +224,25 @@ async function loadLearnerContext(
 
   for (const a of answers) {
     const id = a.questionId.toLowerCase();
-    if (id.includes('role') || id.includes('job') || id.includes('position')) {
+    if (id.includes("role") || id.includes("job") || id.includes("position")) {
       role = a.answer;
-    } else if (id.includes('product') || id.includes('sell') || id.includes('offer')) {
+    } else if (
+      id.includes("product") ||
+      id.includes("sell") ||
+      id.includes("offer")
+    ) {
       product = a.answer;
-    } else if (id.includes('audience') || id.includes('customer') || id.includes('client')) {
+    } else if (
+      id.includes("audience") ||
+      id.includes("customer") ||
+      id.includes("client")
+    ) {
       audience = a.answer;
-    } else if (id.includes('goal') || id.includes('objective') || id.includes('outcome')) {
+    } else if (
+      id.includes("goal") ||
+      id.includes("objective") ||
+      id.includes("outcome")
+    ) {
       goal = a.answer;
     } else {
       extras.push({ question: a.prompt, answer: a.answer });
@@ -235,7 +263,9 @@ function makeBlockId(): string {
   return crypto.randomUUID();
 }
 
-export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUnitResult> {
+export async function generateUnit(
+  input: GenerateUnitInput,
+): Promise<GenerateUnitResult> {
   const { unitId, learnerId, supabase } = input;
   const admin = createAdminClient();
 
@@ -246,33 +276,33 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
   const { unit, topic, outline } = ctx;
 
   // 2. If already ready/completed, just return current blocks.
-  if (unit.status === 'ready' || unit.status === 'completed') {
+  if (unit.status === "ready" || unit.status === "completed") {
     const blocks = await loadBlocks(unitId, supabase);
     return { unitId, status: unit.status, blocks, cached: true };
   }
 
   // 3. If already generating, conflict.
-  if (unit.status === 'generating') {
+  if (unit.status === "generating") {
     throw new UnitGeneratingError();
   }
 
   // 4. Mark as generating (prevents duplicate concurrent generation).
   await supabase
-    .from('praxis_units')
-    .update({ status: 'generating', updated_at: new Date().toISOString() })
-    .eq('id', unitId);
+    .from("praxis_units")
+    .update({ status: "generating", updated_at: new Date().toISOString() })
+    .eq("id", unitId);
 
   try {
     const modelVersion = PROMPT_VERSIONS.curriculumUnit;
 
     // 5. Check unit cache.
     const { data: cacheHit } = await admin
-      .from('praxis_unit_cache')
-      .select('id, blocks')
-      .eq('fingerprint', topic.fingerprint)
-      .eq('locale', topic.locale)
-      .eq('unit_index', unit.index)
-      .eq('model_version', modelVersion)
+      .from("praxis_unit_cache")
+      .select("id, blocks")
+      .eq("fingerprint", topic.fingerprint)
+      .eq("locale", topic.locale)
+      .eq("unit_index", unit.index)
+      .eq("model_version", modelVersion)
       .maybeSingle();
 
     let blocks: ContentBlock[];
@@ -283,7 +313,10 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
       // Cache hit — copy blocks.
       cached = true;
       cacheId = cacheHit.id;
-      const rawBlocks = cacheHit.blocks as Array<{ kind: string; content: string }>;
+      const rawBlocks = cacheHit.blocks as Array<{
+        kind: string;
+        content: string;
+      }>;
       blocks = rawBlocks.map((b) => ({
         id: makeBlockId(),
         kind: b.kind as UnitBlockKind,
@@ -297,9 +330,9 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
 
       // Load learner context for the practice block.
       const { data: learnerRow } = await supabase
-        .from('nexus_users')
-        .select('display_name')
-        .eq('id', learnerId)
+        .from("nexus_users")
+        .select("display_name")
+        .eq("id", learnerId)
         .maybeSingle();
 
       const learnerContext = await loadLearnerContext(
@@ -312,7 +345,7 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
       const outlineUnit: OutlineUnit = {
         title: unit.title,
         objective: unit.objective,
-        summary: outline[unit.index - 1]?.summary ?? '',
+        summary: outline[unit.index - 1]?.summary ?? "",
       };
 
       const prompt = curriculumUnit.build({
@@ -348,7 +381,10 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
         const strictRes = await client.chat({
           model,
           messages: [
-            { role: ChatRole.USER, content: prompt + '\n\n' + JSON_ONLY_DIRECTIVE },
+            {
+              role: ChatRole.USER,
+              content: prompt + "\n\n" + JSON_ONLY_DIRECTIVE,
+            },
           ],
           responseFormat: ResponseFormat.JSON_OBJECT,
           temperature: 0.3,
@@ -362,9 +398,11 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
           outputTokens: strictRes.usage.outputTokens,
         });
 
-        const strictParsed = extractJson<curriculumUnit.UnitJson>(strictRes.content);
+        const strictParsed = extractJson<curriculumUnit.UnitJson>(
+          strictRes.content,
+        );
         if (!strictParsed?.blocks?.length) {
-          throw new Error('unit generation failed — invalid JSON after retry');
+          throw new Error("unit generation failed — invalid JSON after retry");
         }
         blocks = strictParsed.blocks.map((b) => ({
           id: makeBlockId(),
@@ -385,7 +423,7 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
 
       // Insert into unit cache (service-role, bypass RLS).
       const { data: cacheInserted } = await admin
-        .from('praxis_unit_cache')
+        .from("praxis_unit_cache")
         .insert({
           fingerprint: topic.fingerprint,
           locale: topic.locale,
@@ -393,7 +431,7 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
           model_version: modelVersion,
           blocks: blocks.map(({ kind, content }) => ({ kind, content })),
         })
-        .select('id')
+        .select("id")
         .maybeSingle();
 
       cacheId = cacheInserted?.id ?? null;
@@ -401,22 +439,23 @@ export async function generateUnit(input: GenerateUnitInput): Promise<GenerateUn
 
     // 6. Write blocks + status to the unit row.
     await supabase
-      .from('praxis_units')
+      .from("praxis_units")
       .update({
-        status: 'ready',
-        blocks: blocks as unknown as Database['public']['Tables']['praxis_units']['Update']['blocks'],
+        status: "ready",
+        blocks:
+          blocks as unknown as Database["public"]["Tables"]["praxis_units"]["Update"]["blocks"],
         cache_id: cacheId,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', unitId);
+      .eq("id", unitId);
 
-    return { unitId, status: 'ready', blocks, cached };
+    return { unitId, status: "ready", blocks, cached };
   } catch (err) {
     // On failure, reset status so the learner can retry.
     await supabase
-      .from('praxis_units')
-      .update({ status: 'failed', updated_at: new Date().toISOString() })
-      .eq('id', unitId);
+      .from("praxis_units")
+      .update({ status: "failed", updated_at: new Date().toISOString() })
+      .eq("id", unitId);
     throw err;
   }
 }
@@ -426,9 +465,9 @@ async function loadBlocks(
   supabase: SupabaseClient<Database>,
 ): Promise<ContentBlock[]> {
   const { data } = await supabase
-    .from('praxis_units')
-    .select('blocks')
-    .eq('id', unitId)
+    .from("praxis_units")
+    .select("blocks")
+    .eq("id", unitId)
     .maybeSingle();
 
   if (!data?.blocks) return [];
@@ -492,7 +531,7 @@ export async function regenerateBlock(
 
   const parsed = extractJson<{ content: string }>(res.content);
   if (!parsed?.content) {
-    throw new Error('block regeneration failed — invalid JSON');
+    throw new Error("block regeneration failed — invalid JSON");
   }
 
   const newBlock: ContentBlock = {
@@ -507,12 +546,13 @@ export async function regenerateBlock(
   const updatedBlocks = [...blocks, newBlock];
 
   await supabase
-    .from('praxis_units')
+    .from("praxis_units")
     .update({
-      blocks: updatedBlocks as unknown as Database['public']['Tables']['praxis_units']['Update']['blocks'],
+      blocks:
+        updatedBlocks as unknown as Database["public"]["Tables"]["praxis_units"]["Update"]["blocks"],
       updated_at: new Date().toISOString(),
     })
-    .eq('id', unitId);
+    .eq("id", unitId);
 
   return { block: newBlock };
 }
@@ -531,28 +571,28 @@ function buildBlockRegenPrompt(opts: {
   unitIndex: number;
 }): string {
   return [
-    'You are regenerating one content block of a learning unit inside PRAXIS.',
-    'The learner is unsatisfied with the current block and has given you a specific instruction.',
-    '',
-    '## Rules',
+    "You are regenerating one content block of a learning unit inside PRAXIS.",
+    "The learner is unsatisfied with the current block and has given you a specific instruction.",
+    "",
+    "## Rules",
     '- Return ONLY a JSON object: { "content": "..." }.',
-    '- The content should be the same kind and approximate length as the previous block.',
-    '- Follow the learner\'s instruction faithfully.',
-    '- Do NOT fabricate statistics, studies, or quotes.',
-    '',
+    "- The content should be the same kind and approximate length as the previous block.",
+    "- Follow the learner's instruction faithfully.",
+    "- Do NOT fabricate statistics, studies, or quotes.",
+    "",
     JSON_ONLY_DIRECTIVE,
-    '',
+    "",
     `## Topic: ${clamp(opts.topic, 240)}`,
     `## Unit: ${opts.unitTitle}`,
     `## Objective: ${opts.unitObjective}`,
     `## Block kind: ${opts.blockKind}`,
-    '',
-    '## Previous content',
+    "",
+    "## Previous content",
     clamp(opts.previousContent, MAX_BLOCK_CONTENT_CHARS),
-    '',
-    '## Learner instruction',
+    "",
+    "## Learner instruction",
     clamp(opts.learnerInstruction, MAX_INSTRUCTION_CHARS),
-  ].join('\n');
+  ].join("\n");
 }
 
 // ---- mark complete ---------------------------------------------------------
@@ -566,12 +606,11 @@ export async function markUnitComplete(
   if (!ctx) throw new UnitNotFoundError(unitId);
 
   await supabase
-    .from('praxis_units')
+    .from("praxis_units")
     .update({
-      status: 'completed',
+      status: "completed",
       completed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })
-    .eq('id', unitId);
+    .eq("id", unitId);
 }
-

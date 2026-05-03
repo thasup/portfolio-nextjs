@@ -49,6 +49,15 @@ export default async function PrototypesPage({
       tags: ["AI-Learning", "Personalization", "LLM"],
       isSensitive: true,
     },
+    {
+      id: "capital-os",
+      title: "CapitalOS",
+      description:
+        "Financial intelligence dashboard — monitor, project, and optimize personal wealth with AI-powered insights.",
+      href: `/${locale}/prototypes/capital-os`,
+      tags: ["Finance", "YNAB", "Airtable", "AI"],
+      isSensitive: true,
+    },
   ];
 
   const visiblePrototypes = prototypes.filter(

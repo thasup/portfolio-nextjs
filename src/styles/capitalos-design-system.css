@@ -1,0 +1,837 @@
+/**
+ * CapitalOS Design System v2.0
+ * 
+ * A comprehensive design system transforming the style guide into
+ * a production-ready system with spacing scales, grid rules, component
+ * states, interaction patterns, and accessibility guidelines.
+ * 
+ * Based on recovery plan requirements:
+ * - Semantic token mapping (color → intent)
+ * - Spacing scale (4/8/12/16/24/32/48)
+ * - 8-column grid + gutter rules
+ * - Component states (default/hover/active/disabled/error)
+ * - Interaction patterns
+ * - Typography usage rules
+ * - Density guidelines
+ * - Motion principles
+ * - Accessibility notes
+ * - Do/don't examples
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. SEMANTIC TOKEN MAP
+   Color tokens mapped to semantic intents, not just aesthetics
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* ── Intent-Based Color System ───────────────────────────────────────── */
+  
+  /* Success/Positive: On track, synced, completed */
+  --intent-success: #10b981;
+  --intent-success-muted: rgba(16, 185, 129, 0.12);
+  --intent-success-hover: #059669;
+  --intent-success-active: #047857;
+  
+  /* Warning/Caution: Stale, approaching limit, attention needed */
+  --intent-warning: #f59e0b;
+  --intent-warning-muted: rgba(245, 158, 11, 0.12);
+  --intent-warning-hover: #d97706;
+  --intent-warning-active: #b45309;
+  
+  /* Danger/Critical: Error, debt, overdue, failed */
+  --intent-danger: #ef4444;
+  --intent-danger-muted: rgba(239, 68, 68, 0.12);
+  --intent-danger-hover: #dc2626;
+  --intent-danger-active: #b91c1c;
+  
+  /* Info/Neutral: Secondary actions, information, liquid assets */
+  --intent-info: #3b82f6;
+  --intent-info-muted: rgba(59, 130, 246, 0.12);
+  --intent-info-hover: #2563eb;
+  --intent-info-active: #1d4ed8;
+  
+  /* AI/Intelligence: Violet for AI-generated content */
+  --intent-ai: #8b5cf6;
+  --intent-ai-muted: rgba(139, 92, 246, 0.12);
+  --intent-ai-hover: #7c3aed;
+  --intent-ai-active: #6d28d9;
+
+  /* ── Surface Hierarchy ────────────────────────────────────────────────── */
+  --surface-void: #020408;           /* Deepest background */
+  --surface-base: #0a0e1a;           /* Primary background */
+  --surface-elevated: #111827;       /* Cards, panels */
+  --surface-hovered: #1f2937;        /* Hover states */
+  --surface-active: #374151;         /* Active/pressed states */
+
+  /* ── Text Hierarchy ───────────────────────────────────────────────────── */
+  --text-primary: #f9fafb;           /* Headlines, primary content */
+  --text-secondary: #9ca3af;        /* Labels, descriptions */
+  --text-tertiary: #6b7280;          /* Metadata, disabled */
+  --text-disabled: #4b5563;          /* Non-interactive */
+  --text-inverse: #111827;           /* On colored backgrounds */
+
+  /* ── Border System ────────────────────────────────────────────────────── */
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-focus: var(--intent-success);
+
+  /* ── Legacy compatibility (maintain existing CSS variable names) ───────── */
+  --cos-bg: var(--surface-base);
+  --cos-surface: var(--surface-elevated);
+  --cos-surface-2: var(--surface-hovered);
+  --cos-surface-3: var(--surface-active);
+  --cos-border: var(--border-default);
+  --cos-border-subtle: var(--border-subtle);
+  --cos-text: var(--text-primary);
+  --cos-text-2: var(--text-secondary);
+  --cos-text-3: var(--text-tertiary);
+  --cos-accent: var(--intent-success);
+  --cos-accent-hover: var(--intent-success-hover);
+  --cos-accent-muted: var(--intent-success-muted);
+  --cos-accent-2: var(--intent-info);
+  --cos-accent-2-muted: var(--intent-info-muted);
+  --cos-positive: var(--intent-success);
+  --cos-positive-muted: var(--intent-success-muted);
+  --cos-negative: var(--intent-danger);
+  --cos-negative-muted: var(--intent-danger-muted);
+  --cos-warning: var(--intent-warning);
+  --cos-warning-muted: var(--intent-warning-muted);
+  --cos-info: var(--intent-info);
+  --cos-info-muted: var(--intent-info-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. SPACING SCALE
+   4/8/12/16/24/32/48 base scale with extended increments
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* Base scale (recovery plan requirement) */
+  --space-1: 0.25rem;   /* 4px - Tightest, icon gaps */
+  --space-2: 0.5rem;    /* 8px - Tight, inline elements */
+  --space-3: 0.75rem;   /* 12px - Default small gap */
+  --space-4: 1rem;      /* 16px - Base unit, component padding */
+  --space-6: 1.5rem;    /* 24px - Section gaps */
+  --space-8: 2rem;      /* 32px - Large gaps, card padding */
+  --space-12: 3rem;     /* 48px - Section breaks */
+  
+  /* Extended scale */
+  --space-0: 0;
+  --space-1-5: 0.375rem;  /* 6px */
+  --space-2-5: 0.625rem;  /* 10px */
+  --space-3-5: 0.875rem;  /* 14px */
+  --space-5: 1.25rem;     /* 20px */
+  --space-7: 1.75rem;     /* 28px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px */
+  --space-32: 8rem;       /* 128px */
+  
+  /* Semantic spacing */
+  --gap-xs: var(--space-1);
+  --gap-sm: var(--space-2);
+  --gap-md: var(--space-3);
+  --gap-lg: var(--space-4);
+  --gap-xl: var(--space-6);
+  --gap-2xl: var(--space-8);
+  
+  /* Component spacing */
+  --padding-card: var(--space-4);
+  --padding-button: var(--space-2) var(--space-4);
+  --padding-input: var(--space-3) var(--space-4);
+  --padding-table-cell: var(--space-3) var(--space-4);
+  
+  /* Layout spacing */
+  --page-padding-x: var(--space-4);
+  --page-padding-y: var(--space-6);
+  --section-gap: var(--space-8);
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 68px;
+}
+
+/* Responsive spacing adjustments */
+@media (min-width: 640px) {
+  [data-capitalos] {
+    --page-padding-x: var(--space-6);
+    --page-padding-y: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-capitalos] {
+    --page-padding-x: var(--space-8);
+    --section-gap: var(--space-12);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. GRID SYSTEM
+   8-column grid with responsive gutters
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* Grid configuration */
+  --grid-columns: 8;
+  --grid-gutter: var(--space-4);
+  --grid-margin: var(--space-4);
+  --grid-max-width: 1400px;
+  
+  /* Column width calculation */
+  --grid-col: calc((100% - (var(--grid-columns) - 1) * var(--grid-gutter)) / var(--grid-columns));
+}
+
+@media (min-width: 640px) {
+  [data-capitalos] {
+    --grid-gutter: var(--space-6);
+    --grid-margin: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-capitalos] {
+    --grid-columns: 12;
+    --grid-gutter: var(--space-6);
+    --grid-margin: var(--space-8);
+  }
+}
+
+/* Grid container utility */
+.cos-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gutter);
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-margin);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4. TYPOGRAPHY SYSTEM
+   Usage rules: when to use display vs body vs mono
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* Font families */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  
+  /* Type scale with precise line heights */
+  --text-xs: 0.6875rem;    /* 11px - Captions, metadata */
+  --text-sm: 0.8125rem;    /* 13px - Small body, labels */
+  --text-base: 1rem;       /* 16px - Body text */
+  --text-lg: 1.125rem;     /* 18px - Lead paragraph */
+  --text-xl: 1.375rem;     /* 22px - Small headings */
+  --text-2xl: 1.75rem;     /* 28px - Subsection headings */
+  --text-3xl: 2.25rem;     /* 36px - Section headings */
+  --text-4xl: 3rem;        /* 48px - Page headings (REDUCED from 120px) */
+  
+  /* Line heights */
+  --leading-tight: 1.1;    /* Display, large headings */
+  --leading-snug: 1.25;    /* Headings */
+  --leading-normal: 1.5;   /* Body text */
+  --leading-relaxed: 1.625;/* Long-form content */
+  
+  /* Font weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. COMPONENT STATES
+   All states defined: default, hover, active, disabled, error, focus
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Button States ──────────────────────────────────────────────────────── */
+[data-capitalos] .cos-button {
+  /* Default */
+  --btn-bg: var(--surface-hovered);
+  --btn-text: var(--text-primary);
+  --btn-border: var(--border-default);
+  --btn-shadow: none;
+  
+  /* Hover */
+  --btn-hover-bg: var(--surface-active);
+  --btn-hover-text: var(--text-primary);
+  --btn-hover-border: var(--border-strong);
+  
+  /* Active/Pressed */
+  --btn-active-bg: var(--surface-active);
+  --btn-active-text: var(--text-primary);
+  --btn-active-transform: scale(0.98);
+  
+  /* Focus */
+  --btn-focus-ring: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--intent-success);
+  
+  /* Disabled */
+  --btn-disabled-bg: var(--surface-base);
+  --btn-disabled-text: var(--text-tertiary);
+  --btn-disabled-border: var(--border-subtle);
+  --btn-disabled-opacity: 0.5;
+  
+  /* Primary variant */
+  --btn-primary-bg: var(--intent-success);
+  --btn-primary-text: var(--text-inverse);
+  --btn-primary-hover-bg: var(--intent-success-hover);
+  --btn-primary-active-bg: var(--intent-success-active);
+  
+  /* Danger variant */
+  --btn-danger-bg: var(--intent-danger);
+  --btn-danger-text: #ffffff;
+  --btn-danger-hover-bg: var(--intent-danger-hover);
+  --btn-danger-active-bg: var(--intent-danger-active);
+}
+
+/* ── Input States ───────────────────────────────────────────────────────── */
+[data-capitalos] .cos-input {
+  /* Default */
+  --input-bg: var(--surface-base);
+  --input-border: var(--border-default);
+  --input-text: var(--text-primary);
+  
+  /* Hover */
+  --input-hover-border: var(--border-strong);
+  
+  /* Focus */
+  --input-focus-border: var(--intent-success);
+  --input-focus-ring: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--intent-success-muted);
+  
+  /* Error */
+  --input-error-border: var(--intent-danger);
+  --input-error-ring: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--intent-danger-muted);
+  
+  /* Disabled */
+  --input-disabled-bg: var(--surface-elevated);
+  --input-disabled-text: var(--text-tertiary);
+  --input-disabled-border: var(--border-subtle);
+}
+
+/* ── Card States ─────────────────────────────────────────────────────────── */
+[data-capitalos] .cos-card {
+  /* Default */
+  --card-bg: var(--surface-elevated);
+  --card-border: var(--border-subtle);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  
+  /* Hover */
+  --card-hover-bg: var(--surface-elevated);
+  --card-hover-border: var(--border-default);
+  --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --card-hover-translate: translateY(-2px);
+  
+  /* Active */
+  --card-active-bg: var(--surface-hovered);
+  --card-active-transform: scale(0.99);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. INTERACTION PATTERNS
+   Confirm flows, empty states, loading states
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* ── Confirmation Dialog Pattern ──────────────────────────────────────── */
+  --confirm-overlay: rgba(2, 4, 8, 0.8);
+  --confirm-z-index: 1000;
+  --confirm-enter-duration: 200ms;
+  --confirm-exit-duration: 150ms;
+  
+  /* ── Empty States ─────────────────────────────────────────────────────── */
+  --empty-icon-size: 48px;
+  --empty-icon-color: var(--text-tertiary);
+  --empty-title-size: var(--text-lg);
+  --empty-title-weight: var(--font-semibold);
+  --empty-desc-color: var(--text-secondary);
+  --empty-action-margin: var(--space-4);
+  
+  /* ── Loading States ────────────────────────────────────────────────────── */
+  --skeleton-bg: linear-gradient(
+    90deg,
+    var(--surface-hovered) 25%,
+    var(--surface-active) 50%,
+    var(--surface-hovered) 75%
+  );
+  --skeleton-shimmer-duration: 1.5s;
+  --skeleton-border-radius: var(--radius-md);
+  
+  /* ── Progress Indicators ──────────────────────────────────────────────── */
+  --progress-height: 4px;
+  --progress-bg: var(--surface-hovered);
+  --progress-fill: var(--intent-success);
+  --progress-animation-duration: 300ms;
+}
+
+/* Empty State Template */
+.cos-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.cos-empty-state-icon {
+  width: var(--empty-icon-size);
+  height: var(--empty-icon-size);
+  color: var(--empty-icon-color);
+  margin-bottom: var(--space-4);
+}
+
+.cos-empty-state-title {
+  font-size: var(--empty-title-size);
+  font-weight: var(--empty-title-weight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.cos-empty-state-description {
+  font-size: var(--text-sm);
+  color: var(--empty-desc-color);
+  max-width: 320px;
+  margin-bottom: var(--empty-action-margin);
+  line-height: var(--leading-relaxed);
+}
+
+/* Skeleton Loading */
+.cos-skeleton {
+  background: var(--skeleton-bg);
+  background-size: 200% 100%;
+  border-radius: var(--skeleton-border-radius);
+  animation: skeleton-shimmer var(--skeleton-shimmer-duration) infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   7. DENSITY GUIDELINES
+   Compact / Default / Spacious modes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* Default density (balanced) */
+  --density-padding-x: var(--space-4);
+  --density-padding-y: var(--space-3);
+  --density-gap: var(--space-3);
+  --density-font-size: var(--text-sm);
+  --density-line-height: var(--leading-normal);
+}
+
+[data-capitalos][data-density="compact"] {
+  /* Compact: Data-dense tables, admin panels */
+  --density-padding-x: var(--space-3);
+  --density-padding-y: var(--space-2);
+  --density-gap: var(--space-2);
+  --density-font-size: var(--text-xs);
+  --density-line-height: var(--leading-snug);
+}
+
+[data-capitalos][data-density="spacious"] {
+  /* Spacious: Landing pages, marketing content */
+  --density-padding-x: var(--space-6);
+  --density-padding-y: var(--space-4);
+  --density-gap: var(--space-4);
+  --density-font-size: var(--text-base);
+  --density-line-height: var(--leading-relaxed);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   8. MOTION PRINCIPLES
+   Duration, easing, what to animate
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* Duration scale */
+  --duration-instant: 0ms;
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-slow: 250ms;
+  --duration-slower: 350ms;
+  
+  /* Easing functions */
+  --ease-linear: linear;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* Semantic motion tokens */
+  --transition-hover: var(--duration-fast) var(--ease-out);
+  --transition-active: var(--duration-instant);
+  --transition-expand: var(--duration-slow) var(--ease-out);
+  --transition-page: var(--duration-slower) var(--ease-out);
+}
+
+/* Motion patterns */
+@media (prefers-reduced-motion: reduce) {
+  [data-capitalos] {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   9. ACCESSIBILITY
+   Contrast ratios, focus indicators, ARIA patterns
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-capitalos] {
+  /* Focus indicators (WCAG 2.2 AA compliant) */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--intent-success);
+  
+  /* Minimum contrast ratios enforced:
+   * - Text on background: 4.5:1 (AA) / 7:1 (AAA for small text)
+   * - Large text (18px+): 3:1
+   * - UI components: 3:1
+   * 
+   * Current palette compliance:
+   * --text-primary (#f9fafb) on --surface-base (#0a0e1a): ~14:1 ✓ AAA
+   * --text-secondary (#9ca3af) on --surface-base (#0a0e1a): ~7:1 ✓ AAA
+   * --intent-success (#10b981) on --surface-base (#0a0e1a): ~5:1 ✓ AA
+   * --intent-warning (#f59e0b) on --surface-base (#0a0e1a): ~8:1 ✓ AAA
+   * --intent-danger (#ef4444) on --surface-base (#0a0e1a): ~6:1 ✓ AA
+   */
+  
+  /* High contrast mode overrides */
+  --hc-border: #ffffff;
+  --hc-text: #ffffff;
+  --hc-bg: #000000;
+}
+
+@media (prefers-contrast: high) {
+  [data-capitalos] {
+    --border-default: var(--hc-border);
+    --text-primary: var(--hc-text);
+    --surface-base: var(--hc-bg);
+  }
+}
+
+/* Focus visible (keyboard navigation) */
+.cos-focusable:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--surface-base),
+              0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   10. COMPONENT UTILITIES
+   Do/Don't examples as actual utility classes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Button Component ───────────────────────────────────────────────────── */
+.cos-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--density-padding-y) var(--density-padding-x);
+  font-family: var(--font-body);
+  font-size: var(--density-font-size);
+  font-weight: var(--font-medium);
+  line-height: var(--density-line-height);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: all var(--transition-hover);
+  user-select: none;
+}
+
+.cos-btn:hover:not(:disabled) {
+  background: var(--btn-hover-bg);
+  border-color: var(--btn-hover-border);
+}
+
+.cos-btn:active:not(:disabled) {
+  transform: var(--btn-active-transform);
+  background: var(--btn-active-bg);
+}
+
+.cos-btn:focus-visible {
+  box-shadow: var(--btn-focus-ring);
+}
+
+.cos-btn:disabled {
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
+  border-color: var(--btn-disabled-border);
+  opacity: var(--btn-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Button variants */
+.cos-btn-primary {
+  --btn-bg: var(--btn-primary-bg);
+  --btn-text: var(--btn-primary-text);
+  --btn-border: transparent;
+  --btn-hover-bg: var(--btn-primary-hover-bg);
+  --btn-active-bg: var(--btn-primary-active-bg);
+}
+
+.cos-btn-danger {
+  --btn-bg: var(--btn-danger-bg);
+  --btn-text: var(--btn-danger-text);
+  --btn-border: transparent;
+  --btn-hover-bg: var(--btn-danger-hover-bg);
+  --btn-active-bg: var(--btn-danger-active-bg);
+}
+
+/* ── Card Component ──────────────────────────────────────────────────────── */
+.cos-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  transition: all var(--transition-hover);
+}
+
+.cos-card-interactive:hover {
+  border-color: var(--card-hover-border);
+  box-shadow: var(--card-hover-shadow);
+  transform: var(--card-hover-translate);
+}
+
+.cos-card-interactive:active {
+  background: var(--card-active-bg);
+  transform: var(--card-active-transform);
+}
+
+/* ── Semantic Badges (Financial Status) ────────────────────────────────── */
+.cos-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  border-radius: var(--radius-sm);
+}
+
+.cos-badge-success {
+  background: var(--intent-success-muted);
+  color: var(--intent-success);
+}
+
+.cos-badge-warning {
+  background: var(--intent-warning-muted);
+  color: var(--intent-warning);
+}
+
+.cos-badge-danger {
+  background: var(--intent-danger-muted);
+  color: var(--intent-danger);
+}
+
+.cos-badge-info {
+  background: var(--intent-info-muted);
+  color: var(--intent-info);
+}
+
+.cos-badge-ai {
+  background: var(--intent-ai-muted);
+  color: var(--intent-ai);
+}
+
+/* ── Goal Progress Bar ─────────────────────────────────────────────────── */
+.cos-progress {
+  height: var(--progress-height);
+  background: var(--progress-bg);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.cos-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--progress-animation-duration) var(--ease-out);
+}
+
+.cos-progress-fill[data-status="success"] {
+  background: var(--intent-success);
+}
+
+.cos-progress-fill[data-status="warning"] {
+  background: var(--intent-warning);
+}
+
+.cos-progress-fill[data-status="danger"] {
+  background: var(--intent-danger);
+}
+
+/* ── KPI Card ─────────────────────────────────────────────────────────────── */
+.cos-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--padding-card);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+}
+
+.cos-kpi-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.cos-kpi-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.cos-kpi-delta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+}
+
+.cos-kpi-delta-positive {
+  color: var(--intent-success);
+}
+
+.cos-kpi-delta-negative {
+  color: var(--intent-danger);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   11. TYPOGRAPHY UTILITIES
+   When to use display vs body vs mono
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 
+ * DISPLAY — Use for:
+ * - Page titles (but keep under 48px in data views)
+ * - Hero sections on landing pages
+ * - Section headers in marketing content
+ * - NOT for dashboard card headers
+ */
+.cos-type-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* 
+ * BODY — Use for:
+ * - Dashboard card titles
+ * - Navigation labels
+ * - Form labels
+ * - Body copy
+ * - UI text throughout the application
+ */
+.cos-type-body {
+  font-family: var(--font-body);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+}
+
+/* 
+ * MONO — Use for:
+ * - All financial figures (balances, percentages)
+ * - Dates and timestamps
+ * - Status codes (SYNC_OK, CRITICAL)
+ * - Data table values
+ * - Agent output (technical data)
+ */
+.cos-type-mono {
+  font-family: var(--font-mono);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Font size utilities */
+.cos-text-page-title {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-snug);
+}
+
+.cos-text-section-title {
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+}
+
+.cos-text-card-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+}
+
+.cos-text-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   12. LAYOUT UTILITIES
+   Common layout patterns
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.cos-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--density-gap);
+}
+
+.cos-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--density-gap);
+}
+
+.cos-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--density-gap);
+}
+
+.cos-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cos-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

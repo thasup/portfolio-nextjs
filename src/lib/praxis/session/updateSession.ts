@@ -16,25 +16,28 @@
  * This helper does NOT call next-intl. Path-rewriting happens in the
  * outer `middleware.ts` after this returns.
  */
-import { createServerClient } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
-import type { Database } from '@/lib/praxis/supabase/database.types';
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
+import type { Database } from "@/lib/praxis/supabase/database.types";
 
 /** Paths under `/prototypes/praxis/*` that bypass the auth gate. */
 const PRAXIS_PUBLIC_PATHS: ReadonlyArray<string> = [];
 
 /** Redirect target for unauthenticated traffic on protected paths. */
-const NOT_INVITED_PATH = '/prototypes';
+const NOT_INVITED_PATH = "/prototypes";
 
 /**
  * Locale-aware path helpers. The site uses next-intl with locale prefix
  * `as-needed`, so Thai routes are `/th/learn/*` while English routes are
  * `/learn/*`. Both must be treated identically for auth purposes.
  */
-function stripLocalePrefix(pathname: string): { locale: string | null; rest: string } {
+function stripLocalePrefix(pathname: string): {
+  locale: string | null;
+  rest: string;
+} {
   const match = pathname.match(/^\/(en|th)(\/.*)?$/);
   if (!match) return { locale: null, rest: pathname };
-  return { locale: match[1], rest: match[2] ?? '/' };
+  return { locale: match[1], rest: match[2] ?? "/" };
 }
 
 export interface UpdateSessionResult {
@@ -45,7 +48,9 @@ export interface UpdateSessionResult {
   redirected: boolean;
 }
 
-export async function updateSession(request: NextRequest): Promise<UpdateSessionResult> {
+export async function updateSession(
+  request: NextRequest,
+): Promise<UpdateSessionResult> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
@@ -53,7 +58,11 @@ export async function updateSession(request: NextRequest): Promise<UpdateSession
   // route handlers will surface a 500. This keeps local dev usable on
   // non-PRAXIS portfolio pages.
   if (!supabaseUrl || !supabaseKey) {
-    return { response: NextResponse.next({ request }), userId: null, redirected: false };
+    return {
+      response: NextResponse.next({ request }),
+      userId: null,
+      redirected: false,
+    };
   }
 
   let response = NextResponse.next({ request });
@@ -64,7 +73,9 @@ export async function updateSession(request: NextRequest): Promise<UpdateSession
         return request.cookies.getAll();
       },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+        cookiesToSet.forEach(({ name, value }) =>
+          request.cookies.set(name, value),
+        );
         response = NextResponse.next({ request });
         cookiesToSet.forEach(({ name, value, options }) =>
           response.cookies.set(name, value, options),
@@ -79,17 +90,18 @@ export async function updateSession(request: NextRequest): Promise<UpdateSession
   } = await supabase.auth.getUser();
 
   const { locale, rest } = stripLocalePrefix(request.nextUrl.pathname);
-  const isPraxisPath = rest.startsWith('/prototypes/praxis') || rest.startsWith('/api/praxis');
+  const isPraxisPath =
+    rest.startsWith("/prototypes/praxis") || rest.startsWith("/api/praxis");
   const isPublicPath = PRAXIS_PUBLIC_PATHS.some(
     (p) => rest === p || rest.startsWith(`${p}/`),
   );
 
   if (isPraxisPath && !isPublicPath && !user) {
     // API clients get a machine-readable 401; page navigation gets an HTML redirect.
-    if (rest.startsWith('/api/')) {
+    if (rest.startsWith("/api/")) {
       return {
         response: NextResponse.json(
-          { error: { code: 'UNAUTHENTICATED', message: 'Sign-in required' } },
+          { error: { code: "UNAUTHENTICATED", message: "Sign-in required" } },
           { status: 401 },
         ),
         userId: null,
@@ -97,9 +109,15 @@ export async function updateSession(request: NextRequest): Promise<UpdateSession
       };
     }
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = locale ? `/${locale}${NOT_INVITED_PATH}` : NOT_INVITED_PATH;
-    redirectUrl.search = '';
-    return { response: NextResponse.redirect(redirectUrl), userId: null, redirected: true };
+    redirectUrl.pathname = locale
+      ? `/${locale}${NOT_INVITED_PATH}`
+      : NOT_INVITED_PATH;
+    redirectUrl.search = "";
+    return {
+      response: NextResponse.redirect(redirectUrl),
+      userId: null,
+      redirected: true,
+    };
   }
 
   return { response, userId: user?.id ?? null, redirected: false };

@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { Category } from '@/lib/marketos/types';
-import { fmtBudget } from '@/lib/marketos/format';
+import Link from "next/link";
+import { useState } from "react";
+import { AppPage } from "@/components/prototypes/market-os/app/AppPage";
+import { Category } from "@/lib/marketos/types";
+import { fmtBudget } from "@/lib/marketos/format";
 
 const AC = {
-  cream: '#f9f7f6',
-  dark: '#1e3a2f',
-  orange: '#f2a84b',
-  muted: '#7a7f79',
-  border: 'rgba(30,58,47,0.1)',
+  cream: "#f9f7f6",
+  dark: "#1e3a2f",
+  orange: "#f2a84b",
+  muted: "#7a7f79",
+  border: "rgba(30,58,47,0.1)",
 };
 
 const CATEGORIES = Object.values(Category);
@@ -24,28 +24,30 @@ const CATEGORIES = Object.values(Category);
  * "Post another". No persistence, no API.
  */
 export function PostMissionForm() {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [cat, setCat] = useState<Category>(Category.Design);
-  const [desc, setDesc] = useState('');
-  const [deliverables, setDeliverables] = useState<string[]>(['']);
-  const [budget, setBudget] = useState('');
-  const [deadline, setDeadline] = useState('');
+  const [desc, setDesc] = useState("");
+  const [deliverables, setDeliverables] = useState<string[]>([""]);
+  const [budget, setBudget] = useState("");
+  const [deadline, setDeadline] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const updateDeliverable = (i: number, value: string) => {
     setDeliverables((prev) => prev.map((d, idx) => (idx === i ? value : d)));
   };
-  const addDeliverable = () => setDeliverables((prev) => [...prev, '']);
+  const addDeliverable = () => setDeliverables((prev) => [...prev, ""]);
   const removeDeliverable = (i: number) =>
-    setDeliverables((prev) => (prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i)));
+    setDeliverables((prev) =>
+      prev.length === 1 ? prev : prev.filter((_, idx) => idx !== i),
+    );
 
   const reset = () => {
-    setTitle('');
+    setTitle("");
     setCat(Category.Design);
-    setDesc('');
-    setDeliverables(['']);
-    setBudget('');
-    setDeadline('');
+    setDesc("");
+    setDeliverables([""]);
+    setBudget("");
+    setDeadline("");
     setSubmitted(false);
   };
 
@@ -59,34 +61,51 @@ export function PostMissionForm() {
     return (
       <AppPage>
         <Link href="/prototypes/market-os/app/missions" className="a-back-btn">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-            <path d="M9 11L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M9 11L5 7L9 3"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
           Back to missions
         </Link>
         <div
           style={{
-            background: 'white',
+            background: "white",
             borderRadius: 24,
-            padding: '56px 48px',
+            padding: "56px 48px",
             marginTop: 24,
-            textAlign: 'center',
-            boxShadow: '0 1px 4px rgba(30,58,47,0.07)',
+            textAlign: "center",
+            boxShadow: "0 1px 4px rgba(30,58,47,0.07)",
           }}
         >
           <div
             style={{
               width: 64,
               height: 64,
-              borderRadius: '50%',
-              background: 'rgba(165,214,167,0.25)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 18px',
+              borderRadius: "50%",
+              background: "rgba(165,214,167,0.25)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 18px",
             }}
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+            >
               <path
                 d="M5 12L10 17L19 7"
                 stroke="#4caf50"
@@ -98,53 +117,55 @@ export function PostMissionForm() {
           </div>
           <h1
             style={{
-              fontFamily: 'var(--font-bricolage), sans-serif',
+              fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
               fontSize: 26,
               color: AC.dark,
-              margin: '0 0 8px',
-              letterSpacing: '-0.03em',
+              margin: "0 0 8px",
+              letterSpacing: "-0.03em",
             }}
           >
             Mission posted!
           </h1>
           <p
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 15,
-              color: 'rgba(30,58,47,0.6)',
+              color: "rgba(30,58,47,0.6)",
               maxWidth: 460,
-              margin: '0 auto 8px',
+              margin: "0 auto 8px",
               lineHeight: 1.55,
             }}
           >
-            <strong style={{ color: AC.dark }}>{title}</strong> is live for{' '}
-            <strong style={{ color: AC.dark }}>{fmtBudget(Number(budget) || 0)}</strong>. The
-            board will notify you as bids come in.
+            <strong style={{ color: AC.dark }}>{title}</strong> is live for{" "}
+            <strong style={{ color: AC.dark }}>
+              {fmtBudget(Number(budget) || 0)}
+            </strong>
+            . The board will notify you as bids come in.
           </p>
           <p
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 12,
               color: AC.muted,
-              margin: '0 0 28px',
+              margin: "0 0 28px",
             }}
           >
             (Prototype — the mission is not actually persisted.)
           </p>
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
             <button
               type="button"
               className="a-btn a-btn-ghost"
               onClick={reset}
-              style={{ height: 42, padding: '0 18px', fontSize: 14 }}
+              style={{ height: 42, padding: "0 18px", fontSize: 14 }}
             >
               Post another
             </button>
             <Link
               className="a-btn a-btn-primary"
               href="/prototypes/market-os/app/missions"
-              style={{ height: 42, padding: '0 20px', fontSize: 14 }}
+              style={{ height: 42, padding: "0 20px", fontSize: 14 }}
             >
               View board
             </Link>
@@ -158,45 +179,51 @@ export function PostMissionForm() {
     <AppPage>
       <Link href="/prototypes/market-os/app/missions" className="a-back-btn">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-          <path d="M9 11L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path
+            d="M9 11L5 7L9 3"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
         Back to missions
       </Link>
 
       <h1
         style={{
-          fontFamily: 'var(--font-bricolage), sans-serif',
+          fontFamily: "var(--font-bricolage), sans-serif",
           fontWeight: 800,
           fontSize: 28,
           color: AC.dark,
-          margin: '20px 0 4px',
-          letterSpacing: '-0.03em',
+          margin: "20px 0 4px",
+          letterSpacing: "-0.03em",
         }}
       >
         Post a mission
       </h1>
       <p
         style={{
-          fontFamily: 'var(--font-dm-sans), sans-serif',
+          fontFamily: "var(--font-dm-sans), sans-serif",
           fontSize: 14,
-          color: 'rgba(30,58,47,0.55)',
-          margin: '0 0 28px',
+          color: "rgba(30,58,47,0.55)",
+          margin: "0 0 28px",
           maxWidth: 640,
         }}
       >
-        Define a discrete, valued piece of work. Anyone in the org — and approved external
-        contributors — can bid. The first agreed offer becomes a binding contract.
+        Define a discrete, valued piece of work. Anyone in the org — and
+        approved external contributors — can bid. The first agreed offer becomes
+        a binding contract.
       </p>
 
       <form
         onSubmit={handleSubmit}
         style={{
-          background: 'white',
+          background: "white",
           borderRadius: 20,
-          padding: '32px 36px',
-          boxShadow: '0 1px 4px rgba(30,58,47,0.07)',
-          display: 'flex',
-          flexDirection: 'column',
+          padding: "32px 36px",
+          boxShadow: "0 1px 4px rgba(30,58,47,0.07)",
+          display: "flex",
+          flexDirection: "column",
           gap: 22,
         }}
       >
@@ -210,13 +237,15 @@ export function PostMissionForm() {
           />
         </Field>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+        <div
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}
+        >
           <Field label="Category">
             <select
               className="a-input"
               value={cat}
               onChange={(e) => setCat(e.target.value as Category)}
-              style={{ appearance: 'none' }}
+              style={{ appearance: "none" }}
             >
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>
@@ -237,14 +266,14 @@ export function PostMissionForm() {
         </div>
 
         <Field label="Budget">
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: "relative" }}>
             <span
               style={{
-                position: 'absolute',
+                position: "absolute",
                 left: 13,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                fontFamily: 'var(--font-dm-sans), sans-serif',
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontFamily: "var(--font-dm-sans), sans-serif",
                 fontSize: 15,
                 color: AC.muted,
               }}
@@ -275,9 +304,12 @@ export function PostMissionForm() {
         </Field>
 
         <Field label="Deliverables">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {deliverables.map((d, i) => (
-              <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div
+                key={i}
+                style={{ display: "flex", gap: 8, alignItems: "center" }}
+              >
                 <input
                   className="a-input"
                   value={d}
@@ -292,9 +324,10 @@ export function PostMissionForm() {
                     height: 42,
                     width: 42,
                     border: `1.5px solid ${AC.border}`,
-                    background: 'white',
+                    background: "white",
                     borderRadius: 10,
-                    cursor: deliverables.length === 1 ? 'not-allowed' : 'pointer',
+                    cursor:
+                      deliverables.length === 1 ? "not-allowed" : "pointer",
                     color: AC.muted,
                     fontSize: 18,
                     flexShrink: 0,
@@ -309,15 +342,15 @@ export function PostMissionForm() {
               type="button"
               onClick={addDeliverable}
               style={{
-                alignSelf: 'flex-start',
-                background: 'transparent',
-                border: 'none',
+                alignSelf: "flex-start",
+                background: "transparent",
+                border: "none",
                 color: AC.orange,
-                fontFamily: 'var(--font-dm-sans), sans-serif',
+                fontFamily: "var(--font-dm-sans), sans-serif",
                 fontSize: 13,
                 fontWeight: 600,
-                cursor: 'pointer',
-                padding: '4px 0',
+                cursor: "pointer",
+                padding: "4px 0",
               }}
             >
               + Add deliverable
@@ -327,16 +360,16 @@ export function PostMissionForm() {
 
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             paddingTop: 12,
             borderTop: `1px solid ${AC.border}`,
           }}
         >
           <p
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 12,
               color: AC.muted,
               margin: 0,
@@ -344,13 +377,13 @@ export function PostMissionForm() {
               lineHeight: 1.55,
             }}
           >
-            Posting deducts the budget from the unallocated pool. If no one bids, the budget
-            returns at period end.
+            Posting deducts the budget from the unallocated pool. If no one
+            bids, the budget returns at period end.
           </p>
           <button
             type="submit"
             className="a-btn a-btn-primary"
-            style={{ height: 44, padding: '0 22px', fontSize: 14 }}
+            style={{ height: 44, padding: "0 22px", fontSize: 14 }}
           >
             Post mission →
           </button>
@@ -360,15 +393,21 @@ export function PostMissionForm() {
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
-    <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <span
         style={{
-          fontFamily: 'var(--font-dm-sans), sans-serif',
+          fontFamily: "var(--font-dm-sans), sans-serif",
           fontSize: 13,
           fontWeight: 600,
-          color: 'rgba(30,58,47,0.78)',
+          color: "rgba(30,58,47,0.78)",
         }}
       >
         {label}

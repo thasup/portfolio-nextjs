@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Contact } from './Contact';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Contact } from "./Contact";
 
 const meta = {
-  title: 'Sections/Contact',
+  title: "Sections/Contact",
   component: Contact,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Contact>;
 
 export default meta;
@@ -17,19 +17,19 @@ export const Default: Story = {};
 
 export const DarkTheme: Story = {
   parameters: {
-    backgrounds: { default: 'dark' },
+    backgrounds: { default: "dark" },
   },
   globals: {
-    theme: 'dark',
+    theme: "dark",
   },
 };
 
 export const LightTheme: Story = {
   parameters: {
-    backgrounds: { default: 'light' },
+    backgrounds: { default: "light" },
   },
   globals: {
-    theme: 'light',
+    theme: "light",
   },
 };
 
@@ -37,7 +37,8 @@ export const InteractiveForm: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Contact form with validation, showing how errors appear when fields are invalid',
+        story:
+          "Contact form with validation, showing how errors appear when fields are invalid",
       },
     },
   },

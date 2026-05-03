@@ -1,11 +1,11 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
-import { computePool, centsToDollars } from '@/lib/marketos/calc';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
+import { computePool, centsToDollars } from "@/lib/marketos/calc";
 import {
   type PoolCompositionDTO,
   type PoolHistoryEntryDTO,
   type UpcomingPayoutDTO,
-} from '@/lib/marketos/types';
+} from "@/lib/marketos/types";
 
 /**
  * MarketOS — pool & payout reads.
@@ -36,7 +36,7 @@ export async function getCurrentPool(
     where: {
       orgId,
       revenuePeriodId: current.id,
-      status: 'scheduled',
+      status: "scheduled",
     },
     _sum: { amountCents: true },
   });
@@ -72,7 +72,7 @@ export async function getPoolHistory(
 ): Promise<PoolHistoryEntryDTO[]> {
   const periods = await prisma.marketosRevenuePeriod.findMany({
     where: { orgId },
-    orderBy: { periodStart: 'asc' },
+    orderBy: { periodStart: "asc" },
     select: {
       periodLabel: true,
       revenueCents: true,
@@ -101,8 +101,8 @@ export async function getUpcomingPayouts(
   options: { limit?: number } = {},
 ): Promise<UpcomingPayoutDTO[]> {
   const rows = await prisma.marketosPayout.findMany({
-    where: { orgId, status: 'scheduled' },
-    orderBy: { scheduledFor: 'asc' },
+    where: { orgId, status: "scheduled" },
+    orderBy: { scheduledFor: "asc" },
     take: options.limit,
     select: {
       id: true,

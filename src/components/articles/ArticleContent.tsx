@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useRef } from 'react';
-import { useTranslations } from 'next-intl';
-import { Article, ArticleCategory } from '@/types/article';
-import { cn } from '@/lib/utils';
-import { parseMarkdown, buildHierarchicalToc, type TocItem } from '@/lib/markdownParser';
+import { useEffect, useState, useRef } from "react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { Article, ArticleCategory } from "@/types/article";
+import { cn } from "@/lib/utils";
+import { parseMarkdown, buildHierarchicalToc } from "@/lib/markdownParser";
 
 interface ArticleContentProps {
   article: Article;
@@ -13,19 +14,22 @@ interface ArticleContentProps {
 
 function getCategoryColor(category: ArticleCategory): string {
   const colors = {
-    [ArticleCategory.HISTORY]: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
-    [ArticleCategory.TECHNOLOGY]: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-    [ArticleCategory.CULTURE]: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
-    [ArticleCategory.SCIENCE]: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+    [ArticleCategory.HISTORY]:
+      "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
+    [ArticleCategory.TECHNOLOGY]:
+      "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+    [ArticleCategory.CULTURE]:
+      "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
+    [ArticleCategory.SCIENCE]:
+      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
   };
   return colors[category];
 }
 
 export function ArticleContent({ article, locale }: ArticleContentProps) {
-  const t = useTranslations('articles');
-  const [activeSection, setActiveSection] = useState<string>('');
+  const t = useTranslations("articles");
+  const [activeSection, setActiveSection] = useState<string>("");
   const [hoveredTimeline, setHoveredTimeline] = useState(false);
-  const [hoveredEvent, setHoveredEvent] = useState<number | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
 
@@ -39,12 +43,12 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
         });
       },
       {
-        rootMargin: '-80px 0px -80% 0px',
+        rootMargin: "-80px 0px -80% 0px",
         threshold: 0,
-      }
+      },
     );
 
-    const sections = document.querySelectorAll('section[id]');
+    const sections = document.querySelectorAll("section[id]");
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
@@ -52,12 +56,12 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
 
   // Collect all timeline events for left sidebar
   const allTimelineEvents = article.sections
-    .flatMap((section, sectionIdx) => 
+    .flatMap((section, sectionIdx) =>
       (section.timeline || []).map((event, eventIdx) => ({
         ...event,
         sectionId: section.id,
         globalIndex: sectionIdx * 1000 + eventIdx,
-      }))
+      })),
     )
     .sort((a, b) => Math.abs(b.year) - Math.abs(a.year));
 
@@ -68,10 +72,11 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
     const element = document.getElementById(sectionId);
     if (element) {
       const navbarHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
         top: elementPosition - navbarHeight,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
@@ -80,49 +85,62 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
     <article className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${article.heroImage.src})` }}
-        >
+        <div className="absolute inset-0">
+          <Image
+            src={article.heroImage.src}
+            alt={article.heroImage.alt}
+            fill
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-background" />
         </div>
-        
+
         <div className="relative h-full mx-auto max-w-6xl px-4 sm:px-6 flex flex-col justify-end pb-12">
           <div className="space-y-4">
-            <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(article.category)}`}>
+            <span
+              className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(article.category)}`}
+            >
               {article.category}
             </span>
-            
+
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
               {article.title}
             </h1>
-            
+
             {article.subtitle && (
               <p className="text-lg sm:text-xl md:text-2xl text-gray-200 max-w-3xl">
                 {article.subtitle}
               </p>
             )}
-            
+
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-[var(--color-ink-2)]">
               {article.author && (
                 <span className="flex items-center gap-2">
                   {article.author.avatar && (
-                    <img 
-                      src={article.author.avatar} 
+                    <Image
+                      src={article.author.avatar}
                       alt={article.author.name}
+                      width={32}
+                      height={32}
                       className="w-8 h-8 rounded-full border border-[var(--color-line-soft)]"
                     />
                   )}
-                  <span className="text-[var(--color-ink)]">{article.author.name}</span>
+                  <span className="text-[var(--color-ink)]">
+                    {article.author.name}
+                  </span>
                 </span>
               )}
               <span>•</span>
               <time dateTime={article.publishedDate}>
-                {new Date(article.publishedDate).toLocaleDateString(locale, {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {new Date(article.publishedDate).toLocaleDateString(
+                  locale === "th" ? "th-TH" : "en-GB",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  },
+                )}
               </time>
               <span>•</span>
               <span>{article.readingTime} min read</span>
@@ -135,34 +153,37 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         <div className="flex gap-6 lg:gap-8 relative">
           {/* Left Timeline - Desktop Only - Clean Expandable Sidebar */}
-          <aside 
+          <aside
             className="hidden lg:block shrink-0 transition-all duration-300 ease-out overflow-visible"
-            style={{ width: hoveredTimeline ? '280px' : '80px' }}
+            style={{ width: hoveredTimeline ? "280px" : "80px" }}
             onMouseEnter={() => setHoveredTimeline(true)}
             onMouseLeave={() => setHoveredTimeline(false)}
             ref={timelineRef}
           >
             <div className="sticky top-28 h-[calc(100vh-10rem)]">
               {/* Vertical Line */}
-              <div 
+              <div
                 className="absolute top-8 bottom-8 transition-all duration-300"
-                style={{ left: hoveredTimeline ? '24px' : '50%', transform: hoveredTimeline ? 'none' : 'translateX(-50%)' }}
+                style={{
+                  left: hoveredTimeline ? "24px" : "50%",
+                  transform: hoveredTimeline ? "none" : "translateX(-50%)",
+                }}
               >
                 <div className="w-px h-full bg-linear-to-b from-transparent via-border to-transparent" />
               </div>
-              
+
               {/* Timeline Events Container */}
               <div className="relative h-full py-8 flex flex-col gap-12 overflow-y-auto scrollbar-hide">
                 {allTimelineEvents.map((event, idx) => {
                   const isActive = activeSection === event.sectionId;
-                  
+
                   return (
                     <div
                       key={idx}
                       className="relative transition-all duration-300"
-                      style={{ 
-                        paddingLeft: hoveredTimeline ? '48px' : '0',
-                        textAlign: hoveredTimeline ? 'left' : 'center'
+                      style={{
+                        paddingLeft: hoveredTimeline ? "48px" : "0",
+                        textAlign: hoveredTimeline ? "left" : "center",
                       }}
                     >
                       {/* Dot Indicator */}
@@ -172,26 +193,36 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                           "absolute transition-all duration-300 rounded-full",
                           "flex items-center justify-center group cursor-pointer",
                           "border-2",
-                          hoveredTimeline ? "left-0 top-0" : "left-1/2 -translate-x-1/2 top-0",
-                          isActive 
-                            ? "w-12 h-12 bg-primary border-primary shadow-xl shadow-primary/30" 
-                            : "w-10 h-10 bg-background border-border hover:border-primary hover:scale-105"
+                          hoveredTimeline
+                            ? "left-0 top-0"
+                            : "left-1/2 -translate-x-1/2 top-0",
+                          isActive
+                            ? "w-12 h-12 bg-primary border-primary shadow-xl shadow-primary/30"
+                            : "w-10 h-10 bg-background border-border hover:border-primary hover:scale-105",
                         )}
                         aria-label={`${event.year} ${event.era}: ${event.title}`}
                       >
-                        <div className={cn(
-                          "rounded-full transition-all",
-                          isActive ? "w-3 h-3 bg-primary-foreground" : "w-2 h-2 bg-muted-foreground"
-                        )} />
+                        <div
+                          className={cn(
+                            "rounded-full transition-all",
+                            isActive
+                              ? "w-3 h-3 bg-primary-foreground"
+                              : "w-2 h-2 bg-muted-foreground",
+                          )}
+                        />
                       </button>
-                      
+
                       {/* Compact View - Year Only */}
                       {!hoveredTimeline && (
                         <div className="pt-14">
-                          <div className={cn(
-                            "text-xs font-bold tracking-tight transition-colors leading-tight",
-                            isActive ? "text-primary" : "text-muted-foreground"
-                          )}>
+                          <div
+                            className={cn(
+                              "text-xs font-bold tracking-tight transition-colors leading-tight",
+                              isActive
+                                ? "text-primary"
+                                : "text-muted-foreground",
+                            )}
+                          >
                             {Math.abs(event.year)}
                           </div>
                           {event.era && (
@@ -201,7 +232,7 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                           )}
                         </div>
                       )}
-                      
+
                       {/* Expanded View - Full Details */}
                       {hoveredTimeline && (
                         <button
@@ -209,16 +240,20 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                           className={cn(
                             "w-full text-left pl-16 pr-3 py-3 rounded-lg transition-all",
                             "hover:bg-[var(--color-paper-2)] cursor-pointer group",
-                            isActive && "bg-[var(--color-praxis-accent-soft)]"
+                            isActive && "bg-[var(--color-praxis-accent-soft)]",
                           )}
                         >
                           <div className="space-y-1.5">
                             {/* Year + Era */}
                             <div className="flex items-baseline gap-2">
-                              <span className={cn(
-                                "text-xl font-display font-medium tracking-tight leading-none",
-                                isActive ? "text-[var(--color-praxis-accent)]" : "text-[var(--color-ink)]"
-                              )}>
+                              <span
+                                className={cn(
+                                  "text-xl font-display font-medium tracking-tight leading-none",
+                                  isActive
+                                    ? "text-[var(--color-praxis-accent)]"
+                                    : "text-[var(--color-ink)]",
+                                )}
+                              >
                                 {Math.abs(event.year)}
                               </span>
                               {event.era && (
@@ -227,12 +262,16 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                                 </span>
                               )}
                             </div>
-                            
+
                             {/* Event Title */}
-                            <h4 className={cn(
-                              "text-sm font-medium leading-snug line-clamp-2",
-                              isActive ? "text-[var(--color-praxis-accent)]" : "text-[var(--color-ink-2)] group-hover:text-[var(--color-praxis-accent)]"
-                            )}>
+                            <h4
+                              className={cn(
+                                "text-sm font-medium leading-snug line-clamp-2",
+                                isActive
+                                  ? "text-[var(--color-praxis-accent)]"
+                                  : "text-[var(--color-ink-2)] group-hover:text-[var(--color-praxis-accent)]",
+                              )}
+                            >
                               {event.title}
                             </h4>
                           </div>
@@ -248,21 +287,23 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
           {/* Main Article Content */}
           <div ref={contentRef} className="flex-1 min-w-0">
             <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-medium prose-p:text-[var(--color-ink-2)] prose-headings:text-[var(--color-ink)] prose-headings:scroll-mt-24">
-              {article.sections.map((section, index) => (
+              {article.sections.map((section) => (
                 <section key={section.id} id={section.id} className="mb-16">
                   <h2 className="text-2xl sm:text-3xl font-display font-medium mb-6 text-[var(--color-ink)]">
                     {section.title}
                   </h2>
-                  
+
                   {/* Render content with markdown parsing */}
                   <div className="space-y-4 text-[var(--color-ink-2)] leading-relaxed">
-                    {section.content.split('\n\n').map((paragraph, pIdx) => {
+                    {section.content.split("\n\n").map((paragraph, pIdx) => {
                       if (paragraph.trim()) {
                         return (
-                          <p 
-                            key={pIdx} 
+                          <p
+                            key={pIdx}
                             className="text-base sm:text-lg"
-                            dangerouslySetInnerHTML={{ __html: parseMarkdown(paragraph) }}
+                            dangerouslySetInnerHTML={{
+                              __html: parseMarkdown(paragraph),
+                            }}
                           />
                         );
                       }
@@ -285,11 +326,17 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                                 {Math.abs(event.year)}
                               </time>
                               {event.era && (
-                                <span className="text-xs sm:text-sm text-[var(--color-ink-3)]">{event.era}</span>
+                                <span className="text-xs sm:text-sm text-[var(--color-ink-3)]">
+                                  {event.era}
+                                </span>
                               )}
                             </div>
-                            <h4 className="text-base sm:text-lg font-medium text-[var(--color-ink)]">{event.title}</h4>
-                            <p className="text-sm sm:text-base text-[var(--color-ink-2)]">{event.description}</p>
+                            <h4 className="text-base sm:text-lg font-medium text-[var(--color-ink)]">
+                              {event.title}
+                            </h4>
+                            <p className="text-sm sm:text-base text-[var(--color-ink-2)]">
+                              {event.description}
+                            </p>
                           </div>
                         </div>
                       ))}
@@ -301,12 +348,15 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                     <div className="my-8 lg:my-12 grid gap-6 sm:gap-8">
                       {section.images.map((image, idx) => (
                         <figure key={idx} className="space-y-3">
-                          <img
-                            src={image.src}
-                            alt={image.alt}
-                            className="w-full border border-[var(--color-line-soft)] bg-[var(--color-paper-2)]"
-                            loading="lazy"
-                          />
+                          <div className="relative aspect-video w-full overflow-hidden border border-[var(--color-line-soft)] bg-[var(--color-paper-2)]">
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              className="object-cover"
+                              loading="lazy"
+                            />
+                          </div>
                           {(image.caption || image.credit) && (
                             <figcaption className="text-sm text-[var(--color-ink-3)] text-center">
                               {image.caption}
@@ -331,7 +381,7 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
             <div className="sticky top-36">
               <nav className="card p-4 sm:p-6">
                 <h3 className="eyebrow mb-4 text-[var(--color-ink-3)]">
-                  {t('contents')}
+                  {t("contents")}
                 </h3>
                 <ul className="space-y-1 text-sm">
                   {tocItems.map((item) => (
@@ -343,12 +393,12 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                           "text-left w-full transition-colors py-1.5 font-medium",
                           activeSection === item.id
                             ? "text-[var(--color-praxis-accent)]"
-                            : "text-[var(--color-ink)] hover:text-[var(--color-praxis-accent)]"
+                            : "text-[var(--color-ink)] hover:text-[var(--color-praxis-accent)]",
                         )}
                       >
                         {item.title}
                       </button>
-                      
+
                       {/* Sub-sections (if any) */}
                       {item.children && item.children.length > 0 && (
                         <ul className="mt-1 space-y-1 pl-3 border-l border-[var(--color-line-soft)]">
@@ -360,9 +410,11 @@ export function ArticleContent({ article, locale }: ArticleContentProps) {
                                   "text-left w-full transition-colors py-1 text-xs line-clamp-2",
                                   activeSection === child.id
                                     ? "text-[var(--color-praxis-accent)]"
-                                    : "text-[var(--color-ink-2)] hover:text-[var(--color-praxis-accent)]"
+                                    : "text-[var(--color-ink-2)] hover:text-[var(--color-praxis-accent)]",
                                 )}
-                                style={{ paddingLeft: `${(child.level - 2) * 0.5}rem` }}
+                                style={{
+                                  paddingLeft: `${(child.level - 2) * 0.5}rem`,
+                                }}
                               >
                                 {child.title}
                               </button>

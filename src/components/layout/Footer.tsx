@@ -1,35 +1,39 @@
-'use client'
+"use client";
 
-import React, { useMemo } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Github, Linkedin, Mail } from 'lucide-react'
-import { siteConfig } from '@/data/siteConfig'
-import { navigationItems } from '@/data/navigation'
-import { isNavAnchorEnabled } from '@/lib/featureFlags'
-import { useTranslations } from 'next-intl'
-import { getPrototypeConfig } from '@/data/prototypes'
+import React, { useMemo } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { siteConfig } from "@/data/siteConfig";
+import { navigationItems } from "@/data/navigation";
+import { isNavAnchorEnabled } from "@/lib/featureFlags";
+import { useTranslations } from "next-intl";
+import { getPrototypeConfig } from "@/data/prototypes";
 
 export function Footer() {
-  const t = useTranslations('footer')
-  const pathname = usePathname() ?? ''
-  const footerNavItems = navigationItems.filter((item) => isNavAnchorEnabled(item.href) && item.isAnchor)
+  const t = useTranslations("footer");
+  const pathname = usePathname() ?? "";
+  const footerNavItems = navigationItems.filter(
+    (item) => isNavAnchorEnabled(item.href) && item.isAnchor,
+  );
 
   const { isLandingPage, activePrototypeId } = useMemo(() => {
     const normalized = pathname.replace(/^\/(en|th)/, "") || "/";
     const isLanding = normalized === "/";
     const segments = normalized.split("/").filter(Boolean);
-    const protoId = segments[0] === "prototypes" && segments.length > 1 ? segments[1] : null;
-    
-    return { 
-      isLandingPage: isLanding, 
-      activePrototypeId: protoId 
+    const protoId =
+      segments[0] === "prototypes" && segments.length > 1 ? segments[1] : null;
+
+    return {
+      isLandingPage: isLanding,
+      activePrototypeId: protoId,
     };
   }, [pathname]);
 
-  const protoConfig = useMemo(() => 
-    activePrototypeId ? getPrototypeConfig(activePrototypeId) : null
-  , [activePrototypeId]);
+  const protoConfig = useMemo(
+    () => (activePrototypeId ? getPrototypeConfig(activePrototypeId) : null),
+    [activePrototypeId],
+  );
 
   // Global control: Hide footer if prototype explicitly requests it
   if (protoConfig?.hideGlobalFooter) return null;
@@ -40,7 +44,10 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/" className="text-lg font-bold text-[var(--color-ink)] flex items-center gap-2">
+            <Link
+              href="/"
+              className="text-lg font-bold text-[var(--color-ink)] flex items-center gap-2"
+            >
               <span>
                 Thanachon
                 <span className="text-[var(--color-praxis-accent)]">.</span>
@@ -52,14 +59,14 @@ export function Footer() {
               )}
             </Link>
             <p className="mt-2 text-sm text-[var(--color-ink-3)]">
-              {t('headline')}
+              {t("headline")}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
             <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
-              {isLandingPage ? t('navigation') : 'Nexus'}
+              {isLandingPage ? t("navigation") : "Nexus"}
             </h3>
             <ul className="space-y-2">
               {isLandingPage ? (
@@ -76,18 +83,27 @@ export function Footer() {
               ) : (
                 <>
                   <li>
-                    <Link href="/" className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]">
-                      {t('home')}
+                    <Link
+                      href="/"
+                      className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                    >
+                      {t("home")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/prototypes" className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]">
-                      {t('prototypes')}
+                    <Link
+                      href="/prototypes"
+                      className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                    >
+                      {t("prototypes")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/articles" className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]">
-                      {t('articles')}
+                    <Link
+                      href="/articles"
+                      className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
+                    >
+                      {t("articles")}
                     </Link>
                   </li>
                 </>
@@ -99,7 +115,7 @@ export function Footer() {
           {isLandingPage ? (
             <div>
               <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
-                {t('resources')}
+                {t("resources")}
               </h3>
               <ul className="space-y-2">
                 <li>
@@ -107,7 +123,7 @@ export function Footer() {
                     href="/articles"
                     className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
                   >
-                    {t('articles')}
+                    {t("articles")}
                   </Link>
                 </li>
                 <li>
@@ -115,17 +131,19 @@ export function Footer() {
                     href="/prototypes"
                     className="text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-ink)]"
                   >
-                    {t('prototypes')}
+                    {t("prototypes")}
                   </Link>
                 </li>
               </ul>
             </div>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
 
           {/* Social */}
           <div>
             <h3 className="mb-3 eyebrow text-[var(--color-ink-3)]">
-              {t('connect')}
+              {t("connect")}
             </h3>
             <div className="flex gap-3">
               <a
@@ -158,9 +176,10 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-[var(--color-line-soft)] pt-6 text-center text-sm text-[var(--color-ink-3)]">
-          © {new Date().getFullYear()} {siteConfig.name}. {t('allRightsReserved')}
+          © {new Date().getFullYear()} {siteConfig.name}.{" "}
+          {t("allRightsReserved")}
         </div>
       </div>
     </footer>
-  )
+  );
 }

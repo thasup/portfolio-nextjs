@@ -1,11 +1,11 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
 import {
   type OrgDTO,
   type OrgSettingsDTO,
   OrgAccent,
   OrgPeriod,
-} from '@/lib/marketos/types';
+} from "@/lib/marketos/types";
 
 /**
  * MarketOS — org-level reads.

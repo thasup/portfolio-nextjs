@@ -29,8 +29,8 @@
  * Server-only: importing this from a client component will fail at
  * build time thanks to `'server-only'`.
  */
-import 'server-only';
-import { PrismaClient } from '@prisma/client';
+import "server-only";
+import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
@@ -40,11 +40,11 @@ export const prisma: PrismaClient =
   globalForPrisma.prisma ??
   new PrismaClient({
     log:
-      process.env.NODE_ENV === 'development'
-        ? ['query', 'error', 'warn']
-        : ['error'],
+      process.env.NODE_ENV === "development"
+        ? ["query", "error", "warn"]
+        : ["error"],
   });
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }

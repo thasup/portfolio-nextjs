@@ -1,20 +1,23 @@
-import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { CatChip, TierChip } from '@/components/prototypes/market-os/primitives/Chips';
-import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
+import { AppPage } from "@/components/prototypes/market-os/app/AppPage";
+import {
+  CatChip,
+  TierChip,
+} from "@/components/prototypes/market-os/primitives/Chips";
+import { getOrgBySlug } from "@/lib/marketos/queries/orgs";
 import {
   getMemberMissionHistory,
   getMemberWithStats,
-} from '@/lib/marketos/queries/members';
-import { getCurrentMember } from '@/lib/marketos/auth';
-import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
-import { fmtBudget, fmtDateLong } from '@/lib/marketos/format';
+} from "@/lib/marketos/queries/members";
+import { getCurrentMember } from "@/lib/marketos/auth";
+import { DEMO_ORG_SLUG } from "@/lib/marketos/constants";
+import { fmtBudget, fmtDateLong } from "@/lib/marketos/format";
 
 const AC = {
-  cream: '#f9f7f6',
-  dark: '#1e3a2f',
-  orange: '#f2a84b',
-  muted: '#7a7f79',
-  border: 'rgba(30,58,47,0.1)',
+  cream: "#f9f7f6",
+  dark: "#1e3a2f",
+  orange: "#f2a84b",
+  muted: "#7a7f79",
+  border: "rgba(30,58,47,0.1)",
 };
 
 /**
@@ -25,51 +28,52 @@ const AC = {
  */
 export default async function ProfilePage() {
   const org = await getOrgBySlug(DEMO_ORG_SLUG);
-  if (!org) return <AppPage>{empty('Demo org not seeded.')}</AppPage>;
+  if (!org) return <AppPage>{empty("Demo org not seeded.")}</AppPage>;
 
   const member = await getCurrentMember(org.slug);
-  if (!member) return <AppPage>{empty('Sign in to see your profile.')}</AppPage>;
+  if (!member)
+    return <AppPage>{empty("Sign in to see your profile.")}</AppPage>;
 
   const [stats, history] = await Promise.all([
     getMemberWithStats(member.id),
     getMemberMissionHistory(member.id, { limit: 20 }),
   ]);
-  if (!stats) return <AppPage>{empty('No profile stats found.')}</AppPage>;
+  if (!stats) return <AppPage>{empty("No profile stats found.")}</AppPage>;
 
   const initials = stats.displayName
-    .split(' ')
+    .split(" ")
     .map((n) => n[0])
-    .join('')
+    .join("")
     .slice(0, 2);
 
   return (
     <AppPage>
       <div
         style={{
-          background: 'white',
+          background: "white",
           borderRadius: 24,
-          padding: '36px 40px',
+          padding: "36px 40px",
           marginBottom: 24,
-          boxShadow: '0 1px 4px rgba(30,58,47,0.07)',
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr auto',
+          boxShadow: "0 1px 4px rgba(30,58,47,0.07)",
+          display: "grid",
+          gridTemplateColumns: "auto 1fr auto",
           gap: 28,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <div
           style={{
             width: 72,
             height: 72,
-            borderRadius: '50%',
+            borderRadius: "50%",
             background: `linear-gradient(135deg, ${AC.orange}, #e89a35)`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontFamily: 'var(--font-bricolage), sans-serif',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "var(--font-bricolage), sans-serif",
             fontWeight: 800,
             fontSize: 26,
-            color: 'white',
+            color: "white",
           }}
         >
           {initials.toUpperCase()}
@@ -77,37 +81,37 @@ export default async function ProfilePage() {
         <div>
           <h1
             style={{
-              fontFamily: 'var(--font-bricolage), sans-serif',
+              fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
               fontSize: 24,
               color: AC.dark,
-              margin: '0 0 4px',
-              letterSpacing: '-0.03em',
+              margin: "0 0 4px",
+              letterSpacing: "-0.03em",
             }}
           >
             {stats.displayName}
           </h1>
           <p
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 15,
-              color: 'rgba(30,58,47,0.55)',
-              margin: '0 0 12px',
+              color: "rgba(30,58,47,0.55)",
+              margin: "0 0 12px",
             }}
           >
             {stats.title ?? stats.role}
           </p>
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {stats.skills.map((s) => (
               <span
                 key={s}
                 style={{
-                  padding: '3px 10px',
+                  padding: "3px 10px",
                   borderRadius: 8,
-                  background: 'rgba(30,58,47,0.06)',
+                  background: "rgba(30,58,47,0.06)",
                   fontSize: 12,
-                  fontFamily: 'var(--font-dm-sans), sans-serif',
-                  color: 'rgba(30,58,47,0.7)',
+                  fontFamily: "var(--font-dm-sans), sans-serif",
+                  color: "rgba(30,58,47,0.7)",
                   fontWeight: 500,
                 }}
               >
@@ -118,19 +122,19 @@ export default async function ProfilePage() {
         </div>
         <div
           style={{
-            textAlign: 'center',
-            padding: '16px 32px',
+            textAlign: "center",
+            padding: "16px 32px",
             background: AC.cream,
             borderRadius: 16,
           }}
         >
           <div
             style={{
-              fontFamily: 'var(--font-bricolage), sans-serif',
+              fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
               fontSize: 42,
               color: AC.dark,
-              letterSpacing: '-0.04em',
+              letterSpacing: "-0.04em",
               lineHeight: 1,
             }}
           >
@@ -138,7 +142,7 @@ export default async function ProfilePage() {
           </div>
           <div
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 13,
               color: AC.muted,
               marginTop: 2,
@@ -154,40 +158,40 @@ export default async function ProfilePage() {
 
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4,1fr)',
+          display: "grid",
+          gridTemplateColumns: "repeat(4,1fr)",
           gap: 16,
           marginBottom: 28,
         }}
       >
         {(
           [
-            ['Missions Completed', String(stats.completed), 'total deliveries'],
+            ["Missions Completed", String(stats.completed), "total deliveries"],
             [
-              'On-time Rate',
-              stats.onTimePct == null ? '—' : `${stats.onTimePct}%`,
-              'of missions on schedule',
+              "On-time Rate",
+              stats.onTimePct == null ? "—" : `${stats.onTimePct}%`,
+              "of missions on schedule",
             ],
             [
-              'Peer Rating',
-              stats.avgRating == null ? '—' : `${stats.avgRating.toFixed(1)}/5`,
-              `average across ${stats.reviewCount} review${stats.reviewCount === 1 ? '' : 's'}`,
+              "Peer Rating",
+              stats.avgRating == null ? "—" : `${stats.avgRating.toFixed(1)}/5`,
+              `average across ${stats.reviewCount} review${stats.reviewCount === 1 ? "" : "s"}`,
             ],
             [
-              'Total Earned',
+              "Total Earned",
               `$${stats.totalEarnedUsd.toLocaleString()}`,
-              'across all missions',
+              "across all missions",
             ],
           ] as const
         ).map(([label, val, sub]) => (
           <div key={label} className="a-stat-card">
             <div
               style={{
-                fontFamily: 'var(--font-bricolage), sans-serif',
+                fontFamily: "var(--font-bricolage), sans-serif",
                 fontWeight: 800,
                 fontSize: 26,
                 color: AC.dark,
-                letterSpacing: '-0.03em',
+                letterSpacing: "-0.03em",
                 lineHeight: 1,
                 marginBottom: 6,
               }}
@@ -196,7 +200,7 @@ export default async function ProfilePage() {
             </div>
             <div
               style={{
-                fontFamily: 'var(--font-dm-sans), sans-serif',
+                fontFamily: "var(--font-dm-sans), sans-serif",
                 fontWeight: 600,
                 fontSize: 13,
                 color: AC.dark,
@@ -207,9 +211,9 @@ export default async function ProfilePage() {
             </div>
             <div
               style={{
-                fontFamily: 'var(--font-dm-sans), sans-serif',
+                fontFamily: "var(--font-dm-sans), sans-serif",
                 fontSize: 12,
-                color: 'rgba(30,58,47,0.45)',
+                color: "rgba(30,58,47,0.45)",
               }}
             >
               {sub}
@@ -220,21 +224,26 @@ export default async function ProfilePage() {
 
       <div
         style={{
-          background: 'white',
+          background: "white",
           borderRadius: 20,
-          overflow: 'hidden',
-          boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
+          overflow: "hidden",
+          boxShadow: "0 1px 4px rgba(30,58,47,0.06)",
         }}
       >
-        <div style={{ padding: '20px 28px', borderBottom: `1px solid ${AC.border}` }}>
+        <div
+          style={{
+            padding: "20px 28px",
+            borderBottom: `1px solid ${AC.border}`,
+          }}
+        >
           <h2
             style={{
-              fontFamily: 'var(--font-bricolage), sans-serif',
+              fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 700,
               fontSize: 17,
               color: AC.dark,
               margin: 0,
-              letterSpacing: '-0.02em',
+              letterSpacing: "-0.02em",
             }}
           >
             Mission History
@@ -244,8 +253,8 @@ export default async function ProfilePage() {
           <div
             style={{
               padding: 32,
-              textAlign: 'center',
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              textAlign: "center",
+              fontFamily: "var(--font-dm-sans), sans-serif",
               color: AC.muted,
               fontSize: 13,
             }}
@@ -257,17 +266,18 @@ export default async function ProfilePage() {
           <div
             key={h.missionId}
             style={{
-              display: 'flex',
-              alignItems: 'center',
+              display: "flex",
+              alignItems: "center",
               gap: 16,
-              padding: '16px 28px',
-              borderBottom: i < history.length - 1 ? `1px solid ${AC.border}` : 'none',
+              padding: "16px 28px",
+              borderBottom:
+                i < history.length - 1 ? `1px solid ${AC.border}` : "none",
             }}
           >
             <div style={{ flex: 1 }}>
               <div
                 style={{
-                  fontFamily: 'var(--font-dm-sans), sans-serif',
+                  fontFamily: "var(--font-dm-sans), sans-serif",
                   fontWeight: 600,
                   fontSize: 14,
                   color: AC.dark,
@@ -275,23 +285,30 @@ export default async function ProfilePage() {
               >
                 {h.title}
               </div>
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 4 }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 8,
+                  alignItems: "center",
+                  marginTop: 4,
+                }}
+              >
                 <CatChip cat={h.category} />
                 <span
                   style={{
                     fontSize: 12,
                     color: AC.muted,
-                    fontFamily: 'var(--font-dm-sans), sans-serif',
+                    fontFamily: "var(--font-dm-sans), sans-serif",
                   }}
                 >
                   {fmtDateLong(h.completedAt)}
                 </span>
               </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
+            <div style={{ textAlign: "right" }}>
               <div
                 style={{
-                  fontFamily: 'var(--font-bricolage), sans-serif',
+                  fontFamily: "var(--font-bricolage), sans-serif",
                   fontWeight: 800,
                   fontSize: 16,
                   color: AC.dark,
@@ -304,7 +321,7 @@ export default async function ProfilePage() {
                   style={{
                     fontSize: 12,
                     color: AC.muted,
-                    fontFamily: 'var(--font-dm-sans), sans-serif',
+                    fontFamily: "var(--font-dm-sans), sans-serif",
                   }}
                 >
                   ★ {h.rating.toFixed(1)}
@@ -322,12 +339,12 @@ function empty(message: string) {
   return (
     <div
       style={{
-        background: 'white',
+        background: "white",
         borderRadius: 16,
         padding: 60,
-        textAlign: 'center',
-        boxShadow: '0 1px 4px rgba(30,58,47,0.06)',
-        fontFamily: 'var(--font-dm-sans), sans-serif',
+        textAlign: "center",
+        boxShadow: "0 1px 4px rgba(30,58,47,0.06)",
+        fontFamily: "var(--font-dm-sans), sans-serif",
         color: AC.muted,
         fontSize: 14,
       }}

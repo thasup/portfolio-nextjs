@@ -12,42 +12,42 @@
 
 /** Supported UI locales. Phase 1 only emits `en`; `th` is architecture-only. */
 export enum PraxisLocale {
-  EN = 'en',
-  TH = 'th',
+  EN = "en",
+  TH = "th",
 }
 
 /** Scope guardrail verdict categories. */
 export enum ScopeCategory {
-  OK = 'ok',
-  MEDICAL = 'medical',
-  LEGAL = 'legal',
-  FINANCIAL = 'financial',
-  EXPLICIT = 'explicit',
-  MINORS = 'minors',
-  OTHER = 'other',
+  OK = "ok",
+  MEDICAL = "medical",
+  LEGAL = "legal",
+  FINANCIAL = "financial",
+  EXPLICIT = "explicit",
+  MINORS = "minors",
+  OTHER = "other",
 }
 
 /** Content block kinds emitted by `curriculum.unit.ts`. */
 export enum UnitBlockKind {
-  OBJECTIVES = 'objectives',
-  EXPLAINER = 'explainer',
-  EXAMPLE = 'example',
-  DIAGRAM_NOTE = 'diagram_note',
-  PRACTICE = 'practice',
+  OBJECTIVES = "objectives",
+  EXPLAINER = "explainer",
+  EXAMPLE = "example",
+  DIAGRAM_NOTE = "diagram_note",
+  PRACTICE = "practice",
 }
 
 /** Onboarding question input types emitted by `onboarding.meta.ts`. */
 export enum OnboardingInputType {
-  SHORT_TEXT = 'short_text',
-  LONG_TEXT = 'long_text',
-  SINGLE_SELECT = 'single_select',
+  SHORT_TEXT = "short_text",
+  LONG_TEXT = "long_text",
+  SINGLE_SELECT = "single_select",
 }
 
 /** Template kinds supported in Phase 1 (DOCX + XLSX; PDF is Phase 3). */
 export enum TemplateKind {
-  DOCX = 'docx',
-  XLSX = 'xlsx',
-  PDF = 'pdf',
+  DOCX = "docx",
+  XLSX = "xlsx",
+  PDF = "pdf",
 }
 
 /**
@@ -95,7 +95,7 @@ export interface PromptFixture<TInput> {
 
 /** Canonical persona synthetic fixtures used across eval runs. */
 export enum EvalPersonaKey {
-  SALES_SMB = 'sales_smb',
-  PM_NEW = 'pm_new',
-  NEGOTIATOR = 'negotiator',
+  SALES_SMB = "sales_smb",
+  PM_NEW = "pm_new",
+  NEGOTIATOR = "negotiator",
 }

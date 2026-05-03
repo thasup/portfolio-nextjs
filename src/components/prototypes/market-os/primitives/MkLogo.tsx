@@ -4,17 +4,17 @@
  *   - landing  : dark badge, orange strokes (default).
  *   - app      : orange badge, white strokes (used inside the app shell).
  */
-type Variant = 'landing' | 'app';
+type Variant = "landing" | "app";
 
 export function MkLogo({
   size = 26,
-  variant = 'landing',
+  variant = "landing",
 }: {
   size?: number;
   variant?: Variant;
 }) {
-  const bg = variant === 'app' ? '#f2a84b' : '#1e3a2f';
-  const stroke = variant === 'app' ? '#ffffff' : '#f2a84b';
+  const bg = variant === "app" ? "#f2a84b" : "#1e3a2f";
+  const stroke = variant === "app" ? "#ffffff" : "#f2a84b";
   return (
     <svg
       width={size}

@@ -12,9 +12,9 @@
  * NEVER import this module from a client component or a page. The
  * service-role key grants full database access.
  */
-import 'server-only';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Database } from '@/lib/praxis/supabase/database.types';
+import "server-only";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "@/lib/praxis/supabase/database.types";
 
 let cached: SupabaseClient<Database> | null = null;
 
@@ -33,10 +33,10 @@ export function createAdminClient() {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url) {
-    throw new Error('Supabase admin: NEXT_PUBLIC_SUPABASE_URL is not set');
+    throw new Error("Supabase admin: NEXT_PUBLIC_SUPABASE_URL is not set");
   }
   if (!serviceRoleKey) {
-    throw new Error('Supabase admin: SUPABASE_SERVICE_ROLE_KEY is not set');
+    throw new Error("Supabase admin: SUPABASE_SERVICE_ROLE_KEY is not set");
   }
 
   cached = createClient<Database>(url, serviceRoleKey, {
@@ -46,7 +46,7 @@ export function createAdminClient() {
     },
     global: {
       headers: {
-        'X-Client-Info': 'praxis-admin',
+        "X-Client-Info": "praxis-admin",
       },
     },
   });

@@ -18,12 +18,19 @@ export function Timeline() {
   const t = useTranslations("timeline");
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  
+
   const [activeYear, setActiveYear] = useState<YearKey | null>(null);
   const [spineProgress, setSpineProgress] = useState(0);
-  const [yearPositions, setYearPositions] = useState<Record<YearKey, number>>({} as Record<YearKey, number>);
+  const [yearPositions, setYearPositions] = useState<Record<YearKey, number>>(
+    {} as Record<YearKey, number>,
+  );
   const [totalHeight, setTotalHeight] = useState(0);
-  const [milestones, setMilestones] = useState({ 25: false, 50: false, 75: false, 100: false });
+  const [milestones, setMilestones] = useState({
+    25: false,
+    50: false,
+    75: false,
+    100: false,
+  });
   const [isFiltered, setIsFiltered] = useState(true);
 
   const { scrollYProgress } = useScroll({
@@ -66,14 +73,16 @@ export function Timeline() {
   }, [isFiltered]); // Re-calculate when filter changes
 
   // IntersectionObserver for active year detection
-  const allYears = Object.keys(YEAR_THEMES).map(Number).sort((a, b) => a - b) as YearKey[];
-  const years = isFiltered ? allYears.filter(y => y >= 2022) : allYears;
+  const allYears = Object.keys(YEAR_THEMES)
+    .map(Number)
+    .sort((a, b) => a - b) as YearKey[];
+  const years = isFiltered ? allYears.filter((y) => y >= 2022) : allYears;
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
     const yearElements = years.map((y) =>
-      sectionRef.current!.querySelector(`[data-year="${y}"]`)
+      sectionRef.current!.querySelector(`[data-year="${y}"]`),
     );
 
     const observer = new IntersectionObserver(
@@ -83,7 +92,9 @@ export function Timeline() {
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
 
         if (visible[0]) {
-          const year = Number(visible[0].target.getAttribute("data-year")) as YearKey;
+          const year = Number(
+            visible[0].target.getAttribute("data-year"),
+          ) as YearKey;
           setActiveYear(year);
         }
       },
@@ -91,7 +102,7 @@ export function Timeline() {
         root: null,
         rootMargin: "-20% 0px -60% 0px",
         threshold: 0,
-      }
+      },
     );
 
     yearElements.forEach((el) => el && observer.observe(el));
@@ -99,17 +110,20 @@ export function Timeline() {
   }, [years]);
 
   // Group events by year
-  const eventsByYear = timelineEvents.reduce((acc, event) => {
-    const year = new Date(event.sortDate).getFullYear() as YearKey;
-    if (!acc[year]) acc[year] = [];
-    acc[year].push(event);
-    return acc;
-  }, {} as Record<YearKey, typeof timelineEvents>);
+  const eventsByYear = timelineEvents.reduce(
+    (acc, event) => {
+      const year = new Date(event.sortDate).getFullYear() as YearKey;
+      if (!acc[year]) acc[year] = [];
+      acc[year].push(event);
+      return acc;
+    },
+    {} as Record<YearKey, typeof timelineEvents>,
+  );
 
   // Sort events within each year by sortDate ascending
   Object.keys(eventsByYear).forEach((year) => {
     eventsByYear[year as unknown as YearKey].sort(
-      (a, b) => new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime()
+      (a, b) => new Date(a.sortDate).getTime() - new Date(b.sortDate).getTime(),
     );
   });
 
@@ -118,22 +132,30 @@ export function Timeline() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="timeline" className="relative section-padding overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="timeline"
+      className="relative section-padding overflow-hidden"
+    >
       <YearBackground activeYear={activeYear} />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeader label={t("label")} title={t("title")} subtitle={t("subtitle")} />
+        <SectionHeader
+          label={t("label")}
+          title={t("title")}
+          subtitle={t("subtitle")}
+        />
 
         {/* Filter Toggle */}
         <div className="flex justify-end items-center gap-3 mt-8 -mb-4 relative z-10">
-          <Label 
-            htmlFor="timeline-filter" 
+          <Label
+            htmlFor="timeline-filter"
             className="text-sm font-medium text-muted-foreground cursor-pointer select-none"
           >
             {t("labels.filterLabel")}
           </Label>
-          <Switch 
-            id="timeline-filter" 
+          <Switch
+            id="timeline-filter"
             checked={isFiltered}
             onCheckedChange={(checked) => {
               setIsFiltered(checked);
@@ -181,7 +203,9 @@ export function Timeline() {
 
             {/* Vision CTA */}
             <div className="mt-24 md:mt-32 text-center">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">{t("visionTitle")}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                {t("visionTitle")}
+              </h3>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
                 {t("visionDescription")}
               </p>

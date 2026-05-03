@@ -1,9 +1,7 @@
-import { notFound } from 'next/navigation';
-import { getArticle, getAllArticleSlugs } from '@/data/articles';
-import { getTranslations } from 'next-intl/server';
-import { ArticleCategory } from '@/types/article';
-import { ArticleContent } from '@/components/articles/ArticleContent';
-import type { PageProps } from '@/types/next';
+import { notFound } from "next/navigation";
+import { getArticle, getAllArticleSlugs } from "@/data/articles";
+import { ArticleContent } from "@/components/articles/ArticleContent";
+import type { PageProps } from "@/types/next";
 
 type ArticlePageProps = PageProps<{
   locale: string;
@@ -12,32 +10,32 @@ type ArticlePageProps = PageProps<{
 
 export async function generateStaticParams() {
   const slugs = getAllArticleSlugs();
-  const locales = ['en', 'th'];
-  
-  return slugs.flatMap(slug => 
-    locales.map(locale => ({
+  const locales = ["en", "th"];
+
+  return slugs.flatMap((slug) =>
+    locales.map((locale) => ({
       locale,
       slug,
-    }))
+    })),
   );
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
   const { locale, slug } = await params;
   const article = getArticle(slug, locale);
-  
+
   if (!article) {
     return {
-      title: 'Article Not Found',
+      title: "Article Not Found",
     };
   }
 
   const keywords = [
     article.category,
-    ...article.tags || [],
-    locale === 'th' ? 'บทความ' : 'article',
-    locale === 'th' ? 'ประวัติศาสตร์' : 'history',
-  ].join(', ');
+    ...(article.tags || []),
+    locale === "th" ? "บทความ" : "article",
+    locale === "th" ? "ประวัติศาสตร์" : "history",
+  ].join(", ");
 
   return {
     title: `${article.title} | Articles`,
@@ -51,16 +49,16 @@ export async function generateMetadata({ params }: ArticlePageProps) {
         {
           url: article.heroImage.src,
           alt: article.heroImage.alt,
-        }
+        },
       ],
-      type: 'article',
+      type: "article",
       publishedTime: article.publishedDate,
       authors: article.author ? [article.author.name] : [],
       section: article.category,
       tags: article.tags,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: article.title,
       description: article.description,
       images: [article.heroImage.src],

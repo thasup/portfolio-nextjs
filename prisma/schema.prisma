@@ -11,26 +11,38 @@ datasource db {
 
 model User {
   /// FK to auth.users(id), enforced at SQL level.
-  id                String   @id @db.Uuid
-  email             String   @unique(map: "praxis_learners_email_key")
-  displayName       String?  @map("display_name")
+  id                       String                    @id @db.Uuid
+  email                    String                    @unique(map: "praxis_learners_email_key")
+  displayName              String?                   @map("display_name")
   /// 'en' | 'th' (check constraint in SQL).
-  defaultLocale     String   @default("en") @map("default_locale")
-  canGenerateTopics Boolean  @default(false) @map("can_generate_topics")
-  canSeePrototypes  Boolean  @default(false) @map("can_see_prototypes")
+  defaultLocale            String                    @default("en") @map("default_locale")
+  canGenerateTopics        Boolean                   @default(false) @map("can_generate_topics")
   /// JSONB object: { guardrail?, curriculum?, unit?, onboarding?, judge? }
-  modelPreferences  Json?    @map("model_preferences")
-  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  lastActiveAt      DateTime @default(now()) @map("last_active_at") @db.Timestamptz(6)
-  role              Role?    @default(MEMBER)
-
-  topics        PraxisTopic[]
-  invitations   PraxisInvitation[] @relation("Inviter")
-  onboarding    PraxisOnboarding[]
-  templates     PraxisTemplate[]
-  conversations PraxisConversation[]
-  orgsCreated   MarketosOrg[]      @relation("OrgCreator")
-  marketosMembers MarketosMember[]
+  modelPreferences         Json?                     @map("model_preferences")
+  createdAt                DateTime                  @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastActiveAt             DateTime                  @default(now()) @map("last_active_at") @db.Timestamptz(6)
+  role                     Role?                     @default(MEMBER)
+  canSeePrototypes         Boolean                   @default(false) @map("can_see_prototypes")
+  capitalAccounts          CapitalAccount[]
+  capitalAirtableConfigs   CapitalAirtableConfig[]
+  capitalAirtableSnapshots CapitalAirtableSnapshot[]
+  capitalAlerts            CapitalAlert[]
+  capitalGoals             CapitalGoal[]
+  capitalLiabilities       CapitalLiability[]
+  capitalMappingConfigs    CapitalMappingConfig[]    @relation("UserMappingConfigs")
+  capitalSACategories      CapitalSACategory[]       @relation("UserSACategories")
+  capitalScenarios         CapitalScenario[]
+  capitalSettings          CapitalSettings?
+  capitalSnapshots         CapitalSnapshot[]
+  capitalSnowballSnapshots CapitalSnowballSnapshot[]
+  capitalSyncLogs          CapitalSyncLog[]
+  marketosMembers          MarketosMember[]
+  orgsCreated              MarketosOrg[]             @relation("OrgCreator")
+  conversations            PraxisConversation[]
+  invitations              PraxisInvitation[]        @relation("Inviter")
+  onboarding               PraxisOnboarding[]
+  templates                PraxisTemplate[]
+  topics                   PraxisTopic[]
 
   @@map("nexus_users")
 }
@@ -43,8 +55,7 @@ model PraxisInvitation {
   invitedAt DateTime  @default(now()) @map("invited_at") @db.Timestamptz(6)
   revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
   note      String?
-
-  inviter User @relation("Inviter", fields: [invitedBy], references: [id])
+  inviter   User      @relation("Inviter", fields: [invitedBy], references: [id])
 
   @@map("praxis_invitations")
 }
@@ -76,23 +87,22 @@ model PraxisUnitCache {
 }
 
 model PraxisTopic {
-  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId       String   @map("user_id") @db.Uuid
-  title        String
-  rawInput     String   @map("raw_input")
-  fingerprint  String
-  locale       String   @default("en")
+  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String               @map("user_id") @db.Uuid
+  title         String
+  rawInput      String               @map("raw_input")
+  fingerprint   String
+  locale        String               @default("en")
   /// pending_guardrail | rejected | outline_ready | active | archived
-  status       String   @default("pending_guardrail")
-  curriculumId String?  @map("curriculum_id") @db.Uuid
-  lastActiveAt DateTime @default(now()) @map("last_active_at") @db.Timestamptz(6)
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  user          User                 @relation(fields: [userId], references: [id])
-  units         PraxisUnit[]
+  status        String               @default("pending_guardrail")
+  curriculumId  String?              @map("curriculum_id") @db.Uuid
+  lastActiveAt  DateTime             @default(now()) @map("last_active_at") @db.Timestamptz(6)
+  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
   conversations PraxisConversation[]
   onboarding    PraxisOnboarding[]
   templates     PraxisTemplate[]
+  user          User                 @relation(fields: [userId], references: [id])
+  units         PraxisUnit[]
 
   @@index([fingerprint, locale], map: "praxis_topics_fingerprint_idx")
   @@index([userId, lastActiveAt(sort: Desc)], map: "praxis_topics_learner_active_idx")
@@ -100,42 +110,40 @@ model PraxisTopic {
 }
 
 model PraxisUnit {
-  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  topicId     String    @map("topic_id") @db.Uuid
-  index       Int
-  title       String
-  objective   String
+  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topicId       String               @map("topic_id") @db.Uuid
+  index         Int
+  title         String
+  objective     String
   /// pending | ready | completed
-  status      String    @default("pending")
-  blocks      Json      @default("[]")
-  cacheId     String?   @map("cache_id") @db.Uuid
-  completedAt DateTime? @map("completed_at") @db.Timestamptz(6)
-  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
-
-  topic         PraxisTopic          @relation(fields: [topicId], references: [id])
+  status        String               @default("pending")
+  blocks        Json                 @default("[]")
+  cacheId       String?              @map("cache_id") @db.Uuid
+  completedAt   DateTime?            @map("completed_at") @db.Timestamptz(6)
+  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   conversations PraxisConversation[]
   templates     PraxisTemplate[]
+  topic         PraxisTopic          @relation(fields: [topicId], references: [id])
 
   @@unique([topicId, index])
   @@map("praxis_units")
 }
 
 model PraxisConversation {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId        String    @map("user_id") @db.Uuid
-  topicId       String    @map("topic_id") @db.Uuid
-  unitId        String?   @map("unit_id") @db.Uuid
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String          @map("user_id") @db.Uuid
+  topicId       String          @map("topic_id") @db.Uuid
+  unitId        String?         @map("unit_id") @db.Uuid
   /// unit | mate (check + invariant: unit_id non-null iff surface = 'unit')
   surface       String
   summary       String?
-  lastMessageAt DateTime? @map("last_message_at") @db.Timestamptz(6)
-  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  user     User            @relation(fields: [userId], references: [id])
-  topic    PraxisTopic     @relation(fields: [topicId], references: [id])
-  unit     PraxisUnit?     @relation(fields: [unitId], references: [id])
-  messages PraxisMessage[]
+  lastMessageAt DateTime?       @map("last_message_at") @db.Timestamptz(6)
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  topic         PraxisTopic     @relation(fields: [topicId], references: [id])
+  unit          PraxisUnit?     @relation(fields: [unitId], references: [id])
+  user          User            @relation(fields: [userId], references: [id])
+  messages      PraxisMessage[]
 
   @@index([userId, lastMessageAt(sort: Desc)], map: "praxis_conversations_learner_recent_idx")
   @@index([topicId], map: "praxis_conversations_topic_idx")
@@ -143,52 +151,49 @@ model PraxisConversation {
 }
 
 model PraxisMessage {
-  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  conversationId   String   @map("conversation_id") @db.Uuid
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  conversationId   String             @map("conversation_id") @db.Uuid
   /// user | assistant
   role             String
   content          String
-  tokenCountInput  Int?     @map("token_count_input")
-  tokenCountOutput Int?     @map("token_count_output")
-  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  conversation PraxisConversation @relation(fields: [conversationId], references: [id])
+  tokenCountInput  Int?               @map("token_count_input")
+  tokenCountOutput Int?               @map("token_count_output")
+  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  conversation     PraxisConversation @relation(fields: [conversationId], references: [id])
 
   @@index([conversationId, createdAt], map: "praxis_messages_conversation_idx")
   @@map("praxis_messages")
 }
 
 model PraxisOnboarding {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String   @map("user_id") @db.Uuid
-  topicId   String   @map("topic_id") @db.Uuid
-  version   Int      @default(1)
+  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String      @map("user_id") @db.Uuid
+  topicId   String      @map("topic_id") @db.Uuid
+  version   Int         @default(1)
   answers   Json
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
-
-  user  User        @relation(fields: [userId], references: [id])
-  topic PraxisTopic @relation(fields: [topicId], references: [id])
+  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  topic     PraxisTopic @relation(fields: [topicId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
 
   @@unique([userId, topicId, version], map: "praxis_onboarding_learner_id_topic_id_version_key")
   @@map("praxis_onboarding")
 }
 
 model PraxisTemplate {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId         String   @map("user_id") @db.Uuid
-  topicId        String   @map("topic_id") @db.Uuid
-  unitId         String?  @map("unit_id") @db.Uuid
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String      @map("user_id") @db.Uuid
+  topicId        String      @map("topic_id") @db.Uuid
+  unitId         String?     @map("unit_id") @db.Uuid
   /// docx | xlsx | pdf
   kind           String
   title          String
-  specJson       Json     @map("spec_json")
-  regenerateNote String?  @map("regenerate_note")
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  user  User        @relation(fields: [userId], references: [id])
-  topic PraxisTopic @relation(fields: [topicId], references: [id])
-  unit  PraxisUnit? @relation(fields: [unitId], references: [id])
+  specJson       Json        @map("spec_json")
+  regenerateNote String?     @map("regenerate_note")
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  topic          PraxisTopic @relation(fields: [topicId], references: [id])
+  unit           PraxisUnit? @relation(fields: [unitId], references: [id])
+  user           User        @relation(fields: [userId], references: [id])
 
   @@index([userId, createdAt(sort: Desc)], map: "praxis_templates_learner_idx")
   @@map("praxis_templates")
@@ -209,52 +214,50 @@ model PraxisSpendLedger {
 }
 
 model MarketosOrg {
-  id         String    @id @default(uuid()) @db.Uuid
-  slug       String    @unique
-  name       String
+  id             String                  @id @default(uuid()) @db.Uuid
+  slug           String                  @unique
+  name           String
   /// ISO-4217. MVP-locked to 'USD'; checked at SQL level.
-  currency   String    @default("USD")
+  currency       String                  @default("USD")
   /// FK to auth.users(id) (the org creator). Nullable for the seed.
-  createdBy  String?   @map("created_by") @db.Uuid
-  archivedAt DateTime? @map("archived_at") @db.Timestamptz(6)
-  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  creator        User?                 @relation("OrgCreator", fields: [createdBy], references: [id])
-  members        MarketosMember[]
+  createdBy      String?                 @map("created_by") @db.Uuid
+  archivedAt     DateTime?               @map("archived_at") @db.Timestamptz(6)
+  createdAt      DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
   invitations    MarketosInvitation[]
-  settings       MarketosOrgSettings?
-  revenuePeriods MarketosRevenuePeriod[]
+  members        MarketosMember[]
   missions       MarketosMission[]
-  payouts        MarketosPayout[]
   notifications  MarketosNotification[]
+  settings       MarketosOrgSettings?
+  creator        User?                   @relation("OrgCreator", fields: [createdBy], references: [id])
+  payouts        MarketosPayout[]
+  revenuePeriods MarketosRevenuePeriod[]
 
   @@map("marketos_orgs")
 }
 
 model MarketosMember {
-  id            String    @id @default(uuid()) @db.Uuid
-  orgId         String    @map("org_id") @db.Uuid
+  id              String                 @id @default(uuid()) @db.Uuid
+  orgId           String                 @map("org_id") @db.Uuid
   /// FK to auth.users(id).
-  userId        String    @map("user_id") @db.Uuid
+  userId          String                 @map("user_id") @db.Uuid
   /// owner | admin | member (check at SQL level).
-  role          String
-  displayName   String    @map("display_name")
-  title         String?
-  bio           String?
-  skills        String[]  @default([])
-  baseCompCents BigInt    @default(0) @map("base_comp_cents")
-  joinedAt      DateTime  @default(now()) @map("joined_at") @db.Timestamptz(6)
-  removedAt     DateTime? @map("removed_at") @db.Timestamptz(6)
-
-  org             MarketosOrg            @relation(fields: [orgId], references: [id])
-  user            User                   @relation(fields: [userId], references: [id])
-  payouts         MarketosPayout[]       @relation("PayoutRecipient")
-  postedMissions  MarketosMission[]      @relation("MissionPoster")
+  role            String
+  displayName     String                 @map("display_name")
+  title           String?
+  bio             String?
+  skills          String[]               @default([])
+  baseCompCents   BigInt                 @default(0) @map("base_comp_cents")
+  joinedAt        DateTime               @default(now()) @map("joined_at") @db.Timestamptz(6)
+  removedAt       DateTime?              @map("removed_at") @db.Timestamptz(6)
   bids            MarketosBid[]
   decidedBids     MarketosBid[]          @relation("BidDecider")
-  reviewsGiven    MarketosReview[]       @relation("ReviewReviewer")
-  reviewsReceived MarketosReview[]       @relation("ReviewReviewee")
+  org             MarketosOrg            @relation(fields: [orgId], references: [id])
+  user            User                   @relation(fields: [userId], references: [id])
+  postedMissions  MarketosMission[]      @relation("MissionPoster")
   notifications   MarketosNotification[]
+  payouts         MarketosPayout[]       @relation("PayoutRecipient")
+  reviewsReceived MarketosReview[]       @relation("ReviewReviewee")
+  reviewsGiven    MarketosReview[]       @relation("ReviewReviewer")
 
   @@unique([orgId, userId])
   @@index([orgId, removedAt], map: "marketos_members_org_active_idx")
@@ -262,65 +265,62 @@ model MarketosMember {
 }
 
 model MarketosInvitation {
-  id         String    @id @default(uuid()) @db.Uuid
-  orgId      String    @map("org_id") @db.Uuid
+  id         String      @id @default(uuid()) @db.Uuid
+  orgId      String      @map("org_id") @db.Uuid
   email      String
   /// FK to auth.users(id) (the inviter).
-  invitedBy  String    @map("invited_by") @db.Uuid
+  invitedBy  String      @map("invited_by") @db.Uuid
   /// admin | member (check at SQL level).
   role       String
-  invitedAt  DateTime  @default(now()) @map("invited_at") @db.Timestamptz(6)
-  acceptedAt DateTime? @map("accepted_at") @db.Timestamptz(6)
-  revokedAt  DateTime? @map("revoked_at") @db.Timestamptz(6)
+  invitedAt  DateTime    @default(now()) @map("invited_at") @db.Timestamptz(6)
+  acceptedAt DateTime?   @map("accepted_at") @db.Timestamptz(6)
+  revokedAt  DateTime?   @map("revoked_at") @db.Timestamptz(6)
   note       String?
-
-  org MarketosOrg @relation(fields: [orgId], references: [id])
+  org        MarketosOrg @relation(fields: [orgId], references: [id])
 
   @@unique([orgId, email])
   @@map("marketos_invitations")
 }
 
 model MarketosOrgSettings {
-  orgId           String   @id @map("org_id") @db.Uuid
+  orgId           String      @id @map("org_id") @db.Uuid
   /// 0–100; check constraint.
-  payrollRatioPct Int      @map("payroll_ratio_pct")
+  payrollRatioPct Int         @map("payroll_ratio_pct")
   /// 0–100; check constraint.
-  baseSplitPct    Int      @map("base_split_pct")
+  baseSplitPct    Int         @map("base_split_pct")
   /// month | quarter | half (check).
   period          String
   /// orange | blue | green (check). Cosmetic.
-  accent          String   @default("orange")
-  darkMode        Boolean  @default(false) @map("dark_mode")
-  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  accent          String      @default("orange")
+  darkMode        Boolean     @default(false) @map("dark_mode")
+  updatedAt       DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   /// FK to auth.users(id).
-  updatedBy       String?  @map("updated_by") @db.Uuid
-
-  org MarketosOrg @relation(fields: [orgId], references: [id])
+  updatedBy       String?     @map("updated_by") @db.Uuid
+  org             MarketosOrg @relation(fields: [orgId], references: [id])
 
   @@map("marketos_org_settings")
 }
 
 model MarketosRevenuePeriod {
-  id              String    @id @default(uuid()) @db.Uuid
-  orgId           String    @map("org_id") @db.Uuid
+  id              String           @id @default(uuid()) @db.Uuid
+  orgId           String           @map("org_id") @db.Uuid
   /// month | quarter | half — denormalised to preserve historical accuracy.
   period          String
   /// Human label like "Q3 2025" — used directly in UI.
-  periodLabel     String    @map("period_label")
-  periodStart     DateTime  @map("period_start") @db.Date
-  periodEnd       DateTime  @map("period_end") @db.Date
-  revenueCents    BigInt    @map("revenue_cents")
+  periodLabel     String           @map("period_label")
+  periodStart     DateTime         @map("period_start") @db.Date
+  periodEnd       DateTime         @map("period_end") @db.Date
+  revenueCents    BigInt           @map("revenue_cents")
   /// Snapshot of org settings at close time.
-  payrollRatioPct Int       @map("payroll_ratio_pct")
+  payrollRatioPct Int              @map("payroll_ratio_pct")
   /// Snapshot of org settings at close time.
-  baseSplitPct    Int       @map("base_split_pct")
+  baseSplitPct    Int              @map("base_split_pct")
   /// Exactly one row per org has this true (partial unique index in SQL).
-  isCurrent       Boolean   @default(false) @map("is_current")
-  closedAt        DateTime? @map("closed_at") @db.Timestamptz(6)
-  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  org     MarketosOrg      @relation(fields: [orgId], references: [id])
-  payouts MarketosPayout[]
+  isCurrent       Boolean          @default(false) @map("is_current")
+  closedAt        DateTime?        @map("closed_at") @db.Timestamptz(6)
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  payouts         MarketosPayout[]
+  org             MarketosOrg      @relation(fields: [orgId], references: [id])
 
   @@unique([orgId, periodLabel])
   @@index([orgId, periodStart(sort: Desc)], map: "marketos_revenue_periods_history_idx")
@@ -328,9 +328,9 @@ model MarketosRevenuePeriod {
 }
 
 model MarketosMission {
-  id            String    @id @default(uuid()) @db.Uuid
-  orgId         String    @map("org_id") @db.Uuid
-  posterId      String    @map("poster_id") @db.Uuid
+  id            String           @id @default(uuid()) @db.Uuid
+  orgId         String           @map("org_id") @db.Uuid
+  posterId      String           @map("poster_id") @db.Uuid
   title         String
   slug          String
   description   String
@@ -338,25 +338,24 @@ model MarketosMission {
   category      String
   /// Array of strings, length 1–10.
   deliverables  Json
-  budgetCents   BigInt    @map("budget_cents")
-  deadline      DateTime  @db.Date
+  budgetCents   BigInt           @map("budget_cents")
+  deadline      DateTime         @db.Date
   /// open | active | delivered | completed | cancelled (check).
-  status        String    @default("open")
+  status        String           @default("open")
   /// Set when a bid is accepted. Nullable while open.
-  acceptedBidId String?   @unique @map("accepted_bid_id") @db.Uuid
-  deliveredAt   DateTime? @map("delivered_at") @db.Timestamptz(6)
-  completedAt   DateTime? @map("completed_at") @db.Timestamptz(6)
-  cancelledAt   DateTime? @map("cancelled_at") @db.Timestamptz(6)
-  archivedAt    DateTime? @map("archived_at") @db.Timestamptz(6)
-  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
-
-  org         MarketosOrg      @relation(fields: [orgId], references: [id])
-  poster      MarketosMember   @relation("MissionPoster", fields: [posterId], references: [id])
-  acceptedBid MarketosBid?     @relation("AcceptedBid", fields: [acceptedBidId], references: [id])
-  bids        MarketosBid[]
-  payouts     MarketosPayout[]
-  reviews     MarketosReview[]
+  acceptedBidId String?          @unique @map("accepted_bid_id") @db.Uuid
+  deliveredAt   DateTime?        @map("delivered_at") @db.Timestamptz(6)
+  completedAt   DateTime?        @map("completed_at") @db.Timestamptz(6)
+  cancelledAt   DateTime?        @map("cancelled_at") @db.Timestamptz(6)
+  archivedAt    DateTime?        @map("archived_at") @db.Timestamptz(6)
+  createdAt     DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  bids          MarketosBid[]
+  acceptedBid   MarketosBid?     @relation("AcceptedBid", fields: [acceptedBidId], references: [id])
+  org           MarketosOrg      @relation(fields: [orgId], references: [id])
+  poster        MarketosMember   @relation("MissionPoster", fields: [posterId], references: [id])
+  payouts       MarketosPayout[]
+  reviews       MarketosReview[]
 
   @@unique([orgId, slug])
   @@index([orgId, status, createdAt(sort: Desc)], map: "marketos_missions_board_idx")
@@ -365,20 +364,19 @@ model MarketosMission {
 }
 
 model MarketosBid {
-  id          String    @id @default(uuid()) @db.Uuid
-  missionId   String    @map("mission_id") @db.Uuid
-  bidderId    String    @map("bidder_id") @db.Uuid
-  amountCents BigInt    @map("amount_cents")
+  id          String           @id @default(uuid()) @db.Uuid
+  missionId   String           @map("mission_id") @db.Uuid
+  bidderId    String           @map("bidder_id") @db.Uuid
+  amountCents BigInt           @map("amount_cents")
   proposal    String
   /// pending | shortlisted | accepted | declined | withdrawn (check).
-  status      String    @default("pending")
-  submittedAt DateTime  @default(now()) @map("submitted_at") @db.Timestamptz(6)
-  decidedAt   DateTime? @map("decided_at") @db.Timestamptz(6)
-  decidedBy   String?   @map("decided_by") @db.Uuid
-
-  mission     MarketosMission @relation(fields: [missionId], references: [id])
-  bidder      MarketosMember  @relation(fields: [bidderId], references: [id])
-  decider     MarketosMember? @relation("BidDecider", fields: [decidedBy], references: [id])
+  status      String           @default("pending")
+  submittedAt DateTime         @default(now()) @map("submitted_at") @db.Timestamptz(6)
+  decidedAt   DateTime?        @map("decided_at") @db.Timestamptz(6)
+  decidedBy   String?          @map("decided_by") @db.Uuid
+  bidder      MarketosMember   @relation(fields: [bidderId], references: [id])
+  decider     MarketosMember?  @relation("BidDecider", fields: [decidedBy], references: [id])
+  mission     MarketosMission  @relation(fields: [missionId], references: [id])
   acceptedFor MarketosMission? @relation("AcceptedBid")
   payout      MarketosPayout?
 
@@ -388,28 +386,27 @@ model MarketosBid {
 }
 
 model MarketosPayout {
-  id                String    @id @default(uuid()) @db.Uuid
+  id                String                @id @default(uuid()) @db.Uuid
   /// 1:1 with the accepted bid.
-  bidId             String    @unique @map("bid_id") @db.Uuid
+  bidId             String                @unique @map("bid_id") @db.Uuid
   /// Denormalised for fast queries.
-  missionId         String    @map("mission_id") @db.Uuid
+  missionId         String                @map("mission_id") @db.Uuid
   /// Denormalised.
-  orgId             String    @map("org_id") @db.Uuid
-  recipientMemberId String    @map("recipient_member_id") @db.Uuid
-  amountCents       BigInt    @map("amount_cents")
+  orgId             String                @map("org_id") @db.Uuid
+  recipientMemberId String                @map("recipient_member_id") @db.Uuid
+  amountCents       BigInt                @map("amount_cents")
   /// The period this payout debits.
-  revenuePeriodId   String    @map("revenue_period_id") @db.Uuid
-  scheduledFor      DateTime  @map("scheduled_for") @db.Date
+  revenuePeriodId   String                @map("revenue_period_id") @db.Uuid
+  scheduledFor      DateTime              @map("scheduled_for") @db.Date
   /// scheduled | released | voided (check).
-  status            String    @default("scheduled")
-  releasedAt        DateTime? @map("released_at") @db.Timestamptz(6)
-  voidedAt          DateTime? @map("voided_at") @db.Timestamptz(6)
-
-  bid           MarketosBid           @relation(fields: [bidId], references: [id])
-  mission       MarketosMission       @relation(fields: [missionId], references: [id])
-  org           MarketosOrg           @relation(fields: [orgId], references: [id])
-  recipient     MarketosMember        @relation("PayoutRecipient", fields: [recipientMemberId], references: [id])
-  revenuePeriod MarketosRevenuePeriod @relation(fields: [revenuePeriodId], references: [id])
+  status            String                @default("scheduled")
+  releasedAt        DateTime?             @map("released_at") @db.Timestamptz(6)
+  voidedAt          DateTime?             @map("voided_at") @db.Timestamptz(6)
+  bid               MarketosBid           @relation(fields: [bidId], references: [id])
+  mission           MarketosMission       @relation(fields: [missionId], references: [id])
+  org               MarketosOrg           @relation(fields: [orgId], references: [id])
+  recipient         MarketosMember        @relation("PayoutRecipient", fields: [recipientMemberId], references: [id])
+  revenuePeriod     MarketosRevenuePeriod @relation(fields: [revenuePeriodId], references: [id])
 
   @@index([orgId, scheduledFor], map: "marketos_payouts_org_due_idx")
   @@index([recipientMemberId, status], map: "marketos_payouts_recipient_status_idx")
@@ -417,20 +414,19 @@ model MarketosPayout {
 }
 
 model MarketosReview {
-  id         String   @id @default(uuid()) @db.Uuid
-  missionId  String   @map("mission_id") @db.Uuid
-  reviewerId String   @map("reviewer_id") @db.Uuid
-  revieweeId String   @map("reviewee_id") @db.Uuid
+  id         String          @id @default(uuid()) @db.Uuid
+  missionId  String          @map("mission_id") @db.Uuid
+  reviewerId String          @map("reviewer_id") @db.Uuid
+  revieweeId String          @map("reviewee_id") @db.Uuid
   /// poster_to_contributor | contributor_to_poster (check).
   direction  String
   /// 1–5.
   rating     Int
   feedback   String?
-  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  mission  MarketosMission @relation(fields: [missionId], references: [id])
-  reviewer MarketosMember  @relation("ReviewReviewer", fields: [reviewerId], references: [id])
-  reviewee MarketosMember  @relation("ReviewReviewee", fields: [revieweeId], references: [id])
+  createdAt  DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  mission    MarketosMission @relation(fields: [missionId], references: [id])
+  reviewee   MarketosMember  @relation("ReviewReviewee", fields: [revieweeId], references: [id])
+  reviewer   MarketosMember  @relation("ReviewReviewer", fields: [reviewerId], references: [id])
 
   @@unique([missionId, direction])
   @@index([revieweeId, createdAt(sort: Desc)], map: "marketos_reviews_reviewee_idx")
@@ -438,27 +434,410 @@ model MarketosReview {
 }
 
 model MarketosNotification {
-  id        String    @id @default(uuid()) @db.Uuid
-  orgId     String    @map("org_id") @db.Uuid
-  memberId  String    @map("member_id") @db.Uuid
+  id        String         @id @default(uuid()) @db.Uuid
+  orgId     String         @map("org_id") @db.Uuid
+  memberId  String         @map("member_id") @db.Uuid
   /// One of the strings in the spec §3.10 enum-by-text list.
   type      String
   title     String
   body      String
   link      String?
   payload   Json?
-  readAt    DateTime? @map("read_at") @db.Timestamptz(6)
-  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  org    MarketosOrg    @relation(fields: [orgId], references: [id])
-  member MarketosMember @relation(fields: [memberId], references: [id])
+  readAt    DateTime?      @map("read_at") @db.Timestamptz(6)
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  member    MarketosMember @relation(fields: [memberId], references: [id])
+  org       MarketosOrg    @relation(fields: [orgId], references: [id])
 
   @@index([memberId, readAt, createdAt(sort: Desc)], map: "marketos_notifications_inbox_idx")
   @@map("marketos_notifications")
+}
+
+model CapitalAccount {
+  id          String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String               @map("user_id") @db.Uuid
+  name        String
+  /// Stored in satangs (1/100 THB).
+  balance     BigInt               @default(0)
+  type        CapitalAssetType
+  source      CapitalAccountSource @default(MANUAL)
+  externalId  String?              @map("external_id")
+  icon        String?
+  color       String?
+  archivedAt  DateTime?            @map("archived_at") @db.Timestamptz(6)
+  createdAt   DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  saCategory  String?              @map("sa_category")
+  mappingRole CapitalMappingRole?  @map("mapping_role")
+  user        User                 @relation(fields: [userId], references: [id])
+
+  @@unique([userId, externalId])
+  @@index([userId, archivedAt])
+  @@map("capital_accounts")
+}
+
+model CapitalLiability {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  name       String
+  /// Stored in satangs (negative value).
+  balance    BigInt    @default(0)
+  apr        Decimal?  @db.Decimal(5, 2)
+  icon       String?
+  color      String?
+  archivedAt DateTime? @map("archived_at") @db.Timestamptz(6)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@index([userId, archivedAt])
+  @@map("capital_liabilities")
+}
+
+model CapitalGoal {
+  id         String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String              @map("user_id") @db.Uuid
+  name       String
+  /// Current amount in satangs.
+  current    BigInt              @default(0)
+  /// Target amount in satangs.
+  target     BigInt
+  deadline   DateTime?           @db.Date
+  priority   CapitalGoalPriority
+  vehicle    String?
+  archivedAt DateTime?           @map("archived_at") @db.Timestamptz(6)
+  createdAt  DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user       User                @relation(fields: [userId], references: [id])
+
+  @@index([userId, archivedAt])
+  @@map("capital_goals")
+}
+
+model CapitalSnapshot {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  date         DateTime @db.Date
+  netWorth     BigInt   @map("net_worth")
+  liquid       BigInt
+  invested     BigInt
+  liabilities  BigInt
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  saTotal      BigInt?  @map("sa_total")
+  saPortfolios Json?    @map("sa_portfolios")
+  fxRateUsdThb Decimal? @map("fx_rate_usd_thb") @db.Decimal(10, 4)
+  saAssets     Json?    @map("sa_assets")
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+  @@index([userId, date(sort: Desc)])
+  @@map("capital_snapshots")
+}
+
+model CapitalSettings {
+  userId            String    @id @map("user_id") @db.Uuid
+  runwayBurnRate    BigInt    @default(2500000) @map("runway_burn_rate")
+  runwayAccountIds  String[]  @default([]) @map("runway_account_ids")
+  /// ISO 4217 currency code for display (e.g., THB, USD, EUR)
+  preferredCurrency String    @default("THB") @map("preferred_currency")
+  /// BCP 47 locale for number formatting (e.g., en-US, th-TH)
+  numberFormat      String    @default("en-US") @map("number_format")
+  /// Date format string (YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY)
+  dateFormat        String    @default("YYYY-MM-DD") @map("date_format")
+  /// UI theme: dark (default) or light
+  theme             String    @default("dark")
+  /// Last FX rate fetch timestamp for cache invalidation
+  fxRatesUpdatedAt  DateTime? @map("fx_rates_updated_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user              User      @relation(fields: [userId], references: [id])
+
+  @@index([fxRatesUpdatedAt], map: "capital_settings_fx_cache_idx")
+  @@map("capital_settings")
+}
+
+model CapitalSACategory {
+  id             String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String               @map("user_id") @db.Uuid
+  portfolio_type CapitalPortfolioType
+  name           String
+  target_pct     Decimal?             @db.Decimal(5, 2)
+  sortOrder      Int                  @default(0) @map("sort_order")
+  createdAt      DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  assets         CapitalSAAsset[]
+  user           User                 @relation("UserSACategories", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([userId, portfolio_type], map: "capital_sa_categories_user_portfolio_idx")
+  @@map("capital_sa_categories")
+}
+
+model CapitalSAAsset {
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  categoryId String            @map("category_id") @db.Uuid
+  ticker     String
+  name       String
+  valueThb   BigInt?           @map("value_thb")
+  shares     Decimal?          @db.Decimal(18, 6)
+  targetPct  Decimal?          @map("target_pct") @db.Decimal(5, 2)
+  sortOrder  Int               @default(0) @map("sort_order")
+  createdAt  DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  category   CapitalSACategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([categoryId], map: "capital_sa_assets_category_idx")
+  @@map("capital_sa_assets")
+}
+
+model CapitalMappingConfig {
+  id            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String             @map("user_id") @db.Uuid
+  ynabAccId     String             @map("ynab_acc_id")
+  /// @deprecated Legacy single category mapping. Use saAssetMappings instead. Will be removed in future version.
+  saCategory    String?            @map("sa_category")
+  /// JSONB array of SA asset mappings: [{saTicker: string}, ...]. Supports many-to-one SA asset → YNAB account mapping.
+  saAssetMappings Json?            @map("sa_asset_mappings")
+  role          CapitalMappingRole
+  note          String?
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user          User               @relation("UserMappingConfigs", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([userId, ynabAccId])
+  @@index([userId], map: "capital_mapping_configs_user_idx")
+  @@map("capital_mapping_configs")
+}
+
+model CapitalSyncLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  source     String
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  before     Json?
+  after      Json?
+  timestamp  DateTime @default(now()) @db.Timestamptz(6)
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, timestamp(sort: Desc)])
+  @@map("capital_sync_logs")
+}
+
+model CapitalAlert {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  type       String
+  severity   String
+  title      String
+  message    String
+  isResolved Boolean   @default(false) @map("is_resolved")
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  resolvedAt DateTime? @map("resolved_at") @db.Timestamptz(6)
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@index([userId, isResolved])
+  @@map("capital_alerts")
+}
+
+model CapitalScenario {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String   @map("user_id") @db.Uuid
+  name                String
+  burnRate            BigInt   @map("burn_rate")
+  ssoMonths           Int      @map("sso_months")
+  investReturn        Decimal  @map("invest_return") @db.Decimal(5, 2)
+  missionSuccessMonth Int      @map("mission_success_month")
+  postSuccessIncome   BigInt   @map("post_success_income")
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user                User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("capital_scenarios")
+}
+
+model CapitalSnowballSnapshot {
+  id                 String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String                    @map("user_id") @db.Uuid
+  snapshotDate       DateTime                  @map("snapshot_date")
+  importMethod       String                    @map("import_method")
+  totalValueUsd      BigInt                    @map("total_value_usd")
+  totalValueThb      BigInt                    @map("total_value_thb")
+  fxRateUsdThb       Float                     @map("fx_rate_usd_thb")
+  totalProfitUsd     BigInt                    @map("total_profit_usd")
+  totalProfitPct     Float                     @map("total_profit_pct")
+  irrPct             Float                     @map("irr_pct")
+  passiveIncomeUsd   BigInt                    @map("passive_income_usd")
+  passiveYieldPct    Float                     @map("passive_yield_pct")
+  cashBalanceUsd     BigInt?                   @map("cash_balance_usd")
+  strategicValueUsd  BigInt?                   @map("strategic_value_usd")
+  strategicAllocPct  Float?                    @map("strategic_alloc_pct")
+  strategicProfitPct Float?                    @map("strategic_profit_pct")
+  tacticalValueUsd   BigInt?                   @map("tactical_value_usd")
+  tacticalAllocPct   Float?                    @map("tactical_alloc_pct")
+  tacticalProfitPct  Float?                    @map("tactical_profit_pct")
+  globalEquitiesUsd  BigInt?                   @map("global_equities_usd")
+  globalEquitiesPct  Float?                    @map("global_equities_pct")
+  fixedIncomeUsd     BigInt?                   @map("fixed_income_usd")
+  fixedIncomePct     Float?                    @map("fixed_income_pct")
+  realAssetUsd       BigInt?                   @map("real_asset_usd")
+  thematicUsd        BigInt?                   @map("thematic_usd")
+  airtableSnapshotId String?                   @map("airtable_snapshot_id")
+  notes              String?
+  totalHoldings      Int?                      @map("total_holdings")
+  createdAt          DateTime                  @default(now()) @map("created_at") @db.Timestamptz(6)
+  positions          CapitalPositionSnapshot[]
+  user               User                      @relation(fields: [userId], references: [id])
+
+  @@index([userId, snapshotDate(sort: Desc)])
+  @@map("capital_snowball_snapshots")
+}
+
+model CapitalPositionSnapshot {
+  id               String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  snapshotId       String                  @map("snapshot_id") @db.Uuid
+  ticker           String
+  portfolioName    String                  @map("portfolio_name")
+  sharesHeld       Float                   @map("shares_held")
+  costBasisUsd     BigInt                  @map("cost_basis_usd")
+  currentValueUsd  BigInt                  @map("current_value_usd")
+  totalProfitUsd   BigInt?                 @map("total_profit_usd")
+  totalProfitPct   Float?                  @map("total_profit_pct")
+  irrPct           Float?                  @map("irr_pct")
+  dividendYieldPct Float?                  @map("dividend_yield_pct")
+  peRatio          Float?                  @map("pe_ratio")
+  beta             Float?
+  snapshot         CapitalSnowballSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+
+  @@index([snapshotId])
+  @@map("capital_position_snapshots")
+}
+
+model CapitalAirtableConfig {
+  id         String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String                        @map("user_id") @db.Uuid
+  /// Base ID from Airtable (e.g., "appXXXXXXXXXXXXXX")
+  baseId     String                        @map("base_id")
+  /// Friendly name for this configuration
+  name       String                        @default("My Airtable Base")
+  /// Whether this config is active for syncing
+  isActive   Boolean                       @default(true) @map("is_active")
+  /// Last successful sync timestamp
+  lastSyncAt DateTime?                     @map("last_sync_at") @db.Timestamptz(6)
+  /// Error message from last failed sync
+  lastError  String?                       @map("last_error")
+  createdAt  DateTime                      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime                      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user       User                          @relation(fields: [userId], references: [id])
+  snapshots  CapitalAirtableSnapshot[]
+  tables     CapitalAirtableTableMapping[]
+
+  @@index([userId, isActive])
+  @@map("capital_airtable_configs")
+}
+
+model CapitalAirtableTableMapping {
+  id                String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  configId          String                    @map("config_id") @db.Uuid
+  /// Which entity type this table maps to
+  entityType        CapitalAirtableEntityType @map("entity_type")
+  /// Airtable table name (exact case-sensitive name)
+  tableName         String                    @map("table_name")
+  /// Whether this table is enabled for sync
+  isEnabled         Boolean                   @default(true) @map("is_enabled")
+  /// Field mappings as JSON: { capitalField: "airtableFieldName", ... }
+  fieldMap          Json?                     @map("field_map")
+  /// Optional filter formula for this table
+  filterFormula     String?                   @map("filter_formula")
+  createdAt         DateTime                  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime                  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  /// Custom display title for this table (optional, defaults to tableName)
+  customTitle       String?                   @map("custom_title")
+  /// Custom description for this table
+  customDescription String?                   @map("custom_description")
+  config            CapitalAirtableConfig     @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, entityType])
+  @@index([configId, isEnabled])
+  @@map("capital_airtable_table_mappings")
+}
+
+model CapitalAirtableSnapshot {
+  id              String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  configId        String                    @map("config_id") @db.Uuid
+  userId          String                    @map("user_id") @db.Uuid
+  /// Which sync run this snapshot belongs to (groups records synced together)
+  syncRunId       String                    @map("sync_run_id") @db.Uuid
+  /// Entity type of the records in this snapshot
+  entityType      CapitalAirtableEntityType @map("entity_type")
+  /// The Airtable record ID
+  recordId        String                    @map("record_id")
+  /// Full raw Airtable record data as JSON
+  rawData         Json                      @map("raw_data")
+  /// Whether this record was processed into CapitalOS entities
+  processed       Boolean                   @default(false)
+  /// CapitalOS entity ID if processed (optional, for traceability)
+  capitalEntityId String?                   @map("capital_entity_id") @db.Uuid
+  /// Any processing errors
+  errorMessage    String?                   @map("error_message")
+  createdAt       DateTime                  @default(now()) @map("created_at") @db.Timestamptz(6)
+  config          CapitalAirtableConfig     @relation(fields: [configId], references: [id], onDelete: Cascade)
+  user            User                      @relation(fields: [userId], references: [id])
+
+  @@index([configId, syncRunId, entityType])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([recordId, configId])
+  @@map("capital_airtable_snapshots")
 }
 
 enum Role {
   ADMIN
   MEMBER
   GUEST
+}
+
+enum CapitalAssetType {
+  LIQUID
+  SEMI_LIQUID
+  INVESTMENT
+  FIXED_ASSET
+  GOAL_FUND
+}
+
+enum CapitalGoalPriority {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum CapitalAccountSource {
+  MANUAL
+  YNAB
+  AIRTABLE
+  SA_SNAPSHOT
+}
+
+enum CapitalMappingRole {
+  SA_COVERED
+  YNAB_ONLY
+}
+
+enum CapitalPortfolioType {
+  STRATEGIC
+  TACTICAL
+}
+
+enum CapitalInsightSeverity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  INFO
+}
+
+enum CapitalAirtableEntityType {
+  ACCOUNTS
+  LIABILITIES
+  GOALS
+  SNAPSHOTS
+  HOLDINGS
 }

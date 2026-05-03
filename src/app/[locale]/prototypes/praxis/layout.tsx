@@ -14,9 +14,13 @@
  * flex items-center justify-center` internally, so the padded container
  * is a visual improvement (contained card) not a regression.
  */
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-export default function PraxisLearnLayout({ children }: { children: ReactNode }) {
+export default function PraxisLearnLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <div id="praxis-shell" className="praxis-shell">
       {children}

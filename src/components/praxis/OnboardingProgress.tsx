@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Onboarding progress indicator.
@@ -7,21 +7,31 @@
  * questions are answered one at a time on a single page, and clicking
  * between them doesn't mesh with the save-at-end UX.
  */
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 export interface OnboardingProgressProps {
   current: number;
   total: number;
 }
 
-export function OnboardingProgress({ current, total }: OnboardingProgressProps) {
-  const t = useTranslations('praxis.onboarding');
-  const pct = total > 0 ? Math.min(100, Math.round((current / total) * 100)) : 0;
+export function OnboardingProgress({
+  current,
+  total,
+}: OnboardingProgressProps) {
+  const t = useTranslations("praxis.onboarding");
+  const pct =
+    total > 0 ? Math.min(100, Math.round((current / total) * 100)) : 0;
 
   return (
-    <div className="space-y-2" role="progressbar" aria-valuenow={current} aria-valuemin={0} aria-valuemax={total}>
+    <div
+      className="space-y-2"
+      role="progressbar"
+      aria-valuenow={current}
+      aria-valuemin={0}
+      aria-valuemax={total}
+    >
       <div className="flex items-center justify-between text-xs font-medium uppercase tracking-wider text-muted-foreground">
-        <span>{t('progressLabel')}</span>
+        <span>{t("progressLabel")}</span>
         <span>
           {current} / {total}
         </span>

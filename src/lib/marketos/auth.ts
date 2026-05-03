@@ -1,13 +1,10 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
-import { cookies } from 'next/headers';
-import { createClient as createSupabaseServerClient } from '@/utils/supabase/server';
-import {
-  MemberRole,
-  type MemberDTO,
-} from '@/lib/marketos/types';
-import type { User } from '@supabase/supabase-js';
-import type { MarketosMember } from '@prisma/client';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
+import { cookies } from "next/headers";
+import { createClient as createSupabaseServerClient } from "@/utils/supabase/server";
+import { MemberRole, type MemberDTO } from "@/lib/marketos/types";
+import type { User } from "@supabase/supabase-js";
+import type { MarketosMember } from "@prisma/client";
 
 /**
  * MarketOS — auth & member resolution helpers.
@@ -31,14 +28,14 @@ import type { MarketosMember } from '@prisma/client';
 // ---------- Errors --------------------------------------------------------
 
 export class MarketosAuthError extends Error {
-  readonly code: 'UNAUTHENTICATED' | 'NOT_A_MEMBER' | 'INSUFFICIENT_ROLE';
+  readonly code: "UNAUTHENTICATED" | "NOT_A_MEMBER" | "INSUFFICIENT_ROLE";
   constructor(
-    code: 'UNAUTHENTICATED' | 'NOT_A_MEMBER' | 'INSUFFICIENT_ROLE',
+    code: "UNAUTHENTICATED" | "NOT_A_MEMBER" | "INSUFFICIENT_ROLE",
     message: string,
   ) {
     super(message);
     this.code = code;
-    this.name = 'MarketosAuthError';
+    this.name = "MarketosAuthError";
   }
 }
 
@@ -93,20 +90,20 @@ export async function requireMember(
   const user = await getCurrentUser();
   if (!user) {
     throw new MarketosAuthError(
-      'UNAUTHENTICATED',
-      'You must be signed in to perform this action.',
+      "UNAUTHENTICATED",
+      "You must be signed in to perform this action.",
     );
   }
   const member = await getCurrentMember(orgSlug);
   if (!member) {
     throw new MarketosAuthError(
-      'NOT_A_MEMBER',
+      "NOT_A_MEMBER",
       `You are not a member of "${orgSlug}".`,
     );
   }
   if (role && !memberHasRole(member.role, role)) {
     throw new MarketosAuthError(
-      'INSUFFICIENT_ROLE',
+      "INSUFFICIENT_ROLE",
       `This action requires the "${role}" role or higher.`,
     );
   }

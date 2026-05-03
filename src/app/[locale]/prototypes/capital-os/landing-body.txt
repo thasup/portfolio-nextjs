@@ -1,0 +1,774 @@
+
+
+<div className="cursor" id="cursor"></div>
+<div className="cursor-ring" id="cursor-ring"></div>
+
+{/*<!-- ═══ NAV ═══ -->*/}
+<nav>
+  <a href="#" className="nav-logo">
+    <svg className="nav-logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="7" fill="rgba(0,201,122,0.12)"/>
+      <path d="M22 10.5C20.3 9.2 18.2 8.4 16 8.4C10.7 8.4 6.4 12.7 6.4 18C6.4 23.3 10.7 27.6 16 27.6C18.2 27.6 20.3 26.8 22 25.5" stroke="#00c97a" strokeWidth="2.2" strokeLinecap="round"/>
+      <circle cx="22" cy="10.5" r="2" fill="#00c97a"/>
+      <circle cx="22" cy="25.5" r="2" fill="#00c97a"/>
+      <path d="M16 13L16 18L20 18" stroke="rgba(0,201,122,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="16" cy="18" r="1.5" fill="#00c97a"/>
+    </svg>
+    <span className="nav-wordmark">Capital<span>OS</span></span>
+  </a>
+  <ul className="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#agents">Intelligence</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#brand">Design System</a></li>
+    <li><a href="#cta" className="nav-cta">View Prototype</a></li>
+  </ul>
+</nav>
+
+{/*<!-- ═══ HERO ═══ -->*/}
+<section id="hero">
+  <div className="hero-grid"></div>
+  <div className="hero-content">
+    <div className="hero-badge reveal">
+      <div className="hero-badge-dot"></div>
+      Personal Financial Intelligence · Built May 2026
+    </div>
+
+    <h1 className="hero-title reveal reveal-delay-1">
+      One source<br />of financial <em>truth.</em>
+    </h1>
+
+    <p className="hero-sub reveal reveal-delay-2">
+      CapitalOS collapses YNAB, Airtable, and Snowball into a single authoritative intelligence layer — so every capital decision is made from reconciled, real-time data, not manual approximation.
+    </p>
+
+    <div className="hero-actions reveal reveal-delay-3">
+      <a href="#agents" className="btn-primary">
+        Explore Intelligence Layer
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      </a>
+      <a href="#brand" className="btn-ghost">View Design System</a>
+    </div>
+
+    <div className="hero-stats reveal reveal-delay-4">
+      <div className="hero-stat">
+        <span className="hero-stat-val"><span className="unit">฿</span><span className="counter" data-target="671673">0</span></span>
+        <span className="hero-stat-label">Net Worth Managed</span>
+      </div>
+      <div className="hero-stat">
+        <span className="hero-stat-val"><span className="counter" data-target="14">0</span></span>
+        <span className="hero-stat-label">Accounts Tracked</span>
+      </div>
+      <div className="hero-stat">
+        <span className="hero-stat-val"><span className="counter" data-target="3">0</span></span>
+        <span className="hero-stat-label">Sources Unified</span>
+      </div>
+      <div className="hero-stat">
+        <span className="hero-stat-val"><span className="counter" data-target="6">0</span></span>
+        <span className="hero-stat-label">Goals Monitored</span>
+      </div>
+      <div className="hero-stat">
+        <span className="hero-stat-val"><span className="counter" data-target="4">0</span></span>
+        <span className="hero-stat-label">AI Agents Active</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ PROBLEM ═══ -->*/}
+<section id="problem">
+  <div className="container">
+    <div className="problem-intro reveal">
+      <div className="section-label">The Problem</div>
+      <h2>Three platforms.<br />Three truths.<br />Zero synthesis.</h2>
+      <p>Every capital decision requires manually triangulating three inconsistent sources. This is a tax on decision quality that compounds with every baht you accumulate.</p>
+    </div>
+
+    <div className="sources-diagram reveal reveal-delay-1">
+      <div className="source-card">
+        <div className="source-icon ynab">💰</div>
+        <div className="source-name">YNAB</div>
+        <div className="source-role">TRANSACTION LEDGER</div>
+        <div className="source-tags">
+          <span className="tag ok">Cash flow ✓</span>
+          <span className="tag ok">Budgets ✓</span>
+          <span className="tag fail">Portfolio ✗</span>
+          <span className="tag fail">Goals ✗</span>
+          <span className="tag warn">Stale ±days</span>
+        </div>
+      </div>
+
+      <div className="sources-middle">
+        <div className="conflict-line"></div>
+        <div className="vs-badge">GAP</div>
+        <div className="conflict-line"></div>
+      </div>
+
+      <div className="source-card">
+        <div className="source-icon airtable">📊</div>
+        <div className="source-name">Airtable (Gaia)</div>
+        <div className="source-role">GOAL & PORTFOLIO SYSTEM</div>
+        <div className="source-tags">
+          <span className="tag ok">Goals ✓</span>
+          <span className="tag ok">Relational ✓</span>
+          <span className="tag fail">Auto-sync ✗</span>
+          <span className="tag fail">Real-time ✗</span>
+        </div>
+        <div className="source-gap-val">−฿395,000</div>
+        <div className="source-gap-label">divergence from reality (April 2026)</div>
+      </div>
+    </div>
+
+    <div className="sources-bottom reveal reveal-delay-2">
+      <div className="source-card locked">
+        <div className="source-icon snowball">📈</div>
+        <div className="source-name">Snowball Analytics</div>
+        <div className="source-role">PORTFOLIO PERFORMANCE</div>
+        <div className="source-tags">
+          <span className="tag ok">Visualizations ✓</span>
+          <span className="tag ok">IRR tracking ✓</span>
+          <span className="tag fail">Public API ✗</span>
+          <span className="tag fail">Writeable ✗</span>
+          <span className="tag warn">Closed island</span>
+        </div>
+      </div>
+    </div>
+
+    <div className="problem-statement reveal reveal-delay-3">
+      <p>"The problem is not data. All three platforms have data. The problem is that no single view reconciles them into <strong>actionable intelligence.</strong>"</p>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ THESIS ═══ -->*/}
+<section id="thesis">
+  <div className="container">
+    <div className="thesis-grid">
+      <div className="thesis-content reveal">
+        <div className="section-label">Core Thesis</div>
+        <h2>Intelligence, not information.</h2>
+        <p>Structured data alone tells you what <em>is</em>. An LLM with full financial context tells you what it <em>means</em>, what to do next, and what you're missing.</p>
+        <p>CapitalOS is not a dashboard that displays data. It is a reasoning system that synthesizes it.</p>
+
+        <div className="thesis-principles">
+          <div className="principle">
+            <div className="principle-num">01</div>
+            <div className="principle-text"><strong>Data without synthesis is noise.</strong> Three separate mental models that must be manually reconciled before any decision is cognitive overhead that compounds.</div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">02</div>
+            <div className="principle-text"><strong>Decisions made on stale data are structurally worse.</strong> The ฿395K divergence is not an edge case — it is the predictable output of a manual system under time pressure.</div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">03</div>
+            <div className="principle-text"><strong>The right abstraction is a command center.</strong> One that sees accounts, goals, liabilities, projections, and patterns — and surfaces the most important signal at the right time.</div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">04</div>
+            <div className="principle-text"><strong>LLM integration is the reasoning layer, not a feature.</strong> Every recommendation is explained, every assumption made explicit, every decision deferred to the human.</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="thesis-visual reveal reveal-delay-2">
+        <div className="thesis-rings">
+          <div className="ring ring-4"></div>
+          <div className="ring ring-3"></div>
+          <div className="ring ring-2"></div>
+          <div className="ring ring-1">
+            <div className="ring-core-label">Capital<br />OS</div>
+          </div>
+          {/*<!-- orbital dots -->*/}
+          <div className="orbit-dot" style="top:10px;left:50%;transform:translateX(-50%)">📊</div>
+          <div className="orbit-dot" style="bottom:10px;left:50%;transform:translateX(-50%)">💰</div>
+          <div className="orbit-dot" style="left:10px;top:50%;transform:translateY(-50%)">📈</div>
+          <div className="orbit-dot" style="right:10px;top:50%;transform:translateY(-50%)">🤖</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ AGENTS ═══ -->*/}
+<section id="agents">
+  <div className="container">
+    <div className="agents-header reveal">
+      <div className="section-label">Intelligence Layer</div>
+      <h2>Four agents.<br />One reasoning loop.</h2>
+      <p>CapitalOS implements a multi-agent architecture where each agent thinks in a different mode — and all four collaborate before any recommendation reaches you.</p>
+    </div>
+
+    <div className="agents-grid">
+      <div className="agent-card accountant reveal reveal-delay-1">
+        <div className="agent-header">
+          <div className="agent-icon">🔢</div>
+          <div className="agent-trust">
+            <span className="trust-label">Trust Factor</span>
+            <div className="trust-bar"><div className="trust-fill" data-width="100"></div></div>
+            <span className="agent-trust-pct">100%</span>
+          </div>
+        </div>
+        <h4 className="agent-title">The Accountant</h4>
+        <div className="agent-subtitle">Reconciliation & Consistency</div>
+        <p className="agent-desc">Makes the three sources tell the same story. Computes canonical net worth, detects divergence above 5%, and surfaces reconciliation failures before any decision is made. Questions everything. Assumes nothing.</p>
+        <ul className="agent-outputs">
+          <li className="agent-output-item"><span className="output-arrow">→</span>"Net worth is ฿671,234 as of 02:04 ICT. Airtable last updated 217 days ago (gap: ฿395K)."</li>
+          <li className="agent-output-item"><span className="output-arrow">→</span>"YNAB matches within ฿1,200 rounding tolerance. No action required."</li>
+        </ul>
+      </div>
+
+      <div className="agent-card analyst reveal reveal-delay-2">
+        <div className="agent-header">
+          <div className="agent-icon">📡</div>
+          <div className="agent-trust">
+            <span className="trust-label">Trust Factor</span>
+            <div className="trust-bar"><div className="trust-fill" data-width="80"></div></div>
+            <span className="agent-trust-pct">80%</span>
+          </div>
+        </div>
+        <h4 className="agent-title">The Analyst</h4>
+        <div className="agent-subtitle">Pattern & Anomaly Detection</div>
+        <p className="agent-desc">Finds signals in noise using z-score analysis and trend detection. What's normal? What's unusual? Surfaces patterns you'd never notice manually across 90 days of transaction history.</p>
+        <ul className="agent-outputs">
+          <li className="agent-output-item"><span className="output-arrow">→</span>"Health & Fitness: ฿17K this month, 340% above 3-month average. Intentional?"</li>
+          <li className="agent-output-item"><span className="output-arrow">→</span>"Wedding Fund: ฿0 contribution for 8 weeks. At current velocity, misses target by 18 months."</li>
+        </ul>
+      </div>
+
+      <div className="agent-card strategist reveal reveal-delay-3">
+        <div className="agent-header">
+          <div className="agent-icon">🔭</div>
+          <div className="agent-trust">
+            <span className="trust-label">Trust Factor</span>
+            <div className="trust-bar"><div className="trust-fill" data-width="60"></div></div>
+            <span className="agent-trust-pct">60%</span>
+          </div>
+        </div>
+        <h4 className="agent-title">The Strategist</h4>
+        <div className="agent-subtitle">Scenario & Trajectory Modeling</div>
+        <p className="agent-desc">Models outcomes of decisions across 24-month horizons. Simulates burn rate, income changes, investment returns, and goal timelines simultaneously. Useful for comparison — not prediction.</p>
+        <ul className="agent-outputs">
+          <li className="agent-output-item"><span className="output-arrow">→</span>"Paying off ฿45K in credit cards today extends runway by 2.4 months."</li>
+          <li className="agent-output-item"><span className="output-arrow">→</span>"If MissionOS succeeds in month 4 at ฿80K/mo, net worth reaches ฿1.1M by Dec '27."</li>
+        </ul>
+      </div>
+
+      <div className="agent-card advisor reveal reveal-delay-4">
+        <div className="agent-header">
+          <div className="agent-icon">🧭</div>
+          <div className="agent-trust">
+            <span className="trust-label">Trust Factor</span>
+            <div className="trust-bar"><div className="trust-fill" data-width="50"></div></div>
+            <span className="agent-trust-pct">50%</span>
+          </div>
+        </div>
+        <h4 className="agent-title">The Advisor</h4>
+        <div className="agent-subtitle">Recommendation & Decision Support</div>
+        <p className="agent-desc">Synthesizes inputs from all three agents and recommends specific, reversible actions ranked by leverage. Always explains assumptions. Always defers the final decision to you. Recommends, never executes.</p>
+        <ul className="agent-outputs">
+          <li className="agent-output-item"><span className="output-arrow">→</span>"Pay ฿45,281 from KBank to TTB + Shopee today. Saves ฿567/month interest. Liquid drops to ฿366K — still 14.7 months runway."</li>
+          <li className="agent-output-item"><span className="output-arrow">→</span>"This recommendation assumes MissionOS income begins month 4. Revise if timeline shifts."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div className="agent-pipeline reveal">
+      <div className="pipeline-label">Reasoning Pipeline — Sequential, Transparent, Human-in-the-Loop</div>
+      <div className="pipeline-flow">
+        <div className="pipeline-step">
+          <div className="pipeline-node" style="background:var(--emerald-dim); border-color:rgba(0,201,122,0.3)">🔢</div>
+          <div className="pipeline-node-label">Accountant<br />Reconcile</div>
+        </div>
+        <div className="pipeline-arrow"></div>
+        <div className="pipeline-step">
+          <div className="pipeline-node" style="background:var(--sapphire-dim); border-color:rgba(58,130,247,0.3)">📡</div>
+          <div className="pipeline-node-label">Analyst<br />Detect</div>
+        </div>
+        <div className="pipeline-arrow"></div>
+        <div className="pipeline-step">
+          <div className="pipeline-node" style="background:var(--amber-dim); border-color:rgba(240,160,32,0.3)">🔭</div>
+          <div className="pipeline-node-label">Strategist<br />Model</div>
+        </div>
+        <div className="pipeline-arrow"></div>
+        <div className="pipeline-step">
+          <div className="pipeline-node" style="background:var(--violet-dim); border-color:rgba(155,109,255,0.3)">🧭</div>
+          <div className="pipeline-node-label">Advisor<br />Synthesize</div>
+        </div>
+        <div className="pipeline-arrow"></div>
+        <div className="pipeline-step">
+          <div className="pipeline-node" style="background:var(--surface-2); border-color:var(--border-strong)">👤</div>
+          <div className="pipeline-node-label">You<br />Decide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ SIGNALS ═══ -->*/}
+<section id="signals">
+  <div className="container">
+    <div className="signals-header reveal">
+      <div className="section-label">Signal Theory</div>
+      <h2>Measure everything. Surface only what matters.</h2>
+      <p>A bad intelligence system drowns you in alerts. A good one surfaces only the signal that demands your attention — right now.</p>
+    </div>
+
+    <div className="signals-tiers">
+      <div className="signal-tier tier-1 reveal reveal-delay-1">
+        <div className="tier-header">
+          <div className="tier-num">I</div>
+          <div className="tier-name">Foundational</div>
+        </div>
+        <div className="tier-cadence">Alert immediately · Always on</div>
+        <div className="tier-items">
+          <span className="tier-item">Net worth accuracy (±฿1K)</span>
+          <span className="tier-item">Liquid capital</span>
+          <span className="tier-item">Runway (months)</span>
+          <span className="tier-item">Credit card debt</span>
+          <span className="tier-item">Data freshness</span>
+        </div>
+      </div>
+      <div className="signal-tier tier-2 reveal reveal-delay-2">
+        <div className="tier-header">
+          <div className="tier-num">II</div>
+          <div className="tier-name">Decision</div>
+        </div>
+        <div className="tier-cadence">Weekly review · Drive recommendations</div>
+        <div className="tier-items">
+          <span className="tier-item">Burn rate (7-day avg)</span>
+          <span className="tier-item">Goal velocity</span>
+          <span className="tier-item">Portfolio return</span>
+          <span className="tier-item">Source divergence</span>
+          <span className="tier-item">Deadline alignment</span>
+        </div>
+      </div>
+      <div className="signal-tier tier-3 reveal reveal-delay-3">
+        <div className="tier-header">
+          <div className="tier-num">III</div>
+          <div className="tier-name">Contextual</div>
+        </div>
+        <div className="tier-cadence">Monthly · Inform reasoning</div>
+        <div className="tier-items">
+          <span className="tier-item">Spend z-score by category</span>
+          <span className="tier-item">Goal deadline pressure</span>
+          <span className="tier-item">Income assumptions</span>
+          <span className="tier-item">Relationship budget shifts</span>
+        </div>
+      </div>
+      <div className="signal-tier tier-4 reveal reveal-delay-4">
+        <div className="tier-header">
+          <div className="tier-num">IV</div>
+          <div className="tier-name">Noise</div>
+        </div>
+        <div className="tier-cadence">Rarely · Mostly ignore</div>
+        <div className="tier-items">
+          <span className="tier-item noise">Transaction categorization</span>
+          <span className="tier-item noise">Daily portfolio swings</span>
+          <span className="tier-item noise">Micro-vehicle optimization</span>
+          <span className="tier-item noise">Individual FX fluctuation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ METRICS ═══ -->*/}
+<section id="metrics">
+  <div className="container">
+    <div className="metrics-header reveal">
+      <div className="section-label">Real Numbers</div>
+      <h2>Built on actual financial complexity.</h2>
+      <p>CapitalOS was designed around a real portfolio — not synthetic data.</p>
+    </div>
+
+    <div className="metrics-grid reveal reveal-delay-1">
+      <div className="metric-cell">
+        <div className="metric-number"><span className="accent">฿</span><span className="counter" data-target="671673">0</span></div>
+        <div className="metric-desc">Net worth tracked</div>
+      </div>
+      <div className="metric-cell">
+        <div className="metric-number"><span className="counter" data-target="14">0</span></div>
+        <div className="metric-desc">Accounts across 3 platforms</div>
+      </div>
+      <div className="metric-cell">
+        <div className="metric-number"><span className="accent">฿</span><span className="counter" data-target="395000">0</span></div>
+        <div className="metric-desc">Divergence eliminated on first sync</div>
+      </div>
+      <div className="metric-cell">
+        <div className="metric-number"><span className="counter" data-target="6">0</span></div>
+        <div className="metric-desc">Active financial goals monitored</div>
+      </div>
+      <div className="metric-cell">
+        <div className="metric-number"><span className="counter" data-target="17">0</span><span className="accent">mo</span></div>
+        <div className="metric-desc">Runway projected with scenario sim</div>
+      </div>
+      <div className="metric-cell">
+        <div className="metric-number"><span className="counter" data-target="4">0</span></div>
+        <div className="metric-desc">Reasoning agents in pipeline</div>
+      </div>
+    </div>
+
+    <div className="divergence-alert reveal reveal-delay-2">
+      <div className="alert-icon">⚠️</div>
+      <div className="alert-body">
+        <div className="alert-title">Real example: Airtable showed ฿276K. Reality was ฿671K.</div>
+        <div className="alert-desc">After a ฿266K severance deposit on April 10, 2026 — Airtable's net worth field still read <code>฿276,444</code> seven months later because no one updated it manually. CapitalOS detected this divergence on first sync and flagged it as a <code>CRITICAL</code> reconciliation failure. That's what the Accountant agent exists to do.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ ROADMAP ═══ -->*/}
+<section id="roadmap">
+  <div className="container">
+    <div className="roadmap-header reveal">
+      <div className="section-label">Product Roadmap</div>
+      <h2>Prototype → MVP → Production.</h2>
+      <p>Three stages, one governing question each. Scope is ruthless. Kill criteria are honest.</p>
+    </div>
+
+    <div className="roadmap-stages">
+      <div className="stage-card stage-mvp reveal reveal-delay-1">
+        <div className="stage-num">Stage 1 · May–Jun 2026</div>
+        <h4 className="stage-title">Reliable Personal Tool</h4>
+        <div className="stage-period">6 weeks · 4–6 hours/week</div>
+        <p className="stage-question">"Can I make one capital decision using CapitalOS data alone — without opening YNAB or Airtable?"</p>
+        <ul className="stage-features">
+          <li className="stage-feature"><span className="feature-check">M1</span>Automated YNAB sync via Vercel Cron (daily 02:00 ICT)</li>
+          <li className="stage-feature"><span className="feature-check">M2</span>Divergence detector — alert if any source &gt;5% off</li>
+          <li className="stage-feature"><span className="feature-check">M3</span>Snowball manual snapshot UI (under 60 seconds)</li>
+          <li className="stage-feature"><span className="feature-check">M4</span>Dashboard: 5 core KPIs only (signal over noise)</li>
+          <li className="stage-feature"><span className="feature-check">M5</span>Projection engine wired to live DB baseline</li>
+          <li className="stage-feature"><span className="feature-check">M6</span>Safe CRUD: confirmation modals + change log</li>
+        </ul>
+      </div>
+
+      <div className="stage-card stage-prod reveal reveal-delay-2">
+        <div className="stage-num">Stage 2 · Aug–Oct 2026</div>
+        <h4 className="stage-title">Production-Ready System</h4>
+        <div className="stage-period">Post-Demo Day · 4h/week max</div>
+        <p className="stage-question">"Would this survive 30 days of zero maintenance and still be trusted when I return?"</p>
+        <ul className="stage-features">
+          <li className="stage-feature"><span className="feature-check">P1</span>Weekly LLM financial digest (proactive, not reactive)</li>
+          <li className="stage-feature"><span className="feature-check">P2</span>Goal velocity alerts — 2 consecutive months off-pace</li>
+          <li className="stage-feature"><span className="feature-check">P3</span>Spend pattern z-score detection (&gt;20% above 3-mo avg)</li>
+          <li className="stage-feature"><span className="feature-check">P4</span>Snowball CSV import (historical data, one operation)</li>
+          <li className="stage-feature"><span className="feature-check">P5</span>Transaction log with full filtering and goal linkage</li>
+          <li className="stage-feature"><span className="feature-check">P6</span>Langfuse tracing — latency and cost per AI call</li>
+        </ul>
+      </div>
+
+      <div className="stage-card stage-scale reveal reveal-delay-3">
+        <div className="stage-num">Stage 3 · Q4 2026–Q2 2027</div>
+        <h4 className="stage-title">Productizable Foundation</h4>
+        <div className="stage-period">Trigger: MissionOS outcome</div>
+        <p className="stage-question">"Can a second user connect their accounts without my help in under 15 minutes?"</p>
+        <ul className="stage-features">
+          <li className="stage-feature"><span className="feature-check">Pr1</span>Per-user YNAB OAuth + Airtable key vault</li>
+          <li className="stage-feature"><span className="feature-check">Pr2</span>All Prisma queries scoped by userId (full audit)</li>
+          <li className="stage-feature"><span className="feature-check">Pr3</span>Guided onboarding: connect → map → sync → see net worth</li>
+          <li className="stage-feature"><span className="feature-check">Pr4</span>Goal templates + currency configuration</li>
+          <li className="stage-feature"><span className="feature-check">Pr5</span>Stripe billing: $9/mo personal · $15/mo household</li>
+          <li className="stage-feature"><span className="feature-check">Pr6</span>Sentry + Axiom + Langfuse full observability</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ ARCHITECTURE ═══ -->*/}
+<section id="architecture">
+  <div className="container">
+    <div className="arch-header reveal">
+      <div className="section-label">Technical Architecture</div>
+      <h2>Stack built to evolve.</h2>
+      <p>Every architectural decision is a closed decision — made once, documented, not relitigated without a forcing function.</p>
+    </div>
+
+    <div className="stack-diagram reveal reveal-delay-1">
+      <div className="stack-layer">
+        <div className="stack-label">Interface</div>
+        <div className="stack-cells">
+          <div className="stack-cell highlight">Next.js 15 App Router</div>
+          <div className="stack-cell highlight">TypeScript</div>
+          <div className="stack-cell">TailwindCSS 4</div>
+          <div className="stack-cell">shadcn/ui</div>
+          <div className="stack-cell">Recharts</div>
+        </div>
+      </div>
+      <div className="stack-divider"></div>
+      <div className="stack-layer">
+        <div className="stack-label">AI Layer</div>
+        <div className="stack-cells">
+          <div className="stack-cell highlight">OpenRouter (model-agnostic)</div>
+          <div className="stack-cell">Vercel AI SDK</div>
+          <div className="stack-cell">Gemini 2.0 Flash</div>
+          <div className="stack-cell">Langfuse (tracing)</div>
+        </div>
+      </div>
+      <div className="stack-divider"></div>
+      <div className="stack-layer">
+        <div className="stack-label">Data</div>
+        <div className="stack-cells">
+          <div className="stack-cell highlight">PostgreSQL (Supabase)</div>
+          <div className="stack-cell highlight">Prisma ORM</div>
+          <div className="stack-cell">YNAB API (server-only)</div>
+          <div className="stack-cell">Airtable API (server-only)</div>
+        </div>
+      </div>
+      <div className="stack-divider"></div>
+      <div className="stack-layer">
+        <div className="stack-label">Infra</div>
+        <div className="stack-cells">
+          <div className="stack-cell">Vercel (hosting)</div>
+          <div className="stack-cell">Vercel Cron Jobs</div>
+          <div className="stack-cell">GitHub Actions (CI/CD)</div>
+          <div className="stack-cell">Supabase Auth</div>
+        </div>
+      </div>
+    </div>
+
+    <div className="invariants reveal reveal-delay-2">
+      <div className="invariant">
+        <div className="invariant-icon">🔒</div>
+        <div className="invariant-label">Server-side secrets only. Never client-exposed.</div>
+      </div>
+      <div className="invariant">
+        <div className="invariant-icon">🗑️</div>
+        <div className="invariant-label">Soft-delete everywhere. Financial history is forensic.</div>
+      </div>
+      <div className="invariant">
+        <div className="invariant-icon">💴</div>
+        <div className="invariant-label">Amounts in satangs in DB. Format in app layer only.</div>
+      </div>
+      <div className="invariant">
+        <div className="invariant-icon">🔄</div>
+        <div className="invariant-label">Model-agnostic AI. OpenRouter as abstraction layer.</div>
+      </div>
+      <div className="invariant">
+        <div className="invariant-icon">📋</div>
+        <div className="invariant-label">Prisma migration discipline. Never db push to production.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ BRAND / DESIGN SYSTEM ═══ -->*/}
+<section id="brand">
+  <div className="container">
+    <div className="brand-header reveal">
+      <div className="section-label">Brand & Design System</div>
+      <h2>Every token, justified.</h2>
+      <p>CapitalOS's visual language is precision-first: monospaced numbers, editorial display type, and a palette built around financial semantics — not aesthetics for their own sake.</p>
+    </div>
+
+    {/*<!-- Logo -->*/}
+    <div className="brand-logo-showcase reveal">
+      <div className="logo-panel dark">
+        <div className="logo-full">
+          <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="7" fill="rgba(0,201,122,0.12)"/>
+            <path d="M22 10.5C20.3 9.2 18.2 8.4 16 8.4C10.7 8.4 6.4 12.7 6.4 18C6.4 23.3 10.7 27.6 16 27.6C18.2 27.6 20.3 26.8 22 25.5" stroke="#00c97a" strokeWidth="2.2" strokeLinecap="round"/>
+            <circle cx="22" cy="10.5" r="2" fill="#00c97a"/>
+            <circle cx="22" cy="25.5" r="2" fill="#00c97a"/>
+            <path d="M16 13L16 18L20 18" stroke="rgba(0,201,122,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="16" cy="18" r="1.5" fill="#00c97a"/>
+          </svg>
+          <div className="logo-text-mark">Capital<span>OS</span></div>
+        </div>
+        <div className="logo-tagline">One source of financial truth</div>
+      </div>
+      <div className="logo-panel light">
+        <div className="logo-full">
+          <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="7" fill="rgba(0,160,96,0.1)"/>
+            <path d="M22 10.5C20.3 9.2 18.2 8.4 16 8.4C10.7 8.4 6.4 12.7 6.4 18C6.4 23.3 10.7 27.6 16 27.6C18.2 27.6 20.3 26.8 22 25.5" stroke="#00a060" strokeWidth="2.2" strokeLinecap="round"/>
+            <circle cx="22" cy="10.5" r="2" fill="#00a060"/>
+            <circle cx="22" cy="25.5" r="2" fill="#00a060"/>
+            <path d="M16 13L16 18L20 18" stroke="rgba(0,160,96,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="16" cy="18" r="1.5" fill="#00a060"/>
+          </svg>
+          <div className="logo-text-mark">Capital<span>OS</span></div>
+        </div>
+        <div className="logo-tagline">One source of financial truth</div>
+      </div>
+    </div>
+
+    {/*<!-- Colors -->*/}
+    <div className="reveal">
+      <div className="brand-section-title">Color System — Semantic, Not Decorative</div>
+      <div className="color-row">
+        <div className="swatch">
+          <div className="swatch-color" style="background:#060c14; border: 1px solid #111;"></div>
+          <div className="swatch-name">Void</div>
+          <div className="swatch-hex">#060c14</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#0d1421;"></div>
+          <div className="swatch-name">Surface</div>
+          <div className="swatch-hex">#0d1421</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#162035;"></div>
+          <div className="swatch-name">Surface+</div>
+          <div className="swatch-hex">#162035</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#eef2f8;"></div>
+          <div className="swatch-name">Text Primary</div>
+          <div className="swatch-hex">#eef2f8</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#8da0b8;"></div>
+          <div className="swatch-name">Text Secondary</div>
+          <div className="swatch-hex">#8da0b8</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#00c97a;"></div>
+          <div className="swatch-name">Emerald</div>
+          <div className="swatch-hex">Growth · CTA</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#f0a020;"></div>
+          <div className="swatch-name">Amber</div>
+          <div className="swatch-hex">Warning · Attention</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#ff4466;"></div>
+          <div className="swatch-name">Rose</div>
+          <div className="swatch-hex">Danger · Debt</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#3a82f7;"></div>
+          <div className="swatch-name">Sapphire</div>
+          <div className="swatch-hex">Info · Secondary</div>
+        </div>
+        <div className="swatch">
+          <div className="swatch-color" style="background:#9b6dff;"></div>
+          <div className="swatch-name">Violet</div>
+          <div className="swatch-hex">AI · Intelligence</div>
+        </div>
+      </div>
+    </div>
+
+    {/*<!-- Typography -->*/}
+    <div className="reveal">
+      <div className="brand-section-title">Typography System</div>
+      <div className="type-specimen">
+        <div className="type-sample">
+          <div className="type-sample-name">Display — Cormorant Garamond</div>
+          <div className="type-sample-display">Capital<br />Intelligence</div>
+          <div className="type-meta">Headings, hero text, editorial statements. Signals editorial refinement — unexpected for fintech, memorable for it.</div>
+        </div>
+        <div className="type-sample">
+          <div className="type-sample-name">Body — DM Sans</div>
+          <div className="type-sample-body">Every capital decision — How much runway do I have? Is my Emergency Fund adequately funded? — requires a single authoritative answer, not three approximations.</div>
+          <div className="type-meta">Body copy, labels, UI text. Clean and precise without being sterile.</div>
+        </div>
+        <div className="type-sample">
+          <div className="type-sample-name">Mono — JetBrains Mono</div>
+          <div className="type-sample-mono">฿671,234<br />+16.6% ↑<br />14.7mo runway<br />SYNC_OK · 02:04 ICT</div>
+          <div className="type-meta">Numbers, code, labels, badges, timestamps. Every financial figure uses mono — signals precision.</div>
+        </div>
+      </div>
+    </div>
+
+    {/*<!-- Components -->*/}
+    <div className="component-grid reveal">
+      <div className="component-panel">
+        <div className="component-panel-title">KPI Cards</div>
+        <div className="kpi-demo-grid">
+          <div className="kpi-demo green">
+            <div className="kpi-demo-val">฿671K</div>
+            <div className="kpi-demo-lbl">Net Worth</div>
+          </div>
+          <div className="kpi-demo blue">
+            <div className="kpi-demo-val">฿411K</div>
+            <div className="kpi-demo-lbl">Liquid Capital</div>
+          </div>
+          <div className="kpi-demo amber">
+            <div className="kpi-demo-val">16.5mo</div>
+            <div className="kpi-demo-lbl">Runway</div>
+          </div>
+          <div className="kpi-demo rose">
+            <div className="kpi-demo-val">฿45K</div>
+            <div className="kpi-demo-lbl">Credit Debt</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="component-panel">
+        <div className="component-panel-title">Status Badges</div>
+        <div className="badge-row">
+          <span className="ds-badge green">SYNCED</span>
+          <span className="ds-badge green">ON TRACK</span>
+          <span className="ds-badge amber">STALE</span>
+          <span className="ds-badge amber">WARNING</span>
+          <span className="ds-badge rose">CRITICAL</span>
+          <span className="ds-badge rose">OVERDUE</span>
+          <span className="ds-badge blue">LIQUID</span>
+          <span className="ds-badge blue">SEMI</span>
+          <span className="ds-badge violet">AI ACTIVE</span>
+        </div>
+        <div className="component-panel-title" style="margin-top: var(--space-5)">Goal Progress Bars</div>
+        <div className="prog-demo">
+          <div className="prog-row">
+            <div className="prog-labels"><span>Emergency Fund 🚨</span><span>58.7%</span></div>
+            <div className="prog-track"><div className="prog-fill" style="width:0%;background:var(--amber)" data-target-width="58.7"></div></div>
+          </div>
+          <div className="prog-row">
+            <div className="prog-labels"><span>Business Venture 📊</span><span>51.7%</span></div>
+            <div className="prog-track"><div className="prog-fill" style="width:0%;background:var(--sapphire)" data-target-width="51.7"></div></div>
+          </div>
+          <div className="prog-row">
+            <div className="prog-labels"><span>Wedding Fund 💍</span><span>2.0%</span></div>
+            <div className="prog-track"><div className="prog-fill" style="width:0%;background:var(--rose)" data-target-width="2"></div></div>
+          </div>
+          <div className="prog-row">
+            <div className="prog-labels"><span>Jane's Wedding ✅</span><span>109%</span></div>
+            <div className="prog-track"><div className="prog-fill" style="width:0%;background:var(--emerald)" data-target-width="100"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ CTA ═══ -->*/}
+<section id="cta">
+  <div className="container">
+    <div className="cta-inner reveal">
+      <div className="section-label" style="justify-content:center">Built by First · May 2026</div>
+      <h2>Your capital deserves<br /><em>better than a spreadsheet.</em></h2>
+      <p>CapitalOS is the intelligence layer your wealth management stack is missing. Stop approximating. Start reasoning.</p>
+      <div className="hero-actions" style="justify-content:center">
+        <a href="#" className="btn-primary">
+          View Live Prototype
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </a>
+        <a href="#problem" className="btn-ghost">Read the Architecture</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/*<!-- ═══ FOOTER ═══ -->*/}
+<footer>
+  <div className="container">
+    <div className="footer-inner">
+      <div className="footer-meta">
+        <span>Capital</span>OS · Personal Financial Intelligence System<br />
+        Built by <span>First (Thanachon Supasatian)</span> · Khon Kaen, Thailand · May 2026
+      </div>
+      <ul className="footer-links">
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#agents">Intelligence</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#brand">Design System</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+

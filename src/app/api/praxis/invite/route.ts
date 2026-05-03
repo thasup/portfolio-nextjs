@@ -17,13 +17,16 @@
  * No spend ledger entry — email is free tier; generation-cost tracking
  * is reserved for LLM calls.
  */
-import { NextResponse, type NextRequest } from 'next/server';
-import { z } from 'zod';
-import { createAdminClient } from '@/lib/praxis/supabase/admin';
-import { sendInvitationEmail, EmailDeliveryStatus } from '@/lib/praxis/email/resend';
-import { mintInviteToken } from '@/lib/praxis/invite/token';
+import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
+import { createAdminClient } from "@/lib/praxis/supabase/admin";
+import {
+  sendInvitationEmail,
+  EmailDeliveryStatus,
+} from "@/lib/praxis/email/resend";
+import { mintInviteToken } from "@/lib/praxis/invite/token";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 const BodySchema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -39,11 +42,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // ---- 1. Authorize ------------------------------------------------------
   const adminToken = process.env.PRAXIS_ADMIN_TOKEN;
   if (!adminToken) {
-    return errorResponse(500, 'MISCONFIGURED', 'PRAXIS_ADMIN_TOKEN is not set on the server');
+    return errorResponse(
+      500,
+      "MISCONFIGURED",
+      "PRAXIS_ADMIN_TOKEN is not set on the server",
+    );
   }
-  const provided = request.headers.get('x-praxis-admin-token');
+  const provided = request.headers.get("x-praxis-admin-token");
   if (!provided || provided !== adminToken) {
-    return errorResponse(401, 'BAD_ADMIN_TOKEN', 'Admin token missing or incorrect');
+    return errorResponse(
+      401,
+      "BAD_ADMIN_TOKEN",
+      "Admin token missing or incorrect",
+    );
   }
 
   // ---- 2. Validate body --------------------------------------------------
@@ -52,8 +63,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const json = await request.json();
     payload = BodySchema.parse(json);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Invalid request body';
-    return errorResponse(400, 'INVALID_EMAIL', message);
+    const message = err instanceof Error ? err.message : "Invalid request body";
+    return errorResponse(400, "INVALID_EMAIL", message);
   }
 
   // ---- 3. Upsert invitation row -----------------------------------------
@@ -63,13 +74,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // constraint on `email`, so a simple insert would collide on repeated
   // sends. We look up by email and branch on `revoked_at`.
   const { data: existing, error: lookupErr } = await admin
-    .from('praxis_invitations')
-    .select('id, email, invited_at, revoked_at, note')
-    .eq('email', payload.email)
+    .from("praxis_invitations")
+    .select("id, email, invited_at, revoked_at, note")
+    .eq("email", payload.email)
     .maybeSingle();
 
   if (lookupErr) {
-    return errorResponse(500, 'DB_LOOKUP_FAILED', lookupErr.message);
+    return errorResponse(500, "DB_LOOKUP_FAILED", lookupErr.message);
   }
 
   let invitationId: string;
@@ -80,19 +91,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Keep the existing record and resend the email. Still fail the
     // contract-defined ALREADY_INVITED for honesty; operator can revoke
     // and re-invite if they really want a fresh row.
-    return errorResponse(400, 'ALREADY_INVITED', `An active invitation already exists for ${payload.email}`);
+    return errorResponse(
+      400,
+      "ALREADY_INVITED",
+      `An active invitation already exists for ${payload.email}`,
+    );
   }
 
   if (existing?.revoked_at) {
     // Resurrect the row by clearing revoked_at and updating the note.
     const { data: updated, error: updateErr } = await admin
-      .from('praxis_invitations')
+      .from("praxis_invitations")
       .update({ revoked_at: null, note: payload.note ?? existing.note ?? null })
-      .eq('id', existing.id)
-      .select('id, invited_at, note')
+      .eq("id", existing.id)
+      .select("id, invited_at, note")
       .single();
     if (updateErr || !updated) {
-      return errorResponse(500, 'DB_UPDATE_FAILED', updateErr?.message ?? 'no row returned');
+      return errorResponse(
+        500,
+        "DB_UPDATE_FAILED",
+        updateErr?.message ?? "no row returned",
+      );
     }
     invitationId = updated.id;
     invitedAt = updated.invited_at;
@@ -107,22 +126,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!invitedBy) {
       return errorResponse(
         500,
-        'MISCONFIGURED',
-        'PRAXIS_INVITER_USER_ID is not set. Add a seed auth.users row and export its id.',
+        "MISCONFIGURED",
+        "PRAXIS_INVITER_USER_ID is not set. Add a seed auth.users row and export its id.",
       );
     }
 
     const { data: inserted, error: insertErr } = await admin
-      .from('praxis_invitations')
+      .from("praxis_invitations")
       .insert({
         email: payload.email,
         invited_by: invitedBy,
         note: payload.note ?? null,
       })
-      .select('id, invited_at, note')
+      .select("id, invited_at, note")
       .single();
     if (insertErr || !inserted) {
-      return errorResponse(500, 'DB_INSERT_FAILED', insertErr?.message ?? 'no row returned');
+      return errorResponse(
+        500,
+        "DB_INSERT_FAILED",
+        insertErr?.message ?? "no row returned",
+      );
     }
     invitationId = inserted.id;
     invitedAt = inserted.invited_at;
@@ -131,8 +154,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   // ---- 4. Mint JWT + send email -----------------------------------------
   const token = await mintInviteToken({ email: payload.email, invitationId });
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const actionUrl = `${siteUrl.replace(/\/$/, '')}/prototypes/praxis/callback?token=${encodeURIComponent(token)}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const actionUrl = `${siteUrl.replace(/\/$/, "")}/prototypes/praxis/callback?token=${encodeURIComponent(token)}`;
 
   const delivery = await sendInvitationEmail({
     to: payload.email,
@@ -141,7 +164,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (delivery.status === EmailDeliveryStatus.FAILED) {
     // Row persists so operator can retry; surface 502 per contract.
-    return errorResponse(502, 'RESEND_FAILED', delivery.error ?? 'email provider error');
+    return errorResponse(
+      502,
+      "RESEND_FAILED",
+      delivery.error ?? "email provider error",
+    );
   }
 
   return NextResponse.json(
@@ -157,4 +184,3 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     { status: 201 },
   );
 }
-

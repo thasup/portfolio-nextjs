@@ -10,7 +10,7 @@
  *
  * If you change a formula here, change the SQL view in the same commit.
  */
-import { Tier } from '@/lib/marketos/types';
+import { Tier } from "@/lib/marketos/types";
 
 // ---------- Reputation & tier --------------------------------------------
 
@@ -87,7 +87,10 @@ export function computePool(inputs: PoolInputs): PoolComposition {
   const baseCents = Math.floor((totalCents * baseSplit) / 100);
   const missionBudgetCents = totalCents - baseCents;
   const missionsLockedCents = Number(inputs.missionsLockedCents);
-  const unallocatedCents = Math.max(0, missionBudgetCents - missionsLockedCents);
+  const unallocatedCents = Math.max(
+    0,
+    missionBudgetCents - missionsLockedCents,
+  );
 
   return {
     totalCents,

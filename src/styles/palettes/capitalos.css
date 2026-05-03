@@ -1,0 +1,99 @@
+/**
+ * CapitalOS palette — scoped under [data-capitalos].
+ *
+ * Deep navy dark-mode with emerald/amber financial semantics.
+ * This palette is isolated from the Nexus portfolio and other prototypes.
+ */
+
+[data-capitalos] {
+  /* ── Base surfaces ─────────────────────────── */
+  --cos-bg: #0a0e1a;
+  --cos-surface: #111827;
+  --cos-surface-2: #1f2937;
+  --cos-surface-3: #283548;
+  --cos-border: #374151;
+  --cos-border-subtle: #1f2937;
+
+  /* ── Typography ────────────────────────────── */
+  --cos-text: #f9fafb;
+  --cos-text-2: #9ca3af;
+  --cos-text-3: #6b7280;
+
+  /* ── Accents ───────────────────────────────── */
+  --cos-accent: #10b981;
+  --cos-accent-hover: #059669;
+  --cos-accent-muted: rgba(16, 185, 129, 0.12);
+  --cos-accent-2: #3b82f6;
+  --cos-accent-2-muted: rgba(59, 130, 246, 0.12);
+
+  /* ── Semantic ──────────────────────────────── */
+  --cos-positive: #10b981;
+  --cos-positive-muted: rgba(16, 185, 129, 0.12);
+  --cos-negative: #ef4444;
+  --cos-negative-muted: rgba(239, 68, 68, 0.12);
+  --cos-warning: #f59e0b;
+  --cos-warning-muted: rgba(245, 158, 11, 0.12);
+  --cos-info: #3b82f6;
+  --cos-info-muted: rgba(59, 130, 246, 0.12);
+
+  /* ── Chart series ──────────────────────────── */
+  --cos-chart-1: #10b981;
+  --cos-chart-2: #3b82f6;
+  --cos-chart-3: #8b5cf6;
+  --cos-chart-4: #f59e0b;
+  --cos-chart-5: #ec4899;
+  --cos-chart-6: #06b6d4;
+
+  /* ── Shadows ───────────────────────────────── */
+  --cos-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --cos-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --cos-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* ── Radius ────────────────────────────────── */
+  --cos-radius-sm: 6px;
+  --cos-radius-md: 8px;
+  --cos-radius-lg: 12px;
+  --cos-radius-xl: 16px;
+
+  /* ── Transitions ───────────────────────────── */
+  --cos-transition: 150ms ease;
+  --cos-transition-slow: 300ms ease;
+
+  /* ── Override shadcn tokens for scoped theming ── */
+  --background: var(--cos-bg);
+  --foreground: var(--cos-text);
+  --card: var(--cos-surface);
+  --card-foreground: var(--cos-text);
+  --popover: var(--cos-surface);
+  --popover-foreground: var(--cos-text);
+  --primary: var(--cos-accent);
+  --primary-foreground: #ffffff;
+  --secondary: var(--cos-surface-2);
+  --secondary-foreground: var(--cos-text);
+  --muted: var(--cos-surface-2);
+  --muted-foreground: var(--cos-text-2);
+  --accent: var(--cos-surface-2);
+  --accent-foreground: var(--cos-text);
+  --destructive: var(--cos-negative);
+  --destructive-foreground: #ffffff;
+  --border: var(--cos-border);
+  --input: var(--cos-border);
+  --ring: var(--cos-accent);
+  --chart-1: var(--cos-chart-1);
+  --chart-2: var(--cos-chart-2);
+  --chart-3: var(--cos-chart-3);
+  --chart-4: var(--cos-chart-4);
+  --chart-5: var(--cos-chart-5);
+
+  /* ── Sidebar overrides ─────────────────────── */
+  --sidebar-background: var(--cos-surface);
+  --sidebar-foreground: var(--cos-text);
+  --sidebar-primary: var(--cos-accent);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--cos-surface-2);
+  --sidebar-accent-foreground: var(--cos-text);
+  --sidebar-border: var(--cos-border-subtle);
+  --sidebar-ring: var(--cos-accent);
+
+  color-scheme: dark;
+}

@@ -32,13 +32,12 @@ export function HeroVisual() {
   return (
     <div className="relative flex w-full justify-center lg:justify-end py-10">
       <div className="relative flex h-[350px] w-[350px] items-center justify-center sm:h-[450px] sm:w-[450px]">
-        
         {/* Background ambient glow that pulses */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 rounded-full bg-linear-to-br from-[var(--color-praxis-accent-soft)] via-[var(--color-ai-soft)] to-[var(--color-praxis-accent-soft)] blur-3xl"
-          animate={{ 
+          animate={{
             scale: [1, 1.1, 0.95, 1],
-            opacity: [0.4, 0.6, 0.3, 0.4] 
+            opacity: [0.4, 0.6, 0.3, 0.4],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -53,7 +52,7 @@ export function HeroVisual() {
         {/* Orbiting Ring 2 (Solid with gradient) */}
         <motion.div
           className="absolute inset-10 rounded-full border border-[var(--color-line-soft)]"
-          style={{ borderTopColor: 'var(--color-praxis-accent)' }}
+          style={{ borderTopColor: "var(--color-praxis-accent)" }}
           animate={{ rotate: -360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         >
@@ -64,7 +63,7 @@ export function HeroVisual() {
         {/* Orbiting Ring 3 (Inner, fast) */}
         <motion.div
           className="absolute inset-16 rounded-full border border-[var(--color-line-soft)]"
-          style={{ borderBottomColor: 'var(--color-ai-primary, #6366f1)' }}
+          style={{ borderBottomColor: "var(--color-ai-primary, #6366f1)" }}
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         >
@@ -73,32 +72,78 @@ export function HeroVisual() {
         </motion.div>
 
         {/* Floating tech nodes (decorative) */}
-        <motion.div 
+        <motion.div
           className="absolute top-[15%] right-[10%] card flex items-center justify-center p-2 text-[var(--color-ink-3)] bg-[var(--color-paper)]/50 backdrop-blur-md"
           animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5,
+          }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="absolute bottom-[20%] left-[5%] card flex items-center justify-center p-2 text-[var(--color-praxis-accent)] bg-[var(--color-paper)]/50 backdrop-blur-md"
           animate={{ y: [0, 10, 0], rotate: [0, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+            <path d="M2 12h20"></path>
+          </svg>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="absolute top-[20%] left-[10%] h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"
           animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
         />
 
-        <motion.div 
+        <motion.div
           className="absolute bottom-[30%] right-[5%] h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_#a855f7]"
           animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5,
+          }}
         />
 
         {/* Central Avatar */}
@@ -113,7 +158,7 @@ export function HeroVisual() {
               priority
             />
           </div>
-          
+
           {/* Inner ring overlay */}
           <div className="absolute inset-0 rounded-full shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] pointer-events-none" />
         </div>

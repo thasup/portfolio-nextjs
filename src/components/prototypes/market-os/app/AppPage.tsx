@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from "react";
 
 /**
  * Standard page-shell wrapper for every `/app/*` view. Matches the
@@ -12,7 +12,14 @@ export function AppPage({
   style?: CSSProperties;
 }) {
   return (
-    <div style={{ padding: '36px 40px', maxWidth: 1060, margin: '0 auto', ...style }}>
+    <div
+      style={{
+        padding: "36px 40px",
+        maxWidth: 1060,
+        margin: "0 auto",
+        ...style,
+      }}
+    >
       {children}
     </div>
   );
@@ -30,9 +37,9 @@ export function AppPageHeader({
   return (
     <div
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         marginBottom: 28,
         gap: 16,
       }}
@@ -40,12 +47,12 @@ export function AppPageHeader({
       <div>
         <h1
           style={{
-            fontFamily: 'var(--font-bricolage), sans-serif',
+            fontFamily: "var(--font-bricolage), sans-serif",
             fontWeight: 800,
             fontSize: 28,
-            color: '#1e3a2f',
-            margin: '0 0 4px',
-            letterSpacing: '-0.03em',
+            color: "#1e3a2f",
+            margin: "0 0 4px",
+            letterSpacing: "-0.03em",
           }}
         >
           {title}
@@ -53,9 +60,9 @@ export function AppPageHeader({
         {subtitle && (
           <p
             style={{
-              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontFamily: "var(--font-dm-sans), sans-serif",
               fontSize: 14,
-              color: 'rgba(30,58,47,0.5)',
+              color: "rgba(30,58,47,0.5)",
               margin: 0,
             }}
           >
@@ -63,7 +70,7 @@ export function AppPageHeader({
           </p>
         )}
       </div>
-      {actions && <div style={{ display: 'flex', gap: 10 }}>{actions}</div>}
+      {actions && <div style={{ display: "flex", gap: 10 }}>{actions}</div>}
     </div>
   );
 }

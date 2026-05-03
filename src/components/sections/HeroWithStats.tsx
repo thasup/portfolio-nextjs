@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import { Hero } from './Hero'
-import { ValueStrip } from './ValueStrip'
-import type { GitHubStats } from '@/lib/github'
+import { Hero } from "./Hero";
+import { ValueStrip } from "./ValueStrip";
+import type { GitHubStats } from "@/lib/github";
 
 interface HeroWithStatsProps {
-  githubStats?: GitHubStats | null
+  githubStats?: GitHubStats | null;
 }
 
 export function HeroWithStats({ githubStats }: HeroWithStatsProps) {
@@ -16,5 +16,5 @@ export function HeroWithStats({ githubStats }: HeroWithStatsProps) {
       </div>
       <ValueStrip githubStats={githubStats} />
     </div>
-  )
+  );
 }

@@ -21,7 +21,7 @@
  * Unit-tested against representative inputs in
  * `src/lib/praxis/cache/topicFingerprint.test.ts` (Week 2 Vitest suite).
  */
-import { createHash } from 'node:crypto';
+import { createHash } from "node:crypto";
 
 const LEADING_PREFIXES: ReadonlyArray<RegExp> = [
   /^i want to learn\s+/,
@@ -37,38 +37,43 @@ const LEADING_PREFIXES: ReadonlyArray<RegExp> = [
 ];
 
 const TRAILING_FILLERS: ReadonlyArray<string> = [
-  'please',
-  'basics',
-  '101',
-  'fundamentals',
-  'for beginners',
-  'from scratch',
+  "please",
+  "basics",
+  "101",
+  "fundamentals",
+  "for beginners",
+  "from scratch",
 ];
 
 /** Publicly exposed so the `/curriculum` endpoint can surface the
  *  cleaned-up title without re-running the pipeline. */
 export function normaliseTopic(rawInput: string): string {
-  let out = rawInput.normalize('NFC').trim().toLowerCase();
+  let out = rawInput.normalize("NFC").trim().toLowerCase();
 
   let stripped = true;
   while (stripped) {
     stripped = false;
     for (const prefix of LEADING_PREFIXES) {
       if (prefix.test(out)) {
-        out = out.replace(prefix, '');
+        out = out.replace(prefix, "");
         stripped = true;
       }
     }
   }
 
   for (const filler of TRAILING_FILLERS) {
-    const re = new RegExp(`\\s+${filler.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}\\s*$`);
-    out = out.replace(re, '');
+    const re = new RegExp(
+      `\\s+${filler.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\s*$`,
+    );
+    out = out.replace(re, "");
   }
 
   // Keep only alphanumeric + internal whitespace. Thai script is in the
   // BMP as Unicode letters, so the `\p{L}` class covers it too.
-  out = out.replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+  out = out
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   return out;
 }
@@ -81,9 +86,9 @@ export function sameTopic(a: string, b: string): boolean {
 /** Stable `sha1-<hex>` fingerprint suitable for the cache key. */
 export function fingerprint(rawInput: string): string {
   const normalised = normaliseTopic(rawInput);
-  const tokens = normalised.split(' ').filter(Boolean).sort();
-  const canonical = tokens.join(' ');
-  const hex = createHash('sha1').update(canonical, 'utf8').digest('hex');
+  const tokens = normalised.split(" ").filter(Boolean).sort();
+  const canonical = tokens.join(" ");
+  const hex = createHash("sha1").update(canonical, "utf8").digest("hex");
   return `sha1-${hex}`;
 }
 
@@ -97,10 +102,22 @@ export function titleFromRawInput(rawInput: string): string {
   if (!normalised) return rawInput.trim().slice(0, 80);
   // Title-case each word, preserving short connectors (a, an, the, of,
   // for, and) in lowercase except as the first word.
-  const words = normalised.split(' ');
-  const SHORT = new Set(['a', 'an', 'the', 'of', 'for', 'and', 'in', 'on', 'to']);
+  const words = normalised.split(" ");
+  const SHORT = new Set([
+    "a",
+    "an",
+    "the",
+    "of",
+    "for",
+    "and",
+    "in",
+    "on",
+    "to",
+  ]);
   return words
-    .map((w, i) => (i === 0 || !SHORT.has(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w))
-    .join(' ')
+    .map((w, i) =>
+      i === 0 || !SHORT.has(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w,
+    )
+    .join(" ")
     .slice(0, 80);
 }

@@ -12,18 +12,18 @@
  *
  * Fonts are loaded via `next/font` inside this subtree only.
  */
-import type { Metadata } from 'next';
-import type { ReactNode } from 'react';
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import {
   bricolage,
   dmSans,
   permanentMarker,
-} from '@/lib/prototypes/market-os/fonts';
+} from "@/lib/prototypes/market-os/fonts";
 
 export const metadata: Metadata = {
-  title: 'MarketOS — Work as a market',
+  title: "MarketOS — Work as a market",
   description:
-    'A prototype of an internal market for work. Posts revenue-funded missions, lets people bid, and replaces opaque comp negotiations with a visible track record.',
+    "A prototype of an internal market for work. Posts revenue-funded missions, lets people bid, and replaces opaque comp negotiations with a visible track record.",
 };
 
 export default function MarketOSLayout({ children }: { children: ReactNode }) {
@@ -32,9 +32,9 @@ export default function MarketOSLayout({ children }: { children: ReactNode }) {
       data-marketos
       className={`${bricolage.variable} ${dmSans.variable} ${permanentMarker.variable}`}
       style={{
-        minHeight: '100vh',
+        minHeight: "100vh",
         // expose font variables to inline-styled descendants
-        fontFamily: 'var(--font-dm-sans), DM Sans, sans-serif',
+        fontFamily: "var(--font-dm-sans), DM Sans, sans-serif",
       }}
     >
       {children}

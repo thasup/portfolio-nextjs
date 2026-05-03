@@ -1,12 +1,12 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
-import { centsToDollars } from '@/lib/marketos/calc';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
+import { centsToDollars } from "@/lib/marketos/calc";
 import {
   type MissionDTO,
   type Category,
   type MissionStatus,
-} from '@/lib/marketos/types';
-import type { Prisma } from '@prisma/client';
+} from "@/lib/marketos/types";
+import type { Prisma } from "@prisma/client";
 
 /**
  * MarketOS — mission reads.
@@ -69,13 +69,13 @@ export async function listMissions(
     archivedAt: null,
     ...(status ? { status } : {}),
     ...(category ? { category } : {}),
-    ...(search ? { title: { contains: search, mode: 'insensitive' } } : {}),
+    ...(search ? { title: { contains: search, mode: "insensitive" } } : {}),
     ...(cursor ? { createdAt: { lt: new Date(cursor) } } : {}),
   };
 
   const rows = await prisma.marketosMission.findMany({
     where,
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     take: limit,
     include: MISSION_INCLUDE,
   });
@@ -91,9 +91,10 @@ export async function getMissionBySlugOrId(
   orgId: string,
   slugOrId: string,
 ): Promise<MissionDTO | null> {
-  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-    slugOrId,
-  );
+  const isUuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      slugOrId,
+    );
   const row = await prisma.marketosMission.findFirst({
     where: {
       orgId,
@@ -114,7 +115,7 @@ export async function countMissionsByStatus(
   orgId: string,
 ): Promise<Record<MissionStatus, number>> {
   const rows = await prisma.marketosMission.groupBy({
-    by: ['status'],
+    by: ["status"],
     where: { orgId, archivedAt: null },
     _count: { _all: true },
   });
@@ -141,7 +142,7 @@ export async function countActiveMissions(orgId: string): Promise<number> {
     where: {
       orgId,
       archivedAt: null,
-      status: { in: ['open', 'active', 'delivered'] },
+      status: { in: ["open", "active", "delivered"] },
     },
   });
 }
@@ -156,9 +157,9 @@ export async function countActiveMissionCategories(
     where: {
       orgId,
       archivedAt: null,
-      status: { in: ['open', 'active', 'delivered'] },
+      status: { in: ["open", "active", "delivered"] },
     },
-    distinct: ['category'],
+    distinct: ["category"],
     select: { category: true },
   });
   return rows.length;

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * `/learn/login` — Google OAuth sign-in entry point for PRAXIS.
@@ -7,8 +7,8 @@
  * On sign-in success Supabase calls `/auth/callback`, which provisions
  * the learner row and redirects to `/learn`.
  */
-import Link from 'next/link';
-import { createClient } from '@/utils/supabase/client';
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
 
 /**
  * Resolve the base URL for the current environment.
@@ -22,15 +22,15 @@ function getURL(): string {
   let url =
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.NEXT_PUBLIC_VERCEL_URL ??
-    'http://localhost:3000';
+    "http://localhost:3000";
 
   // Vercel's NEXT_PUBLIC_VERCEL_URL doesn't include protocol.
-  url = url.startsWith('http') ? url : `https://${url}`;
+  url = url.startsWith("http") ? url : `https://${url}`;
   // Ensure trailing slash.
-  url = url.endsWith('/') ? url : `${url}/`;
+  url = url.endsWith("/") ? url : `${url}/`;
 
   // In the browser, prefer origin so local dev always redirects locally.
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     url = `${window.location.origin}/`;
   }
 
@@ -40,7 +40,7 @@ function getURL(): string {
 async function signInWithGoogle() {
   const supabase = createClient();
   await supabase.auth.signInWithOAuth({
-    provider: 'google',
+    provider: "google",
     options: {
       redirectTo: `${getURL()}auth/callback`,
     },
@@ -63,7 +63,8 @@ export default function LearnLoginPage() {
             Learn anything.
           </h1>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            AI-powered learning, structured around what you actually want to master.
+            AI-powered learning, structured around what you actually want to
+            master.
           </p>
         </div>
 
@@ -109,10 +110,13 @@ export default function LearnLoginPage() {
         </div>
 
         <p className="text-xs text-muted-foreground">
-          PRAXIS is a personal learning tool.{' '}
-          <Link href="/contact" className="underline underline-offset-4 hover:text-foreground">
+          PRAXIS is a personal learning tool.{" "}
+          <Link
+            href="/contact"
+            className="underline underline-offset-4 hover:text-foreground"
+          >
             Get in touch
-          </Link>{' '}
+          </Link>{" "}
           if you&apos;d like access.
         </p>
       </div>

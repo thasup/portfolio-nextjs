@@ -6,18 +6,18 @@
  * GET returns current preferences + available models list.
  * POST updates preferences (authenticated learners only).
  */
-import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
 import {
   AVAILABLE_MODELS,
   ModelPreferences,
   ModelTask,
   createModelResolver,
   getUniversalModel,
-} from '@/lib/praxis/openrouter/models';
+} from "@/lib/praxis/openrouter/models";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 interface ModelInfo {
   task: ModelTask;
@@ -31,36 +31,65 @@ interface GetResponse {
   tasks: ModelInfo[];
 }
 
-export async function GET(): Promise<NextResponse<GetResponse | { error: string }>> {
+export async function GET(): Promise<
+  NextResponse<GetResponse | { error: string }>
+> {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
-  const { data: { user }, error: authErr } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authErr,
+  } = await supabase.auth.getUser();
 
   if (authErr || !user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   // Fetch learner preferences
   const { data: learner, error: learnerErr } = await supabase
-    .from('nexus_users')
-    .select('model_preferences')
-    .eq('id', user.id)
+    .from("nexus_users")
+    .select("model_preferences")
+    .eq("id", user.id)
     .maybeSingle();
 
   if (learnerErr) {
-    console.error('[praxis/models] Failed to fetch preferences:', learnerErr);
-    return NextResponse.json({ error: 'Failed to fetch preferences' }, { status: 500 });
+    console.error("[praxis/models] Failed to fetch preferences:", learnerErr);
+    return NextResponse.json(
+      { error: "Failed to fetch preferences" },
+      { status: 500 },
+    );
   }
 
-  const preferences = (learner?.model_preferences as ModelPreferences | null) ?? null;
+  const preferences =
+    (learner?.model_preferences as ModelPreferences | null) ?? null;
   const resolver = createModelResolver(preferences);
 
   const tasks: ModelInfo[] = [
-    { task: ModelTask.GUARDRAIL, current: resolver(ModelTask.GUARDRAIL), available: AVAILABLE_MODELS },
-    { task: ModelTask.CURRICULUM, current: resolver(ModelTask.CURRICULUM), available: AVAILABLE_MODELS },
-    { task: ModelTask.UNIT, current: resolver(ModelTask.UNIT), available: AVAILABLE_MODELS },
-    { task: ModelTask.ONBOARDING, current: resolver(ModelTask.ONBOARDING), available: AVAILABLE_MODELS },
-    { task: ModelTask.JUDGE, current: resolver(ModelTask.JUDGE), available: AVAILABLE_MODELS },
+    {
+      task: ModelTask.GUARDRAIL,
+      current: resolver(ModelTask.GUARDRAIL),
+      available: AVAILABLE_MODELS,
+    },
+    {
+      task: ModelTask.CURRICULUM,
+      current: resolver(ModelTask.CURRICULUM),
+      available: AVAILABLE_MODELS,
+    },
+    {
+      task: ModelTask.UNIT,
+      current: resolver(ModelTask.UNIT),
+      available: AVAILABLE_MODELS,
+    },
+    {
+      task: ModelTask.ONBOARDING,
+      current: resolver(ModelTask.ONBOARDING),
+      available: AVAILABLE_MODELS,
+    },
+    {
+      task: ModelTask.JUDGE,
+      current: resolver(ModelTask.JUDGE),
+      available: AVAILABLE_MODELS,
+    },
   ];
 
   return NextResponse.json({
@@ -79,17 +108,20 @@ export async function POST(
 ): Promise<NextResponse<{ success: true } | { error: string }>> {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
-  const { data: { user }, error: authErr } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authErr,
+  } = await supabase.auth.getUser();
 
   if (authErr || !user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   let body: PostBody;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   // Validate model slugs are from allowed list
@@ -107,15 +139,17 @@ export async function POST(
 
   // Update preferences
   const { error: updateErr } = await supabase
-    .from('nexus_users')
+    .from("nexus_users")
     .update({ model_preferences: prefs })
-    .eq('id', user.id);
+    .eq("id", user.id);
 
   if (updateErr) {
-    console.error('[praxis/models] Failed to update preferences:', updateErr);
-    return NextResponse.json({ error: 'Failed to update preferences' }, { status: 500 });
+    console.error("[praxis/models] Failed to update preferences:", updateErr);
+    return NextResponse.json(
+      { error: "Failed to update preferences" },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ success: true });
 }
-

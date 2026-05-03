@@ -6,13 +6,13 @@
  * `praxis_onboarding` with incrementing `version`, and the topic is
  * bumped to `status = 'active'` on first save.
  */
-import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
-import { OnboardingFlow } from '@/components/praxis/OnboardingFlow';
-import { requireUser } from '@/lib/nexus/session/getUser';
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { OnboardingFlow } from "@/components/praxis/OnboardingFlow";
+import { requireUser } from "@/lib/nexus/session/getUser";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface OnboardingPageProps {
   params: Promise<{ topicId: string }>;
@@ -25,9 +25,9 @@ export default async function OnboardingPage({ params }: OnboardingPageProps) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
   const { data: topic } = await supabase
-    .from('praxis_topics')
-    .select('id, title, user_id, status')
-    .eq('id', topicId)
+    .from("praxis_topics")
+    .select("id, title, user_id, status")
+    .eq("id", topicId)
     .maybeSingle();
 
   if (!topic || topic.user_id !== session.userId) {
@@ -40,5 +40,3 @@ export default async function OnboardingPage({ params }: OnboardingPageProps) {
     </div>
   );
 }
-
-

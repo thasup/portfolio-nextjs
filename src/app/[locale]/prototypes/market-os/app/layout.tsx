@@ -10,11 +10,11 @@
  * the sidebar (which renders the pool widget) and exposes the org id
  * to nested pages via React's `cache()`-friendly query helpers.
  */
-import type { ReactNode } from 'react';
-import { Sidebar } from '@/components/prototypes/market-os/app/Sidebar';
-import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
-import { getCurrentPool } from '@/lib/marketos/queries/pool';
-import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import type { ReactNode } from "react";
+import { Sidebar } from "@/components/prototypes/market-os/app/Sidebar";
+import { getOrgBySlug } from "@/lib/marketos/queries/orgs";
+import { getCurrentPool } from "@/lib/marketos/queries/pool";
+import { DEMO_ORG_SLUG } from "@/lib/marketos/constants";
 
 export default async function MarketOSAppLayout({
   children,
@@ -27,9 +27,9 @@ export default async function MarketOSAppLayout({
   return (
     <div
       style={{
-        display: 'flex',
-        minHeight: '100vh',
-        background: 'var(--mk-cream)',
+        display: "flex",
+        minHeight: "100vh",
+        background: "var(--mk-cream)",
       }}
     >
       <Sidebar pool={pool} />

@@ -32,7 +32,7 @@ export function HeroBackground() {
         Using much higher opacity and larger blurs to create a vibrant liquid mesh effect.
         The colors are based on the brand's primary/accent colors. 
       */}
-      
+
       {/* Primary Blob (Right Side) */}
       <motion.div
         className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] md:w-[50vw] md:h-[50vw] rounded-full bg-linear-to-bl from-[var(--color-praxis-accent)] via-[var(--color-ai-primary)] to-transparent blur-[80px] md:blur-[120px] opacity-40 dark:opacity-60"
@@ -48,7 +48,7 @@ export function HeroBackground() {
           ease: "linear",
         }}
       />
-      
+
       {/* Secondary Blob (Bottom Right) */}
       <motion.div
         className="absolute bottom-[-20%] right-[10%] w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] rounded-full bg-linear-to-tr from-purple-600 via-[var(--color-praxis-accent)] to-transparent blur-[80px] md:blur-[120px] opacity-30 dark:opacity-50"
@@ -109,9 +109,9 @@ export function HeroBackground() {
           />
         ))}
       </div>
-      
+
       {/* Noise Texture Overlay for that premium grainy look */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,

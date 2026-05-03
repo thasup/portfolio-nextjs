@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * `BlockRegenerateAction` — inline UI for block-level regeneration.
@@ -8,9 +8,9 @@
  * example"). Submits to `POST /api/praxis/unit` with action
  * `regenerate_block`.
  */
-import { useState, useRef, useCallback } from 'react';
-import type { UnitBlockKind } from '@/lib/praxis/prompts/types';
-import { showApiError } from '@/lib/praxis/toast';
+import { useState, useRef, useCallback } from "react";
+import type { UnitBlockKind } from "@/lib/praxis/prompts/types";
+import { showApiError } from "@/lib/praxis/toast";
 
 export interface BlockRegenerateActionProps {
   unitId: string;
@@ -35,7 +35,7 @@ export function BlockRegenerateAction({
   onRegenerated,
 }: BlockRegenerateActionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [instruction, setInstruction] = useState('');
+  const [instruction, setInstruction] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleExpand = useCallback(() => {
@@ -45,7 +45,7 @@ export function BlockRegenerateAction({
 
   const handleCancel = useCallback(() => {
     setIsExpanded(false);
-    setInstruction('');
+    setInstruction("");
   }, []);
 
   const handleSubmit = useCallback(async () => {
@@ -54,11 +54,11 @@ export function BlockRegenerateAction({
     onStartRegenerate();
 
     try {
-      const res = await fetch('/api/praxis/unit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/praxis/unit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          action: 'regenerate_block',
+          action: "regenerate_block",
           unitId,
           blockId,
           instruction: instruction.trim(),
@@ -67,7 +67,9 @@ export function BlockRegenerateAction({
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        const error = new Error(data?.error?.message ?? `Request failed (${res.status})`);
+        const error = new Error(
+          data?.error?.message ?? `Request failed (${res.status})`,
+        );
         (error as { code?: string }).code = data?.error?.code;
         throw error;
       }
@@ -81,21 +83,28 @@ export function BlockRegenerateAction({
       });
 
       setIsExpanded(false);
-      setInstruction('');
+      setInstruction("");
     } catch (err) {
       showApiError(err, {
-        description: 'Block regeneration failed. You can try again.',
+        description: "Block regeneration failed. You can try again.",
       });
     }
-  }, [unitId, blockId, blockKind, instruction, onStartRegenerate, onRegenerated]);
+  }, [
+    unitId,
+    blockId,
+    blockKind,
+    instruction,
+    onStartRegenerate,
+    onRegenerated,
+  ]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
+      if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         handleSubmit();
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         handleCancel();
       }
     },
@@ -159,7 +168,7 @@ export function BlockRegenerateAction({
             Regenerating…
           </>
         ) : (
-          'Go'
+          "Go"
         )}
       </button>
       {!isRegenerating && (

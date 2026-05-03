@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 /**
  * `/prototypes/market-os/app` redirects to the dashboard. The bare
@@ -6,5 +6,5 @@ import { redirect } from 'next/navigation';
  * a destination.
  */
 export default function AppIndex() {
-  redirect('/prototypes/market-os/app/dashboard');
+  redirect("/prototypes/market-os/app/dashboard");
 }

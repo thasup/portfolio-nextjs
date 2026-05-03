@@ -25,28 +25,40 @@
  */
 
 /** Provider-agnostic default that works across OpenRouter. */
-export const DEFAULT_MODEL = 'anthropic/claude-sonnet-4';
+export const DEFAULT_MODEL = "anthropic/claude-sonnet-4";
 
 /** Available models for selection. */
 export const AVAILABLE_MODELS = [
-  { slug: 'deepseek/deepseek-v3.2', label: 'DeepSeek V3.2', provider: 'DeepSeek' },
-  { slug: 'google/gemini-3-flash-preview', label: 'Gemini 3 Flash Preview', provider: 'Google' },
-  { slug: 'minimax/minimax-m2.7', label: 'MiniMax M2.7', provider: 'MiniMax' },
-  { slug: 'x-ai/grok-4.1-fast', label: 'Grok 4.1 Fast', provider: 'xAI' },
-  { slug: 'moonshotai/kimi-k2.6', label: 'Kimi K2.6', provider: 'Moonshot' },
-  { slug: 'openai/gpt-5.4-nano', label: 'GPT-5.4 Nano', provider: 'OpenAI' },
-  { slug: 'anthropic/claude-sonnet-4.6', label: 'Claude Sonnet 4.6', provider: 'Anthropic' },
+  {
+    slug: "deepseek/deepseek-v3.2",
+    label: "DeepSeek V3.2",
+    provider: "DeepSeek",
+  },
+  {
+    slug: "google/gemini-3-flash-preview",
+    label: "Gemini 3 Flash Preview",
+    provider: "Google",
+  },
+  { slug: "minimax/minimax-m2.7", label: "MiniMax M2.7", provider: "MiniMax" },
+  { slug: "x-ai/grok-4.1-fast", label: "Grok 4.1 Fast", provider: "xAI" },
+  { slug: "moonshotai/kimi-k2.6", label: "Kimi K2.6", provider: "Moonshot" },
+  { slug: "openai/gpt-5.4-nano", label: "GPT-5.4 Nano", provider: "OpenAI" },
+  {
+    slug: "anthropic/claude-sonnet-4.6",
+    label: "Claude Sonnet 4.6",
+    provider: "Anthropic",
+  },
 ] as const;
 
-export type AvailableModelSlug = (typeof AVAILABLE_MODELS)[number]['slug'];
+export type AvailableModelSlug = (typeof AVAILABLE_MODELS)[number]["slug"];
 
 /** Task types that can have model overrides. */
 export enum ModelTask {
-  GUARDRAIL = 'guardrail',
-  CURRICULUM = 'curriculum',
-  UNIT = 'unit',
-  ONBOARDING = 'onboarding',
-  JUDGE = 'judge',
+  GUARDRAIL = "guardrail",
+  CURRICULUM = "curriculum",
+  UNIT = "unit",
+  ONBOARDING = "onboarding",
+  JUDGE = "judge",
 }
 
 /** Validated model slug. */
@@ -93,16 +105,16 @@ function loadConfig(): ModelConfig {
   const universalModel = resolveWithDeprecation(
     process.env.PRAXIS_LLM_MODEL,
     process.env.PRAXIS_GENERATION_MODEL,
-    'PRAXIS_LLM_MODEL',
-    'PRAXIS_GENERATION_MODEL',
+    "PRAXIS_LLM_MODEL",
+    "PRAXIS_GENERATION_MODEL",
   );
 
   // Handle legacy PRAXIS_EVAL_MODEL / PRAXIS_EVAL_JUDGE_MODEL → PRAXIS_LLM_JUDGE_MODEL
   const judgeModel = resolveWithDeprecation(
     process.env.PRAXIS_LLM_JUDGE_MODEL ?? process.env.PRAXIS_LLM_MODEL,
     process.env.PRAXIS_EVAL_JUDGE_MODEL ?? process.env.PRAXIS_EVAL_MODEL,
-    'PRAXIS_LLM_JUDGE_MODEL',
-    'PRAXIS_EVAL_JUDGE_MODEL or PRAXIS_EVAL_MODEL',
+    "PRAXIS_LLM_JUDGE_MODEL",
+    "PRAXIS_EVAL_JUDGE_MODEL or PRAXIS_EVAL_MODEL",
   );
 
   const universal = universalModel ?? DEFAULT_MODEL;

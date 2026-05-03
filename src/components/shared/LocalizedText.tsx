@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useLocale } from 'next-intl';
-import { locales } from '@/i18n/request';
+import { useLocale } from "next-intl";
+import { locales } from "@/i18n/request";
 
 interface LocalizedTextProps {
   en: string;
@@ -9,9 +9,9 @@ interface LocalizedTextProps {
   fallback?: string;
 }
 
-export function LocalizedText({ en, th, fallback = '' }: LocalizedTextProps) {
+export function LocalizedText({ en, th, fallback = "" }: LocalizedTextProps) {
   const locale = useLocale();
-  if (locale === 'th' && th) {
+  if (locale === "th" && th) {
     return <>{th}</>;
   }
   return <>{en || fallback}</>;
@@ -19,13 +19,19 @@ export function LocalizedText({ en, th, fallback = '' }: LocalizedTextProps) {
 
 type LocalizedRecord = Record<string, string | undefined>;
 
-export function getLocalizedData<T extends object>(obj: T, fieldName: string, locale: string): string {
-  const normalizedLocale = locales.includes(locale as (typeof locales)[number]) ? locale : 'en';
-  const isThai = normalizedLocale === 'th';
+export function getLocalizedData<T extends object>(
+  obj: T,
+  fieldName: string,
+  locale: string,
+): string {
+  const normalizedLocale = locales.includes(locale as (typeof locales)[number])
+    ? locale
+    : "en";
+  const isThai = normalizedLocale === "th";
   const localizedRecord = obj as LocalizedRecord;
   if (isThai) {
     const thValue = localizedRecord[`${String(fieldName)}Th`];
     if (thValue) return thValue;
   }
-  return localizedRecord[`${String(fieldName)}En`] || '';
+  return localizedRecord[`${String(fieldName)}En`] || "";
 }

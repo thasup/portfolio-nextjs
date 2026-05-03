@@ -1,11 +1,11 @@
-import createIntlMiddleware from 'next-intl/middleware';
-import { NextResponse, type NextRequest } from 'next/server';
-import { updateSession } from '@/lib/praxis/session/updateSession';
+import createIntlMiddleware from "next-intl/middleware";
+import { NextResponse, type NextRequest } from "next/server";
+import { updateSession } from "@/lib/praxis/session/updateSession";
 
 const intlMiddleware = createIntlMiddleware({
-  locales: ['en', 'th'],
-  defaultLocale: 'en',
-  localePrefix: 'as-needed',
+  locales: ["en", "th"],
+  defaultLocale: "en",
+  localePrefix: "as-needed",
 });
 
 /**
@@ -16,16 +16,18 @@ const intlMiddleware = createIntlMiddleware({
  */
 function stripLocale(pathname: string): string {
   const match = pathname.match(/^\/(en|th)(\/.*)?$/);
-  return match ? match[2] ?? '/' : pathname;
+  return match ? (match[2] ?? "/") : pathname;
 }
 
 function isPraxisPath(pathname: string): boolean {
   const rest = stripLocale(pathname);
-  return rest.startsWith('/prototypes/praxis') || rest.startsWith('/api/praxis');
+  return (
+    rest.startsWith("/prototypes/praxis") || rest.startsWith("/api/praxis")
+  );
 }
 
 function isApiPath(pathname: string): boolean {
-  return stripLocale(pathname).startsWith('/api/');
+  return stripLocale(pathname).startsWith("/api/");
 }
 
 /**
@@ -36,7 +38,7 @@ function isApiPath(pathname: string): boolean {
  * which doesn't exist and yields a 404.
  */
 function isAuthApiPath(pathname: string): boolean {
-  return pathname.startsWith('/auth/');
+  return pathname.startsWith("/auth/");
 }
 
 /**
@@ -87,6 +89,6 @@ export const config = {
   matcher: [
     // Every non-static, non-Next-internal path. The middleware itself
     // branches on `/api/*` vs page routes, so we don't pre-filter here.
-    '/((?!_next|_vercel|.*\\..*).*)',
+    "/((?!_next|_vercel|.*\\..*).*)",
   ],
 };

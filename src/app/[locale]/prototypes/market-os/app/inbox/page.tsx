@@ -1,9 +1,9 @@
-import { AppPage } from '@/components/prototypes/market-os/app/AppPage';
-import { InboxView } from '@/components/prototypes/market-os/app/InboxView';
-import { getOrgBySlug } from '@/lib/marketos/queries/orgs';
-import { listNotifications } from '@/lib/marketos/queries/notifications';
-import { getCurrentMember } from '@/lib/marketos/auth';
-import { DEMO_ORG_SLUG } from '@/lib/marketos/constants';
+import { AppPage } from "@/components/prototypes/market-os/app/AppPage";
+import { InboxView } from "@/components/prototypes/market-os/app/InboxView";
+import { getOrgBySlug } from "@/lib/marketos/queries/orgs";
+import { listNotifications } from "@/lib/marketos/queries/notifications";
+import { getCurrentMember } from "@/lib/marketos/auth";
+import { DEMO_ORG_SLUG } from "@/lib/marketos/constants";
 
 /**
  * Inbox — spec §8.10. Anonymous visitors see an empty state because
@@ -19,8 +19,8 @@ export default async function InboxPage() {
       <AppPage>
         <p
           style={{
-            color: '#7a7f79',
-            fontFamily: 'var(--font-dm-sans), sans-serif',
+            color: "#7a7f79",
+            fontFamily: "var(--font-dm-sans), sans-serif",
             fontSize: 14,
           }}
         >
@@ -35,21 +35,21 @@ export default async function InboxPage() {
       <AppPage>
         <h1
           style={{
-            fontFamily: 'var(--font-bricolage), sans-serif',
+            fontFamily: "var(--font-bricolage), sans-serif",
             fontWeight: 800,
             fontSize: 28,
-            color: '#1e3a2f',
-            margin: '0 0 12px',
-            letterSpacing: '-0.03em',
+            color: "#1e3a2f",
+            margin: "0 0 12px",
+            letterSpacing: "-0.03em",
           }}
         >
           Inbox
         </h1>
         <p
           style={{
-            fontFamily: 'var(--font-dm-sans), sans-serif',
+            fontFamily: "var(--font-dm-sans), sans-serif",
             fontSize: 14,
-            color: '#7a7f79',
+            color: "#7a7f79",
           }}
         >
           Sign in to see your notifications.

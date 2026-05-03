@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Navbar } from './Navbar';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Navbar } from "./Navbar";
 
 const meta = {
-  title: 'Layout/Navbar',
+  title: "Layout/Navbar",
   component: Navbar,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Navbar>;
 
 export default meta;
@@ -19,15 +19,15 @@ export const WithScrolledBackground: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Navbar with glass panel background (simulating scrolled state)',
+        story: "Navbar with glass panel background (simulating scrolled state)",
       },
     },
   },
   decorators: [
     (Story) => (
-      <div style={{ paddingTop: '100px' }}>
+      <div style={{ paddingTop: "100px" }}>
         <Story />
-        <div style={{ height: '200vh', padding: '2rem' }}>
+        <div style={{ height: "200vh", padding: "2rem" }}>
           <p>Scroll down to see the navbar background change</p>
         </div>
       </div>
@@ -37,18 +37,18 @@ export const WithScrolledBackground: Story = {
 
 export const DarkTheme: Story = {
   parameters: {
-    backgrounds: { default: 'dark' },
+    backgrounds: { default: "dark" },
   },
   globals: {
-    theme: 'dark',
+    theme: "dark",
   },
 };
 
 export const LightTheme: Story = {
   parameters: {
-    backgrounds: { default: 'light' },
+    backgrounds: { default: "light" },
   },
   globals: {
-    theme: 'light',
+    theme: "light",
   },
 };

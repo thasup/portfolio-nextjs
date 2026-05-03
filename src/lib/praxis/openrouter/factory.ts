@@ -4,8 +4,8 @@
  * the client directly, so the env lookup + referer/title defaults stay
  * in one place.
  */
-import 'server-only';
-import { OpenRouterClient } from '@/lib/praxis/openrouter/client';
+import "server-only";
+import { OpenRouterClient } from "@/lib/praxis/openrouter/client";
 import {
   defaultModel,
   getUniversalModel,
@@ -19,7 +19,7 @@ import {
   createModelResolver,
   AVAILABLE_MODELS,
   DEFAULT_MODEL,
-} from '@/lib/praxis/openrouter/models';
+} from "@/lib/praxis/openrouter/models";
 
 // Re-export model getters for convenience.
 export {
@@ -43,7 +43,7 @@ export type {
   ModelPreferences,
   AvailableModelSlug,
   ModelSlug,
-} from '@/lib/praxis/openrouter/models';
+} from "@/lib/praxis/openrouter/models";
 
 let cached: OpenRouterClient | null = null;
 
@@ -51,12 +51,12 @@ export function getClient(): OpenRouterClient {
   if (cached) return cached;
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    throw new Error('OPENROUTER_API_KEY is not set');
+    throw new Error("OPENROUTER_API_KEY is not set");
   }
   cached = new OpenRouterClient({
     apiKey,
-    referer: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://thanachon.me',
-    title: 'PRAXIS',
+    referer: process.env.NEXT_PUBLIC_SITE_URL ?? "https://thanachon.me",
+    title: "PRAXIS",
   });
   return cached;
 }

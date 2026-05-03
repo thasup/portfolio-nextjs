@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
-import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { usePerformanceTier } from '@/hooks/usePerformanceTier';
-import { supportsBackdropFilter } from '@/lib/feature-detection';
-import { getFilterId, shouldEnableDistortion } from '@/lib/glass-distortion';
-import { SPRING_GENTLE } from '@/lib/springs';
-import { cn } from '@/lib/utils';
-import { DistortionConfig, DistortionIntensity, GlassElevation } from './glass-types';
+import React, { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { usePerformanceTier } from "@/hooks/usePerformanceTier";
+import { supportsBackdropFilter } from "@/lib/feature-detection";
+import { getFilterId, shouldEnableDistortion } from "@/lib/glass-distortion";
+import { SPRING_GENTLE } from "@/lib/springs";
+import { cn } from "@/lib/utils";
+import {
+  DistortionConfig,
+  DistortionIntensity,
+  GlassElevation,
+} from "./glass-types";
 
 export interface GlassModalProps {
   open: boolean;
@@ -16,7 +20,7 @@ export interface GlassModalProps {
   elevation?: GlassElevation;
   className?: string;
   children?: React.ReactNode;
-  
+
   // Distortion props
   distortion?: boolean;
   distortionIntensity?: DistortionIntensity;
@@ -25,32 +29,36 @@ export interface GlassModalProps {
 }
 
 export const GlassModal = React.forwardRef<HTMLDivElement, GlassModalProps>(
-  ({ 
-    open, 
-    onClose, 
-    elevation = 'e4', 
-    distortion = false,
-    distortionIntensity = 'medium',
-    shine = false,
-    className, 
-    children 
-  }, ref) => {
+  (
+    {
+      open,
+      onClose,
+      elevation = "e4",
+      distortion = false,
+      distortionIntensity = "medium",
+      shine = false,
+      className,
+      children,
+    },
+    ref,
+  ) => {
     const reducedMotion = useReducedMotion();
     const performanceTier = usePerformanceTier();
     const hasBackdropFilter = supportsBackdropFilter();
 
     const canBlur = performanceTier === 1 && hasBackdropFilter;
-    const canDistort = distortion && canBlur && shouldEnableDistortion(performanceTier);
+    const canDistort =
+      distortion && canBlur && shouldEnableDistortion(performanceTier);
 
     useEffect(() => {
       if (open) {
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
       } else {
-        document.body.style.overflow = '';
+        document.body.style.overflow = "";
       }
 
       return () => {
-        document.body.style.overflow = '';
+        document.body.style.overflow = "";
       };
     }, [open]);
 
@@ -74,14 +82,16 @@ export const GlassModal = React.forwardRef<HTMLDivElement, GlassModalProps>(
       : undefined;
 
     const baseStyles = cn(
-      'relative max-h-[90vh] w-full max-w-lg overflow-auto rounded-xl border p-6',
+      "relative max-h-[90vh] w-full max-w-lg overflow-auto rounded-xl border p-6",
       // If NOT distorting and CAN blur, add backdrop class (standard)
-      !canDistort && canBlur ? `backdrop-blur-[var(--glass-${elevation}-blur)]` : '',
+      !canDistort && canBlur
+        ? `backdrop-blur-[var(--glass-${elevation}-blur)]`
+        : "",
       // If NOT distorting and CANNOT blur, fall back to bg-card
-      !canDistort && !canBlur ? 'bg-card' : '',
+      !canDistort && !canBlur ? "bg-card" : "",
       // If distorting, ensure relative positioning and isolation
-      canDistort ? 'relative overflow-hidden isolate' : '',
-      className
+      canDistort ? "relative overflow-hidden isolate" : "",
+      className,
     );
 
     const borderColor = `var(--glass-${elevation}-border)`;
@@ -90,44 +100,47 @@ export const GlassModal = React.forwardRef<HTMLDivElement, GlassModalProps>(
     // 1. DISTORTION ENABLED
     if (canDistort) {
       const filterId = getFilterId(distortionIntensity);
-      
+
       const blurValues = {
-        e1: '8px',
-        e2: '12px',
-        e3: '16px',
-        e4: '20px',
-        e5: '24px',
+        e1: "8px",
+        e2: "12px",
+        e3: "16px",
+        e4: "20px",
+        e5: "24px",
       };
 
       const effectStyle: React.CSSProperties = {
-        position: 'absolute',
+        position: "absolute",
         inset: 0,
         zIndex: 0,
         backdropFilter: `blur(${blurValues[elevation]}) saturate(180%)`,
         WebkitBackdropFilter: `blur(${blurValues[elevation]}) saturate(180%)`,
         filter: `url(#${filterId})`,
-        borderRadius: 'inherit',
+        borderRadius: "inherit",
       };
 
       const tintStyle: React.CSSProperties = {
-        position: 'absolute',
+        position: "absolute",
         inset: 0,
         zIndex: 1,
         backgroundColor: `var(--glass-${elevation}-fill)`,
-        borderRadius: 'inherit',
+        borderRadius: "inherit",
       };
 
-      const shineStyle: React.CSSProperties = shine ? {
-        position: 'absolute',
-        inset: 0,
-        zIndex: 2,
-        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 0 rgba(255,255,255,0.2)',
-        borderRadius: 'inherit',
-        pointerEvents: 'none',
-      } : {};
+      const shineStyle: React.CSSProperties = shine
+        ? {
+            position: "absolute",
+            inset: 0,
+            zIndex: 2,
+            boxShadow:
+              "inset 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 0 rgba(255,255,255,0.2)",
+            borderRadius: "inherit",
+            pointerEvents: "none",
+          }
+        : {};
 
       const contentStyle: React.CSSProperties = {
-        position: 'relative',
+        position: "relative",
         zIndex: 3,
       };
 
@@ -157,9 +170,23 @@ export const GlassModal = React.forwardRef<HTMLDivElement, GlassModalProps>(
                 exit="hidden"
                 variants={contentVariants}
               >
-                <div className="liquidGlass-effect" style={effectStyle} aria-hidden="true" />
-                <div className="liquidGlass-tint" style={tintStyle} aria-hidden="true" />
-                {shine && <div className="liquidGlass-shine" style={shineStyle} aria-hidden="true" />}
+                <div
+                  className="liquidGlass-effect"
+                  style={effectStyle}
+                  aria-hidden="true"
+                />
+                <div
+                  className="liquidGlass-tint"
+                  style={tintStyle}
+                  aria-hidden="true"
+                />
+                {shine && (
+                  <div
+                    className="liquidGlass-shine"
+                    style={shineStyle}
+                    aria-hidden="true"
+                  />
+                )}
                 <div className="liquidGlass-content" style={contentStyle}>
                   {children}
                 </div>
@@ -204,7 +231,7 @@ export const GlassModal = React.forwardRef<HTMLDivElement, GlassModalProps>(
         )}
       </AnimatePresence>
     );
-  }
+  },
 );
 
-GlassModal.displayName = 'GlassModal';
+GlassModal.displayName = "GlassModal";

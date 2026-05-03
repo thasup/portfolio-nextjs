@@ -17,32 +17,32 @@
  * contract is stale vs the prompt enum (which is what the LLM actually
  * emits). Tracked in the living plan for a doc-only reconciliation.
  */
-import 'server-only';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { createAdminClient } from '@/lib/praxis/supabase/admin';
-import type { Database } from '@/lib/praxis/supabase/database.types';
+import "server-only";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/praxis/supabase/admin";
+import type { Database } from "@/lib/praxis/supabase/database.types";
 import {
   ChatRole,
   ResponseFormat,
   extractJson,
-} from '@/lib/praxis/openrouter/client';
+} from "@/lib/praxis/openrouter/client";
 import {
   getClient,
   createModelResolver,
   ModelTask,
-} from '@/lib/praxis/openrouter/factory';
-import type { ModelPreferences } from '@/lib/praxis/openrouter/factory';
+} from "@/lib/praxis/openrouter/factory";
+import type { ModelPreferences } from "@/lib/praxis/openrouter/factory";
 import {
   LedgerEndpoint,
   assertBudget,
   recordLedgerEntry,
-} from '@/lib/praxis/openrouter/ledger';
-import { onboardingMeta } from '@/lib/praxis/prompts';
+} from "@/lib/praxis/openrouter/ledger";
+import { onboardingMeta } from "@/lib/praxis/prompts";
 import type {
   OnboardingInputType,
   OutlineUnit,
   PraxisLocale,
-} from '@/lib/praxis/prompts/types';
+} from "@/lib/praxis/prompts/types";
 
 export interface OnboardingQuestion {
   id: string;
@@ -88,7 +88,7 @@ export async function generateQuestions(
 
   const parsed = extractJson<onboardingMeta.OnboardingJson>(res.content);
   if (!parsed?.questions?.length) {
-    throw new Error('onboarding generation failed — invalid JSON');
+    throw new Error("onboarding generation failed — invalid JSON");
   }
 
   return parsed.questions.map((q) => ({
@@ -123,16 +123,18 @@ export interface SaveAnswersResult {
   topicId: string;
 }
 
-export async function saveAnswers(input: SaveAnswersInput): Promise<SaveAnswersResult> {
+export async function saveAnswers(
+  input: SaveAnswersInput,
+): Promise<SaveAnswersResult> {
   const { learnerId, topicId, answers, supabase } = input;
 
   // Find the latest version for this learner/topic combo.
   const { data: latest, error: latestErr } = await supabase
-    .from('praxis_onboarding')
-    .select('version')
-    .eq('user_id', learnerId)
-    .eq('topic_id', topicId)
-    .order('version', { ascending: false })
+    .from("praxis_onboarding")
+    .select("version")
+    .eq("user_id", learnerId)
+    .eq("topic_id", topicId)
+    .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
 
@@ -142,31 +144,35 @@ export async function saveAnswers(input: SaveAnswersInput): Promise<SaveAnswersR
   const nextVersion = (latest?.version ?? 0) + 1;
 
   const { data: inserted, error: insertErr } = await supabase
-    .from('praxis_onboarding')
+    .from("praxis_onboarding")
     .insert({
       user_id: learnerId,
       topic_id: topicId,
       version: nextVersion,
-      answers: answers as unknown as Database['public']['Tables']['praxis_onboarding']['Insert']['answers'],
+      answers:
+        answers as unknown as Database["public"]["Tables"]["praxis_onboarding"]["Insert"]["answers"],
     })
-    .select('id, version')
+    .select("id, version")
     .single();
 
   if (insertErr || !inserted) {
-    throw new Error(`onboarding insert failed: ${insertErr?.message ?? 'no row'}`);
+    throw new Error(
+      `onboarding insert failed: ${insertErr?.message ?? "no row"}`,
+    );
   }
 
   // Bump topic status to 'active'. Fire-and-forget; a failure here is
   // not worth failing the whole save, since the learner's answers are
   // already persisted.
   supabase
-    .from('praxis_topics')
-    .update({ status: 'active', last_active_at: new Date().toISOString() })
-    .eq('id', topicId)
-    .eq('user_id', learnerId)
-    .in('status', ['outline_ready', 'active'])
+    .from("praxis_topics")
+    .update({ status: "active", last_active_at: new Date().toISOString() })
+    .eq("id", topicId)
+    .eq("user_id", learnerId)
+    .in("status", ["outline_ready", "active"])
     .then(({ error }) => {
-      if (error) console.error('[praxis/onboarding] topic status bump failed', error);
+      if (error)
+        console.error("[praxis/onboarding] topic status bump failed", error);
     });
 
   return { profileId: inserted.id, version: inserted.version, topicId };
@@ -186,12 +192,15 @@ export interface OnboardedTopicContext {
  * `curriculum_id` pointer. Used by `generateQuestions()` to ground the
  * meta-prompt in the accepted outline.
  */
-export async function loadTopicContext(topicId: string, learnerId: string): Promise<OnboardedTopicContext | null> {
+export async function loadTopicContext(
+  topicId: string,
+  learnerId: string,
+): Promise<OnboardedTopicContext | null> {
   const admin = createAdminClient();
   const { data: topic, error: topicErr } = await admin
-    .from('praxis_topics')
-    .select('id, title, locale, user_id, curriculum_id')
-    .eq('id', topicId)
+    .from("praxis_topics")
+    .select("id, title, locale, user_id, curriculum_id")
+    .eq("id", topicId)
     .maybeSingle();
 
   if (topicErr || !topic) return null;
@@ -199,21 +208,26 @@ export async function loadTopicContext(topicId: string, learnerId: string): Prom
   if (!topic.curriculum_id) return null;
 
   const { data: cache, error: cacheErr } = await admin
-    .from('praxis_curriculum_cache')
-    .select('units')
-    .eq('id', topic.curriculum_id)
+    .from("praxis_curriculum_cache")
+    .select("units")
+    .eq("id", topic.curriculum_id)
     .maybeSingle();
 
   if (cacheErr || !cache) return null;
 
-  const unitsJson = cache.units as { units?: Array<{ title: string; objective: string; summary: string }> } | null;
+  const unitsJson = cache.units as {
+    units?: Array<{ title: string; objective: string; summary: string }>;
+  } | null;
   const rawUnits = unitsJson?.units ?? [];
 
   return {
     topicId: topic.id,
     title: topic.title,
     locale: topic.locale as PraxisLocale,
-    outline: rawUnits.map((u) => ({ title: u.title, objective: u.objective, summary: u.summary })),
+    outline: rawUnits.map((u) => ({
+      title: u.title,
+      objective: u.objective,
+      summary: u.summary,
+    })),
   };
 }
-

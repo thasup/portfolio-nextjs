@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export interface SpecularPosition {
   x: number;
@@ -35,12 +35,12 @@ export function useSpecularHighlight(enabled: boolean = true) {
       setPosition({ x: 50, y: 50 });
     };
 
-    element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('mouseleave', handleMouseLeave);
+    element.addEventListener("mousemove", handleMouseMove);
+    element.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      element.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('mouseleave', handleMouseLeave);
+      element.removeEventListener("mousemove", handleMouseMove);
+      element.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [enabled, reducedMotion]);
 

@@ -1,17 +1,17 @@
 export enum Section {
-  HERO = 'hero',
-  TIMELINE = 'timeline',
-  PROJECTS = 'projects',
-  TECH_CAPABILITIES = 'techCapabilities',
-  SKILLS = 'skills',
-  TESTIMONIALS = 'testimonials',
-  VALUE_PROP = 'valueProp',
-  CONTACT = 'contact',
-  NAVBAR = 'navbar',
-  FOOTER = 'footer',
+  HERO = "hero",
+  TIMELINE = "timeline",
+  PROJECTS = "projects",
+  TECH_CAPABILITIES = "techCapabilities",
+  SKILLS = "skills",
+  TESTIMONIALS = "testimonials",
+  VALUE_PROP = "valueProp",
+  CONTACT = "contact",
+  NAVBAR = "navbar",
+  FOOTER = "footer",
 }
 
-const isDev = process.env.NODE_ENV !== 'production'
+const isDev = process.env.NODE_ENV !== "production";
 
 /**
  * Central feature flag configuration for controlling section visibility.
@@ -28,27 +28,27 @@ const sectionConfig: Record<Section, boolean> = {
   [Section.TIMELINE]: true,
   [Section.PROJECTS]: true,
   [Section.TECH_CAPABILITIES]: true,
-  [Section.SKILLS]: false,      // WIP - disable in production
+  [Section.SKILLS]: false, // WIP - disable in production
   [Section.TESTIMONIALS]: true,
-  [Section.VALUE_PROP]: false,  // WIP - disable in production
-  [Section.CONTACT]: false,     // WIP - disable in production
+  [Section.VALUE_PROP]: false, // WIP - disable in production
+  [Section.CONTACT]: false, // WIP - disable in production
   [Section.NAVBAR]: true,
   [Section.FOOTER]: true,
-}
+};
 
 /**
  * Maps navigation href anchors to their corresponding Section enum values.
  * This allows navigation items to be controlled by the same feature flags.
  */
 const anchorToSectionMap: Record<string, Section> = {
-  'hero': Section.HERO,
-  'timeline': Section.TIMELINE,
-  'projects': Section.PROJECTS,
-  'skills': Section.SKILLS,
-  'testimonials': Section.TESTIMONIALS,
-  'value': Section.VALUE_PROP,
-  'contact': Section.CONTACT,
-}
+  hero: Section.HERO,
+  timeline: Section.TIMELINE,
+  projects: Section.PROJECTS,
+  skills: Section.SKILLS,
+  testimonials: Section.TESTIMONIALS,
+  value: Section.VALUE_PROP,
+  contact: Section.CONTACT,
+};
 
 /**
  * Check if a section is enabled.
@@ -56,8 +56,8 @@ const anchorToSectionMap: Record<string, Section> = {
  * In production, uses the sectionConfig settings.
  */
 export function isSectionEnabled(section: Section): boolean {
-  if (isDev) return true
-  return sectionConfig[section] ?? false
+  if (isDev) return true;
+  return sectionConfig[section] ?? false;
 }
 
 /**
@@ -65,15 +65,15 @@ export function isSectionEnabled(section: Section): boolean {
  * Extracts the anchor and checks against the corresponding section flag.
  */
 export function isNavAnchorEnabled(href: string): boolean {
-  if (isDev) return true
+  if (isDev) return true;
 
-  const anchor = href.split('#')[1]
-  if (!anchor) return true
+  const anchor = href.split("#")[1];
+  if (!anchor) return true;
 
-  const section = anchorToSectionMap[anchor]
-  if (!section) return true
+  const section = anchorToSectionMap[anchor];
+  if (!section) return true;
 
-  return sectionConfig[section] ?? false
+  return sectionConfig[section] ?? false;
 }
 
 /**
@@ -83,6 +83,6 @@ export function isNavAnchorEnabled(href: string): boolean {
  */
 export const featureFlags = {
   showWipSections: isDev,
-}
+};
 
-export { isDev }
+export { isDev };

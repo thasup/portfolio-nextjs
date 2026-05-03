@@ -1,8 +1,12 @@
-import { Badge } from '@/components/ui/badge'
-import { type ProjectDomain, DOMAIN_LABELS, DOMAIN_COLORS } from '@/types/project'
+import { Badge } from "@/components/ui/badge";
+import {
+  type ProjectDomain,
+  DOMAIN_LABELS,
+  DOMAIN_COLORS,
+} from "@/types/project";
 
 interface DomainBadgeProps {
-  domain: ProjectDomain
+  domain: ProjectDomain;
 }
 
 export function DomainBadge({ domain }: DomainBadgeProps) {
@@ -10,5 +14,5 @@ export function DomainBadge({ domain }: DomainBadgeProps) {
     <Badge variant="secondary" className={DOMAIN_COLORS[domain]}>
       {DOMAIN_LABELS[domain]}
     </Badge>
-  )
+  );
 }

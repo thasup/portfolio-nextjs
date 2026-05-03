@@ -1,28 +1,23 @@
-import { ReactNode } from 'react'
-import { cn } from '@/lib/utils'
+import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 export interface SectionHeaderProps {
-  title: ReactNode
-  subtitle?: ReactNode
-  label?: ReactNode
-  align?: 'left' | 'center'
-  children?: ReactNode
+  title: ReactNode;
+  subtitle?: ReactNode;
+  label?: ReactNode;
+  align?: "left" | "center";
+  children?: ReactNode;
 }
 
 export function SectionHeader({
   title,
   subtitle,
   label,
-  align = 'center',
+  align = "center",
   children,
 }: SectionHeaderProps) {
   return (
-    <div
-      className={cn(
-        'mb-12 md:mb-16',
-        align === 'center' && 'text-center'
-      )}
-    >
+    <div className={cn("mb-12 md:mb-16", align === "center" && "text-center")}>
       {label && (
         <span className="my-6 inline-block text-xs font-semibold tracking-[0.2em] uppercase text-primary">
           {label}
@@ -38,5 +33,5 @@ export function SectionHeader({
       )}
       {children}
     </div>
-  )
+  );
 }

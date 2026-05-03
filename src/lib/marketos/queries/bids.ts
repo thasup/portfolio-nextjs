@@ -1,12 +1,12 @@
-import 'server-only';
-import { prisma } from '@/lib/db/prisma';
-import { centsToDollars, computeBidRatePct } from '@/lib/marketos/calc';
+import "server-only";
+import { prisma } from "@/lib/db/prisma";
+import { centsToDollars, computeBidRatePct } from "@/lib/marketos/calc";
 import {
   type BidDTO,
   type BidStatus,
   BidStatus as BidStatusEnum,
-} from '@/lib/marketos/types';
-import type { Prisma } from '@prisma/client';
+} from "@/lib/marketos/types";
+import type { Prisma } from "@prisma/client";
 
 /**
  * MarketOS — bid reads.
@@ -61,12 +61,10 @@ async function getReputationMap(
   return map;
 }
 
-export async function listBidsForMission(
-  missionId: string,
-): Promise<BidDTO[]> {
+export async function listBidsForMission(missionId: string): Promise<BidDTO[]> {
   const rows = await prisma.marketosBid.findMany({
     where: { missionId },
-    orderBy: { submittedAt: 'desc' },
+    orderBy: { submittedAt: "desc" },
     include: BID_INCLUDE,
   });
   const reps = await getReputationMap(rows.map((r) => r.bidder.id));
@@ -76,7 +74,7 @@ export async function listBidsForMission(
 export async function listMyBids(memberId: string): Promise<BidDTO[]> {
   const rows = await prisma.marketosBid.findMany({
     where: { bidderId: memberId },
-    orderBy: { submittedAt: 'desc' },
+    orderBy: { submittedAt: "desc" },
     include: BID_INCLUDE,
   });
   const reps = await getReputationMap([memberId]);
