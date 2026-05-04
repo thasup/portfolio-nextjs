@@ -494,20 +494,25 @@ model CapitalLiability {
 }
 
 model CapitalGoal {
-  id         String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String              @map("user_id") @db.Uuid
-  name       String
+  id                String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String               @map("user_id") @db.Uuid
+  name              String
   /// Current amount in satangs.
-  current    BigInt              @default(0)
+  current           BigInt               @default(0)
   /// Target amount in satangs.
-  target     BigInt
-  deadline   DateTime?           @db.Date
-  priority   CapitalGoalPriority
-  vehicle    String?
-  archivedAt DateTime?           @map("archived_at") @db.Timestamptz(6)
-  createdAt  DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
-  user       User                @relation(fields: [userId], references: [id])
+  target            BigInt
+  deadline          DateTime?            @db.Date
+  priority          CapitalGoalPriority
+  vehicle           String?
+  category          CapitalGoalCategory? @default(OTHER)
+  description       String?
+  monthlyAllocation BigInt?              @map("monthly_allocation")
+  linkedAccountId   String?              @map("linked_account_id")
+  completedAt       DateTime?            @map("completed_at") @db.Timestamptz(6)
+  archivedAt        DateTime?            @map("archived_at") @db.Timestamptz(6)
+  createdAt         DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user              User                 @relation(fields: [userId], references: [id])
 
   @@index([userId, archivedAt])
   @@map("capital_goals")
@@ -808,6 +813,19 @@ enum CapitalGoalPriority {
   HIGH
   MEDIUM
   LOW
+}
+
+enum CapitalGoalCategory {
+  EMERGENCY_FUND
+  RETIREMENT
+  MAJOR_PURCHASE
+  DEBT_PAYOFF
+  EDUCATION
+  TRAVEL
+  WEDDING
+  INVESTMENT
+  BUSINESS
+  OTHER
 }
 
 enum CapitalAccountSource {

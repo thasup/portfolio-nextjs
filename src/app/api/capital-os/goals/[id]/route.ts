@@ -18,13 +18,16 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
     where: { id, userId: auth.session.userId },
   });
   if (!existing) {
-    return NextResponse.json({ error: "Goal not found" }, { status: 404 });
+    return NextResponse.json({ success: false, error: "Goal not found" }, { status: 404 });
   }
 
   const body = await req.json();
-  const { name, current, target, deadline, priority, vehicle } = body;
+  const { name, current, target, deadline, priority, vehicle, category, description, monthlyAllocation, linkedAccountId } = body;
 
-  const goal = await prisma.capitalGoal.update({
+  const newCurrent = current !== undefined ? BigInt(current) : existing.current;
+  const newTarget = target !== undefined ? BigInt(target) : existing.target;
+
+  const goal = await (prisma.capitalGoal.update as any)({
     where: { id },
     data: {
       ...(name !== undefined && { name }),
@@ -35,6 +38,13 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
       }),
       ...(priority !== undefined && { priority }),
       ...(vehicle !== undefined && { vehicle }),
+      ...(category !== undefined && { category }),
+      ...(description !== undefined && { description }),
+      ...(monthlyAllocation !== undefined && {
+        monthlyAllocation: monthlyAllocation != null ? BigInt(monthlyAllocation) : null,
+      }),
+      ...(linkedAccountId !== undefined && { linkedAccountId }),
+      completedAt: newCurrent >= newTarget ? (existing as any).completedAt ?? new Date() : null,
     },
   });
 
@@ -44,6 +54,7 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
       ...goal,
       current: Number(goal.current),
       target: Number(goal.target),
+      monthlyAllocation: (goal as any).monthlyAllocation != null ? Number((goal as any).monthlyAllocation) : null,
     },
   });
 }
@@ -57,7 +68,7 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext) {
     where: { id, userId: auth.session.userId },
   });
   if (!existing) {
-    return NextResponse.json({ error: "Goal not found" }, { status: 404 });
+    return NextResponse.json({ success: false, error: "Goal not found" }, { status: 404 });
   }
 
   await prisma.capitalGoal.update({

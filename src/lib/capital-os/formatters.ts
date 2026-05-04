@@ -27,7 +27,7 @@ export interface FormatterPreferences {
  */
 export const DEFAULT_PREFERENCES: FormatterPreferences = {
   numberFormat: "en-US",
-  dateFormat: "YYYY-MM-DD",
+  dateFormat: "DD/MM/YYYY",
   preferredCurrency: "THB",
   theme: "dark",
 };

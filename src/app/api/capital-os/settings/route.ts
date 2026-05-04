@@ -32,7 +32,7 @@ export async function GET() {
           runwayAccountIds: [],
           preferredCurrency: "THB",
           numberFormat: "en-US",
-          dateFormat: "YYYY-MM-DD",
+          dateFormat: "DD/MM/YYYY",
           theme: "dark",
         },
       });
@@ -110,7 +110,7 @@ export async function PATCH(req: NextRequest) {
         runwayAccountIds: validated.runwayAccountIds ?? [],
         preferredCurrency: validated.preferredCurrency ?? "THB",
         numberFormat: validated.numberFormat ?? "en-US",
-        dateFormat: validated.dateFormat ?? "YYYY-MM-DD",
+        dateFormat: validated.dateFormat ?? "DD/MM/YYYY",
         theme: validated.theme ?? "dark",
       },
     });

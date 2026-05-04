@@ -24,8 +24,10 @@ import {
   HardDrive,
   ArrowRightLeft,
   Scale,
+  Menu,
+  X,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface NavItem {
   id: string;
@@ -112,6 +114,38 @@ const NAV_SECONDARY: NavItem[] = [
 export function CapitalOSSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Close mobile drawer on click outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      const sidebar = document.getElementById("capital-os-sidebar");
+      if (sidebar && !sidebar.contains(e.target as Node)) {
+        setMobileOpen(false);
+      }
+    }
+    if (mobileOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [mobileOpen]);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   // Extract the base path to build relative links
   const segments = pathname.split("/");
@@ -132,52 +166,93 @@ export function CapitalOSSidebar() {
   };
 
   return (
-    <aside
-      id="capital-os-sidebar"
-      className={`
-        flex flex-col border-r transition-all duration-300 ease-in-out
-        ${collapsed ? "w-[68px]" : "w-[260px]"}
-      `}
-      style={{
-        background: "var(--cos-surface)",
-        borderColor: "var(--cos-border-subtle)",
-        height: "100vh",
-        position: "sticky",
-        top: 0,
-      }}
-    >
+    <>
+      {/* Mobile hamburger */}
+      <button
+        onClick={() => setMobileOpen(true)}
+        className={`
+          fixed bottom-4 right-4 z-40 rounded-lg p-3 shadow-lg
+          transition-opacity duration-200 md:hidden
+          ${mobileOpen ? "pointer-events-none opacity-0" : "opacity-100"}
+        `}
+        style={{
+          background: "var(--cos-surface)",
+          border: "1px solid var(--cos-border-subtle)",
+          color: "var(--cos-text)",
+        }}
+        aria-label="Open menu"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {/* Mobile overlay backdrop */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm md:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        id="capital-os-sidebar"
+        className={`
+          flex flex-col border-r transition-all duration-300 ease-in-out
+          h-screen w-[260px]
+          fixed top-0 left-0 z-50
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          md:sticky md:top-0 md:translate-x-0
+          ${collapsed ? "md:w-[68px]" : "md:w-[260px]"}
+        `}
+        style={{
+          background: "var(--cos-surface)",
+          borderColor: "var(--cos-border-subtle)",
+        }}
+      >
       {/* ── Header ─────────────────────────────────── */}
-      <Link
-        href={`${basePath}/dashboard`}
-        className="flex items-center gap-3 border-b px-4 py-4 hover:bg-[var(--cos-surface-2)] transition-colors"
+      <div
+        className="flex items-center justify-between border-b px-4 py-4"
         style={{ borderColor: "var(--cos-border-subtle)" }}
       >
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg overflow-hidden">
-          <Image
-            src="/capital_os/icons/capital_os-icon.png"
-            alt="CapitalOS"
-            width={32}
-            height={32}
-            className="h-8 w-8 object-contain"
-          />
-        </div>
-        {!collapsed && (
-          <div className="flex flex-col overflow-hidden">
-            <span className="truncate text-sm font-semibold">CapitalOS</span>
-            <span
-              className="truncate text-xs"
-              style={{ color: "var(--cos-text-2)" }}
-            >
-              Financial Intelligence
-            </span>
+        <Link
+          href={`${basePath}/dashboard`}
+          className="flex items-center gap-3 hover:bg-[var(--cos-surface-2)] transition-colors"
+        >
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg overflow-hidden">
+            <Image
+              src="/capital_os/icons/capital_os-icon.png"
+              alt="CapitalOS"
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
+            />
           </div>
-        )}
-      </Link>
+          {(!collapsed || mobileOpen) && (
+            <div className="flex flex-col overflow-hidden">
+              <span className="truncate text-sm font-semibold">CapitalOS</span>
+              <span
+                className="truncate text-xs"
+                style={{ color: "var(--cos-text-2)" }}
+              >
+                Financial Intelligence
+              </span>
+            </div>
+          )}
+        </Link>
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="rounded-lg p-1 md:hidden"
+          style={{ color: "var(--cos-text-3)" }}
+          aria-label="Close menu"
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
 
       {/* ── Primary nav ────────────────────────────── */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <div className="mb-2">
-          {!collapsed && (
+          {(!collapsed || mobileOpen) && (
             <span
               className="mb-2 block px-2 text-[11px] font-semibold uppercase tracking-wider"
               style={{ color: "var(--cos-text-3)" }}
@@ -206,7 +281,7 @@ export function CapitalOSSidebar() {
                   }}
                 >
                   <item.icon className="h-4 w-4 shrink-0" />
-                  {!collapsed && <span>{item.title}</span>}
+                  {(!collapsed || mobileOpen) && <span>{item.title}</span>}
                 </Link>
               </li>
             ))}
@@ -215,7 +290,7 @@ export function CapitalOSSidebar() {
 
         {/* ── Secondary nav ──────────────────────────── */}
         <div className="mt-6">
-          {!collapsed && (
+          {(!collapsed || mobileOpen) && (
             <span
               className="mb-2 block px-2 text-[11px] font-semibold uppercase tracking-wider"
               style={{ color: "var(--cos-text-3)" }}
@@ -244,7 +319,7 @@ export function CapitalOSSidebar() {
                   }}
                 >
                   <item.icon className="h-4 w-4 shrink-0" />
-                  {!collapsed && (
+                  {(!collapsed || mobileOpen) && (
                     <>
                       <span>{item.title}</span>
                       {item.badge && (
@@ -268,9 +343,9 @@ export function CapitalOSSidebar() {
 
       </nav>
 
-      {/* ── Collapse toggle ────────────────────────── */}
+      {/* ── Collapse toggle (desktop) ─────────────── */}
       <div
-        className="border-t px-3 py-3"
+        className="hidden md:block border-t px-3 py-3"
         style={{ borderColor: "var(--cos-border-subtle)" }}
       >
         <button
@@ -287,6 +362,22 @@ export function CapitalOSSidebar() {
           )}
         </button>
       </div>
+
+      {/* ── Close toggle (mobile) ──────────────────── */}
+      <div
+        className="md:hidden border-t px-3 py-3"
+        style={{ borderColor: "var(--cos-border-subtle)" }}
+      >
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="flex w-full items-center justify-center rounded-lg p-2 transition-colors hover:bg-[var(--cos-surface-2)]"
+          style={{ color: "var(--cos-text-3)" }}
+          aria-label="Close menu"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
     </aside>
+    </>
   );
 }

@@ -7,6 +7,7 @@
 
 import { z } from "zod";
 import { CapitalMappingRole, CapitalAssetType, CapitalGoalPriority } from "@prisma/client";
+import { CapitalGoalCategory } from "@/lib/capital-os/types";
 
 // ============================================================================
 // JSONB Structure Types
@@ -114,8 +115,12 @@ export const GoalRequestSchema = z.object({
   current: z.bigint().or(z.number().transform(n => BigInt(Math.round(n * 100)))),
   target: z.bigint().or(z.number().transform(n => BigInt(Math.round(n * 100)))),
   priority: z.nativeEnum(CapitalGoalPriority),
-  deadline: z.string().datetime().optional(),
+  deadline: z.string().optional(),
   vehicle: z.string().optional(),
+  category: z.nativeEnum(CapitalGoalCategory).optional(),
+  description: z.string().max(300).optional(),
+  monthlyAllocation: z.bigint().or(z.number().transform(n => BigInt(Math.round(n * 100)))).optional(),
+  linkedAccountId: z.string().uuid().nullable().optional(),
 });
 
 export type GoalRequest = z.infer<typeof GoalRequestSchema>;
