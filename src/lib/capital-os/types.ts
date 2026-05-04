@@ -21,6 +21,21 @@ export type CapitalAssetType = _CapitalAssetType;
 export const CapitalGoalPriority = _CapitalGoalPriority;
 export type CapitalGoalPriority = _CapitalGoalPriority;
 
+// CapitalGoalCategory is defined locally here until `prisma migrate dev` runs
+// and regenerates the Prisma client with the new enum.
+export enum CapitalGoalCategory {
+  EMERGENCY_FUND = "EMERGENCY_FUND",
+  RETIREMENT = "RETIREMENT",
+  MAJOR_PURCHASE = "MAJOR_PURCHASE",
+  DEBT_PAYOFF = "DEBT_PAYOFF",
+  EDUCATION = "EDUCATION",
+  TRAVEL = "TRAVEL",
+  WEDDING = "WEDDING",
+  INVESTMENT = "INVESTMENT",
+  BUSINESS = "BUSINESS",
+  OTHER = "OTHER",
+}
+
 export const CapitalAccountSource = _CapitalAccountSource;
 export type CapitalAccountSource = _CapitalAccountSource;
 
@@ -83,6 +98,12 @@ export interface CapitalGoal {
   target: number;
   deadline: string | null;
   priority: CapitalGoalPriority;
+  category: CapitalGoalCategory | null;
+  description: string | null;
+  /** Monthly allocation in satangs. */
+  monthlyAllocation: number | null;
+  linkedAccountId: string | null;
+  completedAt: string | null;
   vehicle: string | null;
   archivedAt: string | null;
   createdAt: string;

@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { X, Save, Target, CalendarIcon, Info, TrendingUp, ChevronDown, Sparkles } from "lucide-react";
-import { CapitalGoal, CapitalGoalPriority, CapitalAccount } from "@/lib/capital-os/types";
+import { format, parseISO, isValid } from "date-fns";
+import { X, Save, Target, CalendarIcon, Info, TrendingUp, Sparkles, Trash2, AlertTriangle } from "lucide-react";
+import { CapitalGoal, CapitalGoalPriority, CapitalGoalCategory, CapitalAccount } from "@/lib/capital-os/types";
 import { fmtCurrency } from "@/lib/capital-os/format";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface GoalModalProps {
   isOpen: boolean;
@@ -26,7 +24,9 @@ interface GoalModalProps {
     monthlyAllocation?: number;
     linkedAccountId?: string | null;
     category?: string;
+    description?: string | null;
   }) => Promise<void>;
+  onDelete?: (id: string) => Promise<void>;
 }
 
 const priorityOptions: { value: CapitalGoalPriority; label: string; color: string }[] = [
@@ -36,20 +36,23 @@ const priorityOptions: { value: CapitalGoalPriority; label: string; color: strin
   { value: CapitalGoalPriority.LOW, label: "Low", color: "#64748b" },
 ];
 
-const goalCategories = [
-  { value: "emergency", label: "Emergency Fund", icon: "🛡️", insight: "Safety buffer for unexpected expenses" },
-  { value: "retirement", label: "Retirement", icon: "🏖️", insight: "Long-term wealth accumulation" },
-  { value: "major_purchase", label: "Major Purchase", icon: "🚗", insight: "Vehicle, home, or large asset" },
-  { value: "debt_payoff", label: "Debt Payoff", icon: "💳", insight: "Liability reduction goal" },
-  { value: "education", label: "Education", icon: "📚", insight: "Learning and skill investment" },
-  { value: "travel", label: "Travel", icon: "✈️", insight: "Experience and adventure fund" },
-  { value: "wedding", label: "Wedding", icon: "💒", insight: "Life milestone planning" },
-  { value: "other", label: "Other Goal", icon: "🎯", insight: "Custom savings target" },
+const goalCategories: { value: string; label: string; icon: string; insight: string }[] = [
+  { value: CapitalGoalCategory.EMERGENCY_FUND, label: "Emergency", icon: "🛡️", insight: "Safety buffer for unexpected expenses" },
+  { value: CapitalGoalCategory.RETIREMENT, label: "Retirement", icon: "🏖️", insight: "Long-term wealth accumulation" },
+  { value: CapitalGoalCategory.MAJOR_PURCHASE, label: "Purchase", icon: "🚗", insight: "Vehicle, home, or large asset" },
+  { value: CapitalGoalCategory.DEBT_PAYOFF, label: "Debt Payoff", icon: "💳", insight: "Liability reduction goal" },
+  { value: CapitalGoalCategory.EDUCATION, label: "Education", icon: "📚", insight: "Learning and skill investment" },
+  { value: CapitalGoalCategory.TRAVEL, label: "Travel", icon: "✈️", insight: "Experience and adventure fund" },
+  { value: CapitalGoalCategory.WEDDING, label: "Wedding", icon: "💒", insight: "Life milestone planning" },
+  { value: CapitalGoalCategory.INVESTMENT, label: "Investment", icon: "📈", insight: "Wealth-building portfolio fund" },
+  { value: CapitalGoalCategory.BUSINESS, label: "Business", icon: "🏢", insight: "Entrepreneurship capital reserve" },
+  { value: CapitalGoalCategory.OTHER, label: "Other", icon: "🎯", insight: "Custom savings target" },
 ];
 
-export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRate = 0, onSave }: GoalModalProps) {
+export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRate = 0, onSave, onDelete }: GoalModalProps) {
   const isEditing = !!goal;
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [target, setTarget] = useState("");
   const [current, setCurrent] = useState("");
   const [deadline, setDeadline] = useState<Date | undefined>(undefined);
@@ -57,25 +60,29 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
   const [vehicle, setVehicle] = useState("");
   const [monthlyAllocation, setMonthlyAllocation] = useState("");
   const [linkedAccountId, setLinkedAccountId] = useState<string>("");
-  const [category, setCategory] = useState<string>("other");
+  const [category, setCategory] = useState<string>(CapitalGoalCategory.OTHER);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [dateOpen, setDateOpen] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       if (goal) {
         setName(goal.name);
+        setDescription(goal.description ?? "");
         setTarget((goal.target / 100).toString());
         setCurrent((goal.current / 100).toString());
         setDeadline(goal.deadline ? new Date(goal.deadline) : undefined);
         setPriority(goal.priority);
         setVehicle(goal.vehicle ?? "");
-        setMonthlyAllocation("");
-        setLinkedAccountId("");
-        setCategory("other");
+        setMonthlyAllocation(goal.monthlyAllocation ? (goal.monthlyAllocation / 100).toString() : "");
+        setLinkedAccountId(goal.linkedAccountId ?? "");
+        setCategory(goal.category ?? CapitalGoalCategory.OTHER);
       } else {
         setName("");
+        setDescription("");
         setTarget("");
         setCurrent("");
         setDeadline(undefined);
@@ -83,9 +90,11 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
         setVehicle("");
         setMonthlyAllocation("");
         setLinkedAccountId("");
-        setCategory("other");
+        setCategory(CapitalGoalCategory.OTHER);
       }
       setErrors({});
+      setSaveError(null);
+      setConfirmDelete(false);
     }
   }, [isOpen, goal]);
 
@@ -102,7 +111,8 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
   const handleSave = async () => {
     if (!validate()) return;
-
+    setSaveError(null);
+    onClose();
     setIsSaving(true);
     try {
       await onSave({
@@ -115,12 +125,25 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
         monthlyAllocation: monthlyAllocation ? Math.round(Number(monthlyAllocation) * 100) : undefined,
         linkedAccountId: linkedAccountId || null,
         category,
+        description: description.trim() || null,
       });
-      onClose();
-    } catch (error) {
-      console.error("Failed to save goal:", error);
+    } catch {
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!goal || !onDelete) return;
+    setIsDeleting(true);
+    try {
+      await onDelete(goal.id);
+      onClose();
+    } catch {
+      setSaveError("Failed to delete goal. Please try again.");
+      setConfirmDelete(false);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -128,22 +151,23 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
   const currentNum = Number(current) || 0;
   const progress = targetNum > 0 ? Math.min(100, Math.round((currentNum / targetNum) * 100)) : 0;
   const allocationNum = Number(monthlyAllocation) || 0;
-  const remaining = targetNum - currentNum;
+  const remaining = Math.max(0, targetNum - currentNum);
 
-  // CapitalOS Intelligence: Goal feasibility calculations
+  // CapitalOS Intelligence: Goal feasibility calculations (FIXED: was inverted)
   const monthsToGoal = allocationNum > 0 ? Math.ceil(remaining / allocationNum) : null;
-  const projectedDate = monthsToGoal && deadline
-    ? new Date(deadline).getTime() > new Date().setMonth(new Date().getMonth() + monthsToGoal)
+  const isOnTrack = monthsToGoal !== null && deadline
+    ? new Date(deadline).getTime() > new Date(Date.now()).setMonth(new Date().getMonth() + monthsToGoal)
     : null;
   const goalInsight = monthsToGoal
-    ? projectedDate
-      ? { type: "warning", message: `At ฿${allocationNum.toLocaleString()}/mo, you'll reach this goal in ${monthsToGoal} months. Consider increasing allocation.` }
-      : { type: "success", message: `On track! You'll reach this goal in ${monthsToGoal} months.` }
+    ? isOnTrack === true
+      ? { type: "success", message: `On track! At ฿${allocationNum.toLocaleString()}/mo you'll reach this goal in ${monthsToGoal} months.` }
+      : isOnTrack === false
+        ? { type: "warning", message: `At ฿${allocationNum.toLocaleString()}/mo, you'll reach this goal in ${monthsToGoal} months — consider increasing your allocation.` }
+        : { type: "success", message: `You'll reach this goal in ${monthsToGoal} months at current rate.` }
     : deadline
       ? { type: "info", message: "Set a monthly allocation to see timeline insights." }
       : null;
 
-  // CapitalOS Intelligence: Category-specific insights
   const categoryInsight = goalCategories.find(c => c.value === category);
   const liquidAccounts = accounts.filter(a => !a.archivedAt && a.balance > 0);
   const totalLiquid = liquidAccounts.reduce((sum, a) => sum + a.balance, 0) / 100;
@@ -177,7 +201,15 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
         </div>
 
         {/* Content */}
-        <div className="max-h-[70vh] overflow-y-auto p-6 space-y-6">
+        <div className="max-h-[65vh] overflow-y-auto p-6 space-y-6">
+          {/* Save error banner */}
+          {saveError && (
+            <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-400">
+              <AlertTriangle className="h-4 w-4 shrink-0" />
+              {saveError}
+            </div>
+          )}
+
           {/* Goal Name */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
@@ -195,18 +227,32 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
             {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
           </div>
 
+          {/* Description */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-[var(--cos-text-2)]">
+              Description
+              <span className="ml-2 text-[10px] font-normal text-[var(--cos-text-3)]">optional</span>
+            </label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Brief context or note about this goal…"
+              rows={2}
+              maxLength={300}
+              className="w-full resize-none rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+              style={{ borderColor: "var(--cos-border-subtle)" }}
+            />
+          </div>
+
           {/* Amounts Row */}
           <div className="grid grid-cols-2 gap-4">
-            {/* Target Amount */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
                 Target Amount
                 <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">
-                  ฿
-                </span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">฿</span>
                 <input
                   type="number"
                   value={target}
@@ -219,16 +265,13 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               {errors.target && <p className="text-xs text-red-500">{errors.target}</p>}
             </div>
 
-            {/* Current Amount */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
                 Current Amount
                 <Info className="h-3.5 w-3.5 opacity-50" />
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">
-                  ฿
-                </span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">฿</span>
                 <input
                   type="number"
                   value={current}
@@ -261,27 +304,27 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
             </div>
           )}
 
-          {/* Category - CapitalOS Intelligence Layer */}
+          {/* Category */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
               <Sparkles className="h-3.5 w-3.5" />
               Goal Category
             </label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-5 gap-2">
               {goalCategories.map((cat) => (
                 <button
                   key={cat.value}
                   onClick={() => setCategory(cat.value)}
                   className={cn(
-                    "rounded-xl border px-2 py-2 text-xs font-medium transition-all text-center",
+                    "rounded-xl border px-1 py-2 text-[10px] font-medium transition-all text-center",
                     category === cat.value
                       ? "border-[var(--cos-accent)] bg-[var(--cos-accent-muted)] text-[var(--cos-accent)]"
                       : "border-[var(--cos-border-subtle)] bg-black/10 hover:bg-black/20 text-[var(--cos-text-2)]"
                   )}
                   title={cat.insight}
                 >
-                  <span className="text-lg">{cat.icon}</span>
-                  <div className="mt-1 truncate">{cat.label}</div>
+                  <span className="text-base">{cat.icon}</span>
+                  <div className="mt-0.5 truncate leading-tight">{cat.label}</div>
                 </button>
               ))}
             </div>
@@ -293,62 +336,49 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
             )}
           </div>
 
-          {/* Deadline with Shadcn/UI Date Picker */}
+          {/* Deadline */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
               <CalendarIcon className="h-3.5 w-3.5" />
               Target Deadline
+              <span className="ml-auto text-[10px] font-normal text-[var(--cos-text-3)]">optional</span>
             </label>
-            <Popover open={dateOpen} onOpenChange={setDateOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal rounded-xl border bg-black/20 py-3 px-4 text-sm hover:bg-black/30",
-                    !deadline && "text-muted-foreground"
-                  )}
+            <div className="flex gap-2">
+              <input
+                type="date"
+                value={deadline ? format(deadline, "yyyy-MM-dd") : ""}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    const parsed = parseISO(e.target.value);
+                    setDeadline(isValid(parsed) ? parsed : undefined);
+                  } else {
+                    setDeadline(undefined);
+                  }
+                }}
+                className="flex-1 rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+                style={{ borderColor: "var(--cos-border-subtle)", colorScheme: "dark" }}
+              />
+              {deadline && (
+                <button
+                  type="button"
+                  onClick={() => setDeadline(undefined)}
+                  className="rounded-xl border px-3 py-2 text-xs text-[var(--cos-text-3)] hover:bg-white/5 transition-colors"
                   style={{ borderColor: "var(--cos-border-subtle)" }}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4 opacity-50" />
-                  {deadline ? format(deadline, "PPP") : <span className="text-[var(--cos-text-3)]">Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="w-auto p-0"
-                style={{
-                  background: "var(--cos-surface)",
-                  borderColor: "var(--cos-border-subtle)",
-                }}
-                align="start"
-              >
-                <Calendar
-                  mode="single"
-                  selected={deadline}
-                  onSelect={(date) => {
-                    setDeadline(date);
-                    setDateOpen(false);
-                  }}
-                  disabled={(date) => date < new Date()}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-            <p className="text-xs text-[var(--cos-text-3)]">
-              Setting a deadline enables CapitalOS to generate timeline insights and alerts.
-            </p>
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Monthly Allocation - Intelligence Input */}
+          {/* Monthly Allocation */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
               <TrendingUp className="h-3.5 w-3.5" />
               Monthly Allocation
-              <Info className="h-3.5 w-3.5 opacity-50" />
             </label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">
-                ฿
-              </span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">฿</span>
               <input
                 type="number"
                 value={monthlyAllocation}
@@ -358,38 +388,30 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
                 style={{ borderColor: "var(--cos-border-subtle)" }}
               />
             </div>
-            <p className="text-xs text-[var(--cos-text-3)]">
-              How much you plan to contribute monthly. Used by CapitalOS intelligence to generate timeline insights.
-            </p>
           </div>
 
           {/* Linked Account */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)]">
-              Linked Account
-            </label>
-            <div className="relative">
-              <select
-                value={linkedAccountId}
-                onChange={(e) => setLinkedAccountId(e.target.value)}
-                className="w-full rounded-xl border bg-black/20 py-3 px-4 pr-10 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)] cursor-pointer"
+            <label className="text-sm font-medium text-[var(--cos-text-2)]">Linked Account</label>
+            <Select value={linkedAccountId || "__none__"} onValueChange={(v) => setLinkedAccountId(v === "__none__" ? "" : v)}>
+              <SelectTrigger
+                className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm h-auto"
                 style={{ borderColor: "var(--cos-border-subtle)" }}
               >
-                <option value="">Not linked to an account</option>
+                <SelectValue placeholder="Not linked to an account" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__none__">Not linked to an account</SelectItem>
                 {liquidAccounts.map((account) => (
-                  <option key={account.id} value={account.id}>
+                  <SelectItem key={account.id} value={account.id}>
                     {account.name} — {fmtCurrency(account.balance / 100)}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--cos-text-3)] pointer-events-none" />
-            </div>
-            <p className="text-xs text-[var(--cos-text-3)]">
-              Link to track real-time balance updates in the intelligence layer.
-            </p>
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* CapitalOS Intelligence Insights */}
+          {/* Feasibility Insight */}
           {goalInsight && (
             <div
               className={cn(
@@ -406,7 +428,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
                   goalInsight.type === "warning" && "text-[var(--cos-warning)]",
                   goalInsight.type === "info" && "text-[var(--cos-info)]"
                 )} />
-                <span className="text-sm font-semibold text-[var(--cos-text)]">CapitalOS Insight</span>
+                <span className="text-sm font-semibold">CapitalOS Insight</span>
               </div>
               <p className={cn(
                 "text-xs",
@@ -417,8 +439,8 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
                 {goalInsight.message}
               </p>
               {monthsToGoal && totalLiquid > 0 && (
-                <p className="text-xs text-[var(--cos-text-3)] mt-1">
-                  Available liquid capital: {fmtCurrency(totalLiquid)} across {liquidAccounts.length} accounts
+                <p className="text-xs text-[var(--cos-text-3)]">
+                  Liquid capital available: {fmtCurrency(totalLiquid)} across {liquidAccounts.length} accounts
                 </p>
               )}
             </div>
@@ -426,9 +448,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Priority */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)]">
-              Priority Level
-            </label>
+            <label className="text-sm font-medium text-[var(--cos-text-2)]">Priority Level</label>
             <div className="grid grid-cols-4 gap-2">
               {priorityOptions.map((option) => (
                 <button
@@ -441,10 +461,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
                   }`}
                 >
                   <div className="flex flex-col items-center gap-1">
-                    <div
-                      className="h-2 w-2 rounded-full"
-                      style={{ background: option.color }}
-                    />
+                    <div className="h-2 w-2 rounded-full" style={{ background: option.color }} />
                     {option.label}
                   </div>
                 </button>
@@ -466,38 +483,72 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
               style={{ borderColor: "var(--cos-border-subtle)" }}
             />
-            <p className="text-xs text-[var(--cos-text-3)]">
-              Where the funds are held. Used by intelligence layer to track performance and suggest optimizations.
-            </p>
           </div>
         </div>
 
         {/* Footer */}
-        <div
-          className="flex items-center justify-end gap-3 border-t p-6"
-          style={{ borderColor: "var(--cos-border-subtle)" }}
-        >
-          <button
-            onClick={onClose}
-            className="rounded-xl px-4 py-2 text-sm font-medium transition-colors hover:bg-white/5"
+        {confirmDelete ? (
+          <div
+            className="border-t p-4 space-y-3"
+            style={{ borderColor: "var(--cos-border-subtle)" }}
           >
-            Cancel
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={isSaving}
-            className="flex items-center gap-2 rounded-xl bg-[var(--cos-accent)] px-6 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
+            <p className="text-sm text-center" style={{ color: "var(--cos-text-2)" }}>
+              This will archive the goal — are you sure?
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setConfirmDelete(false)}
+                className="flex-1 rounded-xl border px-4 py-2 text-sm font-medium transition-colors hover:bg-white/5"
+                style={{ borderColor: "var(--cos-border-subtle)" }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+              >
+                <Trash2 className="h-4 w-4" />
+                {isDeleting ? "Deleting…" : "Delete Goal"}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="flex items-center gap-3 border-t p-6"
+            style={{ borderColor: "var(--cos-border-subtle)" }}
           >
-            {isSaving ? (
-              "Saving..."
-            ) : (
-              <>
-                <Save className="h-4 w-4" />
-                {isEditing ? "Update Goal" : "Create Goal"}
-              </>
+            {isEditing && onDelete && (
+              <button
+                onClick={() => setConfirmDelete(true)}
+                className="flex items-center gap-1.5 rounded-xl border border-red-500/40 px-3 py-2 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </button>
             )}
-          </button>
-        </div>
+            <div className="flex flex-1 items-center justify-end gap-3">
+              <button
+                onClick={onClose}
+                className="rounded-xl px-4 py-2 text-sm font-medium transition-colors hover:bg-white/5"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={isSaving}
+                className="flex items-center gap-2 rounded-xl bg-[var(--cos-accent)] px-6 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
+              >
+                {isSaving ? "Saving…" : (
+                  <>
+                    <Save className="h-4 w-4" />
+                    {isEditing ? "Update Goal" : "Create Goal"}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
