@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Plus, Target, TrendingUp, CheckCircle, Clock, Pencil, Trash2, CalendarDays } from "lucide-react";
+import { Plus, Target, TrendingUp, CheckCircle, Clock, Pencil, Trash2, CalendarDays, Sparkles } from "lucide-react";
 import { useCapitalData } from "@/lib/capital-os/hooks";
 import { fmtCurrency } from "@/lib/capital-os/format";
 import { GoalModal } from "@/components/prototypes/capital-os/GoalModal";
 import { CapitalGoal, CapitalGoalPriority, CapitalGoalCategory } from "@/lib/capital-os/types";
 import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { computeGoalInsights } from "@/lib/capital-os/insights";
+import type { DateFormatString } from "@/lib/capital-os/formatters";
 
 // ── Constants ──────────────────────────────────────────────────
 
@@ -94,7 +96,8 @@ function GoalSkeleton() {
 // ── Main Component ─────────────────────────────────────────────
 
 export default function GoalsPage() {
-  const { goals, accounts, settings, isLoading, refresh } = useCapitalData();
+  const { accounts, goals, settings, isLoading, refresh } = useCapitalData();
+  const dateFormat = (settings?.dateFormat as DateFormatString) ?? "DD/MM/YYYY";
   const monthlyBurnRate = settings?.runwayBurnRate ? settings.runwayBurnRate / 100 : 0;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -225,7 +228,7 @@ export default function GoalsPage() {
           <button
             onClick={openCreateModal}
             disabled={isPageSaving}
-            className="flex items-center gap-2 rounded-xl bg-[var(--cos-accent)] px-4 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+            className="flex items-center gap-2 rounded-xl bg-(--cos-accent) px-4 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
           >
             <Plus className="h-4 w-4" />
             {isPageSaving ? "Saving…" : "Add Goal"}
@@ -261,8 +264,8 @@ export default function GoalsPage() {
               className={cn(
                 "rounded-full px-3 py-1 text-xs font-semibold transition-colors border",
                 filterPriority === p
-                  ? "bg-[var(--cos-accent)] text-white border-transparent"
-                  : "border-[var(--cos-border-subtle)] text-[var(--cos-text-2)] hover:bg-white/5"
+                  ? "bg-(--cos-accent) text-white border-transparent"
+                  : "border-(--cos-border-subtle) text-(--cos-text-2) hover:bg-white/5"
               )}
             >
               {p === "ALL" ? "All" : p.charAt(0) + p.slice(1).toLowerCase()}
@@ -303,7 +306,7 @@ export default function GoalsPage() {
             {filterPriority === "ALL" && (
               <button
                 onClick={openCreateModal}
-                className="flex items-center gap-2 rounded-xl bg-[var(--cos-accent)] px-4 py-2 text-sm font-bold text-white"
+                className="flex items-center gap-2 rounded-xl bg-(--cos-accent) px-4 py-2 text-sm font-bold text-white"
               >
                 <Plus className="h-4 w-4" />
                 Add your first goal
@@ -412,6 +415,37 @@ export default function GoalsPage() {
                     </div>
                   </div>
 
+                  {/* Per-card CapitalOS Insight chip (critical/warning only) */}
+                  {(() => {
+                    if (isCompleted) return null;
+                    const liquidAccounts = accounts.filter(a => !a.archivedAt && a.balance > 0);
+                    const totalLiquid = liquidAccounts.reduce((s, a) => s + a.balance, 0) / 100;
+                    const cardInsights = computeGoalInsights({
+                      targetNum: goal.target / 100,
+                      currentNum: goal.current / 100,
+                      allocationNum: goal.monthlyAllocation ? goal.monthlyAllocation / 100 : 0,
+                      deadline: goal.deadline ?? undefined,
+                      category: goal.category ?? undefined,
+                      monthlyBurnRate,
+                      totalLiquid,
+                      liquidAccountCount: liquidAccounts.length,
+                    });
+                    const alertInsight = cardInsights.find(i => i.level === "critical" || i.level === "warning");
+                    if (!alertInsight) return null;
+                    const isWarn = alertInsight.level === "warning";
+                    return (
+                      <div
+                        className="border-t px-5 py-2 flex items-start gap-1.5"
+                        style={{ borderColor: isWarn ? "var(--cos-warning)" + "22" : "rgba(239,68,68,0.2)" }}
+                      >
+                        <Sparkles className="h-2.5 w-2.5 mt-0.5 shrink-0" style={{ color: isWarn ? "var(--cos-warning)" : "rgb(248 113 113)" }} />
+                        <p className="text-[10px] leading-relaxed" style={{ color: isWarn ? "var(--cos-warning)" : "rgb(248 113 113)" }}>
+                          {alertInsight.title}
+                        </p>
+                      </div>
+                    );
+                  })()}
+
                   {/* Footer: vehicle + allocation */}
                   <div className="border-t px-5 py-2.5 flex items-center justify-between" style={{ borderColor: "var(--cos-border-subtle)" }}>
                     <p className="text-[10px] truncate" style={{ color: "var(--cos-text-3)" }}>
@@ -432,7 +466,7 @@ export default function GoalsPage() {
             <button
               onClick={openCreateModal}
               disabled={isPageSaving}
-              className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-6 transition-all min-h-[180px] hover:border-[var(--cos-accent)] hover:bg-[var(--cos-accent-muted,rgba(99,102,241,0.08))] disabled:opacity-40 disabled:pointer-events-none"
+              className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-6 transition-all min-h-[180px] hover:border-(--cos-accent) hover:bg-(--cos-accent-muted,rgba(99,102,241,0.08)) disabled:opacity-40 disabled:pointer-events-none"
               style={{ borderColor: "var(--cos-border-subtle)" }}
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: "var(--cos-surface-3)", color: "var(--cos-text-3)" }}>
@@ -454,6 +488,7 @@ export default function GoalsPage() {
         goal={editingGoal}
         accounts={accounts}
         monthlyBurnRate={monthlyBurnRate}
+        dateFormat={dateFormat}
         onSave={editingGoal ? handleUpdateGoal : handleCreateGoal}
         onDelete={handleDeleteGoal}
       />

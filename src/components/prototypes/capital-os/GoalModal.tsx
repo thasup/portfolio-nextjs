@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { format, parseISO, isValid } from "date-fns";
-import { X, Save, Target, CalendarIcon, Info, TrendingUp, Sparkles, Trash2, AlertTriangle } from "lucide-react";
+import { X, Save, Target, Info, TrendingUp, Sparkles, Trash2, AlertTriangle } from "lucide-react";
 import { CapitalGoal, CapitalGoalPriority, CapitalGoalCategory, CapitalAccount } from "@/lib/capital-os/types";
 import { fmtCurrency } from "@/lib/capital-os/format";
 import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CapitalOSDatePicker } from "@/components/prototypes/capital-os/DatePicker";
+import { CapitalInsightBox } from "@/components/prototypes/capital-os/CapitalInsightBox";
+import { computeGoalInsights } from "@/lib/capital-os/insights";
+import type { DateFormatString } from "@/lib/capital-os/formatters";
 
 interface GoalModalProps {
   isOpen: boolean;
@@ -14,6 +17,8 @@ interface GoalModalProps {
   goal?: CapitalGoal | null;
   accounts?: CapitalAccount[];
   monthlyBurnRate?: number;
+  /** User's preferred display format — e.g. "DD/MM/YYYY" */
+  dateFormat?: DateFormatString;
   onSave: (data: {
     name: string;
     target: number;
@@ -49,7 +54,7 @@ const goalCategories: { value: string; label: string; icon: string; insight: str
   { value: CapitalGoalCategory.OTHER, label: "Other", icon: "🎯", insight: "Custom savings target" },
 ];
 
-export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRate = 0, onSave, onDelete }: GoalModalProps) {
+export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRate = 0, dateFormat = "DD/MM/YYYY", onSave, onDelete }: GoalModalProps) {
   const isEditing = !!goal;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -119,7 +124,9 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
         name: name.trim(),
         target: Math.round(Number(target) * 100),
         current: Math.round(Number(current || 0) * 100),
-        deadline: deadline ? format(deadline, "yyyy-MM-dd") : null,
+        deadline: deadline
+          ? `${deadline.getFullYear()}-${String(deadline.getMonth() + 1).padStart(2, "0")}-${String(deadline.getDate()).padStart(2, "0")}`
+          : null,
         priority,
         vehicle: vehicle.trim() || null,
         monthlyAllocation: monthlyAllocation ? Math.round(Number(monthlyAllocation) * 100) : undefined,
@@ -151,26 +158,23 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
   const currentNum = Number(current) || 0;
   const progress = targetNum > 0 ? Math.min(100, Math.round((currentNum / targetNum) * 100)) : 0;
   const allocationNum = Number(monthlyAllocation) || 0;
-  const remaining = Math.max(0, targetNum - currentNum);
-
-  // CapitalOS Intelligence: Goal feasibility calculations (FIXED: was inverted)
-  const monthsToGoal = allocationNum > 0 ? Math.ceil(remaining / allocationNum) : null;
-  const isOnTrack = monthsToGoal !== null && deadline
-    ? new Date(deadline).getTime() > new Date(Date.now()).setMonth(new Date().getMonth() + monthsToGoal)
-    : null;
-  const goalInsight = monthsToGoal
-    ? isOnTrack === true
-      ? { type: "success", message: `On track! At ฿${allocationNum.toLocaleString()}/mo you'll reach this goal in ${monthsToGoal} months.` }
-      : isOnTrack === false
-        ? { type: "warning", message: `At ฿${allocationNum.toLocaleString()}/mo, you'll reach this goal in ${monthsToGoal} months — consider increasing your allocation.` }
-        : { type: "success", message: `You'll reach this goal in ${monthsToGoal} months at current rate.` }
-    : deadline
-      ? { type: "info", message: "Set a monthly allocation to see timeline insights." }
-      : null;
 
   const categoryInsight = goalCategories.find(c => c.value === category);
   const liquidAccounts = accounts.filter(a => !a.archivedAt && a.balance > 0);
   const totalLiquid = liquidAccounts.reduce((sum, a) => sum + a.balance, 0) / 100;
+
+  // CapitalOS Intelligence — driven by the central insights engine
+  const goalInsights = computeGoalInsights({
+    targetNum,
+    currentNum,
+    allocationNum,
+    deadline: deadline ? deadline.toISOString() : undefined,
+    category,
+    monthlyBurnRate,
+    totalLiquid,
+    liquidAccountCount: liquidAccounts.length,
+  });
+  const topInsight = goalInsights[0] ?? null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -212,7 +216,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Goal Name */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
+            <label className="text-sm font-medium text-(--cos-text-2) flex items-center gap-2">
               Goal Name
               <span className="text-red-500">*</span>
             </label>
@@ -221,7 +225,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Emergency Fund, New Car, Vacation"
-              className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+              className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-(--cos-accent)"
               style={{ borderColor: errors.name ? "#ef4444" : "var(--cos-border-subtle)" }}
             />
             {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
@@ -229,9 +233,9 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Description */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)]">
+            <label className="text-sm font-medium text-(--cos-text-2)">
               Description
-              <span className="ml-2 text-[10px] font-normal text-[var(--cos-text-3)]">optional</span>
+              <span className="ml-2 text-[10px] font-normal text-(--cos-text-3)">optional</span>
             </label>
             <textarea
               value={description}
@@ -239,7 +243,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               placeholder="Brief context or note about this goal…"
               rows={2}
               maxLength={300}
-              className="w-full resize-none rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+              className="w-full resize-none rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-(--cos-accent)"
               style={{ borderColor: "var(--cos-border-subtle)" }}
             />
           </div>
@@ -247,18 +251,18 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
           {/* Amounts Row */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
+              <label className="text-sm font-medium text-(--cos-text-2) flex items-center gap-2">
                 Target Amount
                 <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">฿</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-(--cos-text-3) font-medium">฿</span>
                 <input
                   type="number"
                   value={target}
                   onChange={(e) => setTarget(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-xl border bg-black/20 py-3 pl-8 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+                  className="w-full rounded-xl border bg-black/20 py-3 pl-8 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-(--cos-accent)"
                   style={{ borderColor: errors.target ? "#ef4444" : "var(--cos-border-subtle)" }}
                 />
               </div>
@@ -266,18 +270,18 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
+              <label className="text-sm font-medium text-(--cos-text-2) flex items-center gap-2">
                 Current Amount
                 <Info className="h-3.5 w-3.5 opacity-50" />
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">฿</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-(--cos-text-3) font-medium">฿</span>
                 <input
                   type="number"
                   value={current}
                   onChange={(e) => setCurrent(e.target.value)}
                   placeholder="0.00"
-                  className="w-full rounded-xl border bg-black/20 py-3 pl-8 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+                  className="w-full rounded-xl border bg-black/20 py-3 pl-8 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-(--cos-accent)"
                   style={{ borderColor: errors.current ? "#ef4444" : "var(--cos-border-subtle)" }}
                 />
               </div>
@@ -289,16 +293,16 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
           {targetNum > 0 && (
             <div className="space-y-2 rounded-xl bg-black/10 p-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-[var(--cos-text-3)]">Progress Preview</span>
+                <span className="text-(--cos-text-3)">Progress Preview</span>
                 <span className="font-medium text-[var(--cos-accent)]">{progress}%</span>
               </div>
               <div className="h-2 overflow-hidden rounded-full bg-black/20">
                 <div
-                  className="h-full rounded-full transition-all duration-500 bg-[var(--cos-accent)]"
+                  className="h-full rounded-full transition-all duration-500 bg-(--cos-accent)"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <p className="text-xs text-[var(--cos-text-3)]">
+              <p className="text-xs text-(--cos-text-3)">
                 {fmtCurrency(currentNum)} of {fmtCurrency(targetNum)}
               </p>
             </div>
@@ -306,7 +310,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Category */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
+            <label className="text-sm font-medium text-(--cos-text-2) flex items-center gap-2">
               <Sparkles className="h-3.5 w-3.5" />
               Goal Category
             </label>
@@ -318,8 +322,8 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
                   className={cn(
                     "rounded-xl border px-1 py-2 text-[10px] font-medium transition-all text-center",
                     category === cat.value
-                      ? "border-[var(--cos-accent)] bg-[var(--cos-accent-muted)] text-[var(--cos-accent)]"
-                      : "border-[var(--cos-border-subtle)] bg-black/10 hover:bg-black/20 text-[var(--cos-text-2)]"
+                      ? "border-(--cos-accent) bg-(--cos-accent-muted) text-[var(--cos-accent)]"
+                      : "border-(--cos-border-subtle) bg-black/10 hover:bg-black/20 text-(--cos-text-2)"
                   )}
                   title={cat.insight}
                 >
@@ -338,53 +342,34 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Deadline */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
-              <CalendarIcon className="h-3.5 w-3.5" />
+            <label className="text-sm font-medium flex items-center gap-2" style={{ color: "var(--cos-text-2)" }}>
               Target Deadline
-              <span className="ml-auto text-[10px] font-normal text-[var(--cos-text-3)]">optional</span>
+              <span className="ml-auto text-[10px] font-normal" style={{ color: "var(--cos-text-3)" }}>optional</span>
             </label>
-            <div className="flex gap-2">
-              <input
-                type="date"
-                value={deadline ? format(deadline, "yyyy-MM-dd") : ""}
-                onChange={(e) => {
-                  if (e.target.value) {
-                    const parsed = parseISO(e.target.value);
-                    setDeadline(isValid(parsed) ? parsed : undefined);
-                  } else {
-                    setDeadline(undefined);
-                  }
-                }}
-                className="flex-1 rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
-                style={{ borderColor: "var(--cos-border-subtle)", colorScheme: "dark" }}
-              />
-              {deadline && (
-                <button
-                  type="button"
-                  onClick={() => setDeadline(undefined)}
-                  className="rounded-xl border px-3 py-2 text-xs text-[var(--cos-text-3)] hover:bg-white/5 transition-colors"
-                  style={{ borderColor: "var(--cos-border-subtle)" }}
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+            <CapitalOSDatePicker
+              value={deadline}
+              onChange={setDeadline}
+              dateFormat={dateFormat}
+              placeholder="Pick a target date…"
+              fromYear={2015}
+              toYear={2040}
+            />
           </div>
 
           {/* Monthly Allocation */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
+            <label className="text-sm font-medium text-(--cos-text-2) flex items-center gap-2">
               <TrendingUp className="h-3.5 w-3.5" />
               Monthly Allocation
             </label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--cos-text-3)] font-medium">฿</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-(--cos-text-3) font-medium">฿</span>
               <input
                 type="number"
                 value={monthlyAllocation}
                 onChange={(e) => setMonthlyAllocation(e.target.value)}
                 placeholder="0.00"
-                className="w-full rounded-xl border bg-black/20 py-3 pl-8 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+                className="w-full rounded-xl border bg-black/20 py-3 pl-8 pr-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-(--cos-accent)"
                 style={{ borderColor: "var(--cos-border-subtle)" }}
               />
             </div>
@@ -392,7 +377,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Linked Account */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)]">Linked Account</label>
+            <label className="text-sm font-medium text-(--cos-text-2)">Linked Account</label>
             <Select value={linkedAccountId || "__none__"} onValueChange={(v) => setLinkedAccountId(v === "__none__" ? "" : v)}>
               <SelectTrigger
                 className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm h-auto"
@@ -411,44 +396,14 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
             </Select>
           </div>
 
-          {/* Feasibility Insight */}
-          {goalInsight && (
-            <div
-              className={cn(
-                "rounded-xl p-4 border space-y-2",
-                goalInsight.type === "success" && "bg-[var(--cos-positive-muted)] border-[var(--cos-positive)]/30",
-                goalInsight.type === "warning" && "bg-[var(--cos-warning-muted)] border-[var(--cos-warning)]/30",
-                goalInsight.type === "info" && "bg-[var(--cos-info-muted)] border-[var(--cos-info)]/30"
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <Sparkles className={cn(
-                  "h-4 w-4",
-                  goalInsight.type === "success" && "text-[var(--cos-positive)]",
-                  goalInsight.type === "warning" && "text-[var(--cos-warning)]",
-                  goalInsight.type === "info" && "text-[var(--cos-info)]"
-                )} />
-                <span className="text-sm font-semibold">CapitalOS Insight</span>
-              </div>
-              <p className={cn(
-                "text-xs",
-                goalInsight.type === "success" && "text-[var(--cos-positive)]",
-                goalInsight.type === "warning" && "text-[var(--cos-warning)]",
-                goalInsight.type === "info" && "text-[var(--cos-info)]"
-              )}>
-                {goalInsight.message}
-              </p>
-              {monthsToGoal && totalLiquid > 0 && (
-                <p className="text-xs text-[var(--cos-text-3)]">
-                  Liquid capital available: {fmtCurrency(totalLiquid)} across {liquidAccounts.length} accounts
-                </p>
-              )}
-            </div>
+          {/* CapitalOS Insight — powered by the insights engine */}
+          {topInsight && (
+            <CapitalInsightBox insight={topInsight} />
           )}
 
           {/* Priority */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)]">Priority Level</label>
+            <label className="text-sm font-medium text-(--cos-text-2)">Priority Level</label>
             <div className="grid grid-cols-4 gap-2">
               {priorityOptions.map((option) => (
                 <button
@@ -456,8 +411,8 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
                   onClick={() => setPriority(option.value)}
                   className={`rounded-xl border px-3 py-2 text-xs font-medium transition-all ${
                     priority === option.value
-                      ? "border-[var(--cos-accent)] bg-[var(--cos-accent-muted)]"
-                      : "border-[var(--cos-border-subtle)] bg-black/10 hover:bg-black/20"
+                      ? "border-(--cos-accent) bg-(--cos-accent-muted)"
+                      : "border-(--cos-border-subtle) bg-black/10 hover:bg-black/20"
                   }`}
                 >
                   <div className="flex flex-col items-center gap-1">
@@ -471,7 +426,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
 
           {/* Investment Vehicle */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--cos-text-2)] flex items-center gap-2">
+            <label className="text-sm font-medium text-(--cos-text-2) flex items-center gap-2">
               <TrendingUp className="h-3.5 w-3.5" />
               Investment Vehicle
             </label>
@@ -480,7 +435,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               value={vehicle}
               onChange={(e) => setVehicle(e.target.value)}
               placeholder="e.g., Savings Account, S&P 500 ETF, Government Bonds"
-              className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--cos-accent)]"
+              className="w-full rounded-xl border bg-black/20 py-3 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-(--cos-accent)"
               style={{ borderColor: "var(--cos-border-subtle)" }}
             />
           </div>
@@ -537,7 +492,7 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="flex items-center gap-2 rounded-xl bg-[var(--cos-accent)] px-6 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
+                className="flex items-center gap-2 rounded-xl bg-(--cos-accent) px-6 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
               >
                 {isSaving ? "Saving…" : (
                   <>

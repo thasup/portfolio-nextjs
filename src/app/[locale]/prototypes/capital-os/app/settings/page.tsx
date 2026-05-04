@@ -12,12 +12,23 @@ import {
   CheckCircle2,
   AlertCircle,
   Download,
+  CalendarDays,
+  Save,
 } from "lucide-react";
 import { CapitalOSHeader } from "@/components/prototypes/capital-os/layout/CapitalOSHeader";
-import { useYNABSync } from "@/lib/capital-os/hooks";
+import { useYNABSync, useCapitalData } from "@/lib/capital-os/hooks";
 import { AirtableConfigForm } from "@/components/prototypes/capital-os/AirtableConfigForm";
 import { AirtableSyncButton } from "@/components/prototypes/capital-os/AirtableSyncButton";
 import { useAirtableConfig } from "@/lib/capital-os/hooks/useAirtableConfig";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { DateFormatString } from "@/lib/capital-os/formatters";
+
+const DATE_FORMAT_OPTIONS: { value: DateFormatString; label: string; example: string }[] = [
+  { value: "DD/MM/YYYY", label: "DD/MM/YYYY", example: "31/12/2025" },
+  { value: "MM/DD/YYYY", label: "MM/DD/YYYY", example: "12/31/2025" },
+  { value: "YYYY-MM-DD", label: "YYYY-MM-DD", example: "2025-12-31" },
+  { value: "DD.MM.YYYY", label: "DD.MM.YYYY", example: "31.12.2025" },
+];
 
 export default function SettingsPage() {
   const {
@@ -27,9 +38,27 @@ export default function SettingsPage() {
     triggerSync: triggerYnabSync,
   } = useYNABSync();
   const { configs: airtableConfigs, configsLoading: airtableConfigLoading } = useAirtableConfig();
+  const { settings, updateSettings } = useCapitalData();
   const [activeTab, setActiveTab] = useState<"connections" | "preferences">(
     "connections",
   );
+  const [dateFormat, setDateFormat] = useState<DateFormatString>(
+    (settings?.dateFormat as DateFormatString) ?? "DD/MM/YYYY",
+  );
+  const [isSavingPref, setIsSavingPref] = useState(false);
+  const [prefSaved, setPrefSaved] = useState(false);
+
+  const handleSavePreferences = async () => {
+    setIsSavingPref(true);
+    setPrefSaved(false);
+    try {
+      await updateSettings({ dateFormat });
+      setPrefSaved(true);
+      setTimeout(() => setPrefSaved(false), 3000);
+    } finally {
+      setIsSavingPref(false);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -46,13 +75,13 @@ export default function SettingsPage() {
         >
           <button
             onClick={() => setActiveTab("connections")}
-            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === "connections" ? "border-[var(--cos-accent)] text-[var(--cos-text)]" : "border-transparent text-[var(--cos-text-2)] hover:text-[var(--cos-text)]"}`}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === "connections" ? "border-(--cos-accent) text-(--cos-text)" : "border-transparent text-(--cos-text-2) hover:text-(--cos-text)"}`}
           >
             Data Connections
           </button>
           <button
             onClick={() => setActiveTab("preferences")}
-            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === "preferences" ? "border-[var(--cos-accent)] text-[var(--cos-text)]" : "border-transparent text-[var(--cos-text-2)] hover:text-[var(--cos-text)]"}`}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === "preferences" ? "border-(--cos-accent) text-(--cos-text)" : "border-transparent text-(--cos-text-2) hover:text-(--cos-text)"}`}
           >
             Preferences
           </button>
@@ -112,7 +141,7 @@ export default function SettingsPage() {
                     <button
                       onClick={triggerYnabSync}
                       disabled={ynabSyncing}
-                      className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:translate-y-[-1px] disabled:opacity-50"
+                      className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:-translate-y-px disabled:opacity-50"
                       style={{
                         borderColor: "var(--cos-border)",
                         background: "var(--cos-surface-2)",
@@ -202,17 +231,68 @@ export default function SettingsPage() {
             </div>
 
             <div
-              className="rounded-xl border p-6"
+              className="rounded-xl border p-6 space-y-6"
               style={{
                 background: "var(--cos-surface)",
                 borderColor: "var(--cos-border-subtle)",
               }}
             >
-              <p className="text-sm" style={{ color: "var(--cos-text-3)" }}>
-                No preferences available to configure yet. Future updates will
-                include display currency options, default scenario parameters,
-                and custom AI prompt configurations.
-              </p>
+              {/* Date Format */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <CalendarDays className="h-5 w-5 mt-0.5 shrink-0" style={{ color: "var(--cos-accent)" }} />
+                  <div>
+                    <h3 className="font-semibold text-sm">Date Format</h3>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--cos-text-2)" }}>
+                      Applied throughout goals, deadlines, and all date displays.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 sm:shrink-0">
+                  <Select
+                    value={dateFormat}
+                    onValueChange={(v) => setDateFormat(v as DateFormatString)}
+                  >
+                    <SelectTrigger
+                      className="w-44 rounded-xl border text-sm h-auto py-2"
+                      style={{ borderColor: "var(--cos-border-subtle)", background: "var(--cos-surface-2)" }}
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {DATE_FORMAT_OPTIONS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          <span className="font-medium">{opt.label}</span>
+                          <span className="ml-2 text-xs opacity-50">{opt.example}</span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Save bar */}
+              <div className="flex items-center justify-between border-t pt-4" style={{ borderColor: "var(--cos-border-subtle)" }}>
+                {prefSaved ? (
+                  <span className="flex items-center gap-1.5 text-xs" style={{ color: "var(--cos-positive)" }}>
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                    Preferences saved
+                  </span>
+                ) : (
+                  <span className="text-xs" style={{ color: "var(--cos-text-3)" }}>
+                    Changes apply immediately to all pages.
+                  </span>
+                )}
+                <button
+                  onClick={handleSavePreferences}
+                  disabled={isSavingPref}
+                  className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
+                  style={{ background: "var(--cos-accent)" }}
+                >
+                  <Save className="h-3.5 w-3.5" />
+                  {isSavingPref ? "Saving…" : "Save Preferences"}
+                </button>
+              </div>
             </div>
 
             <div className="pt-6">
@@ -283,7 +363,7 @@ export default function SettingsPage() {
                       );
                     }
                   }}
-                  className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:translate-y-[-1px]"
+                  className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:-translate-y-px"
                   style={{
                     borderColor: "var(--cos-border)",
                     background: "var(--cos-surface-2)",

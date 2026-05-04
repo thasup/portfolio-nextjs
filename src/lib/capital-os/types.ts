@@ -125,6 +125,7 @@ export interface CapitalSettings {
   userId: string;
   runwayBurnRate: number; // Stored as satangs, but handled as number in JS
   runwayAccountIds: string[];
+  dateFormat?: import("./formatters").DateFormatString;
   updatedAt: string;
 }
 
