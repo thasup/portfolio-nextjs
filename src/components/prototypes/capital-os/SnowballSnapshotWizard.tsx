@@ -504,7 +504,7 @@ export function SnowballSnapshotWizard({ onClose, onSuccess }: WizardProps) {
           <div className="flex items-center justify-between border-t p-5 bg-[var(--cos-surface-2)]" style={{ borderColor: "var(--cos-border-subtle)" }}>
             <button
               type="button"
-              onClick={() => step > 1 ? setStep((s) => (s - 1) as any) : onClose()}
+              onClick={() => step > 1 ? setStep((s) => (s - 1) as 1 | 2 | 3 | 4) : onClose()}
               className="flex items-center gap-1 text-sm font-medium text-[var(--cos-text-2)] hover:text-white transition-colors"
             >
               {step > 1 ? <><ChevronLeft className="h-4 w-4" /> Back</> : "Cancel"}
@@ -513,7 +513,7 @@ export function SnowballSnapshotWizard({ onClose, onSuccess }: WizardProps) {
             {step < 3 ? (
               <button
                 type="button"
-                onClick={() => setStep((s) => (s + 1) as any)}
+                onClick={() => setStep((s) => (s + 1) as 1 | 2 | 3 | 4)}
                 className="flex items-center gap-1 rounded-lg bg-[var(--cos-accent)] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
               >
                 Next <ChevronRight className="h-4 w-4" />

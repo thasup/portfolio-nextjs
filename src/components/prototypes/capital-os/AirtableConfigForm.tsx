@@ -356,7 +356,7 @@ export function AirtableConfigForm() {
               Step 2: Select Tables to Sync
             </h5>
             <p className="text-sm" style={{ color: "var(--cos-text-2)" }}>
-              Found {discovered.tables.length} tables in "{discovered.baseName}"
+              Found {discovered.tables.length} tables in &quot;{discovered.baseName}&quot;
             </p>
           </div>
 

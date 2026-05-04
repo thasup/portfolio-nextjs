@@ -60,7 +60,7 @@ export default function ProjectionPage() {
       const balance = Number(acc.balance);
       if (debtToPay > 0 && balance > 0) {
         const payment = Math.min(balance, debtToPay);
-        acc.balance = BigInt(balance - payment);
+        acc.balance = balance - payment;
         debtToPay -= payment;
       }
     }

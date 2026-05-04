@@ -80,7 +80,7 @@ export async function PATCH(req: NextRequest) {
     const validated = validateRequest(SettingsRequestSchema, body);
 
     // Build update data object
-    const updateData: Record<string, any> = {};
+    const updateData: Record<string, unknown> = {};
     
     if (validated.runwayBurnRate !== undefined) {
       updateData.runwayBurnRate = validated.runwayBurnRate;

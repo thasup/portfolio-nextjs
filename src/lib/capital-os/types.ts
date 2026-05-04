@@ -135,6 +135,16 @@ export interface ProjectionParams {
   scenarioMode: CapitalScenarioMode;
 }
 
+export interface CapitalScenario {
+  id: string;
+  name: string;
+  burnRate: number;
+  ssoMonths: number;
+  investReturn: number;
+  missionSuccessMonth: number;
+  postSuccessIncome: number;
+}
+
 // ── Dashboard metric type ───────────────────────────────────────
 
 export interface DashboardMetric {

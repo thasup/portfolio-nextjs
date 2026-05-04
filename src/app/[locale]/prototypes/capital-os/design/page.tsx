@@ -380,7 +380,7 @@ export default function CapitalOSDesignPage() {
             <div className="ds-type-usage">
               <strong>Use for:</strong> Landing page heroes, editorial statements
               <br />
-              <strong>Don't use for:</strong> Dashboard headers, data displays
+              <strong>Don&apos;t use for:</strong> Dashboard headers, data displays
             </div>
           </div>
 
@@ -397,7 +397,7 @@ export default function CapitalOSDesignPage() {
             <div className="ds-type-usage">
               <strong>Use for:</strong> UI text, labels, navigation, body copy
               <br />
-              <strong>Don't use for:</strong> Financial figures, display headers
+              <strong>Don&apos;t use for:</strong> Financial figures, display headers
             </div>
           </div>
 

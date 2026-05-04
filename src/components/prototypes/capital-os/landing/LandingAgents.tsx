@@ -46,13 +46,13 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Net worth is ฿500,000
+                  <span className="output-arrow">→</span>&quot;Net worth is ฿500,000
                   as of sync time. Manual records last updated 180 days ago (gap:
-                  ฿400K)."
+                  ฿400K).&quot;
                 </li>
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"YNAB matches within
-                  ฿1,200 rounding tolerance. No action required."
+                  <span className="output-arrow">→</span>&quot;YNAB matches within
+                  ฿1,200 rounding tolerance. No action required.&quot;
                 </li>
               </ul>
             </div>
@@ -72,19 +72,19 @@ export function LandingAgents() {
               <div className="agent-subtitle">Pattern & Anomaly Detection</div>
               <p className="agent-desc">
                 Finds signals in noise using z-score analysis and trend
-                detection. What's normal? What's unusual? Surfaces patterns
-                you'd never notice manually across 90 days of transaction
+                detection. What&apos;s normal? What&apos;s unusual? Surfaces patterns
+                you&apos;d never notice manually across 90 days of transaction
                 history.
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Health & Fitness: ฿15K
-                  this month, 300% above 3-month average. Intentional?"
+                  <span className="output-arrow">→</span>&quot;Health & Fitness: ฿15K
+                  this month, 300% above 3-month average. Intentional?&quot;
                 </li>
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Wedding Fund: ฿0
+                  <span className="output-arrow">→</span>&quot;Wedding Fund: ฿0
                   contribution for 8 weeks. At current velocity, misses target
-                  by 18 months."
+                  by 18 months.&quot;
                 </li>
               </ul>
             </div>
@@ -112,12 +112,12 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Paying off ฿50K in
-                  credit cards today extends runway by 2.5 months."
+                  <span className="output-arrow">→</span>&quot;Paying off ฿50K in
+                  credit cards today extends runway by 2.5 months.&quot;
                 </li>
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"If MissionOS succeeds
-                  in month 4 at ฿80K/mo, net worth reaches ฿1.1M by Dec '27."
+                  <span className="output-arrow">→</span>&quot;If MissionOS succeeds
+                  in month 4 at ฿80K/mo, net worth reaches ฿1.1M by Dec &apos;27.&quot;
                 </li>
               </ul>
             </div>
@@ -145,14 +145,14 @@ export function LandingAgents() {
               </p>
               <ul className="agent-outputs">
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"Pay ฿50,000 from savings
+                  <span className="output-arrow">→</span>&quot;Pay ฿50,000 from savings
                   to credit cards today. Saves ฿600/month interest. Liquid drops
-                  to ฿350K — still 14 months runway."
+                  to ฿350K — still 14 months runway.&quot;
                 </li>
                 <li className="agent-output-item">
-                  <span className="output-arrow">→</span>"This recommendation
+                  <span className="output-arrow">→</span>&quot;This recommendation
                   assumes MissionOS income begins month 4. Revise if timeline
-                  shifts."
+                  shifts.&quot;
                 </li>
               </ul>
             </div>

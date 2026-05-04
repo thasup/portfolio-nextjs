@@ -31,6 +31,7 @@ interface MappingEntry {
   ynabAccId: string;
   saCategory?: string | null;
   role: CapitalMappingRole;
+  saAssetMappings?: Array<{ saTicker: string }>;
 }
 
 interface SnapshotAsset {
@@ -99,7 +100,12 @@ function PortfolioLabel({ type }: { type: CapitalPortfolioType }) {
   );
 }
 
-function ChartTooltip({ active, payload, label }: any) {
+interface ChartTooltipProps {
+  active?: boolean;
+  payload?: Array<{ name: string; fill: string; value: number }>;
+  label?: string;
+}
+function ChartTooltip({ active, payload, label }: ChartTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
     <div
@@ -107,7 +113,7 @@ function ChartTooltip({ active, payload, label }: any) {
       style={{ background: "var(--cos-surface-2)", borderColor: "var(--cos-border-subtle)" }}
     >
       <p className="font-semibold mb-1">{label}</p>
-      {payload.map((p: any) => (
+      {payload.map((p) => (
         <div key={p.name} className="flex items-center gap-2 mt-0.5">
           <span className="inline-block h-2 w-2 rounded-full shrink-0" style={{ background: p.fill }} />
           <span style={{ color: "var(--cos-text-2)" }}>{p.name}:</span>
@@ -135,14 +141,15 @@ export default function ReconciliationPage() {
       setAccounts(accRes.data?.accounts || []);
       setMappingConfig(mapRes.data || []);
       setLiabilities(liabRes.data?.liabilities || []);
-      const snaps: any[] = snapRes.data?.snapshots || [];
-      const saSnap = [...snaps].reverse().find((s: any) => s.saTotal != null);
+      type RawSnap = { id?: unknown; date?: unknown; saTotal?: number | null; saAssets?: unknown[] };
+      const snaps: RawSnap[] = snapRes.data?.snapshots || [];
+      const saSnap = [...snaps].reverse().find((s) => s.saTotal != null);
       if (saSnap) {
         setLatestSnapshot({
           id: String(saSnap.id),
           date: String(saSnap.date),
           saTotal: Number(saSnap.saTotal),
-          saAssets: Array.isArray(saSnap.saAssets) ? saSnap.saAssets : [],
+          saAssets: Array.isArray(saSnap.saAssets) ? (saSnap.saAssets as SnapshotAsset[]) : [],
         });
       }
       setLoading(false);
@@ -163,7 +170,7 @@ export default function ReconciliationPage() {
         if (!acc) return null;
 
         const ynabValue = Number(acc.balance);
-        const assetRefs: string[] = (m as any).saAssetMappings?.map((r: any) => r.saTicker) ?? [];
+        const assetRefs: string[] = m.saAssetMappings?.map((r) => r.saTicker) ?? [];
         const saAssets = assetRefs.map(t => assetByTicker[t]).filter(Boolean) as SnapshotAsset[];
         const saValue = saAssets.reduce((s, a) => s + (a.currentValue ?? 0), 0);
 
@@ -310,7 +317,7 @@ export default function ReconciliationPage() {
                 <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
                 <Bar dataKey="SA (live)" fill="var(--intent-warning)" radius={[3, 3, 0, 0]} maxBarSize={28} />
                 <Bar dataKey="YNAB (stale)" fill="var(--intent-warning-muted)" radius={[3, 3, 0, 0]} maxBarSize={28}>
-                  {chartData.map((_: any, i: number) => (
+                  {chartData.map((_: unknown, i: number) => (
                     <Cell key={i} fill="rgba(245,158,11,0.35)" />
                   ))}
                 </Bar>

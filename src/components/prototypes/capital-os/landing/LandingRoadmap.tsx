@@ -25,8 +25,8 @@ export function LandingRoadmap() {
               <h4 className="stage-title">Reliable Personal Tool</h4>
               <div className="stage-period">6 weeks · 4–6 hours/week</div>
               <p className="stage-question">
-                "Can I make one capital decision using CapitalOS data alone —
-                without opening YNAB or Airtable?"
+                &ldquo;Can I make one capital decision using CapitalOS data alone —
+                without opening YNAB or Airtable?&rdquo;
               </p>
               <ul className="stage-features">
                 <li className="stage-feature">
@@ -61,8 +61,8 @@ export function LandingRoadmap() {
               <h4 className="stage-title">Production-Ready System</h4>
               <div className="stage-period">Post-Demo Day · 4h/week max</div>
               <p className="stage-question">
-                "Would this survive 30 days of zero maintenance and still be
-                trusted when I return?"
+                &ldquo;Would this survive 30 days of zero maintenance and still be
+                trusted when I return?&rdquo;
               </p>
               <ul className="stage-features">
                 <li className="stage-feature">
@@ -97,8 +97,8 @@ export function LandingRoadmap() {
               <h4 className="stage-title">Productizable Foundation</h4>
               <div className="stage-period">Trigger: MissionOS outcome</div>
               <p className="stage-question">
-                "Can a second user connect their accounts without my help in
-                under 15 minutes?"
+                &ldquo;Can a second user connect their accounts without my help in
+                under 15 minutes?&rdquo;
               </p>
               <ul className="stage-features">
                 <li className="stage-feature">

@@ -117,7 +117,7 @@ export async function executeYnabSync(userId: string) {
     .reduce((sum, a) => sum + a.balance, BigInt(0));
 
   const invested = dbAccs
-    .filter((a) => a.type === "INVESTMENT" || a.type === "FIXED")
+    .filter((a) => a.type === "INVESTMENT" || a.type === "FIXED_ASSET")
     .reduce((sum, a) => sum + a.balance, BigInt(0));
 
   const liab = dbLiabs.reduce((sum, l) => sum + l.balance, BigInt(0));
@@ -202,9 +202,9 @@ export async function executeAirtableSync(userId: string) {
   }
 
   const [accounts, liabilities, goals] = await Promise.all([
-    getAirtableAccounts(),
-    getAirtableLiabilities(),
-    getAirtableGoals(),
+    getAirtableAccounts(userId),
+    getAirtableLiabilities(userId),
+    getAirtableGoals(userId),
   ]);
 
   let syncedAccounts = 0;

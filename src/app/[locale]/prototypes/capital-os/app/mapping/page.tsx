@@ -99,10 +99,11 @@ export default function MappingPage() {
       setAccountRoles(roles);
       setAssetToAccounts(a2accs);
 
-      const snaps: any[] = snapRes.data?.snapshots || [];
-      const saSnap = [...snaps].reverse().find((s: any) => s.saTotal != null);
+      type RawSnap = { saTotal?: number | null; saAssets?: unknown[] };
+      const snaps: RawSnap[] = snapRes.data?.snapshots || [];
+      const saSnap = [...snaps].reverse().find((s) => s.saTotal != null);
       if (saSnap && Array.isArray(saSnap.saAssets)) {
-        setSnapshotAssets(saSnap.saAssets);
+        setSnapshotAssets(saSnap.saAssets as SnapshotAsset[]);
       }
       setLoading(false);
     }).catch(() => setLoading(false));

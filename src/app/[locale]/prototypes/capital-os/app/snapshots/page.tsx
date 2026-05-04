@@ -624,7 +624,7 @@ export default function SnapshotsPage() {
         throw new Error(`Failed to fetch SA snapshots (${res.status})`);
       }
       const data = await res.json();
-      const snaps = Array.isArray(data?.snapshots) ? (data.snapshots as any[]) : [];
+      const snaps = Array.isArray(data?.snapshots) ? (data.snapshots as Array<Record<string, unknown>>) : [];
 
       // Only keep snapshots that actually have SA data
       const normalized: SASnapshot[] = snaps
@@ -633,8 +633,8 @@ export default function SnapshotsPage() {
           id: String(s.id),
           date: String(s.date),
           saTotal: Number(s.saTotal ?? 0),
-          saPortfolios: (s.saPortfolios ?? undefined) as any,
-          saAssets: (Array.isArray(s.saAssets) ? s.saAssets : []) as any,
+          saPortfolios: (s.saPortfolios ?? undefined) as SASnapshot["saPortfolios"],
+          saAssets: (Array.isArray(s.saAssets) ? s.saAssets : []) as SnapshotAsset[],
           fxRateUsdThb: typeof s.fxRateUsdThb === "number" ? s.fxRateUsdThb : undefined,
         }));
 

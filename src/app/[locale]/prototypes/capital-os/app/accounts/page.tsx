@@ -25,6 +25,7 @@ import { SyncButton } from "@/components/prototypes/capital-os/SyncButton";
 import { useCapitalData } from "@/lib/capital-os/hooks";
 import { sumByType, totalAssets } from "@/lib/capital-os/mock-data";
 import { CapitalAssetType } from "@/lib/capital-os/types";
+import type { CapitalAccount } from "@/lib/capital-os/types";
 import { fmtCurrency } from "@/lib/capital-os/format";
 import { SnowballSnapshotWizard } from "@/components/prototypes/capital-os/SnowballSnapshotWizard";
 
@@ -34,7 +35,7 @@ export default function AccountsPage() {
   const { accounts, deletedAccounts, isMockData, refresh } = useCapitalData();
   const [isSnowballOpen, setIsSnowballOpen] = useState(false);
 
-  const [itemToDelete, setItemToDelete] = useState<any>(null);
+  const [itemToDelete, setItemToDelete] = useState<CapitalAccount | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDeleteConfirm = async () => {
