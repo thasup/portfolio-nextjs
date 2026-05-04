@@ -324,6 +324,27 @@ export default function GoalsPage() {
               const catLabel = goal.category ? (CATEGORY_LABEL[goal.category] ?? goal.category) : null;
               const timeChip = getTimeRemaining(goal.deadline);
               const isBeingDeleted = deletingId === goal.id;
+              const remaining = Math.max(goal.target - goal.current, 0);
+              const monthlyAllocation = goal.monthlyAllocation ?? 0;
+              const monthsToTarget = monthlyAllocation > 0 ? Math.ceil(remaining / monthlyAllocation) : null;
+              const description = goal.description?.trim();
+              const topInsight = !isCompleted
+                ? (() => {
+                    const liquidAccounts = accounts.filter(a => !a.archivedAt && a.balance > 0);
+                    const totalLiquid = liquidAccounts.reduce((s, a) => s + a.balance, 0) / 100;
+                    const cardInsights = computeGoalInsights({
+                      targetNum: goal.target / 100,
+                      currentNum: goal.current / 100,
+                      allocationNum: monthlyAllocation / 100,
+                      deadline: goal.deadline ?? undefined,
+                      category: goal.category ?? undefined,
+                      monthlyBurnRate,
+                      totalLiquid,
+                      liquidAccountCount: liquidAccounts.length,
+                    });
+                    return cardInsights.find(i => i.level === "critical" || i.level === "warning") ?? cardInsights[0] ?? null;
+                  })()
+                : null;
 
               return (
                 <div
@@ -344,8 +365,7 @@ export default function GoalsPage() {
                   {/* Header */}
                   <div className="pl-5 pr-4 pt-4 pb-3">
                     <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0 space-y-1.5">
-                        {/* Badges row */}
+                      <div className="flex-1 min-w-0 space-y-2">
                         <div className="flex flex-wrap items-center gap-1.5">
                           <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" style={{ background: bg, color }}>
                             {goal.priority}
@@ -355,23 +375,20 @@ export default function GoalsPage() {
                               {emoji} {catLabel}
                             </span>
                           )}
-                          {isCompleted && (
+                          {isCompleted ? (
                             <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold" style={{ background: "rgba(34,197,94,0.15)", color: "var(--cos-positive)" }}>
                               ✓ Completed
                             </span>
-                          )}
-                          {timeChip && !isCompleted && (
+                          ) : timeChip ? (
                             <span className="flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[10px] font-medium" style={{ background: `${timeChip.color}18`, color: timeChip.color }}>
                               <Clock className="h-2.5 w-2.5" />
                               {timeChip.label}
                             </span>
-                          )}
+                          ) : null}
                         </div>
-                        {/* Name */}
                         <h3 className="text-sm font-semibold leading-tight truncate">{goal.name}</h3>
-                        {/* Description */}
-                        {goal.description && (
-                          <p className="text-[10px] leading-relaxed line-clamp-2" style={{ color: "var(--cos-text-3)" }}>{goal.description}</p>
+                        {description && (
+                          <p className="text-[10px] leading-relaxed line-clamp-2" style={{ color: "var(--cos-text-3)" }}>{description}</p>
                         )}
                       </div>
                       {/* Action buttons */}
@@ -398,7 +415,21 @@ export default function GoalsPage() {
                   </div>
 
                   {/* Progress bar */}
-                  <div className="pl-5 pr-4 pb-3 space-y-1.5">
+                  <div className="pl-5 pr-4 pb-3 space-y-2">
+                    <div className="grid grid-cols-3 gap-2 text-[10px]">
+                      <div className="rounded-lg bg-black/10 px-2 py-1.5">
+                        <p style={{ color: "var(--cos-text-3)" }}>Saved</p>
+                        <p className="mt-0.5 font-semibold truncate">{fmtCurrency(goal.current / 100)}</p>
+                      </div>
+                      <div className="rounded-lg bg-black/10 px-2 py-1.5">
+                        <p style={{ color: "var(--cos-text-3)" }}>Remaining</p>
+                        <p className="mt-0.5 font-semibold truncate">{fmtCurrency(remaining / 100)}</p>
+                      </div>
+                      <div className="rounded-lg bg-black/10 px-2 py-1.5">
+                        <p style={{ color: "var(--cos-text-3)" }}>Target</p>
+                        <p className="mt-0.5 font-semibold truncate">{fmtCurrency(goal.target / 100)}</p>
+                      </div>
+                    </div>
                     <div className="flex items-center justify-between text-xs font-medium">
                       <span style={{ color: "var(--cos-text-3)" }}>Progress</span>
                       <span style={{ color: isCompleted ? "var(--cos-positive)" : "var(--cos-accent)" }}>{progress}%</span>
@@ -409,54 +440,32 @@ export default function GoalsPage() {
                         style={{ width: `${progress}%`, background: isCompleted ? "var(--cos-positive)" : "var(--cos-accent)" }}
                       />
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs font-bold">{fmtCurrency(goal.current / 100)}</p>
-                      <p className="text-xs" style={{ color: "var(--cos-text-3)" }}>{fmtCurrency(goal.target / 100)}</p>
-                    </div>
                   </div>
 
-                  {/* Per-card CapitalOS Insight chip (critical/warning only) */}
-                  {(() => {
-                    if (isCompleted) return null;
-                    const liquidAccounts = accounts.filter(a => !a.archivedAt && a.balance > 0);
-                    const totalLiquid = liquidAccounts.reduce((s, a) => s + a.balance, 0) / 100;
-                    const cardInsights = computeGoalInsights({
-                      targetNum: goal.target / 100,
-                      currentNum: goal.current / 100,
-                      allocationNum: goal.monthlyAllocation ? goal.monthlyAllocation / 100 : 0,
-                      deadline: goal.deadline ?? undefined,
-                      category: goal.category ?? undefined,
-                      monthlyBurnRate,
-                      totalLiquid,
-                      liquidAccountCount: liquidAccounts.length,
-                    });
-                    const alertInsight = cardInsights.find(i => i.level === "critical" || i.level === "warning");
-                    if (!alertInsight) return null;
-                    const isWarn = alertInsight.level === "warning";
-                    return (
-                      <div
-                        className="border-t px-5 py-2 flex items-start gap-1.5"
-                        style={{ borderColor: isWarn ? "var(--cos-warning)" + "22" : "rgba(239,68,68,0.2)" }}
-                      >
-                        <Sparkles className="h-2.5 w-2.5 mt-0.5 shrink-0" style={{ color: isWarn ? "var(--cos-warning)" : "rgb(248 113 113)" }} />
-                        <p className="text-[10px] leading-relaxed" style={{ color: isWarn ? "var(--cos-warning)" : "rgb(248 113 113)" }}>
-                          {alertInsight.title}
+                  <div className="border-t px-5 py-2.5 space-y-2" style={{ borderColor: "var(--cos-border-subtle)" }}>
+                    {topInsight ? (
+                      <div className="flex items-start gap-1.5">
+                        <Sparkles
+                          className="h-2.5 w-2.5 mt-0.5 shrink-0"
+                          style={{ color: topInsight.level === "warning" ? "var(--cos-warning)" : "rgb(248 113 113)" }}
+                        />
+                        <p className="text-[10px] leading-relaxed" style={{ color: topInsight.level === "warning" ? "var(--cos-warning)" : "rgb(248 113 113)" }}>
+                          {topInsight.title}
                         </p>
                       </div>
-                    );
-                  })()}
-
-                  {/* Footer: vehicle + allocation */}
-                  <div className="border-t px-5 py-2.5 flex items-center justify-between" style={{ borderColor: "var(--cos-border-subtle)" }}>
-                    <p className="text-[10px] truncate" style={{ color: "var(--cos-text-3)" }}>
-                      {goal.vehicle || "No vehicle"}
-                    </p>
-                    {goal.monthlyAllocation && (
-                      <p className="text-[10px] font-medium flex items-center gap-1 shrink-0" style={{ color: "var(--cos-text-2)" }}>
-                        <CalendarDays className="h-2.5 w-2.5" />
-                        {fmtCurrency(goal.monthlyAllocation / 100)}/mo
-                      </p>
-                    )}
+                    ) : null}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px]" style={{ color: "var(--cos-text-3)" }}>
+                      <span className="truncate">{goal.vehicle || "No vehicle"}</span>
+                      {goal.monthlyAllocation ? (
+                        <span className="flex items-center gap-1">
+                          <CalendarDays className="h-2.5 w-2.5" />
+                          {fmtCurrency(goal.monthlyAllocation / 100)}/mo
+                        </span>
+                      ) : null}
+                      {monthsToTarget !== null && !isCompleted ? (
+                        <span>{monthsToTarget} mo to target</span>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
               );

@@ -350,9 +350,6 @@ export function GoalModal({ isOpen, onClose, goal, accounts = [], monthlyBurnRat
               value={deadline}
               onChange={setDeadline}
               dateFormat={dateFormat}
-              placeholder="Pick a target date…"
-              fromYear={2015}
-              toYear={2040}
             />
           </div>
 
