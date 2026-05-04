@@ -17,7 +17,7 @@ export function LandingThesis() {
               <p>
                 Structured data alone tells you what <em>is</em>. An LLM with
                 full financial context tells you what it <em>means</em>, what to
-                do next, and what you're missing.
+                do next, and what you&apos;re missing.
               </p>
               <p>
                 CapitalOS is not a dashboard that displays data. It is a

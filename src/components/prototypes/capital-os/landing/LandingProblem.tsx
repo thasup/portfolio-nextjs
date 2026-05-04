@@ -80,9 +80,9 @@ export function LandingProblem() {
 
           <div className="problem-statement reveal reveal-delay-3">
             <p>
-              "The problem is not data. All three platforms have data. The
+              &quot;The problem is not data. All three platforms have data. The
               problem is that no single view reconciles them into{" "}
-              <strong>actionable intelligence.</strong>"
+              <strong>actionable intelligence.</strong>&quot;
             </p>
           </div>
         </div>

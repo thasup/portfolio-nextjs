@@ -402,7 +402,7 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
   const renderCategorySection = (cat: PredefinedCategory) => {
     const state = categoryStates[cat.id];
     const total = categoryTotal(cat.id);
-    const typeIcon = cat.portfolioType === CapitalPortfolioType.STRATEGIC ? Shield : Rocket;
+    const TypeIcon = cat.portfolioType === CapitalPortfolioType.STRATEGIC ? Shield : Rocket;
     const typeColor = cat.portfolioType === CapitalPortfolioType.STRATEGIC ? "var(--intent-success)" : "var(--intent-accent)";
     const typeBg = cat.portfolioType === CapitalPortfolioType.STRATEGIC ? "var(--intent-success-muted)" : "var(--intent-accent-muted)";
 
@@ -419,7 +419,7 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
               className="flex h-7 w-7 items-center justify-center rounded-lg"
               style={{ background: typeBg }}
             >
-              <typeIcon className="h-4 w-4" style={{ color: typeColor }} />
+              <TypeIcon className="h-4 w-4" style={{ color: typeColor }} />
             </div>
             <span className="text-sm font-semibold">{cat.name}</span>
             <span
@@ -453,7 +453,7 @@ export function SnapshotWizard({ isOpen, onClose, onComplete }: SnapshotWizardPr
               className="rounded-lg border border-dashed p-3 text-center text-xs"
               style={{ borderColor: "var(--cos-border-subtle)", color: "var(--cos-text-3)" }}
             >
-              No assets. Click "Add" to add your first asset.
+              No assets. Click &quot;Add&quot; to add your first asset.
             </div>
           ) : (
             state.assets.map((asset) => {

@@ -4,6 +4,7 @@
  * POST /api/capital-os/snapshots  → create SA snapshot
  */
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
 import { requireCapitalOSAuth, isAuthed } from "@/lib/capital-os/auth";
 
@@ -69,8 +70,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Build saAssets from payload - stores full asset-level snapshot data
+    type AssetPayload = { ticker?: string; name?: string; categoryId?: string; investedValue?: number | null; investedValueThb?: number | null; currentValue?: number | null; valueThb?: number | null; currency?: string; shares?: number | null };
     const saAssets = Array.isArray(assets)
-      ? assets.map((a: any) => ({
+      ? assets.map((a: AssetPayload) => ({
           ticker: a.ticker || "",
           name: a.name || "",
           categoryId: a.categoryId || "",
@@ -98,8 +100,8 @@ export async function POST(req: NextRequest) {
         invested: BigInt(saTotal),
         liabilities: BigInt(0),
         saTotal: BigInt(saTotal),
-        saPortfolios: saPortfolios as any,
-        saAssets: saAssets as any,
+        saPortfolios: saPortfolios as Prisma.InputJsonValue,
+        saAssets: saAssets as Prisma.InputJsonValue,
         fxRateUsdThb,
       },
       create: {
@@ -110,8 +112,8 @@ export async function POST(req: NextRequest) {
         invested: BigInt(saTotal),
         liabilities: BigInt(0),
         saTotal: BigInt(saTotal),
-        saPortfolios: saPortfolios as any,
-        saAssets: saAssets as any,
+        saPortfolios: saPortfolios as Prisma.InputJsonValue,
+        saAssets: saAssets as Prisma.InputJsonValue,
         fxRateUsdThb,
       },
     });

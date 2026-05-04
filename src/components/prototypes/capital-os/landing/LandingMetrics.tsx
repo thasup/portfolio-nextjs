@@ -90,7 +90,7 @@ export function LandingMetrics() {
                 net worth field remained unchanged for months
                 because no one updated it. CapitalOS detected
                 this divergence on first sync and flagged it as a{" "}
-                <code>CRITICAL</code> reconciliation failure. That's what the
+                <code>CRITICAL</code> reconciliation failure. That&apos;s what the
                 Accountant agent exists to do.
               </div>
             </div>

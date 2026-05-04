@@ -12,6 +12,7 @@ import type {
   CapitalLiability,
   CapitalGoal,
   CapitalSettings,
+  CapitalScenario,
 } from "@/lib/capital-os/types";
 import {
   MOCK_ACCOUNTS,
@@ -27,8 +28,8 @@ interface UseCapitalDataResult {
   liabilities: CapitalLiability[];
   goals: CapitalGoal[];
   settings: CapitalSettings | null;
-  snapshots: any[];
-  scenarios: any[];
+  snapshots: Record<string, unknown>[];
+  scenarios: CapitalScenario[];
   isLoading: boolean;
   isMockData: boolean;
   error: string | null;
@@ -53,8 +54,8 @@ export function useCapitalData(): UseCapitalDataResult {
     useState<CapitalLiability[]>(MOCK_LIABILITIES);
   const [goals, setGoals] = useState<CapitalGoal[]>(MOCK_GOALS);
   const [settings, setSettings] = useState<CapitalSettings | null>(null);
-  const [snapshots, setSnapshots] = useState<any[]>([]);
-  const [scenarios, setScenarios] = useState<any[]>([]);
+  const [snapshots, setSnapshots] = useState<Record<string, unknown>[]>([]);
+  const [scenarios, setScenarios] = useState<CapitalScenario[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isMockData, setIsMockData] = useState(true);
   const [error, setError] = useState<string | null>(null);

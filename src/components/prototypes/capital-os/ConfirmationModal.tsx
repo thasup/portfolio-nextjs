@@ -3,8 +3,8 @@ import { AlertCircle } from "lucide-react";
 interface ConfirmationModalProps {
   isOpen: boolean;
   title: string;
-  beforeData: any;
-  afterData: any;
+  beforeData: unknown;
+  afterData: unknown;
   onConfirm: () => void;
   onCancel: () => void;
   isLoading?: boolean;

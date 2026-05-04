@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest, ctx: RouteContext) {
     // Validate request with Zod schema (partial for PATCH)
     const validated = validateRequest(AccountRequestSchema.partial(), body);
 
-    const updateData: Record<string, any> = {};
+    const updateData: Record<string, unknown> = {};
     if (validated.name !== undefined) updateData.name = validated.name;
     if (validated.balance !== undefined) updateData.balance = validated.balance;
     if (validated.type !== undefined) updateData.type = validated.type;

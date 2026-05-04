@@ -15,7 +15,7 @@ export function LandingBrand() {
             <div className="section-label">Brand & Design System</div>
             <h2>Every token, justified.</h2>
             <p>
-              CapitalOS's visual language is precision-first: monospaced
+              CapitalOS&apos;s visual language is precision-first: monospaced
               numbers, editorial display type, and a palette built around
               financial semantics — not aesthetics for their own sake.
             </p>
@@ -250,7 +250,7 @@ export function LandingBrand() {
                 </div>
                 <div className="prog-row">
                   <div className="prog-labels">
-                    <span>Jane's Wedding ✅</span>
+                    <span>Jane&apos;s Wedding ✅</span>
                     <span>109%</span>
                   </div>
                   <div className="prog-track">
