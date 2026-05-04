@@ -8,8 +8,8 @@ import {
   jetbrainsMono,
 } from "@/lib/fonts";
 import { ThemeProvider } from "next-themes";
-import Script from "next/script";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { ChatbaseScript } from "@/components/ChatbaseScript";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Navbar } from "@/components/layout/Navbar";
@@ -120,15 +120,7 @@ export default async function RootLayout({
         </NextIntlClientProvider>
         {gaId && <GoogleAnalytics gaId={gaId} />}
         {gtmId && <GoogleTagManager gtmId={gtmId} />}
-        {chatbaseEmbedId && (
-          <Script
-            id="chatbase-inline-loader"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="${chatbaseEmbedId}";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();`,
-            }}
-          />
-        )}
+        {chatbaseEmbedId && <ChatbaseScript embedId={chatbaseEmbedId} />}
       </body>
     </html>
   );
